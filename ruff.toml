@@ -1,0 +1,11 @@
+indent-width = 2
+preview = true
+target-version = "py312"
+line-length = 150
+
+lint.ignore = [
+  "E741", # ambiguous variable name
+  "E743", # ambiguous function name
+]
+
+exclude = ["print.py"] # TODO: remove this later

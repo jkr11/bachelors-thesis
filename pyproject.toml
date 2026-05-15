@@ -1,0 +1,30 @@
+[project]
+name = "symmnet"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "jkr11", email = "113939131+jkr11@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel>=7.2.0",
+    "numpy>=2.4.4",
+    "scipy>=1.17.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q --tb=short"
+testpaths = [
+    "tests",
+]
