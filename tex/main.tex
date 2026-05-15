@@ -1,0 +1,108 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage[inner=0.8in, outer=0.8in]{geometry}
+
+\input{preamble.tex}
+
+\date{\today}
+\makeatletter
+\hypersetup{
+    colorlinks=true,
+		linkcolor=red,
+		citecolor=orange,
+    urlcolor=blue
+}
+\makeatother
+
+\begin{document}
+
+\chapter{Introduction}\label{chapter:introduction}
+
+\section{Introduction}
+
+\subsection{Definitions}
+
+Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
+\[
+  T \in \bigotimes_{j \in J} V^j
+\]
+and we say $T$ is a $\left\vert J \right\vert$-legged tensor.
+
+Given finite dimensional Vector spaces $V$ and $W$, we have the identity that $V \otimes W^\ast \equiv Hom(W,V)$. Now, if we have a Tensor $T \in V_1 \otimes \cdots \otimes V_n$, and since for any Vector space $V$, $(V^\ast)^\ast = V$, we can peel off any number of $V_{i}$s, take their duals and represent $T$ as a map
+\[
+  T : V_{n}^\ast \otimes \cdots \otimes V_{k+1} ^\ast \to V_1 \otimes \cdots \otimes V_k 
+\]
+Note that we present the domain here in a contravariant fashion due to the contravariance of the dual.
+
+Lets look at an example, let $t : V_1 \otimes V_2 \otimes W_{2}^\ast \otimes W_1^\ast$. We can represent as an operator in dirac notation:
+\[
+  t = \sum_{i_1,i_2,j_1,j_2}^{} T_{j1 j2 i1 i2}  \ket{v_{i_1}} \ket{v_{i_2}} \bra{w_{j_1}} \bra{w_{j_2}}
+\] 
+
+Graphically, we represent a general tensor
+\[
+  T : (W_{n}^{\ast} \otimes \cdots \otimes W_1) \to (V_1 \otimes V_2 \otimes \cdots \otimes V_n)
+\]
+as follows, where we choose incoming arrows for duals in the domain and outgoings for normal spaces, and on the bottom we choose incoming for duals and outgoing for normals.
+
+
+
+\subsection{Review of Symmetric Tensor networks.}
+
+Generally, we follow the notations of \cite{singhTensorNetworkStates2012a}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollTensorNetworkSimulations2020} which gave an overview for implementing $SU(2)$ invariant tensor networks. A general overview for (Non)abelian symmetries is \cite{singhTensorNetworkDecompositions2010a}, and a detailed account for the abelian $U(1)$ in \cite{singhTensorNetworkStates2011}. There are a multitude of implementations given in major packages, such as ITensor, \cite{fishmanITensorSoftwareLibrary2022}, Cyten, TenPy, \cite{hauschildTensorNetworkPython2024}, QSpace, \cite{weichselbaumQSpaceOpensourceTensor2024} ChemTensor, UniTensor, YasTn (Abelian Only) \cite{ramsYASTNAnotherSymmetric2025} (MPSKit?), (Cytnx (Abelian only i think.))). A general account of symmetries is given in \cite{dissertation} with its respective implementation in \cite{hauschildTensorNetworkPython2024} (We have to build cytens citation manually.)
+
+
+\subsection{Quantum Gates as Tensor Network Operators}
+
+As a sanity check, view this in context of a quantum circuit. A quantum circuit is defined as (unitary) map $(\mathbb{C}^2)^n \to (\mathbb{C}^2)^m$. 
+
+\[
+  \mathop{CNOT} : C^2 \otimes C^2 \to  C^2 \otimes C^2 = \sum_{ij}^{} \ket{i,i \oplus j}\bra{i,j}
+\]  
+\[
+  H = \frac{1}{\sqrt{2} } \sum_{ij}^{} (-1)^{ij} \ket i \bra j
+\]
+
+
+\section{Symmetries}
+
+What do we know now? First of all, we take a symmetry group $G$ that is finite and compact (why?)[For compact groups, representations are completely reducible (Maschke) and the irreps are finite aswell. Finite groups are contained in compact groups.]. Then we look for its unitary representation $U(G)$ on a Hilbert space $H$. Furhtermore, if this is a multiparty hilbert space, lets say $n$ sites, we view the unitary representations $U_{n}$ at site $n$. The unitary representation $U_{n} : G \to Hom(V_{n} ,V_{n} )$ is a covariant linear unitary map. A map $V_{i} \to V_{j}$ is symmetric if it is an intertwiner of the representations, i.e. the following diagram commutes:
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kiXSxbMCwxLCJWX2oiXSxbMSwwLCJWX2kiXSxbMSwxLCJWX2oiXSxbMCwxLCJmIiwyXSxbMCwyLCJVX3tWX2l9KGcpIl0sWzEsMywiVV97Vl9qfShnKSIsMl0sWzIsMywiZiJdXQ==
+\[\begin{tikzcd}
+	{V_i} & {V_i} \\
+	{V_j} & {V_j}
+	\arrow["{U_{V_i}(g)}", from=1-1, to=1-2]
+	\arrow["f"', from=1-1, to=2-1]
+	\arrow["f", from=1-2, to=2-2]
+	\arrow["{U_{V_j}(g)}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+Note that here $V_{i}$ is called a \emph{symmetry space}.
+
+Some examples of these groups include $\U{1}, \SU 2, \mathbb{Z}_{n}$
+
+Now where the intutition is more shaky: Consider a symmetry space $V_i$ on a single site (why single). Then we get that it decomposes into a direct sum of irreps $V_{i}^a$,
+\[
+  V_{i}  = \bigoplus_a \bigoplus_{i = 1}^{d_{a} } V_{i}^a
+\]
+and we can easily construct an isomporphism (but this depends on choosing a basis for $D_{a}$.)
+\[
+  V_{i}  = \bigoplus_a \bigoplus_{i = 1}^{d_{a} } V_{i}^a = \bigoplus_{a} (D_{a} \otimes V_{i}^a ).
+\]
+
+Well, the isom we can construct here would look like $\bigoplus_1^{d_{a} } V_{i}^a \to D_{a} \otimes V_{i}^a$.
+
+Consider a single site of $3$ spin $1 / 2$ particles. Under $\SU 2$ this decomposes as 
+\[
+  2 \otimes 2 \otimes 2 = 4 \oplus 2 \oplus 2
+\]
+Now consider that $C^2$ is just the fundamental representation of $\SU 2$.
+
+
+Note here, an invariant subspace $W \subseteq V$ is a subset of vectors s.t. for all $U \in \SU 2$, $Uw \in W$.
+
+\subsection{Notes on structural tensors and fusion trees}
+
+What do the CG tensors look like? As they are three index and have no intermediates, these are simply $Q_{j_1,j_2,j_3} = (C^{fuse})_{(j_1,m_{j_1}), (j_2, m_{j_2})}^{(j_3,m_{j_3})}$.
+
+\printbibliography
+
+\end{document}
