@@ -216,8 +216,6 @@ class NPTensor(Tensor):
 def ident(n:int) -> NPTensor:
   return NPTensor(np.identity(n))
 
-
-
 def run_tests():
   vec1 = NPTensor(np.array([1, 2, 3]))
   vec2 = NPTensor(np.array([4, 5, 6]))
@@ -264,11 +262,9 @@ def run_tests():
   assert np.allclose(r_trace.data, expected_trace)
   print(f"Trace Simulation Test: {r_trace.data} == {expected_trace}")
 
-# run_tests()
-# 
-# class SU2Tensor(Tensor):
-#   def __init__(self, k:int, l:int, aux:int, )
 
+
+# We can make all of these tests btw, once i redo the project outside of the test repo.
 if __name__ == "__main__":
   testtensor = NPTensor(np.eye(4))
   test2 = testtensor @ testtensor
