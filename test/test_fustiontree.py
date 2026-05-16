@@ -55,6 +55,19 @@ def test_paper_equation_4_11_transformation():
   tau_i.fmove(5)
   assert tau_i.nodes == tau_f.nodes
 
+def test_yoga_fmove():
+  open_edges = [-a for a in range(1,7)]
+
+  figure_50_tree = FusionTree(
+    open_edges=open_edges,
+    internal_edges=[1,2,3],
+    nodes=[(-1,-2,1),(1,-4,2),(2,-3,3),(3,-5,-6)],
+    directions=[NodeType.fusion, NodeType.splitting, NodeType.fusion, NodeType.splitting]
+  )
+  assert figure_50_tree.determine_type() == TreeSort.yoga
+  figure_50_tree.fmove(2)
+  assert figure_50_tree.determine_type() == TreeSort.simple
+
 def test_pentagon():
   left_tree = FusionTree(
     open_edges=[-1, -2, -3, -4, -5],

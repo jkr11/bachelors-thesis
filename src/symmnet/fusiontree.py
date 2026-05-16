@@ -33,7 +33,9 @@ def determine_elementary_type(taus, dirs) -> tuple[TreeSort, tuple[int, int]]:
     # There is one extra case with fuse, split with (0,1) connection that can be simple, so this is defined below.
     return TreeSort.simple, indices
   if d0 == NodeType.fusion and d1 == NodeType.splitting:
-    if indices == (0, 1):
+    if indices == (0, 1): # TODO: really check if this is right.
+      return TreeSort.simple, indices
+    elif indices == (2,0):
       return TreeSort.simple, indices
     return TreeSort.yoga, indices
   else:
@@ -85,7 +87,7 @@ class FusionTree:
     self.open_edges = open_edges  # This is a list of (num, dir in {-1,1}, irreps, )
     self.internal_edges = internal_edges  # Same as above but without dir?
     self.nodes = nodes  # List of triples, i.e. [(a,b,c),(c,d,e),(f,e,g),...]
-    self.directions: list[NodeType] = directions  # orientation of each node, i.e. "fusion" or "splitting"
+    self.directions: list[NodeType] = list(directions)  # orientation of each node, i.e. "fusion" or "splitting"
     self.symmetry = symmetry
     self._verify()
 
@@ -132,6 +134,7 @@ class FusionTree:
     a,b,c = taus[0]
     d,e,f = taus[1]
     d0,d1 = dirs[0],dirs[1]
+    new_dirs = [d0, d1]
     if sort == TreeSort.simple:
       if d0 == d1 == NodeType.fusion:
         if (i1,i2) == (1,2):
@@ -146,13 +149,35 @@ class FusionTree:
         elif (i1,i2) == (1,0):
           new_taus = [(a,e,b),(b,f,c)]
         else: raise NotImplementedError(f"FMove is not yet impelemneted fully, {i1, i2}")
-      else: raise NotImplementedError('SplitFuse cases not implemented')
+    elif sort == TreeSort.yoga:
+      if d0 == NodeType.splitting and d1 == NodeType.fusion:
+        # (-1, -3, 1) (1, -2, -3)
+        if (i1,i2) == (2,0):
+          new_taus = [(a, e, c), (c, b, f)]
+          new_dirs = [NodeType.fusion, NodeType.splitting]
+        elif (i1,i2) == (1,0):
+          new_taus = [(a, e, b), (b, f, c)]
+          new_dirs = [NodeType.fusion, NodeType.splitting]
+        elif (i1,i2) == (2,1):
+          new_taus = [(d, a, c), (c, b, f)]
+          new_dirs = [NodeType.fusion, NodeType.splitting]
+        else:
+          raise NotImplementedError('SplitFuse cases not implemented')
+      elif d0 == NodeType.fusion and d1 == NodeType.splitting:
+        if (i1, i2) == (2, 0):
+          new_taus = [(a, c, f), (c, b, e)]
+          new_dirs = [NodeType.splitting, NodeType.fusion]
+        else:
+          raise NotImplementedError(f"Fuse-Split case {(i1, i2)} not implemented")
     else:
-      raise NotImplementedError("Yoga not yet impelemnet.")
+      raise NotImplementedError("Error in case ")
     # This can be done better? write something like context for htis?
     node_indices = [idx for idx, node in enumerate(self.nodes) if edge in node]
     self.nodes[node_indices[0]] = new_taus[0]
     self.nodes[node_indices[1]] = new_taus[1]
+
+    self.directions[node_indices[0]] = new_dirs[0]
+    self.directions[node_indices[1]] = new_dirs[1]
 
   def permutation(self, swap_sequence:list[tuple[int,int]]):
     for i,j in swap_sequence:
