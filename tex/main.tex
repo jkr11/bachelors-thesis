@@ -1,6 +1,6 @@
 \documentclass[12pt,a4paper]{book}
 \usepackage[inner=0.8in, outer=0.8in]{geometry}
-
+\usepackage{listings}
 \input{preamble.tex}
 
 \date{\today}
@@ -99,9 +99,171 @@ Now consider that $C^2$ is just the fundamental representation of $\SU 2$.
 
 Note here, an invariant subspace $W \subseteq V$ is a subset of vectors s.t. for all $U \in \SU 2$, $Uw \in W$.
 
+symmetry obviously implies pullthrough properties, do Intertwiners as well?
+
+Yes, because $U_(V \otimes W) : g \to U_V(g) \otimes U_W(g)$ and the following diagram commutes:
+
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kgXFxvdGltZXMgVl9qIl0sWzAsMSwiVl9rIl0sWzIsMSwiVl9rIl0sWzIsMCwiVl9pIFxcb3RpbWVzIFZfaiJdLFswLDEsIlQiLDJdLFsxLDIsIlVfe1Zfa30oZykiLDJdLFswLDMsIlVfe1ZfaSBcXG90aW1lcyBWX2p9KGcpIl0sWzMsMiwiVCJdXQ==
+\[\begin{tikzcd}
+	{V_i \otimes V_j} && {V_i \otimes V_j} \\
+	{V_k} && {V_k}
+	\arrow["{U_{V_i \otimes V_j}(g)}", from=1-1, to=1-3]
+	\arrow["T"', from=1-1, to=2-1]
+	\arrow["T", from=1-3, to=2-3]
+	\arrow["{U_{V_k}(g)}"', from=2-1, to=2-3]
+\end{tikzcd}\]
+
+\subsection{Some Symmetry Groups}
+
+\subsubsection{$\mathbb{Z}_n$ }
+
+This group is given by integers $0, \ldots n-1$ with addition mod $n$. Since this happens to be abelian, all the irreps are $1$ dimensional, i.e. 
+$U_a(g) : g \to Hom(\mathbb{C},\mathbb{C})$ with representatives $U_a(g) = z \mapsto e^{2\pi i a g / N} z$. What isthe fusion rule here?
+\[
+  a \otimes b \equiv (c : = a + b \mod n)
+\]
+This also does not have fusion multiplicities.
+
+\subsubsection{The group $\SU{2}$}
+
+Summarize the results from the paper here.
+
+\subsubsection{The group $\SU{2}_3$}
+
+Technically this is a fusion category, the thesis \cite{dissertation} handles this distinction. But if we think of this in terms of the programming guide, this seems to be doable using a group.
+
+Now, since we can argue that Products of symmetry groups again form a symmetry group (proof?), we would also need another type for sector.
+
+We could use $class Sector(NamedTuple)$ holding an array charges.
+
 \subsection{Notes on structural tensors and fusion trees}
 
 What do the CG tensors look like? As they are three index and have no intermediates, these are simply $Q_{j_1,j_2,j_3} = (C^{fuse})_{(j_1,m_{j_1}), (j_2, m_{j_2})}^{(j_3,m_{j_3})}$.
+
+\subsection{Notes on the papers}
+
+Lets assume we only look at incoming legs, i.e. we look at $T_{j_{a} ,j_{b} , j_{c} }$ in a composite vectors space $V^a \otimes V^b \otimes V^c$. By the decomposition
+\[
+  V^a \otimes V^b \otimes V^c = \left(\bigoplus_{j_a} D_{j_{a} } \otimes V_{j_{a} } \right) \otimes \left(\bigoplus_{j_b} D_{j_{b} } \otimes V_{j_{b} } \right) \otimes\left(\bigoplus_{j_c} D_{j_{c} } \otimes V_{j_{c} } \right)
+\]
+and we can represent a single index inside the block space 
+\[
+  T_{j_{a} ,j_{b} , j_{c} } \in (D_{j_{a} j_{b} j_{c}} \otimes V_{j_{a} j_{b} j_{c} })
+\]
+Choosning a basis $t = (t_{j_{a} }, t_{j_{b} }, t_{j_{c} })$ and $m = (m_{j_{a} }, m_{j_{b} }, m_{j_{c} })$ we can write
+\[
+  T_{j_a, j_b,j_c} = \sum_{t,n}^{} (T_{j_{a} ,j_{b} ,j_{c} })_{t,m} (\ket{t} \otimes \ket m)
+\]
+Now we can use Wigner-Eckart to obtain
+\[
+  T_{j_a, j_b,j_c} = \sum_{t,n}^{} ((P_{j_{a} j_{b} j_{c} })_t \cdot (Q_{j_{a} j_{b} j_{c} })_m)_{t,m} (\ket{t} \otimes \ket m)
+\]
+\[
+  = \left(\sum_{t}^{} (P_{j_{a} j_{b} j_{c} })_t \ket t\right) \otimes \left(\sum_{m}^{} (Q_{j_{a} j_{b} j_{c} })_m \ket m \right) = P_{j_{a} j_{b} j_{c} } \otimes Q_{j_{a} j_{b} j_{c} }
+\]
+
+If we generalize this with the decomposition for $k$ indices $i = (i_1, i_2, \ldots, i_k)$ and let $j_e = (j_{e_1}, j_{e_2}, \ldots, j_{e_{k-3} })$ be the internals
+\[
+  T_{i} = \sum_{j_e} (P_j^{j_e})_t \cdot (Q_j^{j_e})_m 
+\]
+
+\subsection{$Q$ intertwiners}
+
+Lets look at 2 paths for the 4 index tensor, $(a,b,c \to d)$ and $(a,b \to c,d)$.
+
+\[
+  (Q_{j_{a} j_{b} j_{c} }^{j_{e}})_{m_1,m_2,m_3,m_4} = \sum_{m_e}^{} \braket{j_1 m_1; j_2 m_2 }{j_e m_e} \braket{j_e m_{e}; j_3 m_3}{j_4 m_4}
+\]
+
+while the other topology would look like
+\[
+  Q\ldots = \sum_{m_e}^{} \braket{j_1 m_1; j_2 m_2}{j_{e} m_{e} } \braket{j_{e} m_{e} }{j_3 m_3; j_4 m_4} 
+\]
+and as an operator this would have to live in $Hom(V_{j_{1}} \otimes V_{j_2} , V_{j_3} \otimes V_{j_4})$
+
+The yoga tree $(-1,1,-3),(-2,1,-4)$ Gives us a good mixture of those. This $Q$ would then have to look like
+\[
+  Q_{-1 -2 -3 -4}^{1} = \sum_{1}^{} \braket{j_{-1} m_{-1}; j_1 m_1  }{j_{-3} m_{-3}  } \braket{j_{-2} m_{-2}  }{j_1 m_{1}; j_{-4} m_{-4}} = \sum_{m_1}^{} C_{-1,1 \to -3} \cdot C_{-2, 1 \to -4} 
+\]
+
+How would we do this when we have a contraction of two simultaneous indices:
+\[
+  Q_{-1 -2}^{1,2} = \sum_{1,2}^{} \braket{-1}{1;2} \braket{1;2}{-2}
+\]
+
+If we define $\tau$ to be the fusion trees topology, then we can define ${}_\tau Q_j^i$
+
+
+What would this look like for general symmetry groups $G$? Lets choose a basis of its invariant decomp $\ket{\lambda_a t_a \mu_a }$. Then the generalized CG coefficient would look like
+\[
+  (C_{\lambda_a \lambda_b \to \lambda_c}^\alpha)_{\mu_a \mu_b}^{\mu_c} = \braket{\lambda_a \mu_a ; \lambda_b \mu_b}{\lambda_c \mu_c}_\alpha
+\]
+where alpha denotes the singular fusion multiplicity at $\mu_c$. 
+
+Now to fully specify $Q$ here for $k$ sectors $(\lambda_i, \mu_i)$, we need to give it $k - 3$ internal edges $(\lambda_{e_{1}}, \ldots, \lambda_{e_{k-3}} )$ along with $k-2$ mulitplicity symbols, $(\alpha_1, \ldots, \alpha_{k-2})$
+
+Can we write down a general formula for $Q$?
+
+This would then be
+
+\[
+  Q_\lambda
+\]
+
+\section{implementation}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+We want to be able to represent a traditional tensor op such as 
+\begin{lstlisting}[language=Python]
+np.einsum("ijklmn,nkol -> ijmo", a, b)
+\end{lstlisting}
+for symmetric tensors. As we want to reuse code form existing librariries that is written using numpy, it would be ideal to write our classes in a way that would only require substituting $np$ for our own libraries $snp$. Towards this goal we define a abstractclass Tensor
+\begin{lstlisting}[language=Python]
+class Tensor(abc.ABC):
+  ...
+  @abstractmethod
+  def transpose(cls, new_shape:list[int]): ...
+  ...
+\end{lstlisting}
+
+and we implement both an $np$ wrapper $NPTensor$ and our symmetric Tensor as $STensor$, i.e.
+\begin{lstlisting}[language=Python]
+class STensor(Tensor):
+  
+  def __init__(self, ...):
+    self.open_legs:list[int|str]
+    self.fusion_tree:FusionTree(self.open_legs, ...)
+    ...
+  @abstractmethod
+  def transpose(cls, new_shape:list[int]): ...
+  ...
+\end{lstlisting}
+
 
 \printbibliography
 
