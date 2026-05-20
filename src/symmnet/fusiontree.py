@@ -10,7 +10,6 @@ class TreeSort(IntEnum):
   yoga = 10
   monster = 20
 
-
 class NodeType(IntEnum):
   splitting = 0
   fusion = 10
@@ -28,7 +27,7 @@ def determine_elementary_type(taus, dirs) -> tuple[TreeSort, tuple[int, int]]:
   i1 = taus[0].index(conn)
   i2 = taus[1].index(conn)
   indices = (i1, i2)
-  if d0 == d1:  # This needs to be more fiely graded now, since we can also construct invalid connections here.
+  if d0 == d1:  # This needs to be more finely graded now, since we can also construct invalid connections here.
     # I think it is (1,0), (0,1), (2,0), (0,2). But draw them all and do this manually.
     # There is one extra case with fuse, split with (0,1) connection that can be simple, so this is defined below.
     return TreeSort.simple, indices
@@ -43,7 +42,7 @@ def determine_elementary_type(taus, dirs) -> tuple[TreeSort, tuple[int, int]]:
       (1, 2): TreeSort.yoga,
       (2, 0): TreeSort.yoga,
       (1, 0): TreeSort.monster,
-      (2, 2): TreeSort.monster,
+      (2, 1): TreeSort.monster, # TODO... expand.
     }
     result = lookup.get(indices)
     if result:
@@ -83,6 +82,17 @@ def fmove_basic_simple(taus, dirs):  # Does it make sense to implement a type fo
 
 
 class FusionTree:
+  """
+  The basic blocks of the fusion tree are trivalent vertices, that look as follows
+       c
+       |  (Outgoing leg)
+       |
+       * <-- Multiplicity index α ∈ {1, 2, ..., N_ab^c}
+      / \
+     /   \
+    a     b  (Incoming legs)
+  reversing this diagram yields a splitting vertex.
+  """
   def __init__(self, open_edges, internal_edges, nodes, directions, symmetry: Symmetry = SU2()):
     self.open_edges = open_edges  # This is a list of (num, dir in {-1,1}, irreps, )
     self.internal_edges = internal_edges  # Same as above but without dir?
@@ -126,6 +136,13 @@ class FusionTree:
         return True
     return False
 
+  def _resolve_identity_nodes(self):
+    for inner in self.internal_edges:
+      taus, _ = self.get_node_context(inner)
+      t0,t1 = taus[0], taus[1]
+      print(t0)
+      print(t1)
+
   def fmove(self, edge):
     # This one is a bit strange because we only have split split and fuse fuse right, but in one of the theses here there was a full table of fmoves.
     taus, dirs = self.get_node_context(edge)
@@ -138,9 +155,13 @@ class FusionTree:
     if sort == TreeSort.simple:
       if d0 == d1 == NodeType.fusion:
         if (i1,i2) == (1,2):
-          new_taus = [(a,b,d),(b,e,c)]
+          new_taus = [(a,d,b),(b,e,c)]
+          # Just as an example here, this would then have the fmove
+          # F_(adec)^((b=f))
         elif (i1,i2) == (2,0):
           new_taus = [(a,c,f),(b,e,c)]
+        #elif (i1, i2) == (2,1):
+      
         else:
           raise NotImplementedError("FMove is not yet fully implemente.")
       elif d0 == d1 == NodeType.splitting:
@@ -186,7 +207,11 @@ class FusionTree:
   def swap(a, b):
     pass
 
-  def determine_internal_charge_sectors(self, outer_charges: dict[Any, Any]):
+
+  
+
+  # I dont like this method here, maybe we can do this better.
+  def determine_internal_charge_sectors(self, outer_charges: dict[Any, list[tuple[Any,int]]]):
     all_edges = set()
     for node in self.nodes:
       all_edges.update(node)
@@ -194,6 +219,7 @@ class FusionTree:
 
     # TODO: remove
     normalized_outer = {}
+    degen_lookup = {}
     for e in self.open_edges:
       if e in outer_charges:
         v = outer_charges[e]
@@ -216,7 +242,7 @@ class FusionTree:
         valid_configurations.append(assignments.copy())
         return
 
-      # establish boundary conditions? Unecessary?
+      # establish boundary conditions? Unnecessary?
       unassigned_open = [e for e in self.open_edges if e not in assignments]
       # print(unassigned_open)
       if unassigned_open:
