@@ -4,7 +4,7 @@
 \usepackage{graphicx} % Required for inserting images
 \usepackage[hidelinks]{hyperref}
 \usepackage{bbm}  % for \mathbb and \mathbbm symbols
-\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{amsmath,amsfonts,amssymb, amsthm}
 \usepackage[chapter]{algorithm}  % for algorithm environment, option: use chapters for numering
 \usepackage{enumitem}
 \usepackage{mathtools}
@@ -14,6 +14,7 @@
 \usepackage{xstring}
 \pgfplotsset{compat=1.18}
 \usepackage{tikz-cd}  % commuting diagrams based on tikz
+\usetikzlibrary{calc}
 \usepackage{framed}
 \usepackage[export]{adjustbox}
 \usepackage{relsize}  % for \mathlarger command, e.g. for dagger of a whole diagram, want a large dagger.
@@ -21,9 +22,10 @@
 \usepackage{booktabs}  % for clean tables (tabular environment) 
 \usepackage{multirow}
 \usepackage{caption}  % for setting caption width
+\usepackage{mathrsfs}
 \captionsetup{width=\linewidth}
-
 \definecolor{Green}{rgb}{0, 0.5, 0.2}
+
 
 \newcommand{\red}[1]{{\color{red} {#1}}}
 \newcommand{\orange}[1]{{\color{orange} {#1}}}
@@ -114,3 +116,19 @@
 \newcommand{\Sp}[1]{\mathrm{Sp}(#1)}
 \newcommand{\GL}[2]{\mathrm{GL}(#1, #2)} % e.g., GL(n, R)
 \newcommand{\SL}[2]{\mathrm{SL}(#1, #2)}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{example}{example}
+
+% --- Category Theory Shorthands ---
+\newcommand{\Cat}{\mathbf{Cat}}          % Category of categories
+\newcommand{\VecCat}{\mathbf{Vect}}      % Category of Vector spaces
+\newcommand{\Rep}{\mathbf{Rep}}          % Representation category
+\newcommand{\Hom}{\operatorname{Hom}}    % Homomorphism set
+\newcommand{\End}{\operatorname{End}}    % Endomorphism set
+\newcommand{\id}{\operatorname{id}}      % Identity morphism
+\newcommand{\Hilb}{\mathbf{Hilb_fd}}
+\newcommand{\del}{\boxtimes}

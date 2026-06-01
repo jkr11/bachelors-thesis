@@ -13,6 +13,8 @@
 }
 \makeatother
 
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
 \begin{document}
 
 \chapter{Introduction}\label{chapter:introduction}
@@ -167,6 +169,292 @@ If we generalize this with the decomposition for $k$ indices $i = (i_1, i_2, \ld
   T_{i} = \sum_{j_e} (P_j^{j_e})_t \cdot (Q_j^{j_e})_m 
 \]
 
+
+\subsection{Notes on the decomposition}
+
+Suppose that $(V,\rho_V)$ and $(W,\rho_W)$ are representations of $G$.
+
+\begin{definition}
+  A linear map $f : V \to W$ is called an \emph{intertwiner} if
+  \[
+    f \circ \rho_V(g) = \rho_W(g) \circ f \quad g \in G.
+  \]
+  Define the \emph{Vector space of Interwtiners} as 
+  \[
+    Hom_G(V,W)
+  \]
+\end{definition}
+
+Suppose now $V^a$ is one of the reps that decomposes as 
+\[
+  V^a \eqsim \bigoplus_{\cdot = 1}^{d_a} R_a.
+\]
+
+\begin{lemma}\label{IsotopyHelper}
+  For a vector space $W$, there is an isomorphism
+  \[
+    \bigoplus^m W \simeq \mathbb C^m \otimes W.
+  \]
+\end{lemma}
+\begin{proof}
+  Let ${e_i}_{i \in [m]}$ be the standard basis on $\mathbb{C}^m$. Let
+  \[
+    \Phi : \mathbb{C}^m \otimes W \to \oplus^m W
+  \]
+  be defined by
+  \[
+    \phi(e_i \otimes w) = (0, \ldots , w, \ldots 0  )
+  \]
+  and linear, thus
+  \[
+    \Phi\left(\sum_{i}^{} c_{i} e_{i} \otimes w_{i} \right) = (c_1 w_1, \ldots , c_m w_m ).
+  \]
+  is clearly bijective, and we have our desired isomorphism.
+\end{proof}
+
+\begin{lemma}[Isotopic Decomposition]
+  \label{IsotopicDecomposition}
+  Let $C$ be a semisimple category with simple objects $\{R_a\}$. Then every object $V \in C$ admits a canonical decomposition
+  \begin{equation}
+    V \cong \bigoplus_a \Hom_C(R_{a} , V) \otimes R_{a}.
+  \end{equation}
+  where we refer to $\Hom_C(R_a, V)$ as the \emph{degeneracy} of the space.
+
+  TODO change this so its a vector space of dimension of the degeneracy, but discuss how to formulate this.
+\end{lemma}
+
+\begin{proof}
+  Since $C$ is semisimple, every object decomposes as
+  \[
+    V \equiv \bigoplus_a m_a R_a
+  \]
+  for the degeneracies $m_a \in N$ (this is techinically abuse of notation, if we define the direct sum.)
+
+  Applying $Hom(R_a, -)$ (this is a linear functor?) yields
+  \[
+    Hom(R_b, V) = \bigoplus_a Hom(R_b, m_a R_a) = Hom_C(R_b, R_a)^{\oplus m_a}
+  \]
+  and then by Schur's lemma
+  \[
+    Hom_C(R_a,R_b) = \begin{dcases}
+      \mathbb{C}, &\text{ if } a \equiv b ;\\
+      0 &\text{ otherwise } 
+    \end{dcases}
+  \]
+  and therefore $dim Hom_C(R_a, V) = dim \mathbb{C}^{m_{a}} = m_a$.
+
+  An issue here might be that $Hom_C(R_a, V)$ is not an object or a morphism of $Rep(G)$. Its elements are, but not itself, it is in $Vect$.
+\end{proof}
+
+So we actualy need this: Maybe this is simpler if we always let the degeneracy be $C$?
+\begin{lemma}\label{HomTensorFactorization}
+Let $C$ be a $k$-linear category and let $D,E$ be finite-dimensional
+$k$-vector spaces. For any objects $R,S\in C$, there is a natural
+isomorphism
+\[
+\Hom_C(D\otimes R,E\otimes S)
+\cong
+\Hom_k(D,E)\otimes \Hom_C(R,S).
+\]
+\end{lemma}
+\begin{proof}
+Let $m=\dim_k D$ and $n=\dim_k E$. By unfolding the definitions and utilizing the properties of finite biproducts, we establish the result through a direct chain of natural isomorphisms:
+$$
+  \begin{aligned}
+    \Hom_C(D\otimes R,E\otimes S)
+    &\cong \Hom_C(R^{\oplus m},S^{\oplus n})
+    && \text{by \ref{IsotopyHelper}} \\[1ex]
+    &\cong \bigoplus_{i=1}^{m} \bigoplus_{j=1}^{n} \Hom_C(R,S)
+    && \text{by additivity of $\Hom_C$} \\[1ex]
+    &\cong k^{mn} \otimes \Hom_C(R,S)
+    && \text{by \ref{IsotopyHelper}} \\[1ex]
+    &\cong \Hom_k(D,E)\otimes \Hom_C(R,S)
+    && \text{since $\Hom_k(D,E) \cong k^{mn}$}
+  \end{aligned}
+$$
+\end{proof}
+
+
+
+%
+%\begin{theorem}
+%  A $G$ equivariant tensor is defined as 
+%  \[
+%    T \in Hom_G\left(\bigotimes V_{i} , \bigotimes W_{i} \right).
+%  \]
+%  Then there is a decomposition of $T$ as
+%  \[
+%    T = \bigoplus_{\hat{a} ,\hat{b}} \sum_{\mu}^{} P^{(\hat{a}, \hat{b} , \mu)} \otimes Q^{(\hat{a} , \hat{b} , \mu)} 
+%  \]
+%  where $\hat{a} = (a_1, \ldots , a_n )$ and $\hat{b} = (b_1, \ldots , b_m )$
+%  $P ^\prime in Hom(\otimes D_a^{(i)}, \otimes E_{b_j})$
+%\end{theorem}
+%
+%\begin{proof}
+%  Since $Rep(G)$ is semisimple, by lemma !!! every object decomposes as
+%  \begin{align*}
+%    V_i &\equiv \bigoplus_{a_i} D_{i,a_i} \otimes R_{a_{i} } \\
+%    W_i &\equiv \bigoplus_{b_{j} } E_{j,b_{j} } \otimes R_{b_{j} } 
+%  \end{align*}
+%
+%  Now, we can substitute these decompositions into
+%  \begin{align*}
+%    \bigotimes_i V_i &\equiv \bigotimes_i \left(\bigoplus_{a_{i} } D_{i, a_{i} } \otimes R_{a_{i} }\right) \\
+%    &\equiv \bigoplus_{\hat{a} } \left(\bigotimes_i D_{i,a_{i} }\right) \otimes \left(\bigotimes_i R_{a_{i}} \right)
+%  \end{align*}
+%
+%  Let $D_{\hat{a} } = \bigotimes_i D_{i,a_{i} }$ and define $R_{\hat{a} }, E_{\hat{a} }$ accordingly, then we obtain   
+%  \begin{align*}
+%    Hom_C(\bigotimes_{i} v_{i} , \bigotimes_{j} W_{j} ) &= Hom_C\left(\bigoplus_{\hat{a} } D_{\hat{a} } \otimes R_{\hat{a} }  , \bigoplus_{\hat{b} } E_{\hat{b} } \otimes R_{\hat{b} }   \right) \\
+%    &= \bigoplus_{\hat{a}, \hat{b} } Hom_C(D_{\hat{a}} \otimes R_{\hat{a} }, E_{\hat{b} } \otimes R_{\hat{b} }) \\
+%    &= \bigoplus_{\hat{a}, \hat{b} } Hom(D_{\hat{a} }, E_{\hat{b} }) \otimes Hom_C(R_{\hat{a} }, R_{\hat{b} }  ) 
+%  \end{align*}
+%\end{proof}
+
+\begin{theorem}[Decomposition of Semisimple Categories]
+  \label{DecompositionOfSemisimpleCategories}
+  Let $C$ be a semisimple $k$-linear category with simple objects $\{R_a\}_{a\in L}$ and let $V_i, W_i$ be a collection of objects in $C$.
+  Every morphism
+  \[
+    T\in \mathrm{Hom}_C\left(\bigotimes_i V_i, \bigotimes_i W_{i}\right)
+  \]
+  admits a decomposition
+  \[
+    T = \bigoplus_{\hat a,\hat b}
+    \sum_\mu
+    P^{(\hat a,\hat b,\mu)}
+    \otimes
+    Q^{(\hat a,\hat b,\mu)},
+    \]
+  where
+  \[
+    P^{(\hat a,\hat b,\mu)}
+    \in
+    \mathrm{Hom}
+    \!\left(
+    \bigotimes_i D_{i,a_i},
+    \bigotimes_j E_{j,b_j}
+    \right),
+  \]
+and
+\[
+Q^{(\hat a,\hat b,\mu)}
+\in
+\mathrm{Hom}_C(R_{\hat a},R_{\hat b}).
+\]
+\end{theorem}
+
+\begin{proof}
+Since $C$ is semisimple, every object decomposes as a finite direct sum
+of simple objects. Thus, by Lemma~\ref{...} and the distributivity of the tensor product through the biproduct
+
+\begin{equation}
+  \label{TensorProductDecomposition}
+  \begin{aligned}
+\bigotimes_i V_i
+    &\cong
+      \bigotimes_i
+      \left(
+        \bigoplus_{a_i}
+        D_{i,a_i}\otimes R_{a_i}
+      \right)
+\\
+    &\cong
+      \bigoplus_{\hat a}
+      \left(
+        \bigotimes_i D_{i,a_i}
+      \right)
+      \otimes
+      \left(
+        \bigotimes_i R_{a_i}
+      \right).
+  \\
+  &\cong 
+    \bigoplus_{\hat{a} } D_{\hat{a} } \otimes R_{\hat{a} }   
+\end{aligned}
+\end{equation}
+
+Then
+
+$$
+  \begin{aligned}
+    \Hom_C \left(
+      \bigotimes_i V_i,
+      \bigotimes_j W_j
+    \right)
+    &\cong
+    \mathrm{Hom}_C
+      \!\left(
+      \bigoplus_{\hat a}
+          D_{\hat a}\otimes R_{\hat a},
+          \,
+          \bigoplus_{\hat b}
+          E_{\hat b}\otimes R_{\hat b}
+          \right)
+    && \text{by \eqref{TensorProductDecomposition}} \\[1ex]
+    &\cong
+    \bigoplus_{\hat a,\hat b}
+    \mathrm{Hom}_C
+    (
+    D_{\hat a}\otimes R_{\hat a},
+    E_{\hat b}\otimes R_{\hat b}
+    ) && \text{by additivity of $Hom_C$} \\[1ex]
+    &\cong
+    \bigoplus_{\hat a,\hat b}
+    \mathrm{Hom}(D_{\hat a},E_{\hat b})
+      \otimes
+    \mathrm{Hom}_C(R_{\hat a},R_{\hat b}).
+    && \text{by \eqref{HomTensorFactorization}} 
+  \end{aligned}
+$$
+
+Choosing a basis
+\[
+  \{Q^{(\hat a,\hat b,\mu)}\}_\mu
+\]
+of each space
+\[
+  \mathrm{Hom}_C(R_{\hat a},R_{\hat b}),
+\]
+every morphism $T$ can therefore be written uniquely as
+\[
+  T
+  =
+  \bigoplus_{\hat a,\hat b}
+  \sum_\mu
+  P^{(\hat a,\hat b,\mu)}
+  \otimes
+  Q^{(\hat a,\hat b,\mu)},
+  \]
+  with
+  \[
+  P^{(\hat a,\hat b,\mu)}
+  \in
+  \mathrm{Hom}(D_{\hat a},E_{\hat b}).
+\]
+\end{proof}
+
+\begin{example}
+  If we restrict to the category $\Rep(SU(2))$ we can build the symmetric tensor networks as given in \cite{singhTensorNetworkStates2012a}. TODO: actual ly do this and convince yourself that the notations amd the triplet basis workd as desired.
+\end{example}
+
+%\begin{equation}
+%  \label{ExternalTensorProductAsCoproductOfFiberwiseTensor}
+%  \begin{aligned}
+%    \mathscr{V}_X \boxtimes \mathscr{V}'_{X'}
+%    &\simeq \Big(\, \coprod_{x \in X} \mathscr{V}_{\{x\}} \Big) \boxtimes \Big(\, \coprod_{x' \in X'} \mathscr{V}'_{\{x'\}} \Big)
+%    && \text{by \eqref{VectorBundleOverSetIsCoproductOfItsRestrictionToSingletons}} \\[1ex]
+%    &\simeq \coprod_{x \in X} \bigg(\!\! \mathscr{V}_{\{x\}} \boxtimes \Big(\, \coprod_{x' \in X'} \mathscr{V}'_{\{x'\}} \Big) \!\! \bigg)
+%    && \text{by assumption (i) in first variable} \\[1ex]
+%    &\simeq \coprod_{x \in X} \; \coprod_{x' \in X'} \Big( \mathscr{V}_{\{x\}} \boxtimes \mathscr{V}'_{\{x'\}} \Big)
+%    && \text{by assumption (i) in second variable} \\[1ex]
+%    &\simeq \coprod_{x \in X} \; \coprod_{x' \in X'} \Big( \iota \big( \mathscr{V}_x \otimes \mathscr{V}_{x'} \big) \Big)
+%    && \text{by assumption (ii)} \\[1ex]
+%    &\simeq \coprod_{(x,x') \,\in\, X \times X'} \Big( \iota \big( \mathscr{V}_x \otimes \mathscr{V}_{x'} \big) \!\Big)
+%    && \text{just to make the base space manifest}
+%  \end{aligned}
+%\end{equation}
+
 \subsection{$Q$ intertwiners}
 
 Lets look at 2 paths for the 4 index tensor, $(a,b,c \to d)$ and $(a,b \to c,d)$.
@@ -209,6 +497,117 @@ This would then be
 \[
   Q_\lambda
 \]
+
+\section{Categories}
+
+\subsection{Tensor and Fusion Categories}
+
+Let $\mathsf{C}$ be a category with bifunctor 
+\[
+  \otimes : C \times C \to C, \quad (X,Y) \to X \otimes Y.
+\] 
+and the isomporphism $F : (- \otimes -) \otimes - \simeq - \otimes (- \otimes - )$ 
+
+... introduce fusion categories here, with associativity and commutativity restrictions, I think this would be a good start.
+
+\begin{definition}[Monoidal Category]
+  A monoidal category is a category $C$ with a bifunctor $\otimes : C \times C \to C$  
+\end{definition}
+
+
+Let $C$ and $D$ be linear abelian categories. Then the \emph{Deligne Tensor Product} $C \boxtimes D$ is a linear abelian category with a bifunctor
+\[
+  \boxtimes : C \times D \to C \boxtimes D
+\]
+with morphisms given by
+\[
+  Hom_{C \boxtimes D}(X \boxtimes Y, W \boxtimes V) = Hom_C(X,W) \otimes Hom_D(Y,V)
+\]
+
+\begin{definition}[The Deligne Tensor Product of Categories]
+Let $k$ be a field, and let $\mathcal{C}$ and $\mathcal{D}$ be two $k$-linear, finite abelian categories. The \textbf{Deligne tensor product}, denoted by $\mathcal{C} \boxtimes \mathcal{D}$, is a $k$-linear finite abelian category equipped with a $k$-bilinear functor
+\[ \boxtimes: \mathcal{C} \times \mathcal{D} \longrightarrow \mathcal{C} \boxtimes \mathcal{D}, \quad (X, Y) \mapsto X \boxtimes Y \]
+TODOTOD!!
+\end{definition}
+
+%\begin{remark}
+%If $\mathcal{C}$ and $\mathcal{D}$ are semisimple (such as finite fusion categories), then $\mathcal{C} \boxtimes \mathcal{D}$ is also semisimple. Furthermore, if $\{X_i\}_{i \in I}$ and $\{Y_j\}_{j \in J}$ are complete sets of representative simple objects of $\mathcal{C}$ and $\mathcal{D}$ respectively, then the set of simple objects of $\mathcal{C} \boxtimes \mathcal{D}$ is precisely given by:
+%\[ \{ X_i \boxtimes Y_j \mid i \in I, \, j \in J \} \]
+%If $\mathcal{C}$ and $\mathcal{D}$ possess monoidal structures, $\mathcal{C} \boxtimes \mathcal{D}$ naturally inherits a monoidal structure defined by $(X_1 \boxtimes Y_1) \otimes (X_2 \boxtimes Y_2) = (X_1 \otimes X_2) \boxtimes (Y_1 \otimes Y_2)$.
+%\end{remark}
+
+\begin{definition}[The Category $\Rep_k(G)$]
+  Let $G$ be a group and $k$ a field. The \emph{category of linear representations of $G$ over $k$} consists of the following data:
+
+  \begin{itemize}
+    \item \textbf{Objects:} The objects $\Rep_k(G)$ are pairs $(V, \rho_V)$, where $V$ is a $k$-vector space and $\rho_V : G  \to \mathrm{GL}(V)$.  
+    \item \textbf{Morphisms:} For any two objects $(V, \rho_V)$ and $(W, \rho_W)$ in $\Rep_k(G)$, a morphism from $V$ to $W$ is a $k$-linear transformation $f: V \to W$ that is $G$-invariant (also called an \textit{intertwiner}). That is, for every element $g \in G$, the following diagram commutes:
+    \[
+    \begin{tikzcd}
+    V \arrow[r, "\rho_V(g)"] \arrow[d, "f"'] & V \arrow[d, "f"] \\
+    W \arrow[r, "\rho_W(g)"']               & W
+    \end{tikzcd}
+    \]
+    In algebraic terms, $f$ must satisfy the condition:
+    \[ f \circ \rho_V(g) = \rho_W(g) \circ f \quad \forall g \in G \]
+    The set of all such morphisms is denoted by $\mathrm{Hom}_G(V, W)$.
+  \end{itemize}
+  We can further endow $Rep_k(G)$ with a monoidal structure: For any two objects $(V,\rho_V), (W,\rho_W)$, their tensor product is in $\Rep_k(G)$ by the diagonal action
+  \[
+    \rho_{(V \otimes W)} (g) (v \otimes w) = \rho_V(g)v \otimes \rho_W(g)w
+  \]
+\end{definition}
+
+%\begin{example}
+%  Lets do an example and look at $\Rep(\SU 2)$. Its objects are then given by $\left\{(V_)\right\}
+%\end{example}
+
+\begin{theorem}
+  Let $G_1$ and $G_2$ be finite groups and let $\Rep(G_1), \Rep(G_2)$ be their respective symmetry categories. Then there is an equivalence of categories
+  \[
+    \Rep(G_1 \times G_2) \simeq \Rep(G_1) \boxtimes \Rep(G_2)
+  \]
+\end{theorem}
+
+Big issue here: $\Rep(\SU{2})$ is not a fusion category as it is not finite. But if i read it correctly, the deligne product only requires abelianness of its groups. Now, $\Rep(G)$ is monoidal for any $G$ but is it abelian? 
+
+So this is actually true, it is abelian. We could obtain a restricted versions by for example always restricting $SU(2)$ to some $SU(2)_{k}$ for some finite $k$. But i do not yet know how to present this nicely. 
+
+A second advantage would be that we can always represent fusion trees as monoidal categories (is this true or is fusion required here again?), and we can write down a unified theory for the fusion trees. Then I hope to write a nice method to view the "eval" of such a fusion tree, i.e. its clebsch gordan tensors by contracting down the topology of the tree. 
+
+\section{Categories Needed}
+
+\begin{definition}[Monoidal Category]
+  A monoidal category is a quintuplet $(C,\otimes,0,1,\alpha)$ ... 
+\end{definition}
+
+\begin{definition}[Semisimple Category]
+  An abelian category $C$ is semisimple if every object is either simple or a direct sum of simple objects. An object is \emph{simple} if its only subobjects are $0$ or $X$ itself. Any object can be written as
+  \[
+    X = \bigoplus_{i \in I} S_{i} 
+  \]
+\end{definition}
+
+\begin{lemma}[Schurs 1st lemma (which one?)]
+  If $S$ and $T$ are simple objects in a semisimple category (over an algebraically closed field? what does this entail?), then it holds that
+  \[
+    \Hom(S,T) = \begin{dcases}
+      k, &\text{ if } S = T ;\\
+      0 , &\text{ if } S \neq T .
+    \end{dcases}
+  \]
+\end{lemma}
+
+Lets give a coordinatized approach to fusion categories:
+
+\begin{definition}[Fusion Category]
+  A \emph{fusion category} is a finite set of labels (sectors?) $L$ and vector spaces $V^{ab}_c$ for all $a,b,c \in L$, as well as the isomorphisms
+  \[
+    F^{abc}_{d} : \bigoplus_e V^{ab}_e \otimes V^{ec}_d \to \bigoplus_e V^{ae}_d \otimes V^{bc}_e
+  \]
+  such that the pentagon holds.
+\end{definition}
+
 
 \section{implementation}
 
