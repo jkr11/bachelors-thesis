@@ -1,5 +1,7 @@
+from symmnet.symmetry import SU2
+from symmnet.fusiontree import FusionTree
 from abc import ABC, abstractmethod, abstractproperty
-from typing import List, Tuple, Literal
+from typing import List, Tuple, Literal, Any
 import numpy as np
 from enum import IntEnum
 import networkx as nx
@@ -79,15 +81,15 @@ class Tensor(ABC):
 
   @abstractmethod
   def svd(self):
-    raise NotImplementedError('Must be implemented in subclass')
+    raise NotImplementedError("Must be implemented in subclass")
 
   @abstractmethod
-  def qr(self, mode:str):
-    raise NotImplementedError('Must be implemented in subclass')
+  def qr(self, mode: str):
+    raise NotImplementedError("Must be implemented in subclass")
 
   @abstractmethod
   def to_numpy(self):
-    raise NotImplementedError('Must be implemented in subclass.')
+    raise NotImplementedError("Must be implemented in subclass.")
 
 
 def primitive_einsum(equation, A: Tensor, B: Tensor):
@@ -134,6 +136,7 @@ def primitive_einsum(equation, A: Tensor, B: Tensor):
     out_final = out_nd
 
   return out_final
+
 
 class NPTensor(Tensor):
   def __init__(self, data: np.ndarray):
@@ -189,23 +192,23 @@ class NPTensor(Tensor):
   def ident(self, k: int):
     return NPTensor(np.identity(k))
 
-  def ndim(self) -> int:
-    pass
+  # def ndim(self) -> int:
+  #  pass
 
   def qr(self, mode):
     return np.linalg.qr(self.data, mode=mode)
 
-  @property
-  def ndim_open(self) -> int:
-    pass
+  # @property
+  # def ndim_open(self) -> int:
+  #  pass
 
-  @property
-  def ndim_aux(self) -> int:
-    pass
+  # @property
+  # def ndim_aux(self) -> int:
+  #  pass
 
-  @property
-  def ndim_internal(self) -> int:
-    return self.ndim_open + self.ndim_aux - 3
+  # @property
+  # def ndim_internal(self) -> int:
+  #  return self.ndim_open + self.ndim_aux - 3
 
   def __repr__(self):
     str(self.data)
@@ -213,8 +216,26 @@ class NPTensor(Tensor):
   def __str__(self):
     return str(self.data)
 
-def ident(n:int) -> NPTensor:
+
+class SymmetricTensor(Tensor):
+  def __init__(self, n_open_edges, n_aux_edges, list_of_open_edges, list_of_internal_edges, directions):
+    self.fusionTree = FusionTree(list_of_open_edges, [], [], directions=directions)
+    self.degeneracy_tensors: list[Any] = []
+    self.list_of_charge_sectors: list[list[int | float]] = []
+    self.sym = SU2()
+  
+  def _fmove(self, edge):
+    old_sectors = self.list_of_charge_sectors
+    old_tensors = self.degeneracy_tensors
+
+    self.fusionTree.fmove(edge) 
+    
+
+
+
+def ident(n: int) -> NPTensor:
   return NPTensor(np.identity(n))
+
 
 def run_tests():
   vec1 = NPTensor(np.array([1, 2, 3]))
@@ -244,7 +265,7 @@ def run_tests():
   print(r_trans.data)
   print(expected_trans)
   assert np.allclose(r_trans.data, expected_trans)
-  
+
   print("Transposed Matmul Test: Passed")
 
   T1 = NPTensor(np.random.randn(2, 2, 3, 3))
@@ -261,7 +282,6 @@ def run_tests():
   expected_trace = np.trace(mat_diag.data)
   assert np.allclose(r_trace.data, expected_trace)
   print(f"Trace Simulation Test: {r_trace.data} == {expected_trace}")
-
 
 
 # We can make all of these tests btw, once i redo the project outside of the test repo.

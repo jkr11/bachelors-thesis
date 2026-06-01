@@ -16,8 +16,8 @@ class Symm[T](ABC):
   def R_symbol(self, a: T, b: T, c: T) -> float:
     pass
 
-  @abstractmethod
-  def F_symbol(self, a: T, b: T, c: T) -> float:
+  @abstractmethod # Cancer
+  def F_symbol(self, a: T, b: T, c: T, abc:T, d:T, e:T, mu1:int=1, mu2:int=1, nu1:int=1, nu2:int=1) -> float:
     pass
 
 

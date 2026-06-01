@@ -17,8 +17,8 @@ def fresh_tree_5():
 @pytest.fixture
 def left_aligned_tree():
   return FusionTree(
-    open_edges=[-1,-2,-3,-4,-5],
-    internal_edges=['i1','i2'],
+    open_edges=[-1,-2,-3,-4],
+    internal_edges=['i'],
     nodes=[(-1,-2,'i'),('i',-3,-4)],
     directions=[NodeType.fusion, NodeType.fusion]
   )
@@ -26,8 +26,8 @@ def left_aligned_tree():
 @pytest.fixture
 def right_aligned_tree():
   return FusionTree(
-    open_edges=[-1,-2,-3,-4,-5],
-    internal_edges=['i1','i2'],
+    open_edges=[-1,-2,-3,-4],
+    internal_edges=['i'],
     nodes=[(-1,'i', -4),(-2,-3,'i')],
     directions=[NodeType.fusion, NodeType.fusion]
   )
