@@ -3,7 +3,8 @@ from symmnet.symmetry import Symmetry, sector, SU2
 from enum import IntEnum
 from dataclasses import dataclass
 from typing import Any
-
+import matplotlib.pyplot as plt
+import networkx as nx
 
 class TreeSort(IntEnum):
   simple = 0
@@ -33,9 +34,7 @@ def determine_elementary_type(taus, dirs) -> tuple[TreeSort, tuple[int, int]]:
     # There is one extra case with fuse, split with (0,1) connection that can be simple, so this is defined below.
     return TreeSort.simple, indices
   if d0 == NodeType.fusion and d1 == NodeType.splitting:
-    if indices == (0, 1):  # TODO: really check if this is right.
-      return TreeSort.simple, indices
-    elif indices == (2, 0):
+    if indices == (0, 1) or indices == (2, 0):  # TODO: really check if this is right.
       return TreeSort.simple, indices
     return TreeSort.yoga, indices
   else:
@@ -109,7 +108,11 @@ class FusionTree:
   def _verify(self):
     assert all(len(node) == 3 for node in self.nodes), "Tree not made of tau triples"
     assert len(self.nodes) == len(self.directions), "Directions not given for every node."
-    assert len(self.internal_edges) == len(self.open_edges) - 3
+    # assert len(self.internal_edges) == len(self.open_edges) - 3
+    # This is not actuallly true in general.
+
+  def plot(self, ax=None, show=True, layout="spring"):
+    return plot_fusion_tree(self, ax=ax, show=show, layout=layout)
 
   def get_node_context(self, edge_id: int | str):
     assert edge_id in self.internal_edges
@@ -339,6 +342,65 @@ class FusionTree:
     return valid_configurations
 
 
+def plot_fusion_tree(fusion_tree, ax=None, show=True, layout="spring"):
+  if plt is None:
+    raise ImportError("matplotlib is required to plot fusion trees")
+
+  if ax is None:
+    ax = plt.subplots(figsize=(7, 6))[1]
+
+  node_ids = [f"v{i}" for i in range(len(fusion_tree.nodes))]
+  edge_ids = [f"e_{edge}" for edge in sorted({edge for node in fusion_tree.nodes for edge in node}, key=str)]
+  node_labels = {node_id: f"{fusion_tree.directions[i].name}\n{i}" for i, node_id in enumerate(node_ids)}
+  edge_labels = {edge_id: edge_id[2:] for edge_id in edge_ids}
+
+  if nx is not None:
+    G = nx.Graph()
+    for node_id in node_ids:
+      G.add_node(node_id, kind="vertex")
+    for edge_id in edge_ids:
+      G.add_node(edge_id, kind="edge")
+    for node_id, node in zip(node_ids, fusion_tree.nodes):
+      for edge in node:
+        edge_id = f"e_{edge}"
+        G.add_edge(node_id, edge_id)
+
+    pos = nx.spring_layout(G, seed=0)
+    vertex_nodes = [n for n, d in G.nodes(data=True) if d["kind"] == "vertex"]
+    edge_nodes = [n for n, d in G.nodes(data=True) if d["kind"] == "edge"]
+    nx.draw_networkx_nodes(G, pos, nodelist=vertex_nodes, node_color="skyblue", node_size=700, ax=ax)
+    nx.draw_networkx_nodes(G, pos, nodelist=edge_nodes, node_color="lightgreen", node_size=300, ax=ax)
+    nx.draw_networkx_edges(G, pos, ax=ax)
+    nx.draw_networkx_labels(G, pos, labels={**node_labels, **edge_labels}, font_size=9, ax=ax)
+  else:
+    positions = {}
+    for i, node_id in enumerate(node_ids):
+      positions[node_id] = (0.0, -i)
+    for j, edge_id in enumerate(edge_ids):
+      positions[edge_id] = ((-1.5 if j % 2 == 0 else 1.5), -j * 0.75)
+
+    for node_id, node in zip(node_ids, fusion_tree.nodes):
+      for edge in node:
+        edge_id = f"e_{edge}"
+        x0, y0 = positions[node_id]
+        x1, y1 = positions[edge_id]
+        ax.plot([x0, x1], [y0, y1], color="black", linewidth=1)
+
+    for node_id in node_ids:
+      x, y = positions[node_id]
+      ax.scatter([x], [y], s=700, color="skyblue", zorder=3)
+      ax.text(x, y, node_labels[node_id], ha="center", va="center", fontsize=9)
+    for edge_id in edge_ids:
+      x, y = positions[edge_id]
+      ax.scatter([x], [y], s=300, color="lightgreen", zorder=3)
+      ax.text(x, y, edge_labels[edge_id], ha="center", va="center", fontsize=8)
+
+  ax.set_axis_off()
+  if show:
+    plt.show()
+  return ax
+
+
 if __name__ == "__main__":
   sym = symmnet.symmetry.SU2()
 
@@ -371,6 +433,9 @@ if __name__ == "__main__":
   for sec in formatted_sectors:
     print(f"  {sec},")
   print("}\n")
+
+
+  paper_tree.plot()
 
 # def plot_fusion_tree(fusion_tree):
 #  G = nx.Graph()

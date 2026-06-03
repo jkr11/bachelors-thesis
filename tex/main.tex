@@ -306,27 +306,27 @@ Suppose now $V^a$ is one of the reps that decomposes as
   %  \cong
   %  \bigoplus_{a\in L} \Hom_C(R_b,R_a)^{\oplus m_a}.
   %\]
-
-  Since $C$ is semisimple, every object decomposes as
-  \[
-    V \equiv \bigoplus_a m_a R_a
-  \]
-  for the degeneracies $m_a \in N$ (this is techinically abuse of notation, if we define the direct sum.)
-
-  Applying $Hom(R_a, -)$ (this is a linear functor?) yields
-  \[
-    Hom(R_b, V) = \bigoplus_a Hom(R_b, m_a R_a) = Hom_C(R_b, R_a)^{\oplus m_a}
-  \]
-  and then by Schur's lemma
-  \[
-    Hom_C(R_a,R_b) = \begin{dcases}
-      \mathbb{C}, &\text{ if } a \equiv b ;\\
-      0 &\text{ otherwise } 
-    \end{dcases}
-  \]
-  and therefore $dim Hom_C(R_a, V) = dim \mathbb{C}^{m_{a}} = m_a$.
-
-  An issue here might be that $Hom_C(R_a, V)$ is not an object or a morphism of $Rep(G)$. Its elements are, but not itself, it is in $Vect$.
+%
+%  Since $C$ is semisimple, every object decomposes as
+%  \[
+%    V \equiv \bigoplus_a m_a R_a
+%  \]
+%  for the degeneracies $m_a \in N$ (this is techinically abuse of notation, if we define the direct sum.)
+%
+%  Applying $Hom(R_a, -)$ (this is a linear functor?) yields
+%  \[
+%    Hom(R_b, V) \cong \bigoplus_a Hom(R_b, m_a R_a) \cong Hom_C(R_b, R_a)^{\oplus m_a}
+%  \]
+%  and then by Schur's lemma
+%  \[
+%    Hom_C(R_a,R_b) = \begin{dcases}
+%      \mathbb{C}, &\text{ if } a \equiv b ;\\
+%      0 &\text{ otherwise } 
+%    \end{dcases}
+%  \]
+%  and therefore $dim Hom_C(R_a, V) = dim \mathbb{C}^{m_{a}} = m_a$.
+%
+%  An issue here might be that $Hom_C(R_a, V)$ is not an object or a morphism of $Rep(G)$. Its elements are, but not itself, it is in $Vect$.
 \end{proof}
 
 So we actualy need this: Maybe this is simpler if we always let the degeneracy be $C$?
@@ -402,121 +402,128 @@ $$
   \[
     T\in \mathrm{Hom}_C\left(\bigotimes_i V_i, \bigotimes_i W_{i}\right)
   \]
-  admits a decomposition
+  admit a decomposition as
   \[
     T = \bigoplus_{\hat a,\hat b}
-    \sum_\mu
-    P^{(\hat a,\hat b,\mu)}
-    \otimes
-    Q^{(\hat a,\hat b,\mu)},
-    \]
-  where
-  \[
-    P^{(\hat a,\hat b,\mu)}
-    \in
-    \mathrm{Hom}
-    \!\left(
-    \bigotimes_i D_{i,a_i},
-    \bigotimes_j E_{j,b_j}
-    \right),
+    P^{(\hat a,\hat b)} \otimes Hom_C(R_{\hat a},R_{\hat b}),
   \]
-and
-\[
-Q^{(\hat a,\hat b,\mu)}
-\in
-\mathrm{Hom}_C(R_{\hat a},R_{\hat b}).
-\]
+  where $\hat a = (a_1, \ldots , a_n )$ and $P$ is a $k$-vector space of dimension ???
+
+%  admits a decomposition
+%  \[
+%    T = \bigoplus_{\hat a,\hat b}
+%    \sum_\mu
+%    P^{(\hat a,\hat b,\mu)}
+%    \otimes
+%    Q^{(\hat a,\hat b,\mu)},
+%    \]
+%  where
+%  \[
+%    P^{(\hat a,\hat b,\mu)}
+%    \in
+%    \mathrm{Hom}
+%    \!\left(
+%    \bigotimes_i D_{i,a_i},
+%    \bigotimes_j E_{j,b_j}
+%    \right),
+%  \]
+%and
+%\[
+%Q^{(\hat a,\hat b,\mu)}
+%\in
+%\mathrm{Hom}_C(R_{\hat a},R_{\hat b}).
+%\]
 \end{theorem}
 
 \begin{proof}
-Since $C$ is semisimple, every object decomposes as a finite direct sum
-of simple objects. Thus, by Lemma~\ref{...} and the distributivity of the tensor product through the biproduct
-
-\begin{equation}
-  \label{TensorProductDecomposition}
-  \begin{aligned}
-\bigotimes_i V_i
-    &\cong
-      \bigotimes_i
-      \left(
-        \bigoplus_{a_i}
-        D_{i,a_i}\otimes R_{a_i}
-      \right)
-\\
-    &\cong
-      \bigoplus_{\hat a}
-      \left(
-        \bigotimes_i D_{i,a_i}
-      \right)
-      \otimes
-      \left(
-        \bigotimes_i R_{a_i}
-      \right).
-  \\
-  &\cong 
-    \bigoplus_{\hat{a} } D_{\hat{a} } \otimes R_{\hat{a} }   
-\end{aligned}
-\end{equation}
-
-Then
-
-$$
-  \begin{aligned}
-    \Hom_C \left(
-      \bigotimes_i V_i,
-      \bigotimes_j W_j
-    \right)
-    &\cong
-    \mathrm{Hom}_C
-      \!\left(
-      \bigoplus_{\hat a}
-          D_{\hat a}\otimes R_{\hat a},
-          \,
-          \bigoplus_{\hat b}
-          E_{\hat b}\otimes R_{\hat b}
-          \right)
-    && \text{by \eqref{TensorProductDecomposition}} \\[1ex]
-    &\cong
-    \bigoplus_{\hat a,\hat b}
-    \mathrm{Hom}_C
-    (
-    D_{\hat a}\otimes R_{\hat a},
-    E_{\hat b}\otimes R_{\hat b}
-    ) && \text{by additivity of $Hom_C$} \\[1ex]
-    &\cong
-    \bigoplus_{\hat a,\hat b}
-    \mathrm{Hom}(D_{\hat a},E_{\hat b})
-      \otimes
-    \mathrm{Hom}_C(R_{\hat a},R_{\hat b}).
-    && \text{by \eqref{HomTensorFactorization}} 
-  \end{aligned}
-$$
-
-Choosing a basis
-\[
-  \{Q^{(\hat a,\hat b,\mu)}\}_\mu
-\]
-of each space
-\[
-  \mathrm{Hom}_C(R_{\hat a},R_{\hat b}),
-\]
-every morphism $T$ can therefore be written uniquely as
-\[
-  T
-  =
-  \bigoplus_{\hat a,\hat b}
-  \sum_\mu
-  P^{(\hat a,\hat b,\mu)}
-  \otimes
-  Q^{(\hat a,\hat b,\mu)},
-  \]
-  with
-  \[
-  P^{(\hat a,\hat b,\mu)}
-  \in
-  \mathrm{Hom}(D_{\hat a},E_{\hat b}).
-\]
-
+%Since $C$ is semisimple, every object decomposes as a finite direct sum
+%of simple objects. Thus, by Lemma~\ref{...} and the distributivity of the tensor product through the biproduct
+%
+%\begin{equation}
+%  \label{TensorProductDecomposition}
+%  \begin{aligned}
+%\bigotimes_i V_i
+%    &\cong
+%      \bigotimes_i
+%      \left(
+%        \bigoplus_{a_i}
+%        D_{i,a_i}\otimes R_{a_i}
+%      \right)
+%\\
+%    &\cong
+%      \bigoplus_{\hat a}
+%      \left(
+%        \bigotimes_i D_{i,a_i}
+%      \right)
+%      \otimes
+%      \left(
+%        \bigotimes_i R_{a_i}
+%      \right).
+%  \\
+%  &\cong 
+%    \bigoplus_{\hat{a} } D_{\hat{a} } \otimes R_{\hat{a} }   
+%\end{aligned}
+%\end{equation}
+%
+%Then
+%
+%$$
+%  \begin{aligned}
+%    \Hom_C \left(
+%      \bigotimes_i V_i,
+%      \bigotimes_j W_j
+%    \right)
+%    &\cong
+%    \mathrm{Hom}_C
+%      \!\left(
+%      \bigoplus_{\hat a}
+%          D_{\hat a}\otimes R_{\hat a},
+%          \,
+%          \bigoplus_{\hat b}
+%          E_{\hat b}\otimes R_{\hat b}
+%          \right)
+%    && \text{by \eqref{TensorProductDecomposition}} \\[1ex]
+%    &\cong
+%    \bigoplus_{\hat a,\hat b}
+%    \mathrm{Hom}_C
+%    (
+%    D_{\hat a}\otimes R_{\hat a},
+%    E_{\hat b}\otimes R_{\hat b}
+%    ) && \text{by additivity of $Hom_C$} \\[1ex]
+%    &\cong
+%    \bigoplus_{\hat a,\hat b}
+%    \mathrm{Hom}(D_{\hat a},E_{\hat b})
+%      \otimes
+%    \mathrm{Hom}_C(R_{\hat a},R_{\hat b}).
+%    && \text{by \eqref{HomTensorFactorization}} 
+%  \end{aligned}
+%$$
+%
+%Choosing a basis
+%\[
+%  \{Q^{(\hat a,\hat b,\mu)}\}_\mu
+%\]
+%of each space
+%\[
+%  \mathrm{Hom}_C(R_{\hat a},R_{\hat b}),
+%\]
+%every morphism $T$ can therefore be written uniquely as
+%\[
+%  T
+%  =
+%  \bigoplus_{\hat a,\hat b}
+%  \sum_\mu
+%  P^{(\hat a,\hat b,\mu)}
+%  \otimes
+%  Q^{(\hat a,\hat b,\mu)},
+%  \]
+%  with
+%  \[
+%  P^{(\hat a,\hat b,\mu)}
+%  \in
+%  \mathrm{Hom}(D_{\hat a},E_{\hat b}).
+%\]
+%
 \begin{align*}
 \Hom_C&\!\left(
   \bigotimes_i V_i,

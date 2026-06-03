@@ -55,53 +55,55 @@
   [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
   {title}{\emph{#1\isdot}}
 
-\DeclareFieldFormat{urlprefix}{}
+%This would give a nice format but it is not performant?
 
-% 1. Format the DOI field to look like: [\href{...}{\tt doi:XXX}]
-\DeclareFieldFormat{doi}{%
-  \mkbibbrackets{%
-    \ifhyperref
-      {\href{https://doi.org/#1}{\texttt{doi:#1}}}
-      {\texttt{doi:#1}}%
-  }}
-
-\DeclareFieldFormat{url}{%
-  \mkbibbrackets{%
-    \IfSubStr{#1}{arxiv.org}{% If it's an arXiv link
-      \ifhyperref
-        {\href{#1}{\texttt{arXiv:\StrBehind{#1}{abs/}}}}
-        {\texttt{arXiv:\StrBehind{#1}{abs/}}}%
-    }{% If it's a standard link (like the TUM thesis)
-      \ifhyperref
-        {\href{#1}{\texttt{\nolinkurl{#1}}}}
-        {\texttt{\nolinkurl{#1}}}%
-    }%
-  }}
-
-% 3. ArXiv (eprint) field format in case Zotero uses it
-\DeclareFieldFormat{eprint:arxiv}{%
-  \mkbibbrackets{%
-    \ifhyperref
-      {\href{https://arxiv.org/abs/#1}{\texttt{arXiv:#1}}}
-      {\texttt{arXiv:#1}}%
-  }}
-
-% 4. Printing logic: Ensure everything shows up on the same line or with proper spacing
-\renewbibmacro*{doi+eprint+url}{%
-  \printfield{doi}%
-  \setunit{\addcomma\space}%
-  \printfield{eprint}%
-  \setunit{\addcomma\space}%
-  \printfield{url}%
-}
-
-% Clean up other common fields
-\AtEveryBibitem{
-    \clearfield{issn}
-    \clearfield{language}
-    \clearfield{note}
-    \clearfield{urldate} % Removes "visited on..."
-}
+%\DeclareFieldFormat{urlprefix}{}
+%
+%% 1. Format the DOI field to look like: [\href{...}{\tt doi:XXX}]
+%\DeclareFieldFormat{doi}{%
+%  \mkbibbrackets{%
+%    \ifhyperref
+%      {\href{https://doi.org/#1}{\texttt{doi:#1}}}
+%      {\texttt{doi:#1}}%
+%  }}
+%
+%\DeclareFieldFormat{url}{%
+%  \mkbibbrackets{%
+%    \IfSubStr{#1}{arxiv.org}{% If it's an arXiv link
+%      \ifhyperref
+%        {\href{#1}{\texttt{arXiv:\StrBehind{#1}{abs/}}}}
+%        {\texttt{arXiv:\StrBehind{#1}{abs/}}}%
+%    }{% If it's a standard link (like the TUM thesis)
+%      \ifhyperref
+%        {\href{#1}{\texttt{\nolinkurl{#1}}}}
+%        {\texttt{\nolinkurl{#1}}}%
+%    }%
+%  }}
+%
+%% 3. ArXiv (eprint) field format in case Zotero uses it
+%\DeclareFieldFormat{eprint:arxiv}{%
+%  \mkbibbrackets{%
+%    \ifhyperref
+%      {\href{https://arxiv.org/abs/#1}{\texttt{arXiv:#1}}}
+%      {\texttt{arXiv:#1}}%
+%  }}
+%
+%% 4. Printing logic: Ensure everything shows up on the same line or with proper spacing
+%\renewbibmacro*{doi+eprint+url}{%
+%  \printfield{doi}%
+%  \setunit{\addcomma\space}%
+%  \printfield{eprint}%
+%  \setunit{\addcomma\space}%
+%  \printfield{url}%
+%}
+%
+%% Clean up other common fields
+%\AtEveryBibitem{
+%    \clearfield{issn}
+%    \clearfield{language}
+%    \clearfield{note}
+%    \clearfield{urldate} % Removes "visited on..."
+%}
 
 \newcommand{\ket}[1]{\ensuremath{\left| #1 \right\rangle}}
 \newcommand{\bra}[1]{\ensuremath{\left\langle #1 \right|}}

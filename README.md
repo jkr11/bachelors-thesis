@@ -1,6 +1,12 @@
 Maybe important for tex:
 https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-tikz
 
+## June 3rd
+
+So again, in the Itensor paper it is mentioned that the issue is not actually the R move but rather the twist factor that would violate isotopy. This is then absorbed in the evaluation map. But this makes me think, in the programming guide for fib anyons, they mention not needing the R move at all for some reason. This would imply to me that it is trivial to study anyonic spin chains here.
+
+For the implementation, i think we should rewrite the tree to not only take open edges but to specifically take domain and codomain, and then treat the rest as a dict.
+
 ## June 2nd
 
 if we have an anyon theory SU(2)_2k, then its labels are (0,1/2,1, ..., k). Also, the type k anyon is a boson (i think).
