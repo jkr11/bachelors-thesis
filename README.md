@@ -1,6 +1,10 @@
 Maybe important for tex:
 https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-tikz
 
+## June 2nd
+
+if we have an anyon theory SU(2)_2k, then its labels are (0,1/2,1, ..., k). Also, the type k anyon is a boson (i think).
+
 ## June 1st
 
 SO i think that the decomposittion theorem as stated works for any semisimple category, so it also works for the anyon categories. But the approach here is not the same as taken in the papers of S & R (Anyonic MPS, Anyonic MPO). The MPO symmetry paper I think mentioned something aobut this.
@@ -25,7 +29,15 @@ requries k-linearity of the category in its last step where we associate the deg
 
 so now we have to change lemma 1.2.4 or whatever it will be numbered.
 
+Actuallt, this is still not fully correct. Since the assumption of k linear tensor products is extra, we need ot include this. Also, is finite biproduct given by semisimplicity? 
 
+An additive category is a category that has $0$ and finite biproducts. Is this also given for semisimple?
+
+### Resolved issue of (planar) isotopy
+
+So the issue is, if we follow the chart down from monoidal categories. In a monoidal category there is fundamentally no twist (allowed). In a braided category there is. Now, if this is a symmetric category (the twist is trivial) we have our normal tensor net rules. However, for nontrivial twists, we have to push the twists to the eval maps. (Cup and cap, check if this is consistent with the fermion paper.)
+
+Or see it this way. Rep(G) are semisimple and rigid, i.e. we dont have to worry about braiding. sVect however has a nontrivial twist.
 
 ## May 31st
 

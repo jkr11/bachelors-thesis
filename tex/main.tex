@@ -19,9 +19,7 @@
 
 \chapter{Introduction}\label{chapter:introduction}
 
-\section{Introduction}
-
-\subsection{Definitions}
+\section{Defintions}
 
 Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
 \[
@@ -45,6 +43,48 @@ Graphically, we represent a general tensor
   T : (W_{n}^{\ast} \otimes \cdots \otimes W_1) \to (V_1 \otimes V_2 \otimes \cdots \otimes V_n)
 \]
 as follows, where we choose incoming arrows for duals in the domain and outgoings for normal spaces, and on the bottom we choose incoming for duals and outgoing for normals.
+
+\subsection{Symmetric Tensors}
+
+%Here we want to define tensors that are invariant under a symmetry $G$ (a compact group). We say that a tensor $T \in ()
+
+Let $G$ be a compact group. Consider a tensor $T$ living in the tensor product space of its legs:
+\[
+  T \in V_1 \otimes \cdots \otimes V_n \otimes W_m^\ast \otimes \cdots \otimes W_1^\ast
+\]
+
+Let $\rho_i : G \to \text{GL}(V_i)$ be the linear representation of $G$ on each vector space $V_i$, and let $\sigma_j^\ast : G \to \text{GL}(W_j^\ast)$ be the dual representation on $W_j^\ast$. 
+
+The total action of the group $G$ on the entire tensor product space is given by
+\begin{gather*}
+  \Pi: G \to \text{GL}\left(\bigotimes_i V_i \otimes \bigotimes_j W_j^\ast\right) \\
+  \Pi(g) = \rho_1(g) \otimes \cdots \otimes \rho_n(g) \otimes \sigma_m^\ast(g) \otimes \cdots \otimes \sigma_1^\ast(g)
+\end{gather*}
+
+
+A tensor $T$ is defined to be a \textbf{symmetric tensor} (or $G$-invariant tensor) if it is invariant under simultaneous action on all legs for all $g \in G$ \cite{singhTensorNetworkDecompositions2010a}:
+\[
+  \Pi(g) T = T \quad \forall g \in G
+\]
+
+By interpreting $T$ as a map
+\[
+  T : W_1 \otimes \cdots \otimes W_m \to V_1 \otimes \cdots \otimes V_n
+\]
+it follows directly from the definition of global invariance that the tensor must commute with the group action and we get the following definition of a symmetric tensor:
+
+\begin{definition}[symmetric Tensor]
+  \label{def:symmetricTensor}
+  A \emph{symmetric tensor} is an intertwiner of the representations of the group $G$:
+  \[
+    \bigotimes_{j=1}^m \sigma_j(g) T = T \bigotimes_{i=1}^n \rho_i(g) \quad \forall g \in G,
+  \]
+  which we denote by
+  \[
+    T \in Hom(W,V).
+  \]
+\end{definition}
+
 
 
 
@@ -212,18 +252,61 @@ Suppose now $V^a$ is one of the reps that decomposes as
   is clearly bijective, and we have our desired isomorphism.
 \end{proof}
 
+\begin{lemma}
+  Let $D$ be a finite dimensional $k$-vector space and let $V$ be an object of a $k$-linear category $C$. Then
+  \[
+    D \otimes V
+    \cong
+    V^{\oplus \dim D}
+  \]
+\end{lemma}
+\begin{proof}
+  Let $n = \dim D$. Take a basis $\{e_i\}$ for D. This yields an isomorphism
+  \[
+    D \cong \bigoplus_{i=1}^n k \cdot e_{i} \cong k^n
+  \]
+  Since in a $k$-linear category the tensor product is additive (should we prove this?), we can distribute
+  \[
+    D \otimes W \cong \bigoplus_1^n (k \cdot e_{i} \otimes W) \cong \bigoplus W = W^{\oplus n}
+  \]
+\end{proof}
+
 \begin{lemma}[Isotopic Decomposition]
   \label{IsotopicDecomposition}
-  Let $C$ be a semisimple category with simple objects $\{R_a\}$. Then every object $V \in C$ admits a canonical decomposition
+  Let $C$ be a semisimple $k$-linear category with simple objects $\{R_a\}$. Then every object $V \in C$ admits a canonical decomposition
   \begin{equation}
-    V \cong \bigoplus_a \Hom_C(R_{a} , V) \otimes R_{a}.
+    V \cong \bigoplus_a D_a \otimes R_{a}.
   \end{equation}
-  where we refer to $\Hom_C(R_a, V)$ as the \emph{degeneracy} of the space.
-
-  TODO change this so its a vector space of dimension of the degeneracy, but discuss how to formulate this.
+  where we refer to $D_a \coloneqq \Hom_C(R_a, V)$ as the \emph{degeneracy} of the space.
 \end{lemma}
 
 \begin{proof}
+  Since $C$ is semisimple, there exist integers $m_a\ge 0$ such that
+  \[
+    V
+    \cong
+    \bigoplus_{a\in L} R_a^{\oplus m_a}.
+  \]
+
+  Applying the additive functor $\Hom_C(R_b,-)$ yields
+  \[
+    \Hom_C(R_b,V)
+    \cong
+    \bigoplus_{a\in L} \Hom_C(R_b,R_a^{\oplus m_a}) \cong \bigoplus_{a\in L} \Hom_C(R_b,R_a)^{\oplus m_a}.
+  \]
+
+  Then, by Schurs lemma
+  \[
+    \bigoplus_{a \in L} Hom_C(R_b, R_a)^{\oplus m_a} = k^{\oplus m_b}
+  \]
+
+  %Since $C$ is additive,
+  %\[
+  %  \Hom_C(R_b,V)
+  %  \cong
+  %  \bigoplus_{a\in L} \Hom_C(R_b,R_a)^{\oplus m_a}.
+  %\]
+
   Since $C$ is semisimple, every object decomposes as
   \[
     V \equiv \bigoplus_a m_a R_a
@@ -272,6 +355,7 @@ $$
     && \text{since $\Hom_k(D,E) \cong k^{mn}$}
   \end{aligned}
 $$
+(The last as s)
 \end{proof}
 
 
@@ -313,7 +397,7 @@ $$
 
 \begin{theorem}[Decomposition of Semisimple Categories]
   \label{DecompositionOfSemisimpleCategories}
-  Let $C$ be a semisimple $k$-linear category with simple objects $\{R_a\}_{a\in L}$ and let $V_i, W_i$ be a collection of objects in $C$.
+  Let $C$ be a semisimple, monoidal, $k$-linear category whose tensor product is $k$-linear in each variable, with simple objects $\{R_a\}_{a\in L}$ and let $V_i, W_i$ be a collection of objects in $C$.
   Every morphism
   \[
     T\in \mathrm{Hom}_C\left(\bigotimes_i V_i, \bigotimes_i W_{i}\right)
@@ -432,6 +516,62 @@ every morphism $T$ can therefore be written uniquely as
   \in
   \mathrm{Hom}(D_{\hat a},E_{\hat b}).
 \]
+
+\begin{align*}
+\Hom_C&\!\left(
+  \bigotimes_i V_i,
+  \bigotimes_j W_j
+\right) \\
+&\cong
+\Hom_C\!\left(
+  \bigotimes_i
+  \Bigl(
+    \bigoplus_{a_i}
+    D_{i,a_i}\otimes R_{a_i}
+  \Bigr),
+  \,
+  \bigotimes_j
+  \Bigl(
+    \bigoplus_{b_j}
+    E_{j,b_j}\otimes R_{b_j}
+  \Bigr)
+\right)
+&&\text{by \ref{IsotopicDecomposition}} 
+\\[1.5ex]
+&\cong
+\Hom_C\!\left(
+  \bigoplus_{\hat a}
+  D_{\hat a}\otimes R_{\hat a},
+  \,
+  \bigoplus_{\hat b}
+  E_{\hat b}\otimes R_{\hat b}
+\right)
+&&\text{since $\otimes$ is $k$-linear in each variable}
+\\[1.5ex]
+&\cong
+\bigoplus_{\hat a,\hat b}
+\Hom_C\!\left(
+  D_{\hat a}\otimes R_{\hat a},
+  E_{\hat b}\otimes R_{\hat b}
+\right)
+&&
+\text{by additivity of }\Hom_C
+\\[1.5ex]
+&\cong
+\bigoplus_{\hat a,\hat b}
+\Hom\!\left(
+  D_{\hat a},
+  E_{\hat b}
+\right)
+\otimes
+\Hom_C\!\left(
+  R_{\hat a},
+  R_{\hat b}
+\right)
+&&\text{by \ref{HomTensorFactorization}} 
+.
+\end{align*}
+
 \end{proof}
 
 \begin{example}
@@ -577,8 +717,20 @@ A second advantage would be that we can always represent fusion trees as monoida
 
 \section{Categories Needed}
 
+The motivation for this section is to introduce the necessary categoy theory background, and provide all the necessary theorems for a format that includes both representations and fusion categories.
+
 \begin{definition}[Monoidal Category]
-  A monoidal category is a quintuplet $(C,\otimes,0,1,\alpha)$ ... 
+  \label{def:monoidalCategory}
+  A monoidal category is a category $C$ equipped with
+  \begin{enumerate}
+    \item A bifunctor $\otimes : C \times C \to C$.
+    \item A unit element $1 \in C$
+    \item An isomorphism
+      \[
+        \alpha : - \otimes (- \otimes -) \to (- \otimes -) \otimes -
+      \]
+    \item Left and right unitors $\gamma : 1 \otimes - \to -$ and $\delta : - \otimes 1 \to -$.
+  \end{enumerate} 
 \end{definition}
 
 \begin{definition}[Semisimple Category]
@@ -588,8 +740,12 @@ A second advantage would be that we can always represent fusion trees as monoida
   \]
 \end{definition}
 
+\begin{definition}[Abelian Category]
+
+\end{definition}
+
 \begin{lemma}[Schurs 1st lemma (which one?)]
-  If $S$ and $T$ are simple objects in a semisimple category (over an algebraically closed field? what does this entail?), then it holds that
+  If $S$ and $T$ are simple objects in a semisimple category over an algebraically closed field (this is always C in our case), then it holds that
   \[
     \Hom(S,T) = \begin{dcases}
       k, &\text{ if } S = T ;\\
@@ -607,6 +763,30 @@ Lets give a coordinatized approach to fusion categories:
   \]
   such that the pentagon holds.
 \end{definition}
+
+\begin{lemma}
+Let $C$ be a $k$-linear monoidal category whose tensor product is
+$k$-linear in each variable. Then
+\[
+\bigotimes_{r=1}^{n}
+\left(
+\bigoplus_{a_r} X_{r,a_r}
+\right)
+\cong
+\bigoplus_{\hat a}
+\bigotimes_{r=1}^{n}
+X_{r,a_r},
+\]
+where
+\[
+\hat a=(a_1,\ldots,a_n).
+\]
+\end{lemma}
+
+\begin{lemma}[Finite Groups admit Fusion Category]
+  Let $G$ be a finite group, the $\Rep(G)$ is a fusion category.
+\end{lemma}
+
 
 
 \section{implementation}
