@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{book}
+\documentclass[12pt,a4paper]{article}
 \usepackage[inner=0.8in, outer=0.8in]{geometry}
 \usepackage{listings}
 \input{preamble.tex}
@@ -17,7 +17,9 @@
 
 \begin{document}
 
-\chapter{Introduction}\label{chapter:introduction}
+\tableofcontents
+
+\setcounter{section}{0}
 
 \section{Defintions}
 
@@ -85,27 +87,252 @@ it follows directly from the definition of global invariance that the tensor mus
   \]
 \end{definition}
 
+\begin{tikzpicture}[scale=1.0,baseline=(current bounding box.center)]
 
+\tikzset{
+tensor/.style={draw,fill=blue!20,minimum size=8mm},
+rep/.style={circle,draw=red,fill=red!30,inner sep=1.5pt},
+}
 
+% TODO: make oriented?
+
+\begin{scope}
+\node[tensor] (T1) at (0,0) {$T$};
+
+\draw (T1.north) -- +(0,0.8);
+\draw (T1.south) -- +(0,-0.8);
+\draw (T1.west) -- +(-0.8,0);
+\draw (T1.east) -- +(0.8,0);
+\end{scope}
+
+\node at (2,0) {$=$};
+
+\begin{scope}[xshift=4cm]
+
+\node[tensor] (T2) at (0,0) {$T$};
+
+\draw (T2.north) -- +(0,0.8);
+\draw (T2.south) -- +(0,-0.8);
+\draw (T2.west) -- +(-0.8,0);
+\draw (T2.east) -- +(0.8,0);
+
+\node[rep] at (0,0.85) {$g$};
+\node[rep] at (0,-0.85) {$g$};
+\node[rep] at (-0.85,0) {$g$};
+\node[rep] at (0.85,0) {$g$};
+
+\end{scope}
+
+\node at (6.4,0) {$\Longleftrightarrow$};
+
+\begin{scope}[xshift=9cm]
+
+\node[tensor] (T3) at (0,0) {$T$};
+
+\draw (T3.north) -- +(0,0.8);
+\draw (T3.south) -- +(0,-0.8);
+\draw (T3.west) -- +(-0.8,0);
+\draw (T3.east) -- +(0.8,0);
+
+\node[rep] at (0,0.85) {$g$};
+
+\end{scope}
+
+\node at (11.2,0) {$=$};
+
+\begin{scope}[xshift=13.5cm]
+
+\node[tensor] (T4) at (0,0) {$T$};
+
+\draw (T4.north) -- +(0,0.8);
+\draw (T4.south) -- +(0,-0.8);
+\draw (T4.west) -- +(-0.8,0);
+\draw (T4.east) -- +(0.8,0);
+
+\node[rep] at (0,-0.85) {$g$};
+\node[rep] at (-0.85,0) {$g$};
+\node[rep] at (0.85,0) {$g$};
+
+\end{scope}
+
+\end{tikzpicture}
+
+\begin{corollary}[Networks of symmetric tensors are symmetric]
+  Since a tensor network is built by composition and application of the $(co)ev$ maps, both of which are intertwiners, the full network is also an intertwiner. Important there is that this entire discussion is only about FdVect or FdHilb for now, but i think the same applies to any braided category.    
+\end{corollary}
 
 \subsection{Review of Symmetric Tensor networks.}
 
 Generally, we follow the notations of \cite{singhTensorNetworkStates2012a}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollTensorNetworkSimulations2020} which gave an overview for implementing $SU(2)$ invariant tensor networks. A general overview for (Non)abelian symmetries is \cite{singhTensorNetworkDecompositions2010a}, and a detailed account for the abelian $U(1)$ in \cite{singhTensorNetworkStates2011}. There are a multitude of implementations given in major packages, such as ITensor, \cite{fishmanITensorSoftwareLibrary2022}, Cyten, TenPy, \cite{hauschildTensorNetworkPython2024}, QSpace, \cite{weichselbaumQSpaceOpensourceTensor2024} ChemTensor, UniTensor, YasTn (Abelian Only) \cite{ramsYASTNAnotherSymmetric2025} (MPSKit?), (Cytnx (Abelian only i think.))). A general account of symmetries is given in \cite{dissertation} with its respective implementation in \cite{hauschildTensorNetworkPython2024} (We have to build cytens citation manually.)
 
+\begin{tikzpicture}[
+    >=latex,
+    cat/.style={
+        draw,
+        rounded corners,
+        fill=blue!5,
+        text width=3.3cm,
+        align=left,
+        minimum height=1.5cm
+    },
+    prop/.style={
+        draw,
+        fill=yellow!5,
+        text width=4.2cm,
+        align=left,
+        minimum height=1.5cm
+    },
+    ex/.style={
+        draw,
+        fill=green!5,
+        text width=4.8cm,
+        align=left,
+        minimum height=1.5cm
+    }
+]
 
-\subsection{Quantum Gates as Tensor Network Operators}
+%------------------------------------------------
+% COLUMN HEADERS
+%------------------------------------------------
 
-As a sanity check, view this in context of a quantum circuit. A quantum circuit is defined as (unitary) map $(\mathbb{C}^2)^n \to (\mathbb{C}^2)^m$. 
+\node[font=\bfseries] at (0,1) {Category};
+\node[font=\bfseries] at (5.2,1) {Braiding / Twist};
+\node[font=\bfseries] at (11.5,1) {Tensor Network};
 
+%------------------------------------------------
+% ROW 1
+%------------------------------------------------
+
+\node[cat] (hilb) at (0,0)
+{
+$\mathbf{Hilb}_{fd}$\\
+Monoidal category
+};
+
+\node[prop] (hilbp) at (5.2,0)
+{
+No intrinsic braiding.
+Wire crossings are graphical only.
+};
+
+\node[ex] (hilbe) at (11.5,-0.5)
+{
+Ordinary tensor networks.\\
+Evaluation:
 \[
-  \mathop{CNOT} : C^2 \otimes C^2 \to  C^2 \otimes C^2 = \sum_{ij}^{} \ket{i,i \oplus j}\bra{i,j}
-\]  
-\[
-  H = \frac{1}{\sqrt{2} } \sum_{ij}^{} (-1)^{ij} \ket i \bra j
+\mathrm{ev}:V^*\otimes V\to\mathbb C.
 \]
+};
+
+%------------------------------------------------
+% ROW 2
+%------------------------------------------------
+
+\node[cat] (braid) at (0,-2.5)
+{
+Braided monoidal category
+};
+
+\node[prop] (braidp) at (5.2,-2.5)
+{
+Braiding
+\[
+c_{X,Y}:X\otimes Y\to Y\otimes X.
+\]
+Crossings carry data.
+};
+
+\node[ex] (braide) at (11.5,-2.5)
+{
+Crossings become operators in the network.
+Diagram evaluation depends on braid structure.
+};
+
+%------------------------------------------------
+% ROW 3
+%------------------------------------------------
+
+\node[cat] (symm) at (0,-5)
+{
+Symmetric fusion category\\
+$\mathrm{Rep}(G)$
+};
+
+\node[prop] (symmp) at (5.2,-5)
+{
+\[
+c_{Y,X}c_{X,Y}=1.
+\]
+Double exchange is trivial.
+};
+
+\node[ex] (symme) at (11.5,-5)
+{
+Tensor contractions behave much like ordinary TNs.
+
+Example:
+$\mathrm{Rep}(\mathbb Z_2)$,
+$\mathrm{Rep}(S_3)$.
+};
+
+%------------------------------------------------
+% ROW 4
+%------------------------------------------------
+
+\node[cat] (mod) at (0,-7.8)
+{
+Ribbon / Modular category
+};
+
+\node[prop] (modp) at (5.2,-7.8)
+{
+Nontrivial braiding:
+\[
+c_{Y,X}c_{X,Y}\neq 1.
+\]
+
+Twist:
+\[
+\theta_X:X\to X.
+\]
+};
+
+\node[ex] (mode) at (11.5,-7.8)
+{
+Anyonic tensor networks.
+
+Evaluation may absorb twist:
+\[
+\widetilde{\mathrm{ev}}
+=
+\mathrm{ev}\circ
+(\theta_X\otimes \mathrm{id}).
+\]
+
+Examples:
+Fibonacci,
+Ising,
+$\mathrm{SU}(2)_k$.
+};
+
+%------------------------------------------------
+% ARROWS
+%------------------------------------------------
+
+\draw[->,thick] (hilb.south) -- (braid.north);
+\draw[->,thick] (braid.south) -- (symm.north);
+
+\draw[->,thick]
+(braid.south east)
+to[out=-45,in=90]
+(mod.north);
+
+\end{tikzpicture}
 
 
 \section{Symmetries}
+
+
 
 What do we know now? First of all, we take a symmetry group $G$ that is finite and compact (why?)[For compact groups, representations are completely reducible (Maschke) and the irreps are finite aswell. Finite groups are contained in compact groups.]. Then we look for its unitary representation $U(G)$ on a Hilbert space $H$. Furhtermore, if this is a multiparty hilbert space, lets say $n$ sites, we view the unitary representations $U_{n}$ at site $n$. The unitary representation $U_{n} : G \to Hom(V_{n} ,V_{n} )$ is a covariant linear unitary map. A map $V_{i} \to V_{j}$ is symmetric if it is an intertwiner of the representations, i.e. the following diagram commutes:
 % https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kiXSxbMCwxLCJWX2oiXSxbMSwwLCJWX2kiXSxbMSwxLCJWX2oiXSxbMCwxLCJmIiwyXSxbMCwyLCJVX3tWX2l9KGcpIl0sWzEsMywiVV97Vl9qfShnKSIsMl0sWzIsMywiZiJdXQ==
@@ -738,6 +965,7 @@ The motivation for this section is to introduce the necessary categoy theory bac
       \]
     \item Left and right unitors $\gamma : 1 \otimes - \to -$ and $\delta : - \otimes 1 \to -$.
   \end{enumerate} 
+  We denote this by the triple $(C,\otimes,1)$ where we omit the unitors.
 \end{definition}
 
 \begin{definition}[Semisimple Category]
@@ -794,6 +1022,8 @@ where
   Let $G$ be a finite group, the $\Rep(G)$ is a fusion category.
 \end{lemma}
 
+Let $\mathrm{Vec}  \coloneqq (\FDVec{\mathbb{C}}, \otimes, \mathbb{C})$ be the monoidal category of finite dimensional complex vector spaces where the last tuple entry $\mathbb{C}$ denotes the unit object, since there are isomorphisms $V \otimes \mathbb{C} \cong V \cong C \otimes V$.
+
 
 
 \section{implementation}
@@ -849,7 +1079,6 @@ class STensor(Tensor):
   def transpose(cls, new_shape:list[int]): ...
   ...
 \end{lstlisting}
-
 
 \printbibliography
 
