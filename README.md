@@ -1,6 +1,22 @@
 Maybe important for tex:
 https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-tikz
 
+## June 10nth
+
+Write down a really nice description of the SU(2) case, i.e. the inner products form a basis for the Hom triple, then the concats thereof form the F move etc... but make this formal. Then furthermore show that while $\alpha$ induces an isomorphisms, it also induces the F move under application of $Hom(-, D)$. I.e. this is valid because of yoneda? But ive never seen this explained like this until now.
+
+Also finish the proof for fusion trees, stepwise decompose them.
+
+Implementation: Doulbe sweeping the tree seems sto work but i need to write more tests for it. Furthremore this should anywas be done sectorwise? Or just write both and then use whatever is faster ... 
+
+## June 8th
+
+Figure out golden chain stuff, here we already have block matrices and then translate this to the degeneracy indeces. Put off reading anyon papers for now, figure this out on own. Also, somehow connect this to the commuting hamiltonian for the symmetric case.
+
+## June 6th
+
+So techinically, since we are working over the hierarchy Vect -> Hilb -> Rep -> Fusion -> etc... Our constructon works for all of them, but here we hvae to realize that the construction for Vect hasonly 1 irrep $\mathbb C$, and thus is trivial.
+
 ## June 3rd
 
 So again, in the Itensor paper it is mentioned that the issue is not actually the R move but rather the twist factor that would violate isotopy. This is then absorbed in the evaluation map. But this makes me think, in the programming guide for fib anyons, they mention not needing the R move at all for some reason. This would imply to me that it is trivial to study anyonic spin chains here.

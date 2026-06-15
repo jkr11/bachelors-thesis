@@ -21,7 +21,7 @@
 
 \setcounter{section}{0}
 
-\section{Defintions}
+\section{Introduction}
 
 Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
 \[
@@ -75,7 +75,7 @@ By interpreting $T$ as a map
 \]
 it follows directly from the definition of global invariance that the tensor must commute with the group action and we get the following definition of a symmetric tensor:
 
-\begin{definition}[symmetric Tensor]
+\begin{definition}[symmetric tensor]
   \label{def:symmetricTensor}
   A \emph{symmetric tensor} is an intertwiner of the representations of the group $G$:
   \[
@@ -83,7 +83,7 @@ it follows directly from the definition of global invariance that the tensor mus
   \]
   which we denote by
   \[
-    T \in Hom(W,V).
+    T \in Hom_G(W,V).
   \]
 \end{definition}
 
@@ -161,9 +161,11 @@ rep/.style={circle,draw=red,fill=red!30,inner sep=1.5pt},
   Since a tensor network is built by composition and application of the $(co)ev$ maps, both of which are intertwiners, the full network is also an intertwiner. Important there is that this entire discussion is only about FdVect or FdHilb for now, but i think the same applies to any braided category.    
 \end{corollary}
 
-\subsection{Review of Symmetric Tensor networks.}
+\subsection{Review of Symmetric Tensor Networks.}
 
 Generally, we follow the notations of \cite{singhTensorNetworkStates2012a}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollTensorNetworkSimulations2020} which gave an overview for implementing $SU(2)$ invariant tensor networks. A general overview for (Non)abelian symmetries is \cite{singhTensorNetworkDecompositions2010a}, and a detailed account for the abelian $U(1)$ in \cite{singhTensorNetworkStates2011}. There are a multitude of implementations given in major packages, such as ITensor, \cite{fishmanITensorSoftwareLibrary2022}, Cyten, TenPy, \cite{hauschildTensorNetworkPython2024}, QSpace, \cite{weichselbaumQSpaceOpensourceTensor2024} ChemTensor, UniTensor, YasTn (Abelian Only) \cite{ramsYASTNAnotherSymmetric2025} (MPSKit?), (Cytnx (Abelian only i think.))). A general account of symmetries is given in \cite{dissertation} with its respective implementation in \cite{hauschildTensorNetworkPython2024} (We have to build cytens citation manually.)
+
+\subsection{Review of Anyonic Tensor Networks.}
 
 \begin{tikzpicture}[
     >=latex,
@@ -191,17 +193,9 @@ Generally, we follow the notations of \cite{singhTensorNetworkStates2012a}, \cit
     }
 ]
 
-%------------------------------------------------
-% COLUMN HEADERS
-%------------------------------------------------
-
 \node[font=\bfseries] at (0,1) {Category};
 \node[font=\bfseries] at (5.2,1) {Braiding / Twist};
 \node[font=\bfseries] at (11.5,1) {Tensor Network};
-
-%------------------------------------------------
-% ROW 1
-%------------------------------------------------
 
 \node[cat] (hilb) at (0,0)
 {
@@ -224,10 +218,6 @@ Evaluation:
 \]
 };
 
-%------------------------------------------------
-% ROW 2
-%------------------------------------------------
-
 \node[cat] (braid) at (0,-2.5)
 {
 Braided monoidal category
@@ -244,13 +234,8 @@ Crossings carry data.
 
 \node[ex] (braide) at (11.5,-2.5)
 {
-Crossings become operators in the network.
-Diagram evaluation depends on braid structure.
+Crossings generate a braiding factor that needs to be absorbed by the structural tensors.
 };
-
-%------------------------------------------------
-% ROW 3
-%------------------------------------------------
 
 \node[cat] (symm) at (0,-5)
 {
@@ -274,10 +259,6 @@ Example:
 $\mathrm{Rep}(\mathbb Z_2)$,
 $\mathrm{Rep}(S_3)$.
 };
-
-%------------------------------------------------
-% ROW 4
-%------------------------------------------------
 
 \node[cat] (mod) at (0,-7.8)
 {
@@ -315,9 +296,6 @@ Ising,
 $\mathrm{SU}(2)_k$.
 };
 
-%------------------------------------------------
-% ARROWS
-%------------------------------------------------
 
 \draw[->,thick] (hilb.south) -- (braid.north);
 \draw[->,thick] (braid.south) -- (symm.north);
@@ -330,134 +308,136 @@ to[out=-45,in=90]
 \end{tikzpicture}
 
 
-\section{Symmetries}
+
+%\section{Symmetries}
+%
+%
+%
+%What do we know now? First of all, we take a symmetry group $G$ that is finite and compact (why?)[For compact groups, representations are completely reducible (Maschke) and the irreps are finite aswell. Finite groups are contained in compact groups.]. Then we look for its unitary representation $U(G)$ on a Hilbert space $H$. Furhtermore, if this is a multiparty hilbert space, lets say $n$ sites, we view the unitary representations $U_{n}$ at site $n$. The unitary representation $U_{n} : G \to Hom(V_{n} ,V_{n} )$ is a covariant linear unitary map. A map $V_{i} \to V_{j}$ is symmetric if it is an intertwiner of the representations, i.e. the following diagram commutes:
+%% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kiXSxbMCwxLCJWX2oiXSxbMSwwLCJWX2kiXSxbMSwxLCJWX2oiXSxbMCwxLCJmIiwyXSxbMCwyLCJVX3tWX2l9KGcpIl0sWzEsMywiVV97Vl9qfShnKSIsMl0sWzIsMywiZiJdXQ==
+%\[\begin{tikzcd}
+%	{V_i} & {V_i} \\
+%	{V_j} & {V_j}
+%	\arrow["{U_{V_i}(g)}", from=1-1, to=1-2]
+%	\arrow["f"', from=1-1, to=2-1]
+%	\arrow["f", from=1-2, to=2-2]
+%	\arrow["{U_{V_j}(g)}"', from=2-1, to=2-2]
+%\end{tikzcd}\]
+%Note that here $V_{i}$ is called a \emph{symmetry space}.
+%
+%Some examples of these groups include $\U{1}, \SU 2, \mathbb{Z}_{n}$
+%
+%Now where the intutition is more shaky: Consider a symmetry space $V_i$ on a single site (why single). Then we get that it decomposes into a direct sum of irreps $V_{i}^a$,
+%\[
+%  V_{i}  = \bigoplus_a \bigoplus_{i = 1}^{d_{a} } V_{i}^a
+%\]
+%and we can easily construct an isomporphism (but this depends on choosing a basis for $D_{a}$.)
+%\[
+%  V_{i}  = \bigoplus_a \bigoplus_{i = 1}^{d_{a} } V_{i}^a = \bigoplus_{a} (D_{a} \otimes V_{i}^a ).
+%\]
+%
+%Well, the isom we can construct here would look like $\bigoplus_1^{d_{a} } V_{i}^a \to D_{a} \otimes V_{i}^a$.
+%
+%Consider a single site of $3$ spin $1 / 2$ particles. Under $\SU 2$ this decomposes as 
+%\[
+%  2 \otimes 2 \otimes 2 = 4 \oplus 2 \oplus 2
+%\]
+%Now consider that $C^2$ is just the fundamental representation of $\SU 2$.
+%
+%
+%Note here, an invariant subspace $W \subseteq V$ is a subset of vectors s.t. for all $U \in \SU 2$, $Uw \in W$.
+%
+%symmetry obviously implies pullthrough properties, do Intertwiners as well?
+%
+%Yes, because $U_(V \otimes W) : g \to U_V(g) \otimes U_W(g)$ and the following diagram commutes:
+%
+%% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kgXFxvdGltZXMgVl9qIl0sWzAsMSwiVl9rIl0sWzIsMSwiVl9rIl0sWzIsMCwiVl9pIFxcb3RpbWVzIFZfaiJdLFswLDEsIlQiLDJdLFsxLDIsIlVfe1Zfa30oZykiLDJdLFswLDMsIlVfe1ZfaSBcXG90aW1lcyBWX2p9KGcpIl0sWzMsMiwiVCJdXQ==
+%\[\begin{tikzcd}
+%	{V_i \otimes V_j} && {V_i \otimes V_j} \\
+%	{V_k} && {V_k}
+%	\arrow["{U_{V_i \otimes V_j}(g)}", from=1-1, to=1-3]
+%	\arrow["T"', from=1-1, to=2-1]
+%	\arrow["T", from=1-3, to=2-3]
+%	\arrow["{U_{V_k}(g)}"', from=2-1, to=2-3]
+%\end{tikzcd}\]
+%
+%\subsection{Some Symmetry Groups}
+%
+%\subsubsection{$\mathbb{Z}_n$ }
+%
+%This group is given by integers $0, \ldots n-1$ with addition mod $n$. Since this happens to be abelian, all the irreps are $1$ dimensional, i.e. 
+%$U_a(g) : g \to Hom(\mathbb{C},\mathbb{C})$ with representatives $U_a(g) = z \mapsto e^{2\pi i a g / N} z$. What isthe fusion rule here?
+%\[
+%  a \otimes b \equiv (c : = a + b \mod n)
+%\]
+%This also does not have fusion multiplicities.
+%
+%\subsubsection{The group $\SU{2}$}
+%
+%Summarize the results from the paper here.
+%
+%\subsubsection{The group $\SU{2}_3$}
+%
+%Technically this is a fusion category, the thesis \cite{dissertation} handles this distinction. But if we think of this in terms of the programming guide, this seems to be doable using a group.
+%
+%Now, since we can argue that Products of symmetry groups again form a symmetry group (proof?), we would also need another type for sector.
+%
+%We could use $class Sector(NamedTuple)$ holding an array charges.
+%
+%\subsection{Notes on structural tensors and fusion trees}
+%
+%What do the CG tensors look like? As they are three index and have no intermediates, these are simply $Q_{j_1,j_2,j_3} = (C^{fuse})_{(j_1,m_{j_1}), (j_2, m_{j_2})}^{(j_3,m_{j_3})}$.
+%
+%\subsection{Notes on the papers}
+%
+%Lets assume we only look at incoming legs, i.e. we look at $T_{j_{a} ,j_{b} , j_{c} }$ in a composite vectors space $V^a \otimes V^b \otimes V^c$. By the decomposition
+%\[
+%  V^a \otimes V^b \otimes V^c = \left(\bigoplus_{j_a} D_{j_{a} } \otimes V_{j_{a} } \right) \otimes \left(\bigoplus_{j_b} D_{j_{b} } \otimes V_{j_{b} } \right) \otimes\left(\bigoplus_{j_c} D_{j_{c} } \otimes V_{j_{c} } \right)
+%\]
+%and we can represent a single index inside the block space 
+%\[
+%  T_{j_{a} ,j_{b} , j_{c} } \in (D_{j_{a} j_{b} j_{c}} \otimes V_{j_{a} j_{b} j_{c} })
+%\]
+%Choosning a basis $t = (t_{j_{a} }, t_{j_{b} }, t_{j_{c} })$ and $m = (m_{j_{a} }, m_{j_{b} }, m_{j_{c} })$ we can write
+%\[
+%  T_{j_a, j_b,j_c} = \sum_{t,n}^{} (T_{j_{a} ,j_{b} ,j_{c} })_{t,m} (\ket{t} \otimes \ket m)
+%\]
+%Now we can use Wigner-Eckart to obtain
+%\[
+%  T_{j_a, j_b,j_c} = \sum_{t,n}^{} ((P_{j_{a} j_{b} j_{c} })_t \cdot (Q_{j_{a} j_{b} j_{c} })_m)_{t,m} (\ket{t} \otimes \ket m)
+%\]
+%\[
+%  = \left(\sum_{t}^{} (P_{j_{a} j_{b} j_{c} })_t \ket t\right) \otimes \left(\sum_{m}^{} (Q_{j_{a} j_{b} j_{c} })_m \ket m \right) = P_{j_{a} j_{b} j_{c} } \otimes Q_{j_{a} j_{b} j_{c} }
+%\]
+%
+%If we generalize this with the decomposition for $k$ indices $i = (i_1, i_2, \ldots, i_k)$ and let $j_e = (j_{e_1}, j_{e_2}, \ldots, j_{e_{k-3} })$ be the internals
+%\[
+%  T_{i} = \sum_{j_e} (P_j^{j_e})_t \cdot (Q_j^{j_e})_m 
+%\]
 
 
+\section{Decomposition of semisimple Categories}
 
-What do we know now? First of all, we take a symmetry group $G$ that is finite and compact (why?)[For compact groups, representations are completely reducible (Maschke) and the irreps are finite aswell. Finite groups are contained in compact groups.]. Then we look for its unitary representation $U(G)$ on a Hilbert space $H$. Furhtermore, if this is a multiparty hilbert space, lets say $n$ sites, we view the unitary representations $U_{n}$ at site $n$. The unitary representation $U_{n} : G \to Hom(V_{n} ,V_{n} )$ is a covariant linear unitary map. A map $V_{i} \to V_{j}$ is symmetric if it is an intertwiner of the representations, i.e. the following diagram commutes:
-% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kiXSxbMCwxLCJWX2oiXSxbMSwwLCJWX2kiXSxbMSwxLCJWX2oiXSxbMCwxLCJmIiwyXSxbMCwyLCJVX3tWX2l9KGcpIl0sWzEsMywiVV97Vl9qfShnKSIsMl0sWzIsMywiZiJdXQ==
-\[\begin{tikzcd}
-	{V_i} & {V_i} \\
-	{V_j} & {V_j}
-	\arrow["{U_{V_i}(g)}", from=1-1, to=1-2]
-	\arrow["f"', from=1-1, to=2-1]
-	\arrow["f", from=1-2, to=2-2]
-	\arrow["{U_{V_j}(g)}"', from=2-1, to=2-2]
-\end{tikzcd}\]
-Note that here $V_{i}$ is called a \emph{symmetry space}.
+%Suppose that $(V,\rho_V)$ and $(W,\rho_W)$ are representations of $G$.
+%
+%\begin{definition}
+%  A linear map $f : V \to W$ is called an \emph{intertwiner} if
+%  \[
+%    f \circ \rho_V(g) = \rho_W(g) \circ f \quad g \in G.
+%  \]
+%  Define the \emph{Vector space of Interwtiners} as 
+%  \[
+%    Hom_G(V,W)
+%  \]
+%\end{definition}
+%
+%Suppose now $V^a$ is one of the reps that decomposes as 
+%\[
+%  V^a \eqsim \bigoplus_{\cdot = 1}^{d_a} R_a.
+%\]
 
-Some examples of these groups include $\U{1}, \SU 2, \mathbb{Z}_{n}$
-
-Now where the intutition is more shaky: Consider a symmetry space $V_i$ on a single site (why single). Then we get that it decomposes into a direct sum of irreps $V_{i}^a$,
-\[
-  V_{i}  = \bigoplus_a \bigoplus_{i = 1}^{d_{a} } V_{i}^a
-\]
-and we can easily construct an isomporphism (but this depends on choosing a basis for $D_{a}$.)
-\[
-  V_{i}  = \bigoplus_a \bigoplus_{i = 1}^{d_{a} } V_{i}^a = \bigoplus_{a} (D_{a} \otimes V_{i}^a ).
-\]
-
-Well, the isom we can construct here would look like $\bigoplus_1^{d_{a} } V_{i}^a \to D_{a} \otimes V_{i}^a$.
-
-Consider a single site of $3$ spin $1 / 2$ particles. Under $\SU 2$ this decomposes as 
-\[
-  2 \otimes 2 \otimes 2 = 4 \oplus 2 \oplus 2
-\]
-Now consider that $C^2$ is just the fundamental representation of $\SU 2$.
-
-
-Note here, an invariant subspace $W \subseteq V$ is a subset of vectors s.t. for all $U \in \SU 2$, $Uw \in W$.
-
-symmetry obviously implies pullthrough properties, do Intertwiners as well?
-
-Yes, because $U_(V \otimes W) : g \to U_V(g) \otimes U_W(g)$ and the following diagram commutes:
-
-% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kgXFxvdGltZXMgVl9qIl0sWzAsMSwiVl9rIl0sWzIsMSwiVl9rIl0sWzIsMCwiVl9pIFxcb3RpbWVzIFZfaiJdLFswLDEsIlQiLDJdLFsxLDIsIlVfe1Zfa30oZykiLDJdLFswLDMsIlVfe1ZfaSBcXG90aW1lcyBWX2p9KGcpIl0sWzMsMiwiVCJdXQ==
-\[\begin{tikzcd}
-	{V_i \otimes V_j} && {V_i \otimes V_j} \\
-	{V_k} && {V_k}
-	\arrow["{U_{V_i \otimes V_j}(g)}", from=1-1, to=1-3]
-	\arrow["T"', from=1-1, to=2-1]
-	\arrow["T", from=1-3, to=2-3]
-	\arrow["{U_{V_k}(g)}"', from=2-1, to=2-3]
-\end{tikzcd}\]
-
-\subsection{Some Symmetry Groups}
-
-\subsubsection{$\mathbb{Z}_n$ }
-
-This group is given by integers $0, \ldots n-1$ with addition mod $n$. Since this happens to be abelian, all the irreps are $1$ dimensional, i.e. 
-$U_a(g) : g \to Hom(\mathbb{C},\mathbb{C})$ with representatives $U_a(g) = z \mapsto e^{2\pi i a g / N} z$. What isthe fusion rule here?
-\[
-  a \otimes b \equiv (c : = a + b \mod n)
-\]
-This also does not have fusion multiplicities.
-
-\subsubsection{The group $\SU{2}$}
-
-Summarize the results from the paper here.
-
-\subsubsection{The group $\SU{2}_3$}
-
-Technically this is a fusion category, the thesis \cite{dissertation} handles this distinction. But if we think of this in terms of the programming guide, this seems to be doable using a group.
-
-Now, since we can argue that Products of symmetry groups again form a symmetry group (proof?), we would also need another type for sector.
-
-We could use $class Sector(NamedTuple)$ holding an array charges.
-
-\subsection{Notes on structural tensors and fusion trees}
-
-What do the CG tensors look like? As they are three index and have no intermediates, these are simply $Q_{j_1,j_2,j_3} = (C^{fuse})_{(j_1,m_{j_1}), (j_2, m_{j_2})}^{(j_3,m_{j_3})}$.
-
-\subsection{Notes on the papers}
-
-Lets assume we only look at incoming legs, i.e. we look at $T_{j_{a} ,j_{b} , j_{c} }$ in a composite vectors space $V^a \otimes V^b \otimes V^c$. By the decomposition
-\[
-  V^a \otimes V^b \otimes V^c = \left(\bigoplus_{j_a} D_{j_{a} } \otimes V_{j_{a} } \right) \otimes \left(\bigoplus_{j_b} D_{j_{b} } \otimes V_{j_{b} } \right) \otimes\left(\bigoplus_{j_c} D_{j_{c} } \otimes V_{j_{c} } \right)
-\]
-and we can represent a single index inside the block space 
-\[
-  T_{j_{a} ,j_{b} , j_{c} } \in (D_{j_{a} j_{b} j_{c}} \otimes V_{j_{a} j_{b} j_{c} })
-\]
-Choosning a basis $t = (t_{j_{a} }, t_{j_{b} }, t_{j_{c} })$ and $m = (m_{j_{a} }, m_{j_{b} }, m_{j_{c} })$ we can write
-\[
-  T_{j_a, j_b,j_c} = \sum_{t,n}^{} (T_{j_{a} ,j_{b} ,j_{c} })_{t,m} (\ket{t} \otimes \ket m)
-\]
-Now we can use Wigner-Eckart to obtain
-\[
-  T_{j_a, j_b,j_c} = \sum_{t,n}^{} ((P_{j_{a} j_{b} j_{c} })_t \cdot (Q_{j_{a} j_{b} j_{c} })_m)_{t,m} (\ket{t} \otimes \ket m)
-\]
-\[
-  = \left(\sum_{t}^{} (P_{j_{a} j_{b} j_{c} })_t \ket t\right) \otimes \left(\sum_{m}^{} (Q_{j_{a} j_{b} j_{c} })_m \ket m \right) = P_{j_{a} j_{b} j_{c} } \otimes Q_{j_{a} j_{b} j_{c} }
-\]
-
-If we generalize this with the decomposition for $k$ indices $i = (i_1, i_2, \ldots, i_k)$ and let $j_e = (j_{e_1}, j_{e_2}, \ldots, j_{e_{k-3} })$ be the internals
-\[
-  T_{i} = \sum_{j_e} (P_j^{j_e})_t \cdot (Q_j^{j_e})_m 
-\]
-
-
-\subsection{Notes on the decomposition}
-
-Suppose that $(V,\rho_V)$ and $(W,\rho_W)$ are representations of $G$.
-
-\begin{definition}
-  A linear map $f : V \to W$ is called an \emph{intertwiner} if
-  \[
-    f \circ \rho_V(g) = \rho_W(g) \circ f \quad g \in G.
-  \]
-  Define the \emph{Vector space of Interwtiners} as 
-  \[
-    Hom_G(V,W)
-  \]
-\end{definition}
-
-Suppose now $V^a$ is one of the reps that decomposes as 
-\[
-  V^a \eqsim \bigoplus_{\cdot = 1}^{d_a} R_a.
-\]
-
-\begin{lemma}\label{IsotopyHelper}
+\begin{lemma}
+  \label{IsotopyHelper}
   For a vector space $W$, there is an isomorphism
   \[
     \bigoplus^m W \simeq \mathbb C^m \otimes W.
@@ -631,7 +611,7 @@ $$
   \]
   admit a decomposition as
   \[
-    T = \bigoplus_{\hat a,\hat b}
+    T \in \bigoplus_{\hat a,\hat b}
     P^{(\hat a,\hat b)} \otimes Hom_C(R_{\hat a},R_{\hat b}),
   \]
   where $\hat a = (a_1, \ldots , a_n )$ and $P$ is a $k$-vector space of dimension ???
@@ -808,8 +788,115 @@ $$
 
 \end{proof}
 
+\begin{corollary}
+  Let $Q_{\mu, \eta}$ be a basis of $Hom_C\bigl(\bigotimes_{\hat{a}} R_{\hat{a}}, \bigotimes_{\hat{b} } R_{\hat{b} }  \bigr)$ where $\mu$ denotes the multiplicities and $\eta$ the internal fusions. In a \emph{multiplicity-free} Category we will omit $\mu$ as a label.
+\end{corollary}
+
+\begin{example}
+  If we let our monoidal semisimple category just be $\VecCat{\mathbb{C}}$, the only simple object is $\mathbb{C}$. 
+  Thus there is also only the trivial biproduct over one sector. 
+\end{example}
+
 \begin{example}
   If we restrict to the category $\Rep(SU(2))$ we can build the symmetric tensor networks as given in \cite{singhTensorNetworkStates2012a}. TODO: actual ly do this and convince yourself that the notations amd the triplet basis workd as desired.
+\end{example}
+
+\begin{example}
+  Take a $2$ in $1$ out tensor in $\Rep(SU(2))$ as
+  \[
+    T \in Hom_{\Rep(SU(2))}(V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}, V_{\frac{1}{2}} )
+  \]
+  Since all parts are simple, nothing happens.
+\end{example}
+
+\begin{example}
+  However, now assign $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ to each leg in the example above. Each leg then becomes $V_0 \oplus V_1 \cong \mathbb{C} \otimes V_0 \oplus \mathbb{C} \otimes V_1$. Then we can start with the decomposition.
+  \[
+    Hom_C(\bigoplus_{a,b,c \in (0,1)} (C \otimes C \otimes C) \otimes V_a \otimes V_b \otimes V_c, \bigoplus_{b \in (0,1)} C \otimes V_b) 
+  \]
+  \[
+    = \bigoplus_{a,b,c,d \in (0,1)} Hom_C((C \otimes C \otimes C) \otimes (V_a \otimes V_b \otimes V_c), C \otimes V_d)
+  \]
+  \[
+    = \bigoplus_{a,b,c,d} Hom(C^3, C) \otimes Hom_{\Rep(SU(2))} (V_a \otimes V_b \otimes V_c, V_d)
+  \]
+\end{example}
+
+\begin{example}
+  Easier. 
+  However, now assign $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ to each leg in the example above. Each leg then becomes $V_0 \oplus V_1 \cong \mathbb{C} \otimes V_0 \oplus \mathbb{C} \otimes V_1$. Then we can start with the decomposition.
+  \[
+    Hom_C\left(\bigoplus_{a,b\in (0,1)} (C \otimes C) \otimes V_a \otimes V_b \bigoplus_{b \in (0,1)} C \otimes V_b \right) 
+  \]
+  \[
+    = \bigoplus_{a,b,c \in (0,1)} Hom_C((C \otimes C) \otimes (V_a \otimes V_b), C \otimes V_c)
+  \]
+  \[
+    = \bigoplus_{a,b, c} Hom(C^2, C) \otimes Hom_{\Rep(SU(2))} (V_a \otimes V_b, V_c)
+  \]
+\end{example}
+
+\begin{example}
+  Lets look at a tensor with in legs $(\tau \otimes \tau)$ and $\tau$ and out legs $\tau$.
+  \[
+    Hom_C(((k \otimes 1) \oplus (k \otimes \tau)) \otimes (k \otimes \tau), k\otimes\tau)
+    =
+    Hom_C()
+  \]
+  \[
+  \begin{aligned}
+    &\Hom_C\bigl(((k \otimes 1) \oplus (k \otimes \tau)) \otimes (k \otimes \tau),\, k\otimes\tau\bigr)\\
+    &\cong
+    \Hom_C\bigl((k\otimes1\otimes k\otimes\tau)
+    \oplus
+    (k\otimes\tau\otimes k\otimes\tau),\,k\otimes\tau\bigr)\\
+    &\cong
+    \Hom_C(k\otimes 1 \otimes k \otimes\tau,\,k\otimes\tau)
+    \oplus
+    \Hom_C(k\otimes \tau \otimes(k \otimes\tau),\,k\otimes\tau)\\
+    &\cong
+    \Hom(k \otimes k,k)\otimes\Hom_C(1 \otimes \tau,\tau)
+    \oplus
+    \Hom(k \otimes k,k)\otimes\Hom_C(\tau\otimes\tau,\tau).
+  \end{aligned}
+  \]
+\end{example}
+
+\begin{example}[Anyonic matrix operator]
+  Finally, consider a $4 \to 4$ anyon operator with one leg on each side, representing the space $\mathrm{Hom}((\tau \otimes \tau \otimes \tau \otimes \tau), (\tau \otimes \tau \otimes \tau \otimes \tau))$. 
+  THe full decomposition is $2 + 3\tau$.
+  Hence
+  we obtain
+  \[
+    \Hom_C\!\left(
+      (k^2 \otimes 1)\oplus(k^3\otimes\tau),
+      (k^2 \otimes 1)\oplus(k^3\otimes\tau)
+    \right).
+  \]
+  \[
+    =
+    \bigoplus_{a,b\in(1,\tau)}
+    \Hom_C(k^{m_a}\otimes a,\,
+    k^{m_b}\otimes b)
+    =
+    \bigoplus_{a,b\in(1,\tau)}
+    \Hom(k^{m_a}, k^{m_b}) \otimes Hom_C(a,b)
+  \]
+  where
+  \[
+    m_1=2,
+    \qquad
+    m_\tau=3.
+  \]
+  For this case, Schurs lemma applies. So we have
+  \[
+    = Hom(k^2, k^2) \oplus Hom(k^3, k^3)
+  \]
+  which is just a block matrix with indexing $(1_1, 1_2, \tau_1, \tau_2, \tau_3)$.
+\end{example}
+
+\begin{example}[$U(1)$ Symmetry]
+  Technically we would want to show here that this is simpler in general. TOOD. Make a theorem? Or a corollary?
 \end{example}
 
 %\begin{equation}
@@ -909,6 +996,13 @@ TODOTOD!!
 %\[ \{ X_i \boxtimes Y_j \mid i \in I, \, j \in J \} \]
 %If $\mathcal{C}$ and $\mathcal{D}$ possess monoidal structures, $\mathcal{C} \boxtimes \mathcal{D}$ naturally inherits a monoidal structure defined by $(X_1 \boxtimes Y_1) \otimes (X_2 \boxtimes Y_2) = (X_1 \otimes X_2) \boxtimes (Y_1 \otimes Y_2)$.
 %\end{remark}
+\begin{definition}[The Category $\mathrm{Vec}_k$]
+  Let $k$ be an algebraically closed field.
+  \begin{itemize}
+    \item \textbf{Objects:} The objects are finite dimensional vectors spaces over $k$.
+    \item \textbf{Morphisms:} Linear maps between vector spaces.  
+  \end{itemize}
+\end{definition}
 
 \begin{definition}[The Category $\Rep_k(G)$]
   Let $G$ be a group and $k$ a field. The \emph{category of linear representations of $G$ over $k$} consists of the following data:
@@ -932,6 +1026,21 @@ TODOTOD!!
   \]
 \end{definition}
 
+\begin{definition}[Direct product of representations]
+  A representation of $G_1 \times G_2$ is a space where the pair $(g_1, g_2)$ acts linearly. SO this is a pair
+  \[
+    (V,\rho), \rho : (G_1 \times G_2) \to GL(V)
+  \]
+\end{definition}
+
+Now, let $(\Rep_{\mathbb{C}}(G), \otimes, \mathbb{C})$ be the monoidal category of representations. We equip the category with a tensor product that acts as follows:
+
+TODO.... 
+
+\begin{theorem}[Fusion Representation Category of finite groups]
+  \label{thm:finiteGroupFusionCat}
+  Let $G$ be a finite group. Then $\Rep(G)$ is a fusion category.
+\end{theorem}
 %\begin{example}
 %  Lets do an example and look at $\Rep(\SU 2)$. Its objects are then given by $\left\{(V_)\right\}
 %\end{example}
@@ -1024,7 +1133,97 @@ where
 
 Let $\mathrm{Vec}  \coloneqq (\FDVec{\mathbb{C}}, \otimes, \mathbb{C})$ be the monoidal category of finite dimensional complex vector spaces where the last tuple entry $\mathbb{C}$ denotes the unit object, since there are isomorphisms $V \otimes \mathbb{C} \cong V \cong C \otimes V$.
 
+Let $(\mathbb{C}\mathrm{Rep}(G),\otimes,?)$ denote the representation Category for a compact group $G$.
+Here $\otimes$ is the tensor product of representations $(\pi \otimes \rho, V \otimes W)$.
 
+\begin{definition}[Direct sum]
+  Given a category $C$ with objects $\{a_n\}$, an object $\bigoplus_{i=1}^n a_i \in C$ is called the \emph{direct sum}. This is equipped with the injections and projections
+  \[
+    \iota_i : a_i \to \bigoplus a_i \quad \text{ and } \quad \pi_i : \bigoplus a_i \to a_i 
+  \]
+  such that
+  \[
+    \pi_i \circ \iota_i = id_{a_i} \forall i
+  \]
+\end{definition}
+
+\subsection{Fusion Trees}
+
+We consider a fusion tree as the basis that spans $Hom(R_a \otimes R_b \ldots \otimes R_m, \otimes R_{a_j} \ldots  )$. Since $R_a \otimes R_b$ is semisimple, we have the relationship
+\[
+  R_a \otimes R_b \cong \bigoplus_c R_c^{\oplus N_{ab}^c }
+\]
+with embedding (make this formal)
+\[
+  g^{ab}_{c, \mu} : R_{c} \to R_{a} \otimes R_{b}  
+\]
+and projections
+\[
+  f^{c,\mu}_{ab} : R_{a} \otimes R_{b} \to R_{c}
+\]
+\[
+  id_{R_a \otimes R_{b} } = \sum_{c \in L}^{} \sum_{\mu = 1}^{N_{ab}^c} g_{c,\mu}^{ab} f_{ab}^{c,\mu}  
+\]
+
+\begin{lemma}
+  \[
+    Hom(R_{a_1} \otimes \cdots \otimes R_{a_N}, R_b)
+  \]
+  is spanned by ordinary fusion trees.
+\end{lemma}
+\begin{proof}
+  Base case: $N = 1$. Nothing to prove here.
+
+  INductive case:
+
+  Under semisimplicity we get that
+  \[
+    Hom(R_{a_1} \otimes \cdots \otimes R_{a_n}, R)b) \cong \bigoplus_{c,\mu} Hom(R_c \otimes R_{a_3} \otimes \cdots \otimes R_{a_n}, R_b)
+  \]
+\end{proof}
+
+\subsection{Monoidal data}
+
+\begin{definition}[$\Rep(SU(2))$]
+  Let $(V,\rho_V)$ be a representation.
+\end{definition}
+
+\section{Anyonic Hamiltionians}
+
+\subsection{Review: The Golden Chain}
+
+For the golden chain, we consider $n+2$ Fib anyons as our ground state. Their combined state yields a Fusion Tree $\Hom(\tau^{\otimes n+1}, \tau)$ with intermediate charges $x_1, \ldots , x_n$. These intermediate charges are further restricted as in that there are no possibilities to assign adjacent $1$s to them (In fact this is what causes the dimension of the hilbert space to reduce to $\phi^n$).
+
+There is a three local hamiltonian for the golden chain defined as
+\[
+  H_i = - \sum_{x_i^\prime }^{} [F_{x_{i+1} }^{x_{i-1}\tau\tau}]_{x_i}^{x_i^\prime } E_{x_{i}^\prime } [F_{x_{i+1} }^{x_{i-1}\tau\tau }]_{x_{i^\prime }}^{x_{i^{\prime\prime}}}
+\]
+
+Write this three local hamiltonian in an operator form
+\[
+  H_i = -J \begin{pmatrix}
+    1 &  &  &  &   \\
+     & 0 &  &  &   \\
+     &  & 0 &  &   \\
+     &  &  & \varphi^{-2}  & \varphi^{-\frac{3}{2}}  \\
+     &  &  & \varphi^{-\frac{3}{2}} & \varphi^{-1}    \\
+  \end{pmatrix}
+\]
+
+%\[
+%H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
+%  & \begin{array}{ccccc} \ket{1\tau 1} & \ket{\tau\tau 1} & \ket{1\tau\tau}_1 & \ket{\tau 1 \tau}_2 & \ket{\tau \tau, \tau}_3 \end{array} \\
+%  \begin{array}{r} \ket{x_0, \mathbf{1}, \tau} \\ \ket{x_0, \tau, \mathbf{1}} \\ \ket{x_0, \tau, \tau}_1 \\ \ket{x_0, \tau, \tau}_2 \\ \ket{x_0, \tau, \tau}_3 \end{array} & 
+%  \begin{pmatrix}
+%    1 &   &   &               &               \\
+%      & 0 &   &               &               \\
+%      &   & 0 &               &               \\
+%      &   &   & \varphi^{-2}  & \varphi^{-\frac{3}{2}} \\
+%      &   &   & \varphi^{-\frac{3}{2}} & \varphi^{-1}   \\
+%  \end{pmatrix}
+%\end{array}
+%\]
+Note that this is block diagonal over the fusion channel (TODO: change notation).
 
 \section{implementation}
 
