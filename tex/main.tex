@@ -46,6 +46,10 @@ Graphically, we represent a general tensor
 \]
 as follows, where we choose incoming arrows for duals in the domain and outgoings for normal spaces, and on the bottom we choose incoming for duals and outgoing for normals.
 
+\subsection{(Algebraic?) Theory of Anyons}
+
+
+
 \subsection{Symmetric Tensors}
 
 %Here we want to define tensors that are invariant under a symmetry $G$ (a compact group). We say that a tensor $T \in ()
@@ -788,8 +792,23 @@ $$
 
 \end{proof}
 
+\begin{corollary}[Operators are block matrices]
+  \label{cor:operator_blocks}
+  An operator
+  \[
+    Hom(V,W) 
+    \cong
+    Hom_C\bigl(\bigoplus_a D_a \otimes R_a, \bigoplus_b E_b \otimes R_b \bigr) \cong \bigoplus_{a,b} Hom(D_a, D_b) \otimes Hom_C(R_a, R_b)
+  \]
+  and by Schurs lemma this is just
+  \[
+    \bigoplus_{a \in Irr(V) \cap Irr(W)} Hom(D_a, E_a)
+  \]
+  where $Hom(D_a, E_a)$ is a matrix. Lets say that $a$ is in a collection of isomorphisms $L$. Then (show matrix here ...)
+\end{corollary}
+
 \begin{corollary}
-  Let $Q_{\mu, \eta}$ be a basis of $Hom_C\bigl(\bigotimes_{\hat{a}} R_{\hat{a}}, \bigotimes_{\hat{b} } R_{\hat{b} }  \bigr)$ where $\mu$ denotes the multiplicities and $\eta$ the internal fusions. In a \emph{multiplicity-free} Category we will omit $\mu$ as a label.
+  Let $Q_{\mu, \eta}$ be a basis of $Hom_C\bigl(\bigotimes_{\hat{a}} R_{\hat{a}}, \bigotimes_{\hat{b} } R_{\hat{b} }  \bigr)$ where $\mu$ denotes the multiplicities and $\eta$ the internal fusions. In a \emph{multiplicity-free} Category we will omit $\mu$ as a label. 
 \end{corollary}
 
 \begin{example}
@@ -833,6 +852,13 @@ $$
   \]
   \[
     = \bigoplus_{a,b, c} Hom(C^2, C) \otimes Hom_{\Rep(SU(2))} (V_a \otimes V_b, V_c)
+  \]
+\end{example}
+
+\begin{example}
+  Consider the same operator as in example $5$ but with its incoming legs fused together. So we have $V_{in} = V_{\frac{1}{2}}^{4}$ and $V_{out} = V_{\frac{1}{2}}^2$. This decomposes $V_2 \oplus V_1^{\oplus 3} \oplus V_0^{\oplus 2}$. Then we can directly use \ref{cor:operator_blocks} to obtain
+  \[
+    Hom(V_{in}, V_{out}  ) =
   \]
 \end{example}
 
@@ -897,6 +923,10 @@ $$
 
 \begin{example}[$U(1)$ Symmetry]
   Technically we would want to show here that this is simpler in general. TOOD. Make a theorem? Or a corollary?
+\end{example}
+
+\begin{example}[Ground state on 4 anyons]
+  We can be given a ground state in the operator form as $Hom(\tau^4, \tau)$.
 \end{example}
 
 %\begin{equation}
@@ -1080,7 +1110,7 @@ The motivation for this section is to introduce the necessary categoy theory bac
 \begin{definition}[Semisimple Category]
   An abelian category $C$ is semisimple if every object is either simple or a direct sum of simple objects. An object is \emph{simple} if its only subobjects are $0$ or $X$ itself. Any object can be written as
   \[
-    X = \bigoplus_{i \in I} S_{i} 
+    X = \bigoplus_{i \in I} S_{i}^{\oplus n_i}
   \]
 \end{definition}
 
@@ -1092,11 +1122,17 @@ The motivation for this section is to introduce the necessary categoy theory bac
   If $S$ and $T$ are simple objects in a semisimple category over an algebraically closed field (this is always C in our case), then it holds that
   \[
     \Hom(S,T) = \begin{dcases}
-      k, &\text{ if } S = T ;\\
-      0 , &\text{ if } S \neq T .
+      k, &\text{ if } S \cong T ;\\
+      0 , &\text{ if } S \ncong T .
     \end{dcases}
   \]
 \end{lemma}
+\begin{proof}
+  Step 1. Let $f : S \to T$ be a morphisms. Since $T$ is simple 
+  \[
+    \mathop{im}(f) \cong 0 \quad \text{ or } \quad \mathop{im}(f) \cong T 
+  \]
+\end{proof}
 
 Lets give a coordinatized approach to fusion categories:
 
@@ -1147,6 +1183,39 @@ Here $\otimes$ is the tensor product of representations $(\pi \otimes \rho, V \o
   \]
 \end{definition}
 
+\begin{lemma}[Peter Weyl Theorem]
+  \label{lem:PeterWeyl}
+  Let $G$ be a compact group. Then all its unitary representations are completely reducible.
+\end{lemma}
+
+\subsection{Group Theory}
+
+\begin{definition}[Compact Group]
+  A compact group is a group $G$ equipped with a topology such that
+  \[
+    m : G \times G \to G, \quad (g,h) \mapsto gh,
+  \]
+  is continuous.
+  \[
+    i : G \to G, \quad g \mapsto g^{-1} 
+  \]
+  is continuous
+  and $G$ is compact as a topoligical space.
+\end{definition}
+\begin{example}
+  \begin{enumerate}
+    \item Every finite group with the discrete topology is compact.
+    \item \[
+      U(n) = \{A \in M_n(\mathbb{C}) : A^\ast A = I \}
+    \]
+    is compact for all integer $n$.
+    \item All \[
+      SU(n) = \{A \in U(n) : \det A = 1 \}
+    \]
+    are compact.
+  \end{enumerate}
+\end{example}
+
 \subsection{Fusion Trees}
 
 We consider a fusion tree as the basis that spans $Hom(R_a \otimes R_b \ldots \otimes R_m, \otimes R_{a_j} \ldots  )$. Since $R_a \otimes R_b$ is semisimple, we have the relationship
@@ -1188,6 +1257,21 @@ and projections
   Let $(V,\rho_V)$ be a representation.
 \end{definition}
 
+\begin{definition}[Twists from $R$ moves]
+  Suppose we are in a braided monoidal category with $F$ and $R$ symbols. Then we compute the \emph{twist} (a self braiding) as follows:
+  \[
+    R^{ab}_{c} R^{ba}_c = \frac{\theta_c}{\theta_a \theta_b}.  
+  \]
+  (state more possibilities here.)
+\end{definition}
+
+\begin{example}
+  Take $sVect$. Our simples are $1$ and $f$. This \emph{braiding} is in fact symmetric. Thus we have that
+  \[
+    1 = \frac{\theta_1}{\theta_f^2} = 
+  \]
+\end{example}
+
 \section{Anyonic Hamiltionians}
 
 \subsection{Review: The Golden Chain}
@@ -1209,7 +1293,6 @@ Write this three local hamiltonian in an operator form
      &  &  & \varphi^{-\frac{3}{2}} & \varphi^{-1}    \\
   \end{pmatrix}
 \]
-
 %\[
 %H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
 %  & \begin{array}{ccccc} \ket{1\tau 1} & \ket{\tau\tau 1} & \ket{1\tau\tau}_1 & \ket{\tau 1 \tau}_2 & \ket{\tau \tau, \tau}_3 \end{array} \\
@@ -1224,6 +1307,26 @@ Write this three local hamiltonian in an operator form
 %\end{array}
 %\]
 Note that this is block diagonal over the fusion channel (TODO: change notation).
+
+\subsection{Rydberg-blockade ladder}
+
+This is given by the fusion category $so(3)_2$. Here we have fusion rules
+\[
+  1 \otimes 1 = 0 \oplus 1 \oplus 2, \quad 2 \otimes 1 = 1, \quad 2 \otimes 2 = 0.
+\]
+
+\section{I dont know where to put this yet}
+
+If we start out on anyonic chains, like the $SU(2)_3$ case, this provideds a nice generalization for chains with $C = Rep(SU(2)_k)$ with fusion rules
+\[
+  j_1 \times j_2 = \sum_{j = \left\vert j_1 - j_2 \right\vert }^{\mathop{\min}(j_1 + j_2, k - j_1 - j_2)} j.
+\]
+However now, if we approach this in the case of $SU(2)_\infty$ these fusion rules read
+\[
+  j_1 \times j_2 = \sum_{j = \left\vert j_1 - j_2 \right\vert }^{j_1 + j_2} 
+\]
+but this chain would have an infinite Hilber Space? Also, lifting to representation operators reveals that there are infinitely many that are not independent.
+
 
 \section{implementation}
 
