@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage[inner=0.8in, outer=0.8in]{geometry}
 \usepackage{listings}
 \input{preamble.tex}
@@ -22,6 +22,69 @@
 \setcounter{section}{0}
 
 \section{Introduction}
+
+\subsection{Some basic Category Theory}
+
+Here we introduce some basic category concepts. For a review of categories for quantum systems see \cite{selingerSurveyGraphicalLanguages2011}, for a use in tensor networks see \cite{vercleyenMathematicalStructureTensor2018} or \cite{biamonteLecturesQuantumTensor2020}(Check this!).
+
+Similarly to the concepts above, we introduce categories because there are some that mirror the graphical language used by tensor networks exactly. Furthermore, both our later treatment of anyons and symmetries in Chapters .... makes use of these concepts. Here we mostly follow the language used by \cite{VakilRisingSea2025}.
+
+\begin{definition}[Category]
+  \label{def:category}
+  A category $\mathrm{C} $  is build by a collection of of objects, which we usually denote by $obj(\mathrm{C} )$, and a set of morphisms $\Hom_C(A,B)$ for each pair $A,B$ of objects, where we refer to $A$ as the domain and $B$ as the codomain. If we want to refer to an object in $\mathrm{C} $, we usually just write $A \in \mathrm{C}$.
+
+  Furthremore, there is a binary operator $\circ : Hom_C(A,B) \times Hom_C(B, C) \to Hom(A,C)$ such that this is associative. Also, we have an identity morphism for each object $A$ denoted by $id_A$ s.t. $id_A \circ f = f$ and $g \circ id_B = g$ for all appropriate morphisms. 
+
+  We say there is an \emph{isomorphism} between two objects if there exists an inverse morphism (Just copy vakil here.).
+\end{definition}
+
+As an example $Hilb_{fd}$ forms a category where the objects are f.d. Hilber spaces and the morphisms are the linear maps between them.
+
+Realize that this encodes all the needed information about sequential composition.
+
+
+\begin{definition}[Functor]
+  \label{def:functor}
+  A \emph{Functor} is a map from category $\mathrm{A} $ to category $\mathrm{B} $ and is given by the data
+  \[
+    F : obj(\mathrm{A} ) \to obj(\mathrm{B} ) \quad \text{and} \quad F : Hom(A,B) \to Hom(F(A), F(B))
+  \]
+  such that $F$ preserves the identity and composition
+  \[
+    F(id_A) = id_{F(A)} \quad \text{and} \quad F(f \circ g) = F(f) \circ F(g)
+  \]
+\end{definition}
+
+Now, in a quantum system we want the option to also describe \emph{parallel composition}. If we have two systems $A$ and $B$ we want to apply processes $f$ and $g$ on the combined system $A \otimes B$ as $f \otimes g$. So we introduce extra structure to our categories in the form of a functor $- \otimes -$. This acts between 
+\[
+  \otimes : \mathrm{C} \times \mathrm{C} \to C
+\]
+where
+\[
+  \otimes : obj(\mathrm{C} ) \times obj(\mathrm{C} ) \to \mathrm{C} : (a,b) \mapsto a \otimes b
+\]
+and
+\[
+  \otimes : Mor(A,A^\prime) \times Hom_{\mathrm{C} }(B,B^\prime ) \to Hom_{\mathrm{C} }(A \otimes A^\prime , B \otimes B^\prime ), (f,g) \mapsto f \otimes g.
+\]
+
+Now, the tensor product in general is not associative, i.e. the spaces $A \otimes (B \otimes C)$ and $(A \otimes B) \otimes C$ are only isomporphic. So we further define a natural isomorphism
+\[
+  \alpha : (A \otimes B) \otimes C \to A \otimes (B \otimes C)
+\]
+called the associator.
+
+We can now make this construction a formal definition:
+
+\begin{definition}[Monoidal Category]
+  \label{def:monoidalCategory}
+  A \emph{monoidal category} is a 5-tuple $(\mathrm{C}, \otimes, I, \alpha, \lambda)$ where ...
+\end{definition}
+
+
+
+
+\subsection{Tensors (Everything here is $fdVect_k$)}
 
 Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
 \[
@@ -94,8 +157,8 @@ it follows directly from the definition of global invariance that the tensor mus
 \begin{tikzpicture}[scale=1.0,baseline=(current bounding box.center)]
 
 \tikzset{
-tensor/.style={draw,fill=blue!20,minimum size=8mm},
-rep/.style={circle,draw=red,fill=red!30,inner sep=1.5pt},
+  tensor/.style={draw,fill=blue!20,minimum size=8mm},
+  rep/.style={circle,draw=red,fill=red!30,inner sep=1.5pt},
 }
 
 % TODO: make oriented?
@@ -165,36 +228,99 @@ rep/.style={circle,draw=red,fill=red!30,inner sep=1.5pt},
   Since a tensor network is built by composition and application of the $(co)ev$ maps, both of which are intertwiners, the full network is also an intertwiner. Important there is that this entire discussion is only about FdVect or FdHilb for now, but i think the same applies to any braided category.    
 \end{corollary}
 
+\subsection{Some Important Facts about Hamiltonians}
+
+\begin{definition}[Gapped Hamiltonian]
+  Let $H$ be a hamiltonian acting on a finite system of size $L$. Let
+  \[
+    E_0 \leq E_1 \leq \cdots 
+  \]
+  be the eigenvalues. The spectral gap is then
+  \[
+    \Delta(L) = E_1 - E_{0}.
+  \]
+  The Hamiltonian is gapped if there is a constant $\Delta$
+  
+\end{definition}
+
 \subsection{Review of Symmetric Tensor Networks.}
 
 Generally, we follow the notations of \cite{singhTensorNetworkStates2012a}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollTensorNetworkSimulations2020} which gave an overview for implementing $SU(2)$ invariant tensor networks. A general overview for (Non)abelian symmetries is \cite{singhTensorNetworkDecompositions2010a}, and a detailed account for the abelian $U(1)$ in \cite{singhTensorNetworkStates2011}. There are a multitude of implementations given in major packages, such as ITensor, \cite{fishmanITensorSoftwareLibrary2022}, Cyten, TenPy, \cite{hauschildTensorNetworkPython2024}, QSpace, \cite{weichselbaumQSpaceOpensourceTensor2024} ChemTensor, UniTensor, YasTn (Abelian Only) \cite{ramsYASTNAnotherSymmetric2025} (MPSKit?), (Cytnx (Abelian only i think.))). A general account of symmetries is given in \cite{dissertation} with its respective implementation in \cite{hauschildTensorNetworkPython2024} (We have to build cytens citation manually.)
 
+The motivation for constructing symmetric tensor networks is as follows: Assume we have a (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. If the ground state is unique, we can obtain 
+\[
+  U(g)^{\otimes L} H \ket{\psi_0} = H (U(g)^{\otimes L}) \ket{\psi_0} = E_0 U(g)^{\otimes L} \ket{\psi_0}
+\]
+and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
+\[
+  U(g) \ket{\psi_0} = e^{i\theta(g)} \ket{\psi_0}
+\]
+
+
+\subsubsection{MPS}
+\begin{definition}[Matrix Product State]
+  \label{def:MPS}
+  A \emph{Matrix Product State} is a quantum state $\ket{\psi}$ with $n$ legs written as the contraction of $n$ trivalent tensors $\{A^{[i]}\}_{i \in [n]}$. Formally this reads
+  \[
+    \ket{\psi[A]}
+    =
+    \sum_{i_1,\ldots,i_n}
+    \operatorname{Tr}\!\left(
+    A^{[1]}_{i_1}
+    A^{[2]}_{i_2}
+    \cdots
+    A^{[n]}_{i_n}
+    \right)
+    \ket{i_1i_2\cdots i_n},
+  \]
+  where $A^{[i]}_{i_{k}} \in \mathbb{C}^{D_i \times D_{i} }$.
+\end{definition}
+Note that this is a state with closed boundaries. If we want open boundaries we have to replace the trace with appropriate end vectors (nice source?).
+
+\begin{lemma}[IDK if this is true.]
+  A MPS state $\ket{\psi[A]}$ is symmetric under $G$ iff. for every tensor $A^{[i]}$ it holds that
+  \[
+    U(g)A^{[i]}U(g)^{\dagger} = A^{[i]} 
+  \]
+\end{lemma}
+
+Not quite. We know that
+
+\begin{theorem}[Fundamental Theorem of MPS]
+  If two MPS states generated by $A$ and $B$ respectively.
+  Figure out what we can do with this. 
+  
+  Proof \cite{ciracMatrixProductDensity2017},\cite{vercleyenMathematicalStructureTensor2018}.
+\end{theorem}
+
+
+
 \subsection{Review of Anyonic Tensor Networks.}
 
 \begin{tikzpicture}[
-    >=latex,
-    cat/.style={
-        draw,
-        rounded corners,
-        fill=blue!5,
-        text width=3.3cm,
-        align=left,
-        minimum height=1.5cm
-    },
-    prop/.style={
-        draw,
-        fill=yellow!5,
-        text width=4.2cm,
-        align=left,
-        minimum height=1.5cm
-    },
-    ex/.style={
-        draw,
-        fill=green!5,
-        text width=4.8cm,
-        align=left,
-        minimum height=1.5cm
-    }
+  >=latex,
+  cat/.style={
+      draw,
+      rounded corners,
+      fill=blue!5,
+      text width=3.3cm,
+      align=left,
+      minimum height=1.5cm
+  },
+  prop/.style={
+      draw,
+      fill=yellow!5,
+      text width=4.2cm,
+      align=left,
+      minimum height=1.5cm
+  },
+  ex/.style={
+      draw,
+      fill=green!5,
+      text width=4.8cm,
+      align=left,
+      minimum height=1.5cm
+  }
 ]
 
 \node[font=\bfseries] at (0,1) {Category};
@@ -870,21 +996,21 @@ $$
     Hom_C()
   \]
   \[
-  \begin{aligned}
-    &\Hom_C\bigl(((k \otimes 1) \oplus (k \otimes \tau)) \otimes (k \otimes \tau),\, k\otimes\tau\bigr)\\
-    &\cong
-    \Hom_C\bigl((k\otimes1\otimes k\otimes\tau)
-    \oplus
-    (k\otimes\tau\otimes k\otimes\tau),\,k\otimes\tau\bigr)\\
-    &\cong
-    \Hom_C(k\otimes 1 \otimes k \otimes\tau,\,k\otimes\tau)
-    \oplus
-    \Hom_C(k\otimes \tau \otimes(k \otimes\tau),\,k\otimes\tau)\\
-    &\cong
-    \Hom(k \otimes k,k)\otimes\Hom_C(1 \otimes \tau,\tau)
-    \oplus
-    \Hom(k \otimes k,k)\otimes\Hom_C(\tau\otimes\tau,\tau).
-  \end{aligned}
+    \begin{aligned}
+      &\Hom_C\bigl(((k \otimes 1) \oplus (k \otimes \tau)) \otimes (k \otimes \tau),\, k\otimes\tau\bigr)\\
+      &\cong
+      \Hom_C\bigl((k\otimes1\otimes k\otimes\tau)
+      \oplus
+      (k\otimes\tau\otimes k\otimes\tau),\,k\otimes\tau\bigr)\\
+      &\cong
+      \Hom_C(k\otimes 1 \otimes k \otimes\tau,\,k\otimes\tau)
+      \oplus
+      \Hom_C(k\otimes \tau \otimes(k \otimes\tau),\,k\otimes\tau)\\
+      &\cong
+      \Hom(k \otimes k,k)\otimes\Hom_C(1 \otimes \tau,\tau)
+      \oplus
+      \Hom(k \otimes k,k)\otimes\Hom_C(\tau\otimes\tau,\tau).
+    \end{aligned}
   \]
 \end{example}
 
@@ -1188,7 +1314,9 @@ Here $\otimes$ is the tensor product of representations $(\pi \otimes \rho, V \o
   Let $G$ be a compact group. Then all its unitary representations are completely reducible.
 \end{lemma}
 
-\subsection{Group Theory}
+\subsection{Representation Theory}
+
+IG remove this since we will only be dealing with finite groups? discuss!
 
 \begin{definition}[Compact Group]
   A compact group is a group $G$ equipped with a topology such that
@@ -1215,6 +1343,28 @@ Here $\otimes$ is the tensor product of representations $(\pi \otimes \rho, V \o
     are compact.
   \end{enumerate}
 \end{example}
+
+\begin{definition}[Representation]
+  \label{def:representation}
+  Let $G$ be a group and $V$ a vector space over a field $\mathbb{F}$ (In our cases $\mathbb{C})$ suffices. A \emph{representation} of \(G\) on \(V\) is a group homomorphism
+  \[
+    \rho : G \longrightarrow \operatorname{GL}(V),
+  \]
+  where $operatorname{GL}(V)$ denotes the group of invertible linear transformations on \(V\). Equivalently
+  \[
+    \rho(gh)=\rho(g)\rho(h),\qquad
+    \rho(e)=I,\qquad
+    \rho(g^{-1})=\rho(g)^{-1}.
+  \]
+  The vector space $V$ is called the \emph{representation space}.
+\end{definition}
+
+\begin{definition}[Projective Representation]
+  Given a group $G$, a linear representation of $G$ over $\mathbb{C}$ of dimension $n$ is a map $U : g \to \mathbb{C}^{n \times n}$.
+  
+\end{definition}
+
+
 
 \subsection{Fusion Trees}
 
@@ -1324,9 +1474,32 @@ Equivalently,
 \]
 Recall that this last condition entails a block diagonal basis for $H$, as $H$ and $S^z$ are simultaneously diagonalizable.
 
-\subsection{Review: The Golden Chain}
+\begin{align*}
+  [H, S^z_{\mathrm{tot}}] = \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sum_{j = 1}^{N} \sigma_j^z ] 
+\end{align*}
+and since operators on different sites commute, only $j = i$ and $j = i+1$ contribute. So we ought to write
+\[
+  \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sigma_i^z + \sigma_{i+1}^z  ] 
+\]
+and now using the identity $[AB,C] = A[B,C] + [A,C]B$:
+\[
+  [\sigma_i^x \sigma_{i+1}^x, \sigma_i^z + \sigma_{i+1}^z  ] = -2i(\sigma_i^y \sigma_{i+1}^x + \sigma_i^x \sigma_{i+1}^y  ) 
+\]
+\[
+  [\sigma_i^y \sigma_{i+1}^y, \sigma_i^z + \sigma_{i+1}^z  ] = 2i(\sigma_i^x \sigma_{i+1}^{y} + \sigma_i^y \sigma_{i+1}^x  )
+\]
+which cancel out. Furtermore, the $z$ spins commute as well. Thus the whole sum is $0$ and we are done.
+
+\subsubsection{Symmetric States}
+
+A state $\ket{\psi}$ is symmetric if $U^n(g) \psi = \psi$. Similarly, its densitiy need require that $U^n(g) \rho U^n(g) = \rho$.
+
+\subsection{Spin Chains}
+
+Here we review the golden chain hamiltonian as introduced by \cite{feiguinInteractingAnyonsTopological2007} and extended in \cite{trebstShortIntroductionFibonacci2008a} as well as generalizations in \cite{gilsAnyonicQuantumSpin2013} and a general account for arbitrary anyon models in \cite{buicanAnyonicChainsTopological2017}. For a treatment in terms of anyonic tensor networks see \cite{ayeniStudiesBraidedNonAbelian2017} and \cite{pfeiferSimulationAnyonsTensor2010} as well as \cite{pfeiferSimulationAnyonsUsing2012}. Furthre generalizations of spin chains using modular categories are given in \cite{eckQuantumLatticeModels2025} (find the others here or what the correct inheritance is).
 
 For the golden chain, we consider $n+2$ Fib anyons as our ground state. Their combined state yields a Fusion Tree $\Hom(\tau^{\otimes n+1}, \tau)$ with intermediate charges $x_1, \ldots , x_n$. These intermediate charges are further restricted as in that there are no possibilities to assign adjacent $1$s to them (In fact this is what causes the dimension of the hilbert space to reduce to $\phi^n$).
+
 
 There is a three local hamiltonian for the golden chain defined as
 \[
@@ -1343,20 +1516,99 @@ Write this three local hamiltonian in an operator form
      &  &  & \varphi^{-\frac{3}{2}} & \varphi^{-1}    \\
   \end{pmatrix}
 \]
-%\[
-%H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
-%  & \begin{array}{ccccc} \ket{1\tau 1} & \ket{\tau\tau 1} & \ket{1\tau\tau}_1 & \ket{\tau 1 \tau}_2 & \ket{\tau \tau, \tau}_3 \end{array} \\
-%  \begin{array}{r} \ket{x_0, \mathbf{1}, \tau} \\ \ket{x_0, \tau, \mathbf{1}} \\ \ket{x_0, \tau, \tau}_1 \\ \ket{x_0, \tau, \tau}_2 \\ \ket{x_0, \tau, \tau}_3 \end{array} & 
-%  \begin{pmatrix}
-%    1 &   &   &               &               \\
-%      & 0 &   &               &               \\
-%      &   & 0 &               &               \\
-%      &   &   & \varphi^{-2}  & \varphi^{-\frac{3}{2}} \\
-%      &   &   & \varphi^{-\frac{3}{2}} & \varphi^{-1}   \\
-%  \end{pmatrix}
-%\end{array}
-%\]
-Note that this is block diagonal over the fusion channel (TODO: change notation).
+
+We can build this as an anyonic operator in $Hom(\tau \otimes \tau, \tau \otimes \tau)$ as
+\[
+  \begin{tikzpicture}[scale=1.2,
+    every node/.style={font=\small},
+    fusion/.style={circle,fill=black,inner sep=1.2pt}
+]
+
+\node at (-2, 0.5) {$H_i = $};
+
+\node at (-1, 0.5) {$E_1$};
+
+\begin{scope}
+  \node[fusion] (v1) at (0,0) {};
+\node[fusion] (v2) at (0,1) {};
+
+\draw (v1) -- (-0.7,-1);
+\draw (v1) -- (0.7,-1);
+
+\draw (v2) -- (0.7,2);
+\draw (v2) -- (-0.7,2);
+
+\draw (v1) -- (v2);
+
+\node[left]  at (-0.7,-1) {$\tau$};
+\node[right] at (0.7,-1) {$\tau$};
+\node[left]  at (-0.7,2) {$\tau$};
+\node[right] at (0.7,2) {$\tau$};
+
+\node[left] at (-0.15,0.5) {$1$};
+
+\end{scope}
+
+\node at (1.5,0.5) {$+$};
+
+\node at (2, 0.5) {$E_\tau$};
+
+\begin{scope}[xshift=3cm]
+  \node[fusion] (v1) at (0,0) {};
+  \node[fusion] (v2) at (0,1) {};
+
+  \draw (v1) -- (-0.7,-1);
+  \draw (v1) -- (0.7,-1);
+
+  \draw (v2) -- (0.7,2);
+  \draw (v2) -- (-0.7,2);
+
+  \draw (v1) -- (v2);
+
+  \node[left]  at (-0.7,-1) {$\tau$};
+  \node[right] at (0.7,-1) {$\tau$};
+  \node[left]  at (-0.7,2) {$\tau$};
+  \node[right] at (0.7,2) {$\tau$};
+
+  \node[left] at (-0.15,0.5) {$\tau$};
+
+\end{scope}
+
+\end{tikzpicture}
+\]
+.
+
+In this case we can view the golden chain approach chosen above as a manualization of the tensor network process.
+
+We can also write $H_i$ in its operator form matrix as
+\[
+  H_{i} \in \bigoplus_{a \in 1,\tau} Hom(\mathbb{C}, \mathbb{C})
+\]
+as 
+\[
+  H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
+  & \begin{array}{cc} 1 & \tau \end{array} \\
+  \begin{array}{r} 1 \\ \tau \end{array} & 
+  \begin{pmatrix}
+   E_1 & 0\\
+   0 & E_\tau   \\
+  \end{pmatrix}
+\end{array}
+\]
+
+\[
+H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
+  & \begin{array}{ccccc} \ket{1\tau 1} & \ket{\tau\tau 1} & \ket{1\tau\tau}_1 & \ket{\tau 1 \tau}_2 & \ket{\tau \tau, \tau}_3 \end{array} \\
+  \begin{array}{r} \ket{x_0, \mathbf{1}, \tau} \\ \ket{x_0, \tau, \mathbf{1}} \\ \ket{x_0, \tau, \tau}_1 \\ \ket{x_0, \tau, \tau}_2 \\ \ket{x_0, \tau, \tau}_3 \end{array} & 
+  \begin{pmatrix}
+    1 &   &   &               &               \\
+      & 0 &   &               &               \\
+      &   & 0 &               &               \\
+      &   &   & \varphi^{-2}  & \varphi^{-\frac{3}{2}} \\
+      &   &   & \varphi^{-\frac{3}{2}} & \varphi^{-1}   \\
+  \end{pmatrix}
+\end{array}
+\]
 
 \subsection{Rydberg-blockade ladder}
 
@@ -1375,7 +1627,40 @@ However now, if we approach this in the case of $SU(2)_\infty$ these fusion rule
 \[
   j_1 \times j_2 = \sum_{j = \left\vert j_1 - j_2 \right\vert }^{j_1 + j_2} 
 \]
-but this chain would have an infinite Hilber Space? Also, lifting to representation operators reveals that there are infinitely many that are not independent.
+Is this the same as the Q deformations? It is for $q = 1$ and $k=\infty$ but what about the intermediates?
+
+\section{MPO-symmetries}
+
+So im not sure how this works completely but there seems to be way more literature on this than on (globally) symmetric tensors. However this also seems to be connected to anyonic networks. Also to the Category of MPS and MPO?
+
+There is an account of (projective) representation on a peps that act on all levels in \cite{bridgemanEffectiveEdgeStates}. Actually there are more such as chapter $IV$ section 2 of \cite{cuiperHouchesLectureNotes2026}, \cite{williamsonMatrixProductOperators2016}
+
+Some sources here: On Lattice Models with Module Categories: \cite{eckQuantumLatticeModels}, \cite{lootensDualitiesOneDimensionalQuantum2023} \cite{lootensDualitiesOneDimensionalQuantum2024} \cite{lootensEntanglementDensityMatrix2025}. Also chapters IV and V of \cite{cuiperHouchesLectureNotes2026}. On the structure see \cite{liuTradingMathematicalPhysical2025}
+
+I think the original motivation for this is to have the following constraint on MPOs:
+
+\[
+  MPO_a \circ MPO_b = \sum_{c}^{} N_{ab}^c MPO_{c} 
+\]
+which we can obtain by a fusion tensor $X_{ab}^c$ that obeys an intertwining property. 
+
+We immediately obtain our case of global symmetry by encoding
+\[
+  \rho(g) = \rho_1(g) \otimes \cdots \otimes \rho_n(g)
+\]
+as a MPO with bond dimension $1$ by setting 
+\[
+  W^{[a]}_{11,ij} = \rho_a(g)_{ij}
+\]
+
+Call $\rho(g) = MPO_g$. Then $\rho(g) \rho(h) = \rho(hg)$ 
+
+If we want $MPO_g MPO_h = MPO_{hg}$ we also have MPO as a unitary representation with bond dimensions $ > 1$. So this generalizes the symmetry approach. 
+
+TODO: check if we can give symmetries such as in the wanniers kramer dual that are given by $Z_i Z_{i+1}$ by not a $Rep(G)$ but instead a $Rep(\mathrm{G} )$ where $\mathrm{G} $ is a groupoid. 
+
+
+
 
 
 \section{implementation}

@@ -50,19 +50,6 @@
 \usepackage[backend=biber, style=alphabetic, maxbibnames=4, isbn=false]{biblatex}
 \addbibresource{bachelors.bib}
 
-\AtEveryBibitem{
-    \clearfield{issn}
-    \clearfield{language}
-    \clearfield{note}
-}
-
-% Format Titles to be Emphasized/Italic
-\DeclareFieldFormat
-  [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
-  {title}{\emph{#1\isdot}}
-
-%This would give a nice format but it is not performant?
-
 %\DeclareFieldFormat{urlprefix}{}
 %
 %% 1. Format the DOI field to look like: [\href{...}{\tt doi:XXX}]
@@ -103,13 +90,12 @@
 %  \printfield{url}%
 %}
 %
-%% Clean up other common fields
-%\AtEveryBibitem{
-%    \clearfield{issn}
-%    \clearfield{language}
-%    \clearfield{note}
-%    \clearfield{urldate} % Removes "visited on..."
-%}
+\AtEveryBibitem{
+    \clearfield{issn}
+    \clearfield{language}
+    \clearfield{note}
+%    \clearfield{urldate}
+}
 
 \newcommand{\ket}[1]{\ensuremath{\left| #1 \right\rangle}}
 \newcommand{\bra}[1]{\ensuremath{\left\langle #1 \right|}}
