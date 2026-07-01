@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[11pt,a4paper]{book}
 \usepackage[inner=0.8in, outer=0.8in]{geometry}
 \usepackage{listings}
 \input{preamble.tex}
@@ -19,7 +19,34 @@
 
 \tableofcontents
 
+
+
 \setcounter{section}{0}
+
+\chapter{Overview}
+
+\section{Symmetries in Physics}
+
+What do i even want to do here? I want to give an overview on the role of symmetries in condensed matter and many body physics that is also of interest to computer scientiests, i.e. describe some sort of of system to compute with. However also, there should be an overview about the flavours of (topological) phases, orders and entanglements. Most important foremost would be a paragraph on what "symmetry" as a concept refers to. Then we would want to classify the symmetries we can (or want to!) adress with tensor networks (and string (spin?) networks!). Landau theory and it's failure would be a great starting point for a condensed matter approach, this is directly correlated with all of topological order, symmetric hamiltonians and dualities. 
+
+So for now im thinking to treat this as a collection of independent chapters. First on global symmetries in tensor networks. Work backwards from the singh papers (however these are actually post-anyon networks (c.f. \cite{pfeiferSimulationAnyonsTensor2010})) and establish the extent that these papers deal with.
+
+Then write one section on the anyonic networks with sparse mentions of symmetries. Of course we could give representations as a special case here if we take the representations to form an anyon theory (really just a fusion category) as given in \cite[§~20]{simonTopologicalQuantum2023} but I do not know if this is desired. Well, the general theory is handled in \cite{devosTensorKitjlJuliaPackage2025} with utmost care, however I would like to give some duly needed proofs (in really all of these papers, I believe the word \emph{proof} only appears once in all of them!) i.e. as done already with our decomposition theorem \ref{DecompositionOfSemisimpleCategories}.
+
+And then it really is just open ended. I think a nice description of dualities is duly managable but this of course requires the discussion of module categories as in \cite{lootensDualitiesOnedimensionalQuantum2024} as well as a restriction on the type of systems we deal with. Another option would be to explore MPO-symmetries, as these share quite a lot of language with our decompositions (in fact, the symmetries they generate are a direct superset of ours!). There is also the consideration of virtual only symmetries, and I currently remember a description of them here \cite{degrootTopologicalPhasesSymmetries2022}. Both the MPO-case and the virtual symmetry case require a discussion of projective symmetries as well.
+
+Someting I currently know nothing about is the theory on \emph{symmetry protected topological} (SPT) phases, but it does sound relevant. \cite{degrootTopologicalPhasesSymmetries2022} also gives some tensor network methods in this context.
+
+The topic of topological order would require a discussion of string nets, and inthereof the toric code. I need to understand this anyways, so why not write it down nicely? 
+
+\section{Review: Landau Theory and it's limitations}
+
+All matter is made of (what exactly?), but can display many different structural properties called \emph{phases}, such as liquid, crystal, solid, (what else? condensations? is there a nice diagram?). These arrangements of matter can be manipulated, should the structural property change we say that a \emph{phase transition} has occured.
+
+Landaus \emph{symmetry breaking} theory \cite{} was thought to classify all phases of matter (What are the 230 Groups/Crystals here?). However, as shown by \cite{wenTopologicalOrdersEdge1995}, there are phases that are not described by spontaneous symmetry breaking but rather a new quantity, the dependence on the topology of the ground state.
+
+There is a nice review here \cite{wenTopologicalOrderLongrange2013}. 
+
 
 \section{Introduction}
 
@@ -31,9 +58,9 @@ Similarly to the concepts above, we introduce categories because there are some 
 
 \begin{definition}[Category]
   \label{def:category}
-  A category $\mathrm{C} $  is build by a collection of of objects, which we usually denote by $obj(\mathrm{C} )$, and a set of morphisms $\Hom_C(A,B)$ for each pair $A,B$ of objects, where we refer to $A$ as the domain and $B$ as the codomain. If we want to refer to an object in $\mathrm{C} $, we usually just write $A \in \mathrm{C}$.
+  A category $\mathrm{C} $  is built by a collection of of objects, which we usually denote by $obj(\mathrm{C} )$, and a set of morphisms $\Hom_C(A,B)$ for each pair $A,B$ of objects, where we refer to $A$ as the domain and $B$ as the codomain. If we want to refer to an object in $\mathrm{C} $, we usually just write $A \in \mathrm{C}$.
 
-  Furthremore, there is a binary operator $\circ : Hom_C(A,B) \times Hom_C(B, C) \to Hom(A,C)$ such that this is associative. Also, we have an identity morphism for each object $A$ denoted by $id_A$ s.t. $id_A \circ f = f$ and $g \circ id_B = g$ for all appropriate morphisms. 
+  Furthermore, there is a binary operator $\circ : Hom_C(A,B) \times Hom_C(B, C) \to Hom(A,C)$ such that this is associative. Also, we have an identity morphism for each object $A$ denoted by $id_A$ s.t. $id_A \circ f = f$ and $g \circ id_B = g$ for all appropriate morphisms. 
 
   We say there is an \emph{isomorphism} between two objects if there exists an inverse morphism (Just copy vakil here.).
 \end{definition}
@@ -76,12 +103,24 @@ called the associator.
 
 We can now make this construction a formal definition:
 
+
+
 \begin{definition}[Monoidal Category]
   \label{def:monoidalCategory}
-  A \emph{monoidal category} is a 5-tuple $(\mathrm{C}, \otimes, I, \alpha, \lambda)$ where ...
+  A monoidal category is a category $C$ equipped with
+  \begin{enumerate}
+    \item A bifunctor $\otimes : C \times C \to C$.
+    \item A unit element $1 \in C$
+    \item An isomorphism
+      \[
+        \alpha : - \otimes (- \otimes -) \to (- \otimes -) \otimes -
+      \]
+    \item Left and right unitors $\gamma : 1 \otimes - \to -$ and $\delta : - \otimes 1 \to -$.
+  \end{enumerate} 
+  We denote this by the triple $(C,\otimes,1)$ where we omit the unitors. Otherwise this is a 5 or 6 tuple TODO.
 \end{definition}
 
-
+TODO: graphical calculus.
 
 
 \subsection{Tensors (Everything here is $fdVect_k$)}
@@ -153,6 +192,8 @@ it follows directly from the definition of global invariance that the tensor mus
     T \in Hom_G(W,V).
   \]
 \end{definition}
+
+TODO: what is the definition of an MPO representation? This could include this as well, maybe as $Hom_{MPO}(W,V)$.
 
 \begin{tikzpicture}[scale=1.0,baseline=(current bounding box.center)]
 
@@ -245,6 +286,9 @@ it follows directly from the definition of global invariance that the tensor mus
 
 \subsection{Review of Symmetric Tensor Networks.}
 
+
+
+
 Generally, we follow the notations of \cite{singhTensorNetworkStates2012a}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollTensorNetworkSimulations2020} which gave an overview for implementing $SU(2)$ invariant tensor networks. A general overview for (Non)abelian symmetries is \cite{singhTensorNetworkDecompositions2010a}, and a detailed account for the abelian $U(1)$ in \cite{singhTensorNetworkStates2011}. There are a multitude of implementations given in major packages, such as ITensor, \cite{fishmanITensorSoftwareLibrary2022}, Cyten, TenPy, \cite{hauschildTensorNetworkPython2024}, QSpace, \cite{weichselbaumQSpaceOpensourceTensor2024} ChemTensor, UniTensor, YasTn (Abelian Only) \cite{ramsYASTNAnotherSymmetric2025} (MPSKit?), (Cytnx (Abelian only i think.))). A general account of symmetries is given in \cite{dissertation} with its respective implementation in \cite{hauschildTensorNetworkPython2024} (We have to build cytens citation manually.)
 
 The motivation for constructing symmetric tensor networks is as follows: Assume we have a (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. If the ground state is unique, we can obtain 
@@ -255,6 +299,76 @@ and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
 \[
   U(g) \ket{\psi_0} = e^{i\theta(g)} \ket{\psi_0}
 \]
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{../experiments/plots/su2_block_structure.pdf}
+  \caption{Three different presentations of the XXZ Hamiltonian. (i): In the default computational basis of spin vectors. (ii) In a reordering of the computational basis into equal spin up (down) classes, i.e. no spin up, one spin up etc... (iii) After changing the basis into the $S^2$ basis.}
+  \label{fig:diagonal_hamiltonians}
+\end{figure}
+
+\begin{definition}[XXZ-Hamiltonian]
+  \label{def:xxzHamiltonian}
+  The XXZ Hamiltonian on $N$ sites is
+  \begin{equation}
+    H 
+    = 
+    J \cdot 
+    \sum_{i = 1}^{N}
+      (\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z  ).
+  \end{equation}
+\end{definition}
+
+As given in \ref{def:xxzHamiltonian}, this acts on the \emph{spin basis} made of states $\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow, \downarrow\}$.
+
+We can plot $H$ and realize the sparsity structure thereof. Furthermore, a suitable rearrangement induces a block structure \ref{fig:diagonal_hamiltonians}.
+
+Now, we can realize about this hamiltonian is that there is a symmetry with the representations of $U(1)$. Lets review this shortly. A representation of $U(1)$ is a group homomorphism
+\[
+  \rho : U(1) \to GL(V), \quad \rho(e^{i\theta_1}) \rho(e^{i\theta_2}) = \rho(e^{i(\theta_1 + \theta_2)}). 
+\]
+
+The XXZ model lives in the Hilbert Space $\mathcal{\MakeUppercase{H}} = (C^2)^n$ and the relevant representation is generated by the total magnetization operator
+\[
+  S^z_{\mathrm{tot}}
+  =
+  \frac12 \sum_{i = 1}^{N} \sigma_i^z
+\]
+The group action is given by
+\[
+  U(\theta)
+  =
+  e^{-i\theta S^z_{\mathrm{tot}}}.
+\]
+
+We now claim that $H$ is invariant under $U(\theta)$.
+\[
+  U(\theta) H U(\theta)^\dagger = H,
+  \qquad \forall \theta \in \mathbb R.
+\]
+Equivalently,
+\[
+  [H,S^z_{\mathrm{tot}}]=0.
+\]
+
+Recall that when two operators commute, we can \emph{simultaneously diagonalize} them \cite[Theorem~1.3.12]{Horn_Johnson_2012}.
+
+\begin{align*}
+  [H, S^z_{\mathrm{tot}}] = \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sum_{j = 1}^{N} \sigma_j^z ] 
+\end{align*}
+and since operators on different sites commute, only $j = i$ and $j = i+1$ contribute. So we ought to write
+\[
+  \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sigma_i^z + \sigma_{i+1}^z  ] 
+\]
+and now using the identity $[AB,C] = A[B,C] + [A,C]B$:
+\[
+  [\sigma_i^x \sigma_{i+1}^x, \sigma_i^z + \sigma_{i+1}^z  ] = -2i(\sigma_i^y \sigma_{i+1}^x + \sigma_i^x \sigma_{i+1}^y  ) 
+\]
+\[
+  [\sigma_i^y \sigma_{i+1}^y, \sigma_i^z + \sigma_{i+1}^z  ] = 2i(\sigma_i^x \sigma_{i+1}^{y} + \sigma_i^y \sigma_{i+1}^x  )
+\]
+which cancel out. Furtermore, the $z$ spins commute as well. Thus the whole sum is $0$ and we are done.
+
 
 
 \subsubsection{MPS}
@@ -273,29 +387,26 @@ and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
     \right)
     \ket{i_1i_2\cdots i_n},
   \]
-  where $A^{[i]}_{i_{k}} \in \mathbb{C}^{D_i \times D_{i} }$.
+  where $A^{[i]}_{i_{k}} \in \mathbb{C}^{D_i \times D_{i+1} }$. The elements of the collection $\{D_i\}_{i \in [n]}$ is referred to as the \emph{bond-dimensions}.
 \end{definition}
 Note that this is a state with closed boundaries. If we want open boundaries we have to replace the trace with appropriate end vectors (nice source?).
 
-\begin{lemma}[IDK if this is true.]
-  A MPS state $\ket{\psi[A]}$ is symmetric under $G$ iff. for every tensor $A^{[i]}$ it holds that
-  \[
-    U(g)A^{[i]}U(g)^{\dagger} = A^{[i]} 
-  \]
-\end{lemma}
-
-Not quite. We know that
+\begin{example}
+  We can represent each product state $\ket{\varPsi} = \ket{\psi}^{\otimes n}$ as a MPS with bond dimension $1$.
+\end{example}
 
 \begin{theorem}[Fundamental Theorem of MPS]
   If two MPS states generated by $A$ and $B$ respectively.
   Figure out what we can do with this. 
   
-  Proof \cite{ciracMatrixProductDensity2017},\cite{vercleyenMathematicalStructureTensor2018}.
+  Proof \cite{ciracMatrixProductDensity2017},\cite{vercleyenMathematicalStructureTensor2018}, \cite{perez-garciaStringOrderSymmetries2008a}.
 \end{theorem}
 
 
 
-\subsection{Review of Anyonic Tensor Networks.}
+\chapter{Decompositions for Categorical Networks}
+
+This chapter generalizes the decomposition in \cite[Equation~27]{singhTensorNetworkStates2012a} to both Fusion Categories and the Representation categories of compact groups. Note that in \cite{devosTensorKitjlJuliaPackage2025}, such a generalization is given for representations of finite groups, which does not include $SU(2)$. However I do not yet know if we should do so, since I not yet sure how to argue the F moves here. If we instead take the deformation $U_q(sl_2)$ we get finiteness (and fusion cats?), unfortunately $U_q(sl_2)$ is not a group.
 
 \begin{tikzpicture}[
   >=latex,
@@ -1218,21 +1329,6 @@ A second advantage would be that we can always represent fusion trees as monoida
 
 The motivation for this section is to introduce the necessary categoy theory background, and provide all the necessary theorems for a format that includes both representations and fusion categories.
 
-\begin{definition}[Monoidal Category]
-  \label{def:monoidalCategory}
-  A monoidal category is a category $C$ equipped with
-  \begin{enumerate}
-    \item A bifunctor $\otimes : C \times C \to C$.
-    \item A unit element $1 \in C$
-    \item An isomorphism
-      \[
-        \alpha : - \otimes (- \otimes -) \to (- \otimes -) \otimes -
-      \]
-    \item Left and right unitors $\gamma : 1 \otimes - \to -$ and $\delta : - \otimes 1 \to -$.
-  \end{enumerate} 
-  We denote this by the triple $(C,\otimes,1)$ where we omit the unitors.
-\end{definition}
-
 \begin{definition}[Semisimple Category]
   An abelian category $C$ is semisimple if every object is either simple or a direct sum of simple objects. An object is \emph{simple} if its only subobjects are $0$ or $X$ itself. Any object can be written as
   \[
@@ -1424,81 +1520,22 @@ and projections
 
 \section{Anyonic Hamiltionians}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.8\textwidth]{../experiments/plots/xxz_hamiltonian.pdf}
-  \caption{\texttt{XXZ} Hamiltonian in both bases.}
-  \label{fig:diagonal_hamiltonians}
-\end{figure}
-
-\begin{definition}[XXZ-Hamiltonian]
-  \label{def:xxzHamiltonian}
-  The XXZ Hamiltonian is
-  \[
-    H 
-    = 
-    J \cdot 
-    \sum_{i = 1}^{N}
-      (\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z  )
-  \]
-\end{definition}
-
-We can plot $H$ and realize the sparsity structure thereof. Furthermore, a suitable rearrangement induces a block structure \ref{fig:diagonal_hamiltonians}.
-
-Now, we can realize about this hamiltonian is that there is a symmetry with the representations of $U(1)$. Lets review this shortly. A representation of $U(1)$ is a map
-\[
-  \rho : U(1) \to GL(V), \quad \rho(e^{i\theta_1}) \rho(e^{i\theta_2}) = \rho(e^{i(\theta_1 + \theta_2)})
-\]
-
-The XXZ model lives in the Hilbert Space $\mathcal{\MakeUppercase{H}} = (C^2)^n$ and the relevant representation is generated by the total magnetization operator
-\[
-  S^z_{\mathrm{tot}}
-  =
-  \frac12 \sum_{i = 1}^{N} \sigma_i^z
-\]
-The group action is given by
-\[
-  U(\theta)
-  =
-  e^{-i\theta S^z_{\mathrm{tot}}}.
-\]
-
-We now claim that $H$ is invariant under $U(\theta)$.
-\[
-  U(\theta) H U(\theta)^\dagger = H,
-  \qquad \forall \theta \in \mathbb R.
-\]
-Equivalently,
-\[
-  [H,S^z_{\mathrm{tot}}]=0.
-\]
-Recall that this last condition entails a block diagonal basis for $H$, as $H$ and $S^z$ are simultaneously diagonalizable.
-
-\begin{align*}
-  [H, S^z_{\mathrm{tot}}] = \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sum_{j = 1}^{N} \sigma_j^z ] 
-\end{align*}
-and since operators on different sites commute, only $j = i$ and $j = i+1$ contribute. So we ought to write
-\[
-  \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sigma_i^z + \sigma_{i+1}^z  ] 
-\]
-and now using the identity $[AB,C] = A[B,C] + [A,C]B$:
-\[
-  [\sigma_i^x \sigma_{i+1}^x, \sigma_i^z + \sigma_{i+1}^z  ] = -2i(\sigma_i^y \sigma_{i+1}^x + \sigma_i^x \sigma_{i+1}^y  ) 
-\]
-\[
-  [\sigma_i^y \sigma_{i+1}^y, \sigma_i^z + \sigma_{i+1}^z  ] = 2i(\sigma_i^x \sigma_{i+1}^{y} + \sigma_i^y \sigma_{i+1}^x  )
-\]
-which cancel out. Furtermore, the $z$ spins commute as well. Thus the whole sum is $0$ and we are done.
 
 \subsubsection{Symmetric States}
 
 A state $\ket{\psi}$ is symmetric if $U^n(g) \psi = \psi$. Similarly, its densitiy need require that $U^n(g) \rho U^n(g) = \rho$.
 
-\subsection{Spin Chains}
+\subsection{1D Lattice Models}
 
-Here we review the golden chain hamiltonian as introduced by \cite{feiguinInteractingAnyonsTopological2007} and extended in \cite{trebstShortIntroductionFibonacci2008a} as well as generalizations in \cite{gilsAnyonicQuantumSpin2013} and a general account for arbitrary anyon models in \cite{buicanAnyonicChainsTopological2017}. For a treatment in terms of anyonic tensor networks see \cite{ayeniStudiesBraidedNonAbelian2017} and \cite{pfeiferSimulationAnyonsTensor2010} as well as \cite{pfeiferSimulationAnyonsUsing2012}. Furthre generalizations of spin chains using modular categories are given in \cite{eckQuantumLatticeModels2025} (find the others here or what the correct inheritance is).
+So from what i can read here (also the nlab or wikipedia) a spin chain specifically only refers to a per site construction with a tensor product hilbert space. An anyon chain is, well, an anyonic chain. These do not admit such a decomposition. So we should call these simply 1D lattice models.
+
+In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically in the $Fib$ model, are introduced simply as the fusion space of $n$ anyons. Further, the authors define a primitive hamiltonian that assigns $-1$ to the interaction $\tau \otimes \tau = 1$ and $0$ to the interaction $\tau \otimes \tau = \tau$. This is in turn realized on the basis of the intermediate states, and evaluated using the method of exact diagonalization \cite{}. This is extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
+
+The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010}, \cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and in terms of categories this is done in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
 
 For the golden chain, we consider $n+2$ Fib anyons as our ground state. Their combined state yields a Fusion Tree $\Hom(\tau^{\otimes n+1}, \tau)$ with intermediate charges $x_1, \ldots , x_n$. These intermediate charges are further restricted as in that there are no possibilities to assign adjacent $1$s to them (In fact this is what causes the dimension of the hilbert space to reduce to $\phi^n$).
+
+Generally, we can define an analogue of a general state of this $N$ site lattice.
 
 
 There is a three local hamiltonian for the golden chain defined as
@@ -1635,7 +1672,7 @@ So im not sure how this works completely but there seems to be way more literatu
 
 There is an account of (projective) representation on a peps that act on all levels in \cite{bridgemanEffectiveEdgeStates}. Actually there are more such as chapter $IV$ section 2 of \cite{cuiperHouchesLectureNotes2026}, \cite{williamsonMatrixProductOperators2016}
 
-Some sources here: On Lattice Models with Module Categories: \cite{eckQuantumLatticeModels}, \cite{lootensDualitiesOneDimensionalQuantum2023} \cite{lootensDualitiesOneDimensionalQuantum2024} \cite{lootensEntanglementDensityMatrix2025}. Also chapters IV and V of \cite{cuiperHouchesLectureNotes2026}. On the structure see \cite{liuTradingMathematicalPhysical2025}
+Some sources here: On Lattice Models with Module Categories: \cite{eckQuantumLatticeModels2025}, \cite{lootensDualitiesOneDimensionalQuantum2023} \cite{lootensDualitiesOneDimensionalQuantum2024} \cite{lootensEntanglementDensityMatrix2025}. Also chapters IV and V of \cite{cuiperHouchesLectureNotes2026}. On the structure see \cite{liuTradingMathematicalPhysical2025}
 
 I think the original motivation for this is to have the following constraint on MPOs:
 
@@ -1664,6 +1701,34 @@ TODO: check if we can give symmetries such as in the wanniers kramer dual that a
 
 
 \section{implementation}
+
+Implementations that are available: 
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\hline
+\textbf{Name} & \textbf{Symmetry} & \textbf{Citation} \\
+\hline
+ITensor & Nonabelian (Fermion?) & \cite{fishmanITensorSoftwareLibrary2022} \\
+Cyten & Categorical & \cite{unfriedCyten} \\
+TeNPy & Abelian & \cite{hauschildTensorNetworkPython2024} \\
+QSpace & Nonabelian & \cite{weichselbaumQSpaceOpensourceTensor2024} \cite{weichselbaumNonabelianSymmetriesTensor2012} \\
+ChemTensor & $SU(2)$ & \cite{QctumChemtensor2026} \\
+UniTensor & ? & \cite{} \\
+YasTn & Abelian & \cite{ramsYASTNAnotherSymmetric2025} \\
+TensorKit.jl & Categorical & \cite{devosTensorKitjlJuliaPackage2025} \\
+Cytnx & Abelian only (i think) & \cite{} \\
+quimb & Fermion? & \cite{} \\
+MPSKit.jl & like TensorKit? & \cite{} \\
+TeMFpy & Fermion? & \cite{temfpy} \\
+abeliantensor & $U(1)$ and  $\mathbb{Z}_n$ & \cite{hauruMhauruAbeliantensors2026} \\
+symmray & Fermion & \cite{gaoFermionicTensorNetwork2025} \cite{grayJcmgraySymmray2026}\\
+grassmanntn & Grassmann & \cite{yosprakobAyosprakobGrassmanntn2026} \\ 
+\hline
+\end{tabular}
+\caption{Overview of tensor network libraries and symmetry support. (There are some closed source things here as well, also what is the software used by singh et al.?)}
+\end{table}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}

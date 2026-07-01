@@ -97,6 +97,16 @@
 %    \clearfield{urldate}
 }
 
+\AtEveryBibitem{%
+  \ifboolexpr{
+    ( test {\ifentrytype{article}} or test {\ifentrytype{online}} )
+    and
+    ( not test {\iffieldundef{doi}} or not test {\iffieldundef{eprint}} )
+  }
+  {\clearfield{url}}
+  {}
+}
+
 \newcommand{\ket}[1]{\ensuremath{\left| #1 \right\rangle}}
 \newcommand{\bra}[1]{\ensuremath{\left\langle #1 \right|}}
 \newcommand{\braket}[2]{\ensuremath{\left\langle #1 \middle| #2 \right\rangle}}
