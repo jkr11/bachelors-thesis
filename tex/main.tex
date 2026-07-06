@@ -1,4 +1,6 @@
+
 \documentclass[11pt,a4paper]{book}
+%\documentclass[11pt,a4paper,draft]{book}
 \usepackage[inner=0.8in, outer=0.8in]{geometry}
 \usepackage{listings}
 \input{preamble.tex}
@@ -33,20 +35,33 @@ So for now im thinking to treat this as a collection of independent chapters. Fi
 
 Then write one section on the anyonic networks with sparse mentions of symmetries. Of course we could give representations as a special case here if we take the representations to form an anyon theory (really just a fusion category) as given in \cite[§~20]{simonTopologicalQuantum2023} but I do not know if this is desired. Well, the general theory is handled in \cite{devosTensorKitjlJuliaPackage2025} with utmost care, however I would like to give some duly needed proofs (in really all of these papers, I believe the word \emph{proof} only appears once in all of them!) i.e. as done already with our decomposition theorem \ref{DecompositionOfSemisimpleCategories}.
 
-And then it really is just open ended. I think a nice description of dualities is duly managable but this of course requires the discussion of module categories as in \cite{lootensDualitiesOnedimensionalQuantum2024} as well as a restriction on the type of systems we deal with. Another option would be to explore MPO-symmetries, as these share quite a lot of language with our decompositions (in fact, the symmetries they generate are a direct superset of ours!). There is also the consideration of virtual only symmetries, and I currently remember a description of them here \cite{degrootTopologicalPhasesSymmetries2022}. Both the MPO-case and the virtual symmetry case require a discussion of projective symmetries as well.
+And then it really is just open ended. I think a nice description of dualities is duly managable but this of course requires the discussion of module categories as in \cite{lootensDualitiesOnedimensionalQuantum2024} as well as a restriction on the type of systems we deal with.
+In fact, \cite{bridgemanInvertibleBimoduleCategories2023} gives us a version of schurs lemma for bimodule categories and mentions its application as clebsch gordan tensors.
+
+Another option would be to explore MPO-symmetries, as these share quite a lot of language with our decompositions (in fact, the symmetries they generate are a direct superset of ours!). There is also the consideration of virtual only symmetries, and I currently remember a description of them here \cite{degrootTopologicalPhasesSymmetries2022}. Both the MPO-case and the virtual symmetry case require a discussion of projective symmetries as well.
 
 Someting I currently know nothing about is the theory on \emph{symmetry protected topological} (SPT) phases, but it does sound relevant. \cite{degrootTopologicalPhasesSymmetries2022} also gives some tensor network methods in this context.
 
 The topic of topological order would require a discussion of string nets, and inthereof the toric code. I need to understand this anyways, so why not write it down nicely? 
 
+On a side note, all of this is an instance of penrose notation \cite{Penrose1971Applications}, and im not yet sure what the difference between spin and string diagrams are. Also, structures such as the metric Lie Algebra TTS given in \cite{nlab:tree_tensor_network_state} seem to admit a very similar calculus, but not with defined braiding as such. Also, there is the topic of categorical computationl using finite groups (but this also seems to be similar to the formalism in Simon TQ), accounts are in the work of Mochon \cite{mochonAnyonsNonsolvableFinite2003}\cite{mochonAnyonComputersSmaller2004a} and i remember something about abelian groups not being suitable in a paper of Bravyi and Koening (find this). And of course, categorical computation in general although i do not believe this matters here \cite{kongCategoricalComputation2023}.
+
 \section{Review: Landau Theory and it's limitations}
 
-All matter is made of (what exactly?), but can display many different structural properties called \emph{phases}, such as liquid, crystal, solid, (what else? condensations? is there a nice diagram?). These arrangements of matter can be manipulated, should the structural property change we say that a \emph{phase transition} has occured.
+All matter is made of (what exactly? 3 fundamentals), but can display many different structural properties called \emph{phases}, such as liquid, crystal, solid, (what else? condensations? is there a nice diagram?). These arrangements of matter can be manipulated, should the structural property change we say that a \emph{phase transition} has occured.
 
 Landaus \emph{symmetry breaking} theory \cite{} was thought to classify all phases of matter (What are the 230 Groups/Crystals here?). However, as shown by \cite{wenTopologicalOrdersEdge1995}, there are phases that are not described by spontaneous symmetry breaking but rather a new quantity, the dependence on the topology of the ground state.
 
-There is a nice review here \cite{wenTopologicalOrderLongrange2013}. 
+There is a nice review here \cite{wenTopologicalOrderLongrange2013}. There is also a paper by Xiao-Gan Wen from 2020, find this. 
 
+
+% If we use this layout, where do we put Fermionic ones? it isnt its own chapter, we only need a summary. Do we put them into the overview/introduction? 
+
+% \chapter{Symmetric Tensor Networks}
+% 
+% \chapter{Fermionic \& Anyonic Tensor Networks}
+% 
+% \chapter{Categorified Tensor Networks}
 
 \section{Introduction}
 
@@ -257,9 +272,9 @@ TODO: what is the definition of an MPO representation? This could include this a
 \draw (T4.west) -- +(-0.8,0);
 \draw (T4.east) -- +(0.8,0);
 
-\node[rep] at (0,-0.85) {$g$};
-\node[rep] at (-0.85,0) {$g$};
-\node[rep] at (0.85,0) {$g$};
+\node[rep] at (0,-0.85) {$U(g)$};
+\node[rep] at (-0.85,0) {$U(g)$};
+\node[rep] at (0.85,0) {$U(g)$};
 
 \end{scope}
 
@@ -302,8 +317,8 @@ and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.9\textwidth]{../experiments/plots/su2_block_structure.pdf}
-  \caption{Three different presentations of the XXZ Hamiltonian. (i): In the default computational basis of spin vectors. (ii) In a reordering of the computational basis into equal spin up (down) classes, i.e. no spin up, one spin up etc... (iii) After changing the basis into the $S^2$ basis.}
+  \includegraphics[width=\textwidth]{../experiments/plots/su2_block_structure.pdf}
+  \caption{Three different presentations of the XXZ Hamiltonian. (i): In the default computational basis of spin vectors. (ii) In a reordering of the computational basis into equal spin up (down) classes, i.e. no spin up, one spin up etc..., here $U$ is simply a permutation matrix. (iii) After changing the basis into the $S^2$ basis.}
   \label{fig:diagonal_hamiltonians}
 \end{figure}
 
@@ -1029,19 +1044,21 @@ $$
 
 \end{proof}
 
+%\begin{corollary}[Operators are block matrices] Figure out how to cite nicely in thm headers.
+%\leavevmode\hfill\cite[Remark~3.4.8]{kongInvitationTopologicalOrders2022b}
 \begin{corollary}[Operators are block matrices]
   \label{cor:operator_blocks}
+  This is also given here: \cite[Remark~3.4.8]{kongInvitationTopologicalOrders2022b} \\
   An operator
   \[
     Hom(V,W) 
     \cong
-    Hom_C\bigl(\bigoplus_a D_a \otimes R_a, \bigoplus_b E_b \otimes R_b \bigr) \cong \bigoplus_{a,b} Hom(D_a, D_b) \otimes Hom_C(R_a, R_b)
+    Hom_C\bigl(\bigoplus_a R_a^{\oplus d_a}, \bigoplus_b R_b^{\oplus e_b} \bigr) \cong \bigoplus_{a,b} Hom(D_a, E_b) \otimes Hom_C(R_a, R_b)
   \]
   and by Schurs lemma this is just
   \[
-    \bigoplus_{a \in Irr(V) \cap Irr(W)} Hom(D_a, E_a)
+    \bigoplus_{a \in Irr(V) \cap Irr(W)} Hom(D_a, E_a) \cong \bigoplus_{a \in Irr(V) \cap Irr(W)} Mat_{d_a \times e_a}(k)
   \]
-  where $Hom(D_a, E_a)$ is a matrix. Lets say that $a$ is in a collection of isomorphisms $L$. Then (show matrix here ...)
 \end{corollary}
 
 \begin{corollary}
@@ -1336,9 +1353,6 @@ The motivation for this section is to introduce the necessary categoy theory bac
   \]
 \end{definition}
 
-\begin{definition}[Abelian Category]
-
-\end{definition}
 
 \begin{lemma}[Schurs 1st lemma (which one?)]
   If $S$ and $T$ are simple objects in a semisimple category over an algebraically closed field (this is always C in our case), then it holds that
@@ -1348,13 +1362,9 @@ The motivation for this section is to introduce the necessary categoy theory bac
       0 , &\text{ if } S \ncong T .
     \end{dcases}
   \]
+  Proof \cite[Theorem~7.5]{ibortIntroductionGroupsGroupoids2019}.
 \end{lemma}
-\begin{proof}
-  Step 1. Let $f : S \to T$ be a morphisms. Since $T$ is simple 
-  \[
-    \mathop{im}(f) \cong 0 \quad \text{ or } \quad \mathop{im}(f) \cong T 
-  \]
-\end{proof}
+
 
 Lets give a coordinatized approach to fusion categories:
 
@@ -1696,92 +1706,98 @@ If we want $MPO_g MPO_h = MPO_{hg}$ we also have MPO as a unitary representation
 
 TODO: check if we can give symmetries such as in the wanniers kramer dual that are given by $Z_i Z_{i+1}$ by not a $Rep(G)$ but instead a $Rep(\mathrm{G} )$ where $\mathrm{G} $ is a groupoid. 
 
+\begin{definition}[2-Category of MPS]
+  \label{def:mpsCategory}
+  Let $A$ and $B$ be arbitrary MPS with bond collections $d^A, d^B$. Now, define the 1-morphism category $Hom(A \to B)$ where the objects are MPO operators $M$ together with a reduction isometry $Y$.
+\end{definition}
 
 
 
 
-\section{implementation}
+
+\section{Appendix}
 
 Implementations that are available: 
 
 \begin{table}[h]
 \centering
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 \hline
-\textbf{Name} & \textbf{Symmetry} & \textbf{Citation} \\
+\textbf{Name} & \textbf{Symmetry} & \textbf{Citation}(Software, Publication) & Language \\
 \hline
-ITensor & Nonabelian (Fermion?) & \cite{fishmanITensorSoftwareLibrary2022} \\
-Cyten & Categorical & \cite{unfriedCyten} \\
-TeNPy & Abelian & \cite{hauschildTensorNetworkPython2024} \\
-QSpace & Nonabelian & \cite{weichselbaumQSpaceOpensourceTensor2024} \cite{weichselbaumNonabelianSymmetriesTensor2012} \\
-ChemTensor & $SU(2)$ & \cite{QctumChemtensor2026} \\
-UniTensor & ? & \cite{} \\
-YasTn & Abelian & \cite{ramsYASTNAnotherSymmetric2025} \\
-TensorKit.jl & Categorical & \cite{devosTensorKitjlJuliaPackage2025} \\
-Cytnx & Abelian only (i think) & \cite{} \\
-quimb & Fermion? & \cite{} \\
-MPSKit.jl & like TensorKit? & \cite{} \\
-TeMFpy & Fermion? & \cite{temfpy} \\
-abeliantensor & $U(1)$ and  $\mathbb{Z}_n$ & \cite{hauruMhauruAbeliantensors2026} \\
-symmray & Fermion & \cite{gaoFermionicTensorNetwork2025} \cite{grayJcmgraySymmray2026}\\
-grassmanntn & Grassmann & \cite{yosprakobAyosprakobGrassmanntn2026} \\ 
+ITensor & Nonabelian (Fermion?) & \cite{fishmanITensorSoftwareLibrary2022} & Julia \\
+Cyten & Categorical & \cite{unfriedCyten} \cite{dissertation} & python \\
+TeNPy & Abelian & \cite{hauschildTensorNetworkPython2024} & python \\
+QSpace & Nonabelian & \cite{weichselbaumQSpaceOpensourceTensor2024} \cite{weichselbaumNonabelianSymmetriesTensor2012} & ? \\
+ChemTensor & $SU(2)$ & \cite{QctumChemtensor2026} & C \\
+UniTensor & ? & \cite{} & ? (Python, C++)\\
+YasTn & Abelian & \cite{ramsYASTNAnotherSymmetric2025} & Python \\
+TensorKit.jl & Categorical & \cite{devosTensorKitjlJuliaPackage2025} & Julia \\
+Cytnx & Abelian only (i think) & \cite{} & C++ \\
+quimb & Fermion? & \cite{} & julia \\
+MPSKit.jl & like TensorKit? & \cite{} & julia \\
+TeMFpy & Fermion? & \cite{temfpy} & python \\
+abeliantensor & $U(1)$ and  $\mathbb{Z}_n$ & \cite{hauruMhauruAbeliantensors2026} & python \\
+symmray & Fermion & \cite{gaoFermionicTensorNetwork2025} \cite{grayJcmgraySymmray2026} & ? \\
+grassmanntn & Grassmann & \cite{yosprakobAyosprakobGrassmanntn2026} & ? \\ 
+SymLibrary & ? (OnSite) & \cite{mcmahonQnlaSymLibrary2019} \cite{mcmahonHolographicDualityLifted2020} & MatLab? \\
 \hline
 \end{tabular}
-\caption{Overview of tensor network libraries and symmetry support. (There are some closed source things here as well, also what is the software used by singh et al.?)}
+\caption{Overview of tensor network libraries and symmetry support. (There are some closed source things here as well, also what is the software used by singh et al.?). Software is included if it has a website or documentation and an account of the symmetries it exploits. Applications or theory are listed in the Citation column.}
 \end{table}
 
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-
-\lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
-    commentstyle=\color{codegreen},
-    keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
-    stringstyle=\color{codepurple},
-    basicstyle=\ttfamily\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
-    showstringspaces=false,
-    showtabs=false,                  
-    tabsize=2
-}
-
-\lstset{style=mystyle}
-
-We want to be able to represent a traditional tensor op such as 
-\begin{lstlisting}[language=Python]
-np.einsum("ijklmn,nkol -> ijmo", a, b)
-\end{lstlisting}
-for symmetric tensors. As we want to reuse code form existing librariries that is written using numpy, it would be ideal to write our classes in a way that would only require substituting $np$ for our own libraries $snp$. Towards this goal we define a abstractclass Tensor
-\begin{lstlisting}[language=Python]
-class Tensor(abc.ABC):
-  ...
-  @abstractmethod
-  def transpose(cls, new_shape:list[int]): ...
-  ...
-\end{lstlisting}
-
-and we implement both an $np$ wrapper $NPTensor$ and our symmetric Tensor as $STensor$, i.e.
-\begin{lstlisting}[language=Python]
-class STensor(Tensor):
-  
-  def __init__(self, ...):
-    self.open_legs:list[int|str]
-    self.fusion_tree:FusionTree(self.open_legs, ...)
-    ...
-  @abstractmethod
-  def transpose(cls, new_shape:list[int]): ...
-  ...
-\end{lstlisting}
-
-\printbibliography
+%\definecolor{codegreen}{rgb}{0,0.6,0}
+%\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+%\definecolor{codepurple}{rgb}{0.58,0,0.82}
+%\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%
+%\lstdefinestyle{mystyle}{
+%    backgroundcolor=\color{backcolour},   
+%    commentstyle=\color{codegreen},
+%    keywordstyle=\color{magenta},
+%    numberstyle=\tiny\color{codegray},
+%    stringstyle=\color{codepurple},
+%    basicstyle=\ttfamily\footnotesize,
+%    breakatwhitespace=false,         
+%    breaklines=true,                 
+%    captionpos=b,                    
+%    keepspaces=true,                 
+%    numbers=left,                    
+%    numbersep=5pt,                  
+%    showspaces=false,                
+%    showstringspaces=false,
+%    showtabs=false,                  
+%    tabsize=2
+%}
+%
+%\lstset{style=mystyle}
+%
+%We want to be able to represent a traditional tensor op such as 
+%\begin{lstlisting}[language=Python]
+%np.einsum("ijklmn,nkol -> ijmo", a, b)
+%\end{lstlisting}
+%for symmetric tensors. As we want to reuse code form existing librariries that is written using numpy, it would be ideal to write our classes in a way that would only require substituting $np$ for our own libraries $snp$. Towards this goal we define a abstractclass Tensor
+%\begin{lstlisting}[language=Python]
+%class Tensor(abc.ABC):
+%  ...
+%  @abstractmethod
+%  def transpose(cls, new_shape:list[int]): ...
+%  ...
+%\end{lstlisting}
+%
+%and we implement both an $np$ wrapper $NPTensor$ and our symmetric Tensor as $STensor$, i.e.
+%\begin{lstlisting}[language=Python]
+%class STensor(Tensor):
+%  
+%  def __init__(self, ...):
+%    self.open_legs:list[int|str]
+%    self.fusion_tree:FusionTree(self.open_legs, ...)
+%    ...
+%  @abstractmethod
+%  def transpose(cls, new_shape:list[int]): ...
+%  ...
+%\end{lstlisting}
+%
+%\printbibliography
 
 \end{document}

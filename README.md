@@ -1,7 +1,27 @@
 Maybe important for tex:
 https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-tikz
 
-## June 10nth
+## July 3rd
+
+If we use this layout, where do we put Fermionic ones? it isnt its own chapter, we only need a summary. Do we put them into the overview/introduction? 
+
+
+\chapter{Symmetric Tensor Networks}
+
+\chapter{Fermionic \& Anyonic Tensor Networks}
+
+\chapter{Categorified Tensor Networks}
+
+## July 2nd
+
+
+Note July 2nd: [@kongInvitationTopologicalOrders2022b] deals with both topological order and has a lot of the categorical language we need already provided. If we adopt this language and notation, we could just pad this out to the graphical calculus. Also this is a lot more familiar notation to me rather then penneys notation, although the latter may be more suitable.
+
+## July 1st
+
+Are there perfect tensors that are also symmetric? For SU(2) apparently not [https://arxiv.org/pdf/1612.04504]. Generally i believe one can show a violation for nonabelians? But there are some with Z_2 symmetry, i.e. Bell states. Are there ones with 6 legs? 5? 
+
+## June 10th
 
 Write down a really nice description of the SU(2) case, i.e. the inner products form a basis for the Hom triple, then the concats thereof form the F move etc... but make this formal. Then furthermore show that while $\alpha$ induces an isomorphisms, it also induces the F move under application of $Hom(-, D)$. I.e. this is valid because of yoneda? But ive never seen this explained like this until now.
 

@@ -1,0 +1,45 @@
+\documentclass[tikz,border=5mm]{standalone}
+\usetikzlibrary{decorations.pathreplacing, calligraphy}
+
+% If you want to use \text{}, uncomment the line below:
+% \usepackage{amsmath} 
+
+\begin{document}
+
+\begin{tikzpicture}[line width=1pt, node distance=1cm]
+
+    \node at (-1.5, 1) {\large $\mathrm{Hom}(A \otimes B \otimes C, D) = \mathrm{span} \left\{ \vphantom{\sum} \right.$};
+
+    \begin{scope}[shift={(1.5,0)}]
+        % Incoming leaves
+        \coordinate (A) at (0,2);
+        \coordinate (B) at (1,2);
+        \coordinate (C) at (2,2);
+        \coordinate (D) at (1.5,0.5);
+        
+        \coordinate (V1) at (0.5, 1.5); 
+        \coordinate (V2) at (1.0, 1); % 
+        
+        \draw (A) -- (D);
+        \draw (B) -- (V1);
+        \draw (V1) -- (V2);
+        \draw (C) -- (V2);
+        \draw (V2) -- (D);
+
+        \filldraw (V1) circle (2pt) node[left=2pt, font=\scriptsize] {$v_1$};
+        \filldraw (V2) circle (2pt) node[right=2pt, font=\scriptsize] {$v_2$};
+
+        \node[above] at (A) {$A$};
+        \node[above] at (B) {$B$};
+        \node[above] at (C) {$C$};
+        \node[below] at (D) {$D$};
+        
+        \node[left, font=\small] at (0.9,0.9) {$i$};
+    \end{scope}
+
+
+    \node at (3.8, 1) {\large $\left. \vphantom{\sum} \right\}$};
+
+\end{tikzpicture}
+
+\end{document}
