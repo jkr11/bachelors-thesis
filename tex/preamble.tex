@@ -48,7 +48,8 @@
 \makeatother
 
 
-\usepackage[backend=biber, style=alphabetic, maxbibnames=4, isbn=false]{biblatex}
+\usepackage[backend=biber, style=alphabetic, maxbibnames=4]{biblatex}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,book,misc]{title}{\textcolor{blue}{#1}}
 \addbibresource{bachelors.bib}
 
 %\DeclareFieldFormat{urlprefix}{}
@@ -92,10 +93,10 @@
 %}
 %
 \AtEveryBibitem{
-    \clearfield{issn}
-    \clearfield{language}
-    \clearfield{note}
-%    \clearfield{urldate}
+  \clearfield{issn}
+  \clearfield{language}
+  \clearfield{note}
+  \clearfield{urldate}
 }
 
 \AtEveryBibitem{%
