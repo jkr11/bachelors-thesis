@@ -1,10 +1,9 @@
-\documentclass[tikz,border=5mm]{standalone}
-\usetikzlibrary{decorations.pathreplacing, calligraphy}
+\documentclass{article}
 
-% If you want to use \text{}, uncomment the line below:
-% \usepackage{amsmath} 
+\input{preamble.tex}
 
 \begin{document}
+
 
 \begin{tikzpicture}[line width=1pt, node distance=1cm]
 
@@ -42,4 +41,256 @@
 
 \end{tikzpicture}
 
+
+\begin{tikzpicture}[line width=1pt, node distance=1cm]
+
+        % Incoming leaves
+        \coordinate (A) at (0,2);
+        \coordinate (B) at (1,2);
+        \coordinate (C) at (2,2);
+        \coordinate (D) at (1.5,0.5);
+        
+        \coordinate (V1) at (0.5, 1.5); 
+        \coordinate (V2) at (1.0, 1); % 
+        
+        \draw (A) -- (D);
+        \draw (B) -- (V1);
+        \draw (V1) -- (V2);
+        \draw (C) -- (V2);
+        \draw (V2) -- (D);
+
+        \filldraw (V1) circle (2pt) node[left=2pt, font=\scriptsize] {$\mu$};
+        \filldraw (V2) circle (2pt) node[left=2pt, font=\scriptsize] {$\nu$};
+
+        \node[above] at (A) {$A$};
+        \node[above] at (B) {$B$};
+        \node[above] at (C) {$C$};
+        \node[below] at (D) {$D$};
+        
+        \node[left, font=\scriptsize] at (1.5,1.5) {$e$};
+        \node at (2.5,1) {$=$};
+        \node at (4,1) {$\displaystyle\sum_{f,\alpha,\beta} [F^{ABC}_{D}]_{(e \mu \nu)}^{(f \alpha \beta)} $};
+
+        \begin{scope}[shift={(5,0)}]
+        % Incoming leaves
+        \coordinate (A) at (0,2);
+        \coordinate (B) at (1,2);
+        \coordinate (C) at (2,2);
+        \coordinate (D) at (1.5,0.5);
+        
+        \coordinate (V2) at (1.0, 1); 
+        \coordinate (V1) at (1.5, 1.5); % 
+        
+        \draw (A) -- (D);
+        \draw (B) -- (V1);
+        \draw (V1) -- (V2);
+        \draw (C) -- (V1);
+        \draw (V2) -- (D);
+
+        \filldraw (V1) circle (2pt) node[left=2pt, font=\scriptsize] {$v_1$};
+        \filldraw (V2) circle (2pt) node[right=2pt, font=\scriptsize] {$v_2$};
+
+        \node[above] at (A) {$A$};
+        \node[above] at (B) {$B$};
+        \node[above] at (C) {$C$};
+        \node[below] at (D) {$D$};
+        
+        \node[left, font=\small] at (0.9,0.9) {$i$};
+    \end{scope}
+
+\end{tikzpicture}
+
+\begin{equation*}
+  \vert 0 \rangle =
+\raisebox{-20pt}{
+\begin{tikzpicture}[scale=1.5]
+    \fill[gray!30] (3,0) ellipse (1 and 0.5);
+    \draw[thick] (3,0) ellipse (1 and 0.5);
+    
+    \draw[thick] (2.7,0) ellipse (0.6 and 0.3);
+    \node at (3.35,-0.2) {$1$};
+    \node[scale=2.5] at (2.4, 0) {$\cdot$};
+    \node at (2.5,0.1) {$\tau$};
+    \node[scale=2.5] at (3.0, 0) {$\cdot$};
+    \node at (3.1,0.1) {$\tau$};
+    \node[scale=2.5] at (3.6, 0) {$\cdot$};
+    \node at (3.7,0.1) {$\tau$};
+    \node at (4.0,-0.3) {$\tau$};
+\end{tikzpicture}
+} 
+\quad
+\vert 1 \rangle = 
+\raisebox{-20pt}{
+\begin{tikzpicture}[scale=1.5]    
+    \fill[gray!30] (3,0) ellipse (1 and 0.5);
+    \draw[thick] (3,0) ellipse (1 and 0.5);
+    
+    \draw[thick] (2.7,0) ellipse (0.6 and 0.3);
+    \node at (3.35,-0.2) {$\tau$};
+
+    \node[scale=2.5] at (2.4, 0) {$\cdot$};
+    \node at (2.5,0.1) {$\tau$};
+    \node[scale=2.5] at (3.0, 0) {$\cdot$};
+    \node at (3.1,0.1) {$\tau$};
+    \node[scale=2.5] at (3.6, 0) {$\cdot$};
+    \node at (3.7,0.1) {$\tau$};
+    \node at (4.0,-0.3) {$\tau$};
+\end{tikzpicture}
+}
+\quad 
+\vert NC \rangle =
+\raisebox{-20pt}{
+\begin{tikzpicture}[scale=1.5]
+
+    \fill[gray!10] (3,0) ellipse (1 and 0.5);
+    \draw[thick] (3,0) ellipse (1 and 0.5);
+    
+    \draw[thick] (2.7,0) ellipse (0.6 and 0.3);
+    \node at (3.35,-0.2) {$\tau$};
+    \node[scale=2.5] at (2.4, 0) {$\cdot$};
+    \node at (2.5, 0.1) {$\tau$};
+    \node[scale=2.5] at (3.0, 0) {$\cdot$};
+    \node at (3.1,0.1) {$\tau$};
+    \node[scale=2.5] at (3.6, 0) {$\cdot$};
+    \node at (3.7,0.1) {$\tau$};
+    \node at (4.0,-0.3) {$1$};
+
+\end{tikzpicture}
+}
+\end{equation*}
+
+\begin{tikzpicture}
+    
+\end{tikzpicture}
+\begin{tikzpicture}[scale=1.5]
+
+    \fill[gray!10] (3,0) ellipse (1 and 0.5);
+    \draw[thick] (3,0) ellipse (1 and 0.5);
+    
+    \draw[thick] (2.7,0) ellipse (0.6 and 0.3);
+    \node at (3.35,-0.2) {$\tau$};
+    \node[scale=2.5] at (2.4, 0) {$\cdot$};
+    \node at (2.5, 0.1) {$\tau$};
+    \node[scale=2.5] at (3.0, 0) {$\cdot$};
+    \node at (3.1,0.1) {$\tau$};
+    \node[scale=2.5] at (3.6, 0) {$\cdot$};
+    \node at (3.7,0.1) {$\tau$};
+    \node at (4.0,-0.3) {$1$};
+    \node[scale=2.5] at (2.8, -0.4) {$\cdot$};
+    \draw (3.0, 0.0) -- (2.8, -0.4);
+    \draw (3.6, 0.0) -- (2.8, -0.4); 
+    \draw (2.8, -0.4) -- (1.9, -1.0);
+    \draw (2.4, 0.0) -- (1.9, -1.0);
+\end{tikzpicture}
+
+% https://q.uiver.app/#q=WzAsMTQsWzAsMCwiKEFcXG90aW1lcyBCKVxcb3RpbWVzIEMiXSxbMiwwLCJBIFxcb3RpbWVzIChCIFxcb3RpbWVzIEMpIl0sWzAsMiwiSG9tKChBXFxvdGltZXMgQikgXFxvdGltZXMgQywgRCkiXSxbMiwyLCJIb20oQVxcb3RpbWVzIChCIFxcb3RpbWVzIEMpLCBEKSJdLFswLDUsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c19jIFZee0FCfV9jIFxcb3RpbWVzIFZee2NDfV9EIl0sWzIsNSwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX2MgVl57QWN9X0QgXFxvdGltZXMgVl57QkN9X2MiXSxbMSwyLCJcXGNvbmciXSxbMSw0LCJcXGNvbmciXSxbMCw2LCJcXHZlcnQgKEEsQik7YztcXG11XFxyYW5nbGUgXFxvdGltZXMgXFx2ZXJ0IGMsQzsgRDsgXFxudSBcXHJhbmdsZSJdLFsyLDYsIlxcc3VtX3tmLFxcYWxwaGEsXFxiZXRhfSBbRl9EXntBQkN9XV97KGNcXG11XFxudSl9XnsoZlxcYWxwaGFcXGJldGEpfSBcXHZlcnQgQSxmO0Q7XFxiZXRhXFxyYW5nbGUgXFxvdGltZXMgXFx2ZXJ0IEIsQzsgZjsgXFxhbHBoYSBcXHJhbmdsZSJdLFsxLDUsIlxcdGV4dHtjaG9pY2Ugb2YgYmFzaXN9Il0sWzAsNCwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX2MgSG9tKEEgXFxvdGltZXMgQiwgYykgXFxvdGltZXMgSG9tKGMgXFxvdGltZXMgQywgRCkiXSxbMiw0LCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2QgXFxpbiBJcnIoXFxtYXRoc2Z7Q2F0fSl9IEhvbShBIFxcb3RpbWVzIGQsIEQpIFxcb3RpbWVzIEhvbShCIFxcb3RpbWVzIEMsIGQpIl0sWzEsMywiXFx0ZXh0e3NlbWlzaW1wbGljaXR5fSJdLFswLDIsIkhvbSgtLEQpIiwxXSxbMSwzLCJIb20oLSxEKSIsMV0sWzAsMSwiXFxhbHBoYV97QUJDfSJdLFs0LDgsIlxcaW4iLDMseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbOCw5LCIiLDEseyJsZXZlbCI6Miwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsyLDExLCJcXHVuZGVyc2V0e1xcdGV4dHtzZW1pc2ltcGxpY2l0eX19e1xcY29uZ30iLDMseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMywxMiwiXFx1bmRlcnNldHtcXHRleHR7c2VtaXNpbXBsaWNpdHl9fXtcXGNvbmd9IiwzLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzExLDQsIlxcY29uZyIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsxMiw1LCJcXGNvbmciLDMseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNSw5LCJcXGluIiwzLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzE2LDYsIlxcdGV4dHtZb25lZGEtbGlmdGluZ30iLDEseyJzaG9ydGVuIjp7InNvdXJjZSI6MjB9LCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XV0=
+\[\begin{tikzcd}
+	{(A\otimes B)\otimes C} && {A \otimes (B \otimes C)} \\
+	\\
+	{Hom((A\otimes B) \otimes C, D)} & \cong & {Hom(A\otimes (B \otimes C), D)} \\
+	& {\text{semisimplicity}} \\
+	{\displaystyle\bigoplus_c Hom(A \otimes B, c) \otimes Hom(c \otimes C, D)} & \cong & {\displaystyle\bigoplus_{d \in Irr(\mathsf{Cat})} Hom(A \otimes d, D) \otimes Hom(B \otimes C, d)} \\
+	{\displaystyle\bigoplus_c V^{AB}_c \otimes V^{cC}_D} & {\text{choice of basis}} & {\displaystyle\bigoplus_c V^{Ac}_D \otimes V^{BC}_c} \\
+	{\vert (A,B);c;\mu\rangle \otimes \vert c,C; D; \nu \rangle} && {\sum_{f,\alpha,\beta} [F_D^{ABC}]_{(c\mu\nu)}^{(f\alpha\beta)} \vert A,f;D;\beta\rangle \otimes \vert B,C; f; \alpha \rangle}
+	\arrow[""{name=0, anchor=center, inner sep=0}, "{\alpha_{ABC}}", from=1-1, to=1-3]
+	\arrow["{Hom(-,D)}"{description}, from=1-1, to=3-1]
+	\arrow["{Hom(-,D)}"{description}, from=1-3, to=3-3]
+	\arrow["{\underset{\text{semisimplicity}}{\cong}}"{marking, allow upside down}, draw=none, from=3-1, to=5-1]
+	\arrow["{\underset{\text{semisimplicity}}{\cong}}"{marking, allow upside down}, draw=none, from=3-3, to=5-3]
+	\arrow["\cong"{marking, allow upside down}, draw=none, from=5-1, to=6-1]
+	\arrow["\cong"{marking, allow upside down}, draw=none, from=5-3, to=6-3]
+	\arrow["\in"{marking, allow upside down}, draw=none, from=6-1, to=7-1]
+	\arrow["\in"{marking, allow upside down}, draw=none, from=6-3, to=7-3]
+	\arrow[equals, from=7-1, to=7-3]
+	\arrow["{\text{Yoneda-lifting}}"{description}, draw=none, from=0, to=3-2]
+\end{tikzcd}\]
+
+
+Let $f : E \to A \otimes B$ and $g : D \to E \otimes C$.
+
+%\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+%\newcommand{\green}[1]{\textcolor{green}{#1}}
+
+% https://q.uiver.app/#q=WzAsMTIsWzAsMCwiKEFcXG90aW1lcyBCKVxcb3RpbWVzIEMiXSxbMiwwLCJBIFxcb3RpbWVzIChCIFxcb3RpbWVzIEMpIl0sWzAsMiwiSG9tKChBXFxvdGltZXMgQikgXFxvdGltZXMgQywgRCkiXSxbMiwyLCJIb20oQVxcb3RpbWVzIChCIFxcb3RpbWVzIEMpLCBEKSJdLFswLDUsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c19jIFZee0FCfV9jIFxcb3RpbWVzIFZee2NDfV9EIl0sWzIsNSwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX2MgVl57QWN9X0QgXFxvdGltZXMgVl57QkN9X2MiXSxbMSw0LCJcXGNvbmciXSxbMCw2LCJcXHVuZGVyc2V0e1xcYmx1ZXtcXG11IFxcaW4gMSxcXGxkb3RzLCBOXntBQn1fY30gXFxxdWFkIFxcYmx1ZXtcXG51IFxcaW4gMSxcXGxkb3RzLE5ee2NDLER9fX17XFx2ZXJ0IChBLEIpO2M7XFxtdVxccmFuZ2xlIFxcb3RpbWVzIFxcdmVydCBjLEM7IEQ7IFxcbnUgXFxyYW5nbGV9Il0sWzIsNiwiXFxkaXNwbGF5c3R5bGVcXHN1bV97ZixcXGFscGhhLFxcYmV0YX0gW0ZfRF57QUJDfV1feyhjXFxtdVxcbnUpfV57KGZcXGFscGhhXFxiZXRhKX0gXFx2ZXJ0IEEsZjtEO1xcYmV0YVxccmFuZ2xlIFxcb3RpbWVzIFxcdmVydCBCLEM7IGY7IFxcYWxwaGEgXFxyYW5nbGUiXSxbMCw0LCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2NcXGluIElycihDQVQpfSBIb20oQSBcXG90aW1lcyBCLCBjKSBcXG90aW1lcyBIb20oYyBcXG90aW1lcyBDLCBEKSJdLFsyLDQsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c197ZCBcXGluIElycihcXG1hdGhzZntDYXR9KX0gSG9tKEEgXFxvdGltZXMgZCwgRCkgXFxvdGltZXMgSG9tKEIgXFxvdGltZXMgQywgZCkiXSxbMSw1LCJcXGNvbmciXSxbMCwyLCJIb20oLSxEKSIsMV0sWzEsMywiSG9tKC0sRCkiLDFdLFswLDEsIlxcdW5kZXJzZXR7XFxzaW19e1xcYWxwaGFfe0FCQ319Il0sWzQsNywiXFxpbiIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs3LDgsIlxcdW5kZXJzZXR7XFxncmVlbntcXHRleHR7Nmotc3ltYm9sc319fXtGXntBQkN9X0R9IiwxLHsic2hvcnRlbiI6eyJzb3VyY2UiOjEwLCJ0YXJnZXQiOjEwfX1dLFsyLDksIlxcdW5kZXJzZXR7XFx0ZXh0e1xcZ3JlZW57c2VtaXNpbXBsaWNpdHl9fX17XFxjb25nfSIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFszLDEwLCJcXHVuZGVyc2V0e1xcdGV4dHtcXGdyZWVue3NlbWlzaW1wbGljaXR5fX19e1xcY29uZ30iLDMseyJvZmZzZXQiOi0yLCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbOSw0LCI9IiwzLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzEwLDUsIj0iLDMseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNSw4LCJcXGluIiwzLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzIsMywiXFx1bmRlcnNldHtcXHNpbX17XFxhbHBoYV97QSxCLEN9fSJdLFsyLDMsIlxcc21hbGxcXGdyZWVue1xcdGV4dHthc3NvY2lhdG9yIGluZHVjZXMgaXNvbW9ycGhpbXMgdW5kZXIgeW9uZWRhfX0iLDAseyJvZmZzZXQiOjUsInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
+\[\begin{tikzcd}
+	{(A\otimes B)\otimes C} && {A \otimes (B \otimes C)} \\
+	\\
+	{Hom((A\otimes B) \otimes C, D)} && {Hom(A\otimes (B \otimes C), D)} \\
+	\\
+	{\displaystyle\bigoplus_{c\in Irr(CAT)} Hom(A \otimes B, c) \otimes Hom(c \otimes C, D)} & \cong & {\displaystyle\bigoplus_{d \in Irr(\mathsf{Cat})} Hom(A \otimes d, D) \otimes Hom(B \otimes C, d)} \\
+	{\displaystyle\bigoplus_c V^{AB}_c \otimes V^{cC}_D} & \cong & {\displaystyle\bigoplus_c V^{Ac}_D \otimes V^{BC}_c} \\
+	{\underset{\blue{\mu \in 1,\ldots, N^{AB}_c} \quad \blue{\nu \in 1,\ldots,N^{cC,D}}}{\vert (A,B);c;\mu\rangle \otimes \vert c,C; D; \nu \rangle}} && {\displaystyle\sum_{f,\alpha,\beta} [F_D^{ABC}]_{(c\mu\nu)}^{(f\alpha\beta)} \vert A,f;D;\beta\rangle \otimes \vert B,C; f; \alpha \rangle} \\
+\begin{tikzpicture}[line width=1pt, node distance=1cm]
+    % First diagram
+    \coordinate (A) at (0,2);
+    \coordinate (B) at (1,2);
+    \coordinate (C) at (2,2);
+    \coordinate (D) at (1.5,0.5);
+
+    \coordinate (V1) at (0.5,1.5);
+    \coordinate (V2) at (1.0,1);
+
+    \draw (A) -- (D);
+    \draw (B) -- (V1);
+    \draw (V1) -- (V2);
+    \draw (C) -- (V2);
+    \draw (V2) -- (D);
+
+    \filldraw (V1) circle (2pt) node[left=2pt,font=\scriptsize] {$\mu$};
+    \filldraw (V2) circle (2pt) node[left=2pt,font=\scriptsize] {$\nu$};
+
+    \node[above] at (A) {$A$};
+    \node[above] at (B) {$B$};
+    \node[above] at (C) {$C$};
+    \node[below] at (D) {$D$};
+
+    \node[left,font=\scriptsize] at (1.5,1.5) {$e$};
+\end{tikzpicture}
+& =  &
+\hspace{-1.8cm}%
+\begin{tikzpicture}[line width=1pt, node distance=1cm, xshift=-2cm]
+    \begin{scope}[xshift=-2]
+        
+    \node at (-1.3,1) 
+    {$\displaystyle\sum_{f,\alpha,\beta}
+    [F^{ABC}_{D}]_{(e\mu\nu)}^{(f\alpha\beta)}$};
+
+    \coordinate (A) at (0,2);
+    \coordinate (B) at (1,2);
+    \coordinate (C) at (2,2);
+    \coordinate (D) at (1.5,0.5);
+
+    \coordinate (V2) at (1.0,1);
+    \coordinate (V1) at (1.5,1.5);
+
+    \draw (A) -- (D);
+    \draw (B) -- (V1);
+    \draw (V1) -- (V2);
+    \draw (C) -- (V1);
+    \draw (V2) -- (D);
+
+    \filldraw (V1) circle (2pt) node[left=2pt,font=\scriptsize] {$v_1$};
+    \filldraw (V2) circle (2pt) node[right=2pt,font=\scriptsize] {$v_2$};
+
+    \node[above] at (A) {$A$};
+    \node[above] at (B) {$B$};
+    \node[above] at (C) {$C$};
+    \node[below] at (D) {$D$};
+
+    \node[left,font=\small] at (0.9,0.9) {$i$};
+    \end{scope}
+\end{tikzpicture}
+	\arrow["{\underset{\sim}{\alpha_{ABC}}}", from=1-1, to=1-3]
+	\arrow["{Hom(-,D)}"{description}, from=1-1, to=3-1]
+	\arrow["{Hom(-,D)}"{description}, from=1-3, to=3-3]
+	\arrow["{\underset{\sim}{\alpha_{A,B,C}}}", from=3-1, to=3-3]
+	\arrow["{\green{\text{associator induces isomorphims under yoneda}}}", shift right=5, draw=none, from=3-1, to=3-3]
+	\arrow["{\underset{\text{\green{semisimplicity}}}{\cong}}"{marking, allow upside down}, draw=none, from=3-1, to=5-1]
+	\arrow["{\underset{\text{\green{semisimplicity}}}{\cong}}"{marking, allow upside down}, shift left=2, draw=none, from=3-3, to=5-3]
+	\arrow["{=}"{marking, allow upside down}, draw=none, from=5-1, to=6-1]
+	\arrow["{=}"{marking, allow upside down}, draw=none, from=5-3, to=6-3]
+	\arrow["\in"{marking, allow upside down}, draw=none, from=6-1, to=7-1]
+	\arrow["\in"{marking, allow upside down}, draw=none, from=6-3, to=7-3]
+	\arrow["{\underset{\green{\text{6j-symbols}}}{F^{ABC}_D}}"{description},  from=7-1, to=7-3]
+\end{tikzcd}\]
 \end{document}

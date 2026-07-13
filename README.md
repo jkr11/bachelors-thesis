@@ -1,6 +1,20 @@
 Maybe important for tex:
 https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-tikz
 
+## July 13th
+
+How do we make the difference between an mps and a spin chain apparent?
+
+Also, i probably need a description of anyonic circuits, as we would like to simulate these using our networks and ideally benchmark to some other anyonic simulator? (DO these exist? what happened to the conell code? Email exact synthesis authors for their code maybe as well.). The description would also be strange here, since we would like to have braidings, and braidings would be elements of Hom(tau tumes tau, tau times tau). I guess the representation of these is then with the R factor in front.
+
+What does this mean for circuits in general? Symmetric circuits (is this a real thing?) are generally not universal, but Fib circuits for example are.
+
+The question is i guess, if we can reduce the size of some of the naive matrices chosen here, and (2) how is leakage error captured here? Just draw the picture i guess. The qubits would also be superpositions of the initial state  but with only 1 / 0 as coeffs.
+
+## July 8th
+
+I really need to formalize the different notions of product we are using. In fact i believe we are using enriched categories over $\mathbb{C}$ and they admit the copower over $C$ vector spaces (This would be the tensor product used in the isotypic decomposition.).
+
 ## July 3rd
 
 If we use this layout, where do we put Fermionic ones? it isnt its own chapter, we only need a summary. Do we put them into the overview/introduction? 

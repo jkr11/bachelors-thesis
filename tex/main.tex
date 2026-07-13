@@ -7,11 +7,14 @@
 
 \date{\today}
 \makeatletter
+\definecolor{RoyalBlue}{HTML}{4169E1}
+\definecolor{CiteViolet}{HTML}{7B2CBF} % readable violet
 \hypersetup{
     colorlinks=true,
-		linkcolor=red,
-		citecolor=orange,
-    urlcolor=black
+		%linkcolor=green!50!black,
+    linkcolor = CiteViolet,
+		citecolor=Mulberry,
+    urlcolor=RoyalBlue
 }
 \makeatother
 
@@ -748,6 +751,8 @@ to[out=-45,in=90]
   \[
     V
     \cong
+    \bigoplus_{a \in L} \bigoplus_{\_ = 1}^{D_a^V} a
+    \cong
     \bigoplus_{a\in L} R_a^{\oplus m_a}.
   \]
 
@@ -863,12 +868,12 @@ $$
   Let $C$ be a semisimple, monoidal, $k$-linear category whose tensor product is $k$-linear in each variable, with simple objects $\{R_a\}_{a\in L}$ and let $V_i, W_i$ be a collection of objects in $C$.
   Every morphism
   \[
-    T\in \mathrm{Hom}_C\left(\bigotimes_i V_i, \bigotimes_i W_{i}\right)
+    T\in \mathrm{Hom}_C\left(\bigotimes_{i = 1}^n V_i, \bigotimes_{i = 1}^m W_{i}\right)
   \]
   admit a decomposition as
   \[
     T \in \bigoplus_{\hat a,\hat b}
-    P^{(\hat a,\hat b)} \otimes Hom_C(R_{\hat a},R_{\hat b}),
+    P^{\hat a,\hat b} \otimes Hom_C(R_{\hat a},R_{\hat b}),
   \]
   where $\hat a = (a_1, \ldots , a_n )$ and $P$ is a $k$-vector space of dimension ???
 
@@ -1656,6 +1661,114 @@ H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
   \end{pmatrix}
 \end{array}
 \]
+
+\subsection{Anyonic States}
+
+For simple lattice states, \cite{singhMatrixProductStates2014} defines a bipartition of the lattice into anyons $A$ and $B$. Then we consider the whole space under charge $a_{tot}$ as
+\[
+  V_{a_{tot}} = \bigoplus_{N_{ab}^{a_{tot} } = 1} (V^{A}_a \otimes V^{B}_b)
+\] 
+What i dont get here is why we are allowed to tensor both these sectors together without the space $V_{ab}^{a_{tot} }$ explicitely.
+
+TODO delete all of this and introduce this over the Hom category.
+
+Anyhow, the fundamental building blocks we are using are the vector spaces $V^{ab}_c$ (where we refer to this as the fusion space from types $a$ and $b$ to $c$). This allows us to build the vector space of two anyonic types $a,b$ as the sum over the fusion outcome:
+\[
+  V^{ab} = \bigoplus_{c \in Irr(C)} V^{ab}_c  
+\]
+
+We can directly introduce the $R$ move (a braiding of the initial anyons) to obtain the isomorphic space $V^{ba}$ as
+\[
+  R : \bigoplus_{c \in Irr(C)} V^{ab}_c  \cong \bigoplus_{c \in Irr(C)} V^{ba}_c  
+\] 
+
+We can also write the space $V^{ab}_c = Hom(a \otimes b, c)$ in the categorical language. Here we also need to realize that there is a difference between the isomorphism $\beta$ and the action of $R$, which is really on the hom space $\Hom(-, c)$. So this would be a yoneda perspective? Since we know $R$ for all $a,b,c \in C$, we also know the action of $R$ as an isomorphism. Well technically i believe that this allows us to determine for all simples $c$, and then semisimplicity extends this to all subjects (this would be nice to write down) and then the yoneda embedding is enough to know the whole space. Similarly, in our Rep(G) categories (which i actually belive to be symmetric? Find this in etingof) 
+
+I think we may be able to build a nice summary with this diagram:
+% https://q.uiver.app/#q=WzAsMTIsWzAsMCwiKEFcXG90aW1lcyBCKVxcb3RpbWVzIEMiXSxbMiwwLCJBIFxcb3RpbWVzIChCIFxcb3RpbWVzIEMpIl0sWzAsMiwiSG9tKChBXFxvdGltZXMgQikgXFxvdGltZXMgQywgRCkiXSxbMiwyLCJIb20oQVxcb3RpbWVzIChCIFxcb3RpbWVzIEMpLCBEKSJdLFswLDUsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c19jIFZee0FCfV9jIFxcb3RpbWVzIFZee2NDfV9EIl0sWzIsNSwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX2MgVl57QWN9X0QgXFxvdGltZXMgVl57QkN9X2MiXSxbMSw0LCJcXGNvbmciXSxbMCw2LCJcXHVuZGVyc2V0e1xcYmx1ZXtcXG11IFxcaW4gMSxcXGxkb3RzLCBOXntBQn1fY30gXFxxdWFkIFxcYmx1ZXtcXG51IFxcaW4gMSxcXGxkb3RzLE5ee2NDLER9fX17XFx2ZXJ0IChBLEIpO2M7XFxtdVxccmFuZ2xlIFxcb3RpbWVzIFxcdmVydCBjLEM7IEQ7IFxcbnUgXFxyYW5nbGV9Il0sWzIsNiwiXFxkaXNwbGF5c3R5bGVcXHN1bV97ZixcXGFscGhhLFxcYmV0YX0gW0ZfRF57QUJDfV1feyhjXFxtdVxcbnUpfV57KGZcXGFscGhhXFxiZXRhKX0gXFx2ZXJ0IEEsZjtEO1xcYmV0YVxccmFuZ2xlIFxcb3RpbWVzIFxcdmVydCBCLEM7IGY7IFxcYWxwaGEgXFxyYW5nbGUiXSxbMCw0LCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2NcXGluIElycihDQVQpfSBIb20oQSBcXG90aW1lcyBCLCBjKSBcXG90aW1lcyBIb20oYyBcXG90aW1lcyBDLCBEKSJdLFsyLDQsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c197ZCBcXGluIElycihcXG1hdGhzZntDYXR9KX0gSG9tKEEgXFxvdGltZXMgZCwgRCkgXFxvdGltZXMgSG9tKEIgXFxvdGltZXMgQywgZCkiXSxbMSw1LCJcXGNvbmciXSxbMCwyLCJIb20oLSxEKSIsMV0sWzEsMywiSG9tKC0sRCkiLDFdLFswLDEsIlxcdW5kZXJzZXR7XFxzaW19e1xcYWxwaGFfe0FCQ319Il0sWzQsNywiXFxpbiIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs3LDgsIlxcdW5kZXJzZXR7XFxncmVlbntcXHRleHR7Nmotc3ltYm9sc319fXtGXntBQkN9X0R9IiwxLHsic2hvcnRlbiI6eyJzb3VyY2UiOjEwLCJ0YXJnZXQiOjEwfX1dLFsyLDksIlxcdW5kZXJzZXR7XFx0ZXh0e1xcZ3JlZW57c2VtaXNpbXBsaWNpdHl9fX17XFxjb25nfSIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFszLDEwLCJcXHVuZGVyc2V0e1xcdGV4dHtcXGdyZWVue3NlbWlzaW1wbGljaXR5fX19e1xcY29uZ30iLDMseyJvZmZzZXQiOi0yLCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbOSw0LCI9IiwzLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzEwLDUsIj0iLDMseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNSw4LCJcXGluIiwzLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzIsMywiXFx1bmRlcnNldHtcXHNpbX17XFxhbHBoYV97QSxCLEN9fSJdLFsyLDMsIlxcc21hbGxcXGdyZWVue1xcdGV4dHthc3NvY2lhdG9yIGluZHVjZXMgaXNvbW9ycGhpbXMgdW5kZXIgeW9uZWRhfX0iLDAseyJvZmZzZXQiOjUsInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
+\[\begin{tikzcd}
+	{(A\otimes B)\otimes C} && {A \otimes (B \otimes C)} \\
+	\\
+	{Hom((A\otimes B) \otimes C, D)} && {Hom(A\otimes (B \otimes C), D)} \\
+	\\
+	{\displaystyle\bigoplus_{c\in Irr(CAT)} Hom(A \otimes B, c) \otimes Hom(c \otimes C, D)} & \cong & {\displaystyle\bigoplus_{d \in Irr(\mathsf{Cat})} Hom(A \otimes d, D) \otimes Hom(B \otimes C, d)} \\
+	{\displaystyle\bigoplus_c V^{AB}_c \otimes V^{cC}_D} & \cong & {\displaystyle\bigoplus_c V^{Ac}_D \otimes V^{BC}_c} \\
+	{\underset{\blue{\mu \in 1,\ldots, N^{AB}_c} \quad \blue{\nu \in 1,\ldots,N^{cC,D}}}{\vert (A,B);c;\mu\rangle \otimes \vert c,C; D; \nu \rangle}} && {\displaystyle\sum_{f,\alpha,\beta} [F_D^{ABC}]_{(c\mu\nu)}^{(f\alpha\beta)} \vert A,f;D;\beta\rangle \otimes \vert B,C; f; \alpha \rangle} \\
+\begin{tikzpicture}[line width=1pt, node distance=1cm]
+    % First diagram
+    \coordinate (A) at (0,2);
+    \coordinate (B) at (1,2);
+    \coordinate (C) at (2,2);
+    \coordinate (D) at (1.5,0.5);
+
+    \coordinate (V1) at (0.5,1.5);
+    \coordinate (V2) at (1.0,1);
+
+    \draw (A) -- (D);
+    \draw (B) -- (V1);
+    \draw (V1) -- (V2);
+    \draw (C) -- (V2);
+    \draw (V2) -- (D);
+
+    \filldraw (V1) circle (2pt) node[left=2pt,font=\scriptsize] {$\mu$};
+    \filldraw (V2) circle (2pt) node[left=2pt,font=\scriptsize] {$\nu$};
+
+    \node[above] at (A) {$A$};
+    \node[above] at (B) {$B$};
+    \node[above] at (C) {$C$};
+    \node[below] at (D) {$D$};
+
+    \node[left,font=\scriptsize] at (1.5,1.5) {$e$};
+\end{tikzpicture}
+& =  &
+\hspace{-1.8cm}%
+\begin{tikzpicture}[line width=1pt, node distance=1cm, xshift=-2cm]
+    \begin{scope}[xshift=-2]
+        
+    \node at (-1.3,1) 
+    {$\displaystyle\sum_{f,\alpha,\beta}
+    [F^{ABC}_{D}]_{(e\mu\nu)}^{(f\alpha\beta)}$};
+
+    \coordinate (A) at (0,2);
+    \coordinate (B) at (1,2);
+    \coordinate (C) at (2,2);
+    \coordinate (D) at (1.5,0.5);
+
+    \coordinate (V2) at (1.0,1);
+    \coordinate (V1) at (1.5,1.5);
+
+    \draw (A) -- (D);
+    \draw (B) -- (V1);
+    \draw (V1) -- (V2);
+    \draw (C) -- (V1);
+    \draw (V2) -- (D);
+
+    \filldraw (V1) circle (2pt) node[left=2pt,font=\scriptsize] {$v_1$};
+    \filldraw (V2) circle (2pt) node[right=2pt,font=\scriptsize] {$v_2$};
+
+    \node[above] at (A) {$A$};
+    \node[above] at (B) {$B$};
+    \node[above] at (C) {$C$};
+    \node[below] at (D) {$D$};
+
+    \node[left,font=\small] at (0.9,0.9) {$i$};
+    \end{scope}
+\end{tikzpicture}
+	\arrow["{\underset{\sim}{\alpha_{ABC}}}", from=1-1, to=1-3]
+	\arrow["{Hom(-,D)}"{description}, from=1-1, to=3-1]
+	\arrow["{Hom(-,D)}"{description}, from=1-3, to=3-3]
+	\arrow["{\underset{\sim}{\alpha_{A,B,C}}}", from=3-1, to=3-3]
+	\arrow["{\green{\text{associator induces isomorphims under yoneda}}}", shift right=5, draw=none, from=3-1, to=3-3]
+	\arrow["{\underset{\text{\green{semisimplicity}}}{\cong}}"{marking, allow upside down}, draw=none, from=3-1, to=5-1]
+	\arrow["{\underset{\text{\green{semisimplicity}}}{\cong}}"{marking, allow upside down}, shift left=2, draw=none, from=3-3, to=5-3]
+	\arrow["{=}"{marking, allow upside down}, draw=none, from=5-1, to=6-1]
+	\arrow["{=}"{marking, allow upside down}, draw=none, from=5-3, to=6-3]
+	\arrow["\in"{marking, allow upside down}, draw=none, from=6-1, to=7-1]
+	\arrow["\in"{marking, allow upside down}, draw=none, from=6-3, to=7-3]
+	\arrow["{\underset{\green{\text{6j-symbols}}}{F^{ABC}_D}}"{description},  from=7-1, to=7-3]
+\end{tikzcd}\]
+
+
 
 \subsection{Rydberg-blockade ladder}
 
