@@ -1,6 +1,5 @@
-
-\documentclass[10pt,a4paper]{book}
-%\documentclass[11pt,a4paper,draft]{book}
+%\documentclass[10pt,a4paper]{book}
+\documentclass[11pt,a4paper,draft]{book}
 \usepackage[margin=0.8in, left=0.8in]{geometry}
 \usepackage{listings}
 \input{preamble.tex}
@@ -387,8 +386,35 @@ and now using the identity $[AB,C] = A[B,C] + [A,C]B$:
 \]
 which cancel out. Furtermore, the $z$ spins commute as well. Thus the whole sum is $0$ and we are done.
 
+In the $SU(2)$ case, we have the generators
+\[
+  S_{tot}^\alpha = \frac{1}{2} \sum_{i = 1}^{N} \sigma_i^\alpha, \quad \alpha \in \{x,y,z\} 
+\]
 
+The representation here is  $U(R) = e^{i\theta n \cdot S_{tot} }$ and the Hamiltonian is invariant under
+\[
+  U(R) H U(R)^\dagger = H, \quad R \in SU(2)
+\]
 
+Since
+\[
+  [S_{tot}^x, S_{tot}^y ] = i S_{tot}^z 
+\]
+we need a new operator for the simulatenous diagonalization
+\[
+  S_{tot} = \sum_{a \in \{x,y,z\}}^{} (S_{tot}^{a})^2
+\]
+and we need to verify this is indeed the correct operator TODO.
+
+The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
+
+Also we have that
+\[
+  (\mathbb{C}^2)^{\otimes6} \cong V_{\frac{1}{2}}^{\otimes 6} \cong 5 V_0 \oplus 9V_1 \oplus 5V_2 \oplus V_3
+\]
+
+So we expect 20 blocks? 
+$5$ have dimension $1$, $9$ have dimension $3$, $5$ have dimension $5$ and $1$ has $7$.
 \subsubsection{MPS}
 \begin{definition}[Matrix Product State]
   \label{def:MPS}

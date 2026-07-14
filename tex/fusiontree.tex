@@ -236,17 +236,17 @@ Let $f : E \to A \otimes B$ and $g : D \to E \otimes C$.
     \draw (C) -- (V2);
     \draw (V2) -- (D);
 
-    \filldraw (V1) circle (2pt) node[left=2pt,font=\scriptsize] {$\mu$};
-    \filldraw (V2) circle (2pt) node[left=2pt,font=\scriptsize] {$\nu$};
+    \filldraw (V1) circle (2pt) node[right=2pt,font=\scriptsize] {$\mu$};
+    \filldraw (V2) circle (2pt) node[right=2pt,font=\scriptsize] {$\nu$};
 
     \node[above] at (A) {$A$};
     \node[above] at (B) {$B$};
     \node[above] at (C) {$C$};
     \node[below] at (D) {$D$};
 
-    \node[left,font=\scriptsize] at (1.5,1.5) {$e$};
+    \node[left,font=\scriptsize] at (0.8,1.2) {$e$};
 \end{tikzpicture}
-& =  &
+&&
 \hspace{-1.8cm}%
 \begin{tikzpicture}[line width=1pt, node distance=1cm, xshift=-2cm]
     \begin{scope}[xshift=-2]
@@ -269,15 +269,15 @@ Let $f : E \to A \otimes B$ and $g : D \to E \otimes C$.
     \draw (C) -- (V1);
     \draw (V2) -- (D);
 
-    \filldraw (V1) circle (2pt) node[left=2pt,font=\scriptsize] {$v_1$};
-    \filldraw (V2) circle (2pt) node[right=2pt,font=\scriptsize] {$v_2$};
+    \filldraw (V1) circle (2pt) node[left=2pt,font=\scriptsize] {$\alpha$};
+    \filldraw (V2) circle (2pt) node[left=2pt,font=\scriptsize] {$\beta$};
 
     \node[above] at (A) {$A$};
     \node[above] at (B) {$B$};
     \node[above] at (C) {$C$};
     \node[below] at (D) {$D$};
 
-    \node[left,font=\small] at (0.9,0.9) {$i$};
+    \node[left,font=\small] at (1.7,1.2) {$f$};
     \end{scope}
 \end{tikzpicture}
 	\arrow["{\underset{\sim}{\alpha_{ABC}}}", from=1-1, to=1-3]
@@ -292,5 +292,47 @@ Let $f : E \to A \otimes B$ and $g : D \to E \otimes C$.
 	\arrow["\in"{marking, allow upside down}, draw=none, from=6-1, to=7-1]
 	\arrow["\in"{marking, allow upside down}, draw=none, from=6-3, to=7-3]
 	\arrow["{\underset{\green{\text{6j-symbols}}}{F^{ABC}_D}}"{description},  from=7-1, to=7-3]
+    \arrow["{=}"{marking, allow upside down}, draw=none, from=8-1, to=8-3]
 \end{tikzcd}\]
+
+% https://q.uiver.app/#q=WzAsMTAsWzAsMCwiKEFcXG90aW1lcyBCKVxcb3RpbWVzIEMiXSxbMSwwLCJBIFxcb3RpbWVzIChCIFxcb3RpbWVzIEMpIl0sWzAsMiwiSG9tKChBXFxvdGltZXMgQikgXFxvdGltZXMgQywgRCkiXSxbMSwyLCJIb20oQVxcb3RpbWVzIChCIFxcb3RpbWVzIEMpLCBEKSJdLFswLDUsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c19lIFZee0FCfV9lIFxcb3RpbWVzIFZee2VDfV9EIl0sWzEsNSwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX2YgVl57QWZ9X0QgXFxvdGltZXMgVl57QkN9X2YiXSxbMCw2LCJcXHVuZGVyc2V0e1xcYmx1ZXtcXG11IFxcaW4gMSxcXGxkb3RzLCBOXntBQn1fZX0gXFxxdWFkIFxcYmx1ZXtcXG51IFxcaW4gMSxcXGxkb3RzLE5ee2VDLER9fX17XFx2ZXJ0IChBLEIpO2U7XFxtdVxccmFuZ2xlIFxcb3RpbWVzIFxcdmVydCBlLEM7IEQ7IFxcbnUgXFxyYW5nbGV9Il0sWzEsNiwiXFxkaXNwbGF5c3R5bGVcXHN1bV97ZixcXGFscGhhLFxcYmV0YX0gW0ZfRF57QUJDfV1feyhlXFxtdVxcbnUpfV57KGZcXGFscGhhXFxiZXRhKX0gXFx2ZXJ0IEEsZjtEO1xcYmV0YVxccmFuZ2xlIFxcb3RpbWVzIFxcdmVydCBCLEM7IGY7IFxcYWxwaGEgXFxyYW5nbGUiXSxbMCw0LCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2NcXGluIElycihDQVQpfSBIb20oQSBcXG90aW1lcyBCLCBjKSBcXG90aW1lcyBIb20oYyBcXG90aW1lcyBDLCBEKSJdLFsxLDQsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c197ZCBcXGluIElycihcXG1hdGhzZntDYXR9KX0gSG9tKEEgXFxvdGltZXMgZCwgRCkgXFxvdGltZXMgSG9tKEIgXFxvdGltZXMgQywgZCkiXSxbMCwyLCJIb20oLSxEKSIsMV0sWzEsMywiSG9tKC0sRCkiLDFdLFswLDEsIlxcdW5kZXJzZXR7XFxzaW19e1xcYWxwaGFfe0FCQ319Il0sWzQsNiwiXFxpbiIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs2LDcsIlxcdW5kZXJzZXR7XFxncmVlbntcXHRleHR7Nmotc3ltYm9sc319fXtGXntBQkN9X0R9IiwxLHsic2hvcnRlbiI6eyJzb3VyY2UiOjEwLCJ0YXJnZXQiOjEwfX1dLFsyLDgsIlxcdW5kZXJzZXR7XFx0ZXh0e1xcZ3JlZW57c2VtaXNpbXBsaWNpdHl9fX17XFxjb25nfSIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFszLDksIlxcdW5kZXJzZXR7XFx0ZXh0e1xcZ3JlZW57c2VtaXNpbXBsaWNpdHl9fX17XFxjb25nfSIsMyx7Im9mZnNldCI6LTIsInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs4LDQsIj0iLDMseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbOSw1LCI9IiwzLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzUsNywiXFxpbiIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsyLDMsIlxcdW5kZXJzZXR7XFxzaW19e1xcYWxwaGFfe0EsQixDfX0iXSxbMiwzLCJcXHNtYWxsXFxncmVlbntcXHRleHR7YXNzb2NpYXRvciBpbmR1Y2VzIGlzb21vcnBoaW1zIHVuZGVyIHlvbmVkYX19IiwwLHsib2Zmc2V0Ijo1LCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbOCw5LCJcXGNvbmciLDEseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNCw1LCJcXGNvbmciLDEseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XV0=
+\begin{tikzcd}[column sep=large]
+	{(A\otimes B)\otimes C} & {A \otimes (B \otimes C)} \\
+	\\
+	{Hom((A\otimes B) \otimes C, D)} & {Hom(A\otimes (B \otimes C), D)} \\
+	\\
+	{\displaystyle\bigoplus_{c\in Irr(CAT)} Hom(A \otimes B, c) \otimes Hom(c \otimes C, D)} & {\displaystyle\bigoplus_{d \in Irr(\mathsf{Cat})} Hom(A \otimes d, D) \otimes Hom(B \otimes C, d)} \\
+	{\displaystyle\bigoplus_e V^{AB}_e \otimes V^{eC}_D} & {\displaystyle\bigoplus_f V^{Af}_D \otimes V^{BC}_f} \\
+	{\underset{\blue{\mu \in 1,\ldots, N^{AB}_e} \quad \blue{\nu \in 1,\ldots,N^{eC,D}}}{\vert (A,B);e;\mu\rangle \otimes \vert e,C; D; \nu \rangle}} & {\displaystyle\sum_{f,\alpha,\beta} [F_D^{ABC}]_{(e\mu\nu)}^{(f\alpha\beta)} \vert A,f;D;\beta\rangle \otimes \vert B,C; f; \alpha \rangle}
+	\arrow["{\underset{\sim}{\alpha_{ABC}}}", from=1-1, to=1-2]
+	\arrow["{Hom(-,D)}"{description}, from=1-1, to=3-1]
+	\arrow["{Hom(-,D)}"{description}, from=1-2, to=3-2]
+	\arrow["{\underset{\sim}{\alpha_{A,B,C}}}", from=3-1, to=3-2]
+	\arrow["{\green{\text{\small{associator induces isomorphims under yoneda}}}}", shift right=5, draw=none, from=3-1, to=3-2]
+	\arrow["{\underset{\text{\green{semisimplicity}}}{\cong}}"{marking, allow upside down}, draw=none, from=3-1, to=5-1]
+	\arrow["{\underset{\text{\green{semisimplicity}}}{\cong}}"{marking, allow upside down}, shift left=2, draw=none, from=3-2, to=5-2]
+	\arrow["\cong"{description}, draw=none, from=5-1, to=5-2]
+	\arrow["{=}"{marking, allow upside down}, draw=none, from=5-1, to=6-1]
+	\arrow["{=}"{marking, allow upside down}, draw=none, from=5-2, to=6-2]
+	\arrow["\cong"{description}, draw=none, from=6-1, to=6-2]
+	\arrow["\in"{marking, allow upside down}, draw=none, from=6-1, to=7-1]
+	\arrow["\in"{marking, allow upside down}, draw=none, from=6-2, to=7-2]
+	\arrow["{\underset{\green{\text{6j-symbols}}}{F^{ABC}_D}}"{description}, from=7-1, to=7-2]
+\end{tikzcd}
+
+\[
+\FLeft{
+\alpha_3\\
+\alpha_2\\
+\alpha_1
+}
+\FCore{A}{B}{C}{D}
+\FRight{
+\beta_3\\
+\beta_2\\
+\beta_1
+}
+\]
+
 \end{document}
+

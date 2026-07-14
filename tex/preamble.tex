@@ -127,3 +127,23 @@
 
 \newcommand{\FDVec}[1]{\mathrm{FD}#1\mathrm{Vec}}
 \newcommand{\VecCat}[1]{\mathrm{Vec}_#1}
+
+
+% Boundary columns
+\newcommand{\FLeft}[1]{%
+\begin{smallmatrix}
+#1
+\end{smallmatrix}\!\!}
+
+\newcommand{\FRight}[1]{%
+\!\!\begin{smallmatrix}
+#1
+\end{smallmatrix}}
+
+% Core symbol
+\newcommand{\FCore}[4]{%
+\Bigl[
+%{}^{#1}\!F_{#2\,#3\,#4}^{#5}
+F_{#1\,#2\,#3}^{#4}
+\Bigr]}
+
