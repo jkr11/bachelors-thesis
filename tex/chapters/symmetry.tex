@@ -1,0 +1,310 @@
+\subsection{Tensors (Everything here is $fdVect_k$)}
+
+Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
+\[
+  T \in \bigotimes_{j \in J} V^j
+\]
+and we say $T$ is a $\left\vert J \right\vert$-legged tensor.
+
+Given finite dimensional Vector spaces $V$ and $W$, we have the identity that $V \otimes W^\ast \equiv Hom(W,V)$. Now, if we have a Tensor $T \in V_1 \otimes \cdots \otimes V_n$, and since for any Vector space $V$, $(V^\ast)^\ast = V$, we can peel off any number of $V_{i}$s, take their duals and represent $T$ as a map
+\[
+  T : V_{n}^\ast \otimes \cdots \otimes V_{k+1} ^\ast \to V_1 \otimes \cdots \otimes V_k 
+\]
+Note that we present the domain here in a contravariant fashion due to the contravariance of the dual.
+
+Lets look at an example, let $t : V_1 \otimes V_2 \otimes W_{2}^\ast \otimes W_1^\ast$. We can represent as an operator in dirac notation:
+\[
+  t = \sum_{i_1,i_2,j_1,j_2}^{} T_{j1 j2 i1 i2}  \ket{v_{i_1}} \ket{v_{i_2}} \bra{w_{j_1}} \bra{w_{j_2}}
+\] 
+
+Graphically, we represent a general tensor
+\[
+  T : (W_{n}^{\ast} \otimes \cdots \otimes W_1) \to (V_1 \otimes V_2 \otimes \cdots \otimes V_n)
+\]
+as follows, where we choose incoming arrows for duals in the domain and outgoings for normal spaces, and on the bottom we choose incoming for duals and outgoing for normals.
+%
+\subsection{(Algebraic?) Theory of Anyons}
+
+
+
+\subsection{Symmetric Tensors}
+
+%Here we want to define tensors that are invariant under a symmetry $G$ (a compact group). We say that a tensor $T \in ()
+
+Let $G$ be a compact group. Consider a tensor $T$ living in the tensor product space of its legs:
+\[
+  T \in V_1 \otimes \cdots \otimes V_n \otimes W_m^\ast \otimes \cdots \otimes W_1^\ast
+\]
+
+Let $\rho_i : G \to \text{GL}(V_i)$ be the linear representation of $G$ on each vector space $V_i$, and let $\sigma_j^\ast : G \to \text{GL}(W_j^\ast)$ be the dual representation on $W_j^\ast$. 
+
+The total action of the group $G$ on the entire tensor product space is given by
+\begin{gather*}
+  \Pi: G \to \text{GL}\left(\bigotimes_i V_i \otimes \bigotimes_j W_j^\ast\right) \\
+  \Pi(g) = \rho_1(g) \otimes \cdots \otimes \rho_n(g) \otimes \sigma_m^\ast(g) \otimes \cdots \otimes \sigma_1^\ast(g)
+\end{gather*}
+
+
+A tensor $T$ is defined to be a \textbf{symmetric tensor} (or $G$-invariant tensor) if it is invariant under simultaneous action on all legs for all $g \in G$ \cite{singhTensorNetworkDecompositions2010a}:
+\[
+  \Pi(g) T = T \quad \forall g \in G
+\]
+
+By interpreting $T$ as a map
+\[
+  T : W_1 \otimes \cdots \otimes W_m \to V_1 \otimes \cdots \otimes V_n
+\]
+it follows directly from the definition of global invariance that the tensor must commute with the group action and we get the following definition of a symmetric tensor:
+
+\begin{definition}[symmetric tensor]
+  \label{def:symmetricTensor}
+  A \emph{symmetric tensor} is an intertwiner of the representations of the group $G$:
+  \[
+    \bigotimes_{j=1}^m \sigma_j(g) T = T \bigotimes_{i=1}^n \rho_i(g) \quad \forall g \in G,
+  \]
+  which we denote by
+  \[
+    T \in Hom_G(W,V).
+  \]
+\end{definition}
+
+TODO: what is the definition of an MPO representation? This could include this as well, maybe as $Hom_{MPO}(W,V)$.
+
+\begin{tikzpicture}[scale=1.0,baseline=(current bounding box.center)]
+
+\tikzset{
+  tensor/.style={draw,fill=blue!20,minimum size=8mm},
+  rep/.style={circle,draw=red,fill=red!30,inner sep=1.5pt},
+}
+
+% TODO: make oriented?
+
+\begin{scope}
+\node[tensor] (T1) at (0,0) {$T$};
+
+\draw (T1.north) -- +(0,0.8);
+\draw (T1.south) -- +(0,-0.8);
+\draw (T1.west) -- +(-0.8,0);
+\draw (T1.east) -- +(0.8,0);
+\end{scope}
+
+\node at (2,0) {$=$};
+
+\begin{scope}[xshift=4cm]
+
+\node[tensor] (T2) at (0,0) {$T$};
+
+\draw (T2.north) -- +(0,0.8);
+\draw (T2.south) -- +(0,-0.8);
+\draw (T2.west) -- +(-0.8,0);
+\draw (T2.east) -- +(0.8,0);
+
+\node[rep] at (0,0.85) {$g$};
+\node[rep] at (0,-0.85) {$g$};
+\node[rep] at (-0.85,0) {$g$};
+\node[rep] at (0.85,0) {$g$};
+
+\end{scope}
+
+\node at (6.4,0) {$\Longleftrightarrow$};
+
+\begin{scope}[xshift=9cm]
+
+\node[tensor] (T3) at (0,0) {$T$};
+
+\draw (T3.north) -- +(0,0.8);
+\draw (T3.south) -- +(0,-0.8);
+\draw (T3.west) -- +(-0.8,0);
+\draw (T3.east) -- +(0.8,0);
+
+\node[rep] at (0,0.85) {$g$};
+
+\end{scope}
+
+\node at (11.2,0) {$=$};
+
+\begin{scope}[xshift=13.5cm]
+
+\node[tensor] (T4) at (0,0) {$T$};
+
+\draw (T4.north) -- +(0,0.8);
+\draw (T4.south) -- +(0,-0.8);
+\draw (T4.west) -- +(-0.8,0);
+\draw (T4.east) -- +(0.8,0);
+
+\node[rep] at (0,-0.85) {$U(g)$};
+\node[rep] at (-0.85,0) {$U(g)$};
+\node[rep] at (0.85,0) {$U(g)$};
+
+\end{scope}
+
+\end{tikzpicture}
+
+\begin{corollary}[Networks of symmetric tensors are symmetric]
+  Since a tensor network is built by composition and application of the $(co)ev$ maps, both of which are intertwiners, the full network is also an intertwiner. Important there is that this entire discussion is only about FdVect or FdHilb for now, but i think the same applies to any braided category.    
+\end{corollary}
+
+\subsection{Some Important Facts about Hamiltonians}
+
+\begin{definition}[Gapped Hamiltonian]
+  Let $H$ be a hamiltonian acting on a finite system of size $L$. Let
+  \[
+    E_0 \leq E_1 \leq \cdots 
+  \]
+  be the eigenvalues. The spectral gap is then
+  \[
+    \Delta(L) = E_1 - E_{0}.
+  \]
+  The Hamiltonian is gapped if there is a constant $\Delta$
+  
+\end{definition}
+
+\subsection{Review of Symmetric Tensor Networks.}
+
+
+
+
+Generally, we follow the notations of \cite{singhTensorNetworkStates2012a}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollTensorNetworkSimulations2020} which gave an overview for implementing $SU(2)$ invariant tensor networks. A general overview for (Non)abelian symmetries is \cite{singhTensorNetworkDecompositions2010a}, and a detailed account for the abelian $U(1)$ in \cite{singhTensorNetworkStates2011}. There are a multitude of implementations given in major packages, such as ITensor, \cite{fishmanITensorSoftwareLibrary2022}, Cyten, TenPy, \cite{hauschildTensorNetworkPython2024}, QSpace, \cite{weichselbaumQSpaceOpensourceTensor2024} ChemTensor, UniTensor, YasTn (Abelian Only) \cite{ramsYASTNAnotherSymmetric2025} (MPSKit?), (Cytnx (Abelian only i think.))). A general account of symmetries is given in \cite{dissertation} with its respective implementation in \cite{hauschildTensorNetworkPython2024} (We have to build cytens citation manually.)
+
+The motivation for constructing symmetric tensor networks is as follows: Assume we have a (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. If the ground state is unique, we can obtain 
+\[
+  U(g)^{\otimes L} H \ket{\psi_0} = H (U(g)^{\otimes L}) \ket{\psi_0} = E_0 U(g)^{\otimes L} \ket{\psi_0}
+\]
+and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
+\[
+  U(g) \ket{\psi_0} = e^{i\theta(g)} \ket{\psi_0}
+\]
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{../experiments/plots/su2_block_structure.pdf}
+  \caption{Three different presentations of the XXZ Hamiltonian. (i): In the default computational basis of spin vectors. (ii) In a reordering of the computational basis into equal spin up (down) classes, i.e. no spin up, one spin up etc..., here $U$ is simply a permutation matrix. (iii) After changing the basis into the $S^2$ basis.}
+  \label{fig:diagonal_hamiltonians}
+\end{figure}
+
+\begin{definition}[XXZ-Hamiltonian]
+  \label{def:xxzHamiltonian}
+  The XXZ Hamiltonian on $N$ sites is
+  \begin{equation}
+    H 
+    = 
+    J \cdot 
+    \sum_{i = 1}^{N}
+      (\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z  ).
+  \end{equation}
+\end{definition}
+
+As given in \ref{def:xxzHamiltonian}, this acts on the \emph{spin basis} made of states $\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow, \downarrow\}$.
+
+We can plot $H$ and realize the sparsity structure thereof. Furthermore, a suitable rearrangement induces a block structure \ref{fig:diagonal_hamiltonians}.
+
+Now, we can realize about this hamiltonian is that there is a symmetry with the representations of $U(1)$. Lets review this shortly. A representation of $U(1)$ is a group homomorphism
+\[
+  \rho : U(1) \to GL(V), \quad \rho(e^{i\theta_1}) \rho(e^{i\theta_2}) = \rho(e^{i(\theta_1 + \theta_2)}). 
+\]
+
+The XXZ model lives in the Hilbert Space $\mathcal{\MakeUppercase{H}} = (C^2)^n$ and the relevant representation is generated by the total magnetization operator
+\[
+  S^z_{\mathrm{tot}}
+  =
+  \frac12 \sum_{i = 1}^{N} \sigma_i^z
+\]
+The group action is given by
+\[
+  U(\theta)
+  =
+  e^{-i\theta S^z_{\mathrm{tot}}}.
+\]
+
+We now claim that $H$ is invariant under $U(\theta)$.
+\[
+  U(\theta) H U(\theta)^\dagger = H,
+  \qquad \forall \theta \in \mathbb R.
+\]
+Equivalently,
+\[
+  [H,S^z_{\mathrm{tot}}]=0.
+\]
+
+Recall that when two operators commute, we can \emph{simultaneously diagonalize} them \cite[Theorem~1.3.12]{Horn_Johnson_2012}.
+
+\begin{align*}
+  [H, S^z_{\mathrm{tot}}] = \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sum_{j = 1}^{N} \sigma_j^z ] 
+\end{align*}
+and since operators on different sites commute, only $j = i$ and $j = i+1$ contribute. So we ought to write
+\[
+  \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sigma_i^z + \sigma_{i+1}^z  ] 
+\]
+and now using the identity $[AB,C] = A[B,C] + [A,C]B$:
+\[
+  [\sigma_i^x \sigma_{i+1}^x, \sigma_i^z + \sigma_{i+1}^z  ] = -2i(\sigma_i^y \sigma_{i+1}^x + \sigma_i^x \sigma_{i+1}^y  ) 
+\]
+\[
+  [\sigma_i^y \sigma_{i+1}^y, \sigma_i^z + \sigma_{i+1}^z  ] = 2i(\sigma_i^x \sigma_{i+1}^{y} + \sigma_i^y \sigma_{i+1}^x  )
+\]
+which cancel out. Furtermore, the $z$ spins commute as well. Thus the whole sum is $0$ and we are done.
+
+In the $SU(2)$ case, we have the generators
+\[
+  S_{tot}^\alpha = \frac{1}{2} \sum_{i = 1}^{N} \sigma_i^\alpha, \quad \alpha \in \{x,y,z\} 
+\]
+
+The representation here is  $U(R) = e^{i\theta n \cdot S_{tot} }$ and the Hamiltonian is invariant under
+\[
+  U(R) H U(R)^\dagger = H, \quad R \in SU(2)
+\]
+
+Since
+\[
+  [S_{tot}^x, S_{tot}^y ] = i S_{tot}^z 
+\]
+we need a new operator for the simulatenous diagonalization
+\[
+  S_{tot} = \sum_{a \in \{x,y,z\}}^{} (S_{tot}^{a})^2
+\]
+and we need to verify this is indeed the correct operator TODO.
+
+The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
+
+Also we have that
+\[
+  (\mathbb{C}^2)^{\otimes6} \cong V_{\frac{1}{2}}^{\otimes 6} \cong 5 V_0 \oplus 9V_1 \oplus 5V_2 \oplus V_3
+\]
+
+Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs lemma
+\[
+  H \in \bigoplus_{S \in 0,1,2,3} I_{2S+1} \otimes Mat_{m_S \times m_S}(\mathbb{C})
+\]
+
+So we expect 20 blocks? 
+$5$ have dimension $1$, $9$ have dimension $3$, $5$ have dimension $5$ and $1$ has $7$.
+\subsubsection{MPS}
+\begin{definition}[Matrix Product State]
+  \label{def:MPS}
+  A \emph{Matrix Product State} is a quantum state $\ket{\psi}$ with $n$ legs written as the contraction of $n$ trivalent tensors $\{A^{[i]}\}_{i \in [n]}$. Formally this reads
+  \[
+    \ket{\psi[A]}
+    =
+    \sum_{i_1,\ldots,i_n}
+    \operatorname{Tr}\!\left(
+    A^{[1]}_{i_1}
+    A^{[2]}_{i_2}
+    \cdots
+    A^{[n]}_{i_n}
+    \right)
+    \ket{i_1i_2\cdots i_n},
+  \]
+  where $A^{[i]}_{i_{k}} \in \mathbb{C}^{D_i \times D_{i+1} }$. The elements of the collection $\{D_i\}_{i \in [n]}$ is referred to as the \emph{bond-dimensions}.
+\end{definition}
+Note that this is a state with closed boundaries. If we want open boundaries we have to replace the trace with appropriate end vectors (nice source?).
+
+\begin{example}
+  We can represent each product state $\ket{\varPsi} = \ket{\psi}^{\otimes n}$ as a MPS with bond dimension $1$.
+\end{example}
+
+\begin{theorem}[Fundamental Theorem of MPS]
+  If two MPS states generated by $A$ and $B$ respectively.
+  Figure out what we can do with this. 
+  
+  Proof \cite{ciracMatrixProductDensity2017},\cite{vercleyenMathematicalStructureTensor2018}, \cite{perez-garciaStringOrderSymmetries2008a}.
+\end{theorem}
