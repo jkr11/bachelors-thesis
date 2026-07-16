@@ -1,6 +1,16 @@
 Maybe important for tex:
 https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-tikz
 
+## July 15th
+
+Seems like the history of tensor networks come both from spin networks after penrose (why is there a 20 year gap of nothing?) and then the physical parts from dmrg after White et al. and MPS after who exactly? There should be some more care in these literature paragraphs. Should these go at the front? or chapterwise? But i will end up repeating a lot of information regardless. 
+
+Then, what theorems should be stated? Proofs can be referenced sure unless they are not given like the general decomposition theorem.
+
+What is a transparent fermion? 
+
+Also, ifnd the MO answer where XGW claims a fermions is not an anyon, because they dont arise from certain constructions (????).
+
 ## July 13th
 
 How do we make the difference between an mps and a spin chain apparent?
