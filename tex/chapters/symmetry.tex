@@ -1,10 +1,35 @@
+
+
+\begin{literature}[\bf Tensor Networks]
+  The modern theory of \emph{tensor networks} shaped out of the study of \emph{renormalization} and quantum many-body systems, initially with the \emph{density-matrix-renormalization-group} of White \cite{whiteDensityMatrixFormulation1992}\cite{whiteDensitymatrixAlgorithmsQuantum1993} and later extended by Oestlund \& Rommer \cite{ostlundThermodynamicLimitDensity1995} as a variational method (ansatz?) in the form of \emph{matrix product states} (MPS) (Maybe this is actually due to \cite{fannesFinitelyCorrelatedStates1992}). This was further generalized to 2 dimensions with the introduction of \emph{projected entangled-pair states} (PEPS) \cite{verstraeteRenormalizationAlgorithmsQuantumMany2004}. \emph{Multiscale-entanglement renormalization ansatz} (MERA) \cite{vidalClassQuantumManybody2008} can be considered as an extension of MPS allowing for long-range entanglement (this is probably wrong). Whats missing? Holography \cite{singhHolographicSpinNetworks2018} but there are earlier ones.
+
+  In the purely mathematical view as a network of contractions, both concept and notation were introduced by \cite{Penrose1971Applications} in the form of \emph{spin-networks}.
+\end{literature}
+
+While we introduce this concept classically and endow it with symmetry as a start, we will start concerning ourselves with a categorical embedding of tensor networks in what is commonly reffereed to as a \emph{fusion-categoty} (Lit ???).
+
+\begin{literature}[\bf Symmetric Tensor Network]
+  Originally, the idea to exploit symmetries of the hamiltonian for a speedup was proposed to be used in dmrg by \cite{}. More general theory for \emph{globally invariant tensor networks}, i.e. networks that are built of tensors that are globally invariant is given by \cite{singhTensorNetworkDecompositions2010a}, an account for abelian symmetries \cite{singhTensorNetworkStates2011} and for nonabelian (SU2) symmetries in \cite{singhTensorNetworkStates2012a}. Another approach is done by \cite{weichselbaumNonabelianSymmetriesTensor2012} and \cite{weichselbaumXsymbolsNonAbelianSymmetries2020}. These rely on the general idea, that under representations of some compact group $G$, there are on site symmetries on each tensor, i.e. $[A, U_g^{\otimes k}] = 0$ there is a generalized \emph{wigner-eckart-theorem} for tensors with $n$ legs of the form
+  \[
+    T = \bigoplus_a D_a \otimes V_a
+  \]
+  where $D_a$ is a matrix and $V_a$ is a \emph{fusion-tree}, i.e. a clebsch-gordan tensor.
+  Reviews and specific implementations in the SU(2) case are given by \cite{schmollBenchmarkingGlobal$SU2$2020}\cite{schmollTensorNetworkSimulations2020}\cite{schmollProgrammingGuideTensor2020}. \cite[§~8]{schmollProgrammingGuideTensor2020} proposes that this method is appropriate for Anyonic simulation as well (although this is done earlier by singh \& pfeiffer.). Symmetries as categorified networks, as we will present in \cite{}, are explained in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
+
+
+\end{literature}
+
+\begin{literature}[Categorified Quantum Mechanics]
+  There are multiple approach to a diagramatic and categorified approach to quantum mechanics. Generally one wants both spaces and maps represented by a framework that allows for parallel and entangled operations, i.e. has a tensor product structure.
+\end{literature}
+
 \subsection{Tensors (Everything here is $fdVect_k$)}
 
 Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
 \[
-  T \in \bigotimes_{j \in J} V^j
+  T \in \bigotimes_{j \in J} V_j
 \]
-and we say $T$ is a $\left\vert J \right\vert$-legged tensor.
+where each $V_j$ is a finite-dimensional vector space and we say $T$ is a $\left\vert J \right\vert$-legged tensor.
 
 Given finite dimensional Vector spaces $V$ and $W$, we have the identity that $V \otimes W^\ast \equiv Hom(W,V)$. Now, if we have a Tensor $T \in V_1 \otimes \cdots \otimes V_n$, and since for any Vector space $V$, $(V^\ast)^\ast = V$, we can peel off any number of $V_{i}$s, take their duals and represent $T$ as a map
 \[
@@ -14,17 +39,15 @@ Note that we present the domain here in a contravariant fashion due to the contr
 
 Lets look at an example, let $t : V_1 \otimes V_2 \otimes W_{2}^\ast \otimes W_1^\ast$. We can represent as an operator in dirac notation:
 \[
-  t = \sum_{i_1,i_2,j_1,j_2}^{} T_{j1 j2 i1 i2}  \ket{v_{i_1}} \ket{v_{i_2}} \bra{w_{j_1}} \bra{w_{j_2}}
+  t = \sum_{i_1,i_2,j_1,j_2}^{} T_{i1 i2}^{j1 j2}  \ket{v_{i_1}} \ket{v_{i_2}} \bra{w_{j_1}} \bra{w_{j_2}}
 \] 
+where $\ket{v_i}$ 
 
 Graphically, we represent a general tensor
 \[
   T : (W_{n}^{\ast} \otimes \cdots \otimes W_1) \to (V_1 \otimes V_2 \otimes \cdots \otimes V_n)
 \]
 as follows, where we choose incoming arrows for duals in the domain and outgoings for normal spaces, and on the bottom we choose incoming for duals and outgoing for normals.
-%
-\subsection{(Algebraic?) Theory of Anyons}
-
 
 
 \subsection{Symmetric Tensors}
@@ -68,103 +91,93 @@ it follows directly from the definition of global invariance that the tensor mus
   \]
 \end{definition}
 
-TODO: what is the definition of an MPO representation? This could include this as well, maybe as $Hom_{MPO}(W,V)$.
+\[
+\begin{array}{c}
+  \begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    leg/.style={
+      draw=orange,
+      line width=1.1pt,
+      postaction={
+        decorate,
+        decoration={
+          markings,
+          mark=at position 0.7 with {\arrow{Stealth[scale=1.0, fill=orange]}}
+        }
+      }
+    },
+    tensor/.style={
+      draw=orange,
+      fill=white,
+      line width=1.1pt,
+      minimum size=18pt,
+      inner sep=2pt,
+      rectangle
+    }
+  ]
+    
 
-\begin{tikzpicture}[scale=1.0,baseline=(current bounding box.center)]
+  \begin{scope}
+    \node[tensor] (T1) at (0,0) {\scriptsize $T$};
+    \draw[leg] (-1,0) node[left, yshift=2pt] {\tiny $A$} -- (T1.west) node[midway, above=2pt] {\scriptsize $U^\dagger$}; 
+    \draw[leg] (T1.north) -- (0,1) node[above] {\tiny $B$} node[midway, right=2pt] {\scriptsize $U$};        
+    \draw[leg] (T1.south) -- (0,-1) node[below] {\tiny $D$} node[midway, right=2pt] {\scriptsize $U$};        
+    \draw[leg] (T1.east) -- (1,0) node[right, yshift=2pt] {\tiny $C$} node[midway, above=2pt] {\scriptsize $U$};        
+  \end{scope}
 
-\tikzset{
-  tensor/.style={draw,fill=blue!20,minimum size=8mm},
-  rep/.style={circle,draw=red,fill=red!30,inner sep=1.5pt},
-}
+  \node at (1.5,0) {$=$};
 
-% TODO: make oriented?
+  \begin{scope}[xshift=3.0cm]
+    \node[tensor] (T2) at (0,0) {\scriptsize $T$};
+    \draw[leg] (-1,0) node[left, yshift=2pt] {\tiny $A$} -- (T2.west);       
+    \draw[leg] (T2.north) -- (0,1) node[above] {\tiny $B$};       
+    \draw[leg] (T2.south) -- (0,-1) node[below] {\tiny $D$};      
+    \draw[leg] (T2.east) -- (1,0) node[right, yshift=2pt] {\tiny $C$};        
+  \end{scope}
 
-\begin{scope}
-\node[tensor] (T1) at (0,0) {$T$};
+  \node at (4.8,0) {$\Longleftrightarrow$};
 
-\draw (T1.north) -- +(0,0.8);
-\draw (T1.south) -- +(0,-0.8);
-\draw (T1.west) -- +(-0.8,0);
-\draw (T1.east) -- +(0.8,0);
-\end{scope}
 
-\node at (2,0) {$=$};
+  \begin{scope}[xshift=6.8cm]
+    \node[tensor] (T3) at (0,0) {\scriptsize $T$};
+    \draw[leg] (-1,0) node[left, yshift=2pt] {\tiny $A$} -- (T3.west) node[midway, above=2pt] {\scriptsize $U^\dagger$}; 
+    \draw[leg] (T3.north) -- (0,1) node[above] {\tiny $B$};
+    \draw[leg] (T3.south) -- (0,-1) node[below] {\tiny $D$};
+    \draw[leg] (T3.east) -- (1,0) node[right, yshift=2pt] {\tiny $C$};
+  \end{scope}
 
-\begin{scope}[xshift=4cm]
+  \node at (8.3,0) {$=$};
 
-\node[tensor] (T2) at (0,0) {$T$};
+  \begin{scope}[xshift=10.1cm]
+    \node[tensor] (T4) at (0,0) {\scriptsize $T$};
+    \draw[leg] (-1,0) node[left, yshift=2pt] {\tiny $A$} -- (T4.west);                  
+    \draw[leg] (T4.north) -- (0,1) node[above] {\tiny $B$} node[midway, right=2pt] {\scriptsize $U$};        
+    \draw[leg] (T4.south) -- (0,-1) node[below] {\tiny $D$} node[midway, right=2pt] {\scriptsize $U$};        
+    \draw[leg] (T4.east) -- (1,0) node[right, yshift=2pt] {\tiny $C$} node[midway, above=2pt] {\scriptsize $U$};        
+  \end{scope}
+  \end{tikzpicture}
+  
+  \\[2.0em] 
 
-\draw (T2.north) -- +(0,0.8);
-\draw (T2.south) -- +(0,-0.8);
-\draw (T2.west) -- +(-0.8,0);
-\draw (T2.east) -- +(0.8,0);
-
-\node[rep] at (0,0.85) {$g$};
-\node[rep] at (0,-0.85) {$g$};
-\node[rep] at (-0.85,0) {$g$};
-\node[rep] at (0.85,0) {$g$};
-
-\end{scope}
-
-\node at (6.4,0) {$\Longleftrightarrow$};
-
-\begin{scope}[xshift=9cm]
-
-\node[tensor] (T3) at (0,0) {$T$};
-
-\draw (T3.north) -- +(0,0.8);
-\draw (T3.south) -- +(0,-0.8);
-\draw (T3.west) -- +(-0.8,0);
-\draw (T3.east) -- +(0.8,0);
-
-\node[rep] at (0,0.85) {$g$};
-
-\end{scope}
-
-\node at (11.2,0) {$=$};
-
-\begin{scope}[xshift=13.5cm]
-
-\node[tensor] (T4) at (0,0) {$T$};
-
-\draw (T4.north) -- +(0,0.8);
-\draw (T4.south) -- +(0,-0.8);
-\draw (T4.west) -- +(-0.8,0);
-\draw (T4.east) -- +(0.8,0);
-
-\node[rep] at (0,-0.85) {$U(g)$};
-\node[rep] at (-0.85,0) {$U(g)$};
-\node[rep] at (0.85,0) {$U(g)$};
-
-\end{scope}
-
-\end{tikzpicture}
+  \begin{tikzpicture}[baseline=(current bounding box.center)]
+    \node[anchor=north, align=center, text=blue] at (1.5,0) {
+      \tiny Globally invariant \\
+      \tiny $T \in \operatorname{Hom}(A, B \otimes C \otimes D)$
+    };
+    
+    \node[anchor=north, align=center, text=blue] at (8.45,0) {
+      \tiny is an intertwiner \\
+      \tiny $T \in \operatorname{Hom}_G(A, B \otimes C \otimes D)$
+    };
+  \end{tikzpicture}
+\end{array}
+\]
 
 \begin{corollary}[Networks of symmetric tensors are symmetric]
   Since a tensor network is built by composition and application of the $(co)ev$ maps, both of which are intertwiners, the full network is also an intertwiner. Important there is that this entire discussion is only about FdVect or FdHilb for now, but i think the same applies to any braided category.    
 \end{corollary}
 
-\subsection{Some Important Facts about Hamiltonians}
-
-\begin{definition}[Gapped Hamiltonian]
-  Let $H$ be a hamiltonian acting on a finite system of size $L$. Let
-  \[
-    E_0 \leq E_1 \leq \cdots 
-  \]
-  be the eigenvalues. The spectral gap is then
-  \[
-    \Delta(L) = E_1 - E_{0}.
-  \]
-  The Hamiltonian is gapped if there is a constant $\Delta$
-  
-\end{definition}
-
 \subsection{Review of Symmetric Tensor Networks.}
-
-
-
-
-Generally, we follow the notations of \cite{singhTensorNetworkStates2012a}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollProgrammingGuideTensor2020}, \cite{schmollTensorNetworkSimulations2020} which gave an overview for implementing $SU(2)$ invariant tensor networks. A general overview for (Non)abelian symmetries is \cite{singhTensorNetworkDecompositions2010a}, and a detailed account for the abelian $U(1)$ in \cite{singhTensorNetworkStates2011}. There are a multitude of implementations given in major packages, such as ITensor, \cite{fishmanITensorSoftwareLibrary2022}, Cyten, TenPy, \cite{hauschildTensorNetworkPython2024}, QSpace, \cite{weichselbaumQSpaceOpensourceTensor2024} ChemTensor, UniTensor, YasTn (Abelian Only) \cite{ramsYASTNAnotherSymmetric2025} (MPSKit?), (Cytnx (Abelian only i think.))). A general account of symmetries is given in \cite{dissertation} with its respective implementation in \cite{hauschildTensorNetworkPython2024} (We have to build cytens citation manually.)
 
 The motivation for constructing symmetric tensor networks is as follows: Assume we have a (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. If the ground state is unique, we can obtain 
 \[
@@ -278,7 +291,7 @@ Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by
 
 So we expect 20 blocks? 
 $5$ have dimension $1$, $9$ have dimension $3$, $5$ have dimension $5$ and $1$ has $7$.
-\subsubsection{MPS}
+
 \begin{definition}[Matrix Product State]
   \label{def:MPS}
   A \emph{Matrix Product State} is a quantum state $\ket{\psi}$ with $n$ legs written as the contraction of $n$ trivalent tensors $\{A^{[i]}\}_{i \in [n]}$. Formally this reads

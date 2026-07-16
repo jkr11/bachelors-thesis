@@ -1,0 +1,160 @@
+
+\begin{literature}[Anyons]
+  \emph{Anyons} as quasiparticles with exotic exchange statistics were originally propsed by \cite{wilcek} 
+\end{literature}
+
+\begin{literature}[Anyons as Categories]
+  The correspondence between the \emph{physical} treatment of anyons and the \emph{categorical treatment} of anyons as a \emph{braided fusion category} (modular functor?) was originally descibed in \cite[A~E, §~8]{kitaevAnyonsExactlySolved2006} based on previous work in quantum field theory already making use of modular categories and their diagrammatic algebras such as \cite{reshetikhinInvariants3manifoldsLink1991} Further treatments are found in \cite{wang} and \cite{simon-nayak-das-sarma}. A modern treatment of the realization through the Configuration space of $n$-anyons if given by \cite{90eb98357acd4634abd18d906cc3811d} and in terms of modular functors by \cite{burtonShortGuideAnyons2016}.
+\end{literature}
+
+\begin{literature}[Anyonic Spin Chains and Tensor Networks]
+  (Check if this is the first). A first appearance of \emph{Anyonic Tensor Networks} in terms of spin chains is given in \cite{feiguinInteractingAnyonsTopological2007} as the \emph{golden chain}, which realizes a interacting $2$-local hamiltonian on a $n$ anyon Fibonacci lattice. This is reviewed in \cite{trebstShortIntroductionFibonacci2008a} with generalizations to $3$ local and longer range hamiltonians. A general account outside of the Fib-model can be found in \cite{gilsAnyonicQuantumSpin2013} and \cite{buicanAnyonicChainsTopological2017} (Check these again.). We can consider these approaches as a \" manualization \" of the tensor network approach. Anyonic tensor networks are first introduced by \cite{pfeiferSimulationAnyonsTensor2010} and \cite{pfeiferSimulationAnyonsUsing2012} already making use of the symmetric approach defined in chapter \ref{chap:symmetricTensorNetworks}. Furthermore, stuctures such as an anyonic MERA are introduced. 
+\end{literature}
+
+\subsection{Anyonic Hamiltionians}
+
+\subsection{1D Lattice Models}
+
+So from what i can read here (also the nlab or wikipedia) a spin chain specifically only refers to a per site construction with a tensor product hilbert space. An anyon chain is, well, an anyonic chain. These do not admit such a decomposition. So we should call these simply 1D lattice models.
+
+In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically in the $Fib$ model, are introduced simply as the fusion space of $n$ anyons. Further, the authors define a primitive hamiltonian that assigns $-1$ to the interaction $\tau \otimes \tau = 1$ and $0$ to the interaction $\tau \otimes \tau = \tau$. This is in turn realized on the basis of the intermediate states, and evaluated using the method of exact diagonalization \cite{}. This is extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
+
+The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010}, \cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and in terms of categories this is done in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
+
+For the golden chain, we consider $n+2$ Fib anyons as our ground state. Their combined state yields a Fusion Tree $\Hom(\tau^{\otimes n+1}, \tau)$ with intermediate charges $x_1, \ldots , x_n$. These intermediate charges are further restricted as in that there are no possibilities to assign adjacent $1$s to them (In fact this is what causes the dimension of the hilbert space to reduce to $\phi^n$).
+
+Generally, we can define an analogue of a general state of this $N$ site lattice.
+
+
+There is a three local hamiltonian for the golden chain defined as
+\[
+  H_i = - \sum_{x_i^\prime }^{} [F_{x_{i+1} }^{x_{i-1}\tau\tau}]_{x_i}^{x_i^\prime } E_{x_{i}^\prime } [F_{x_{i+1} }^{x_{i-1}\tau\tau }]_{x_{i^\prime }}^{x_{i^{\prime\prime}}}
+\]
+
+Write this three local hamiltonian in an operator form
+\[
+  H_i = -J \begin{pmatrix}
+    1 &  &  &  &   \\
+     & 0 &  &  &   \\
+     &  & 0 &  &   \\
+     &  &  & \varphi^{-2}  & \varphi^{-\frac{3}{2}}  \\
+     &  &  & \varphi^{-\frac{3}{2}} & \varphi^{-1}    \\
+  \end{pmatrix}
+\]
+
+We can build this as an anyonic operator in $Hom(\tau \otimes \tau, \tau \otimes \tau)$ as
+\[
+  \begin{tikzpicture}[scale=1.2,
+    every node/.style={font=\small},
+    fusion/.style={circle,fill=black,inner sep=1.2pt}
+]
+
+\node at (-2, 0.5) {$H_i = $};
+
+\node at (-1, 0.5) {$E_1$};
+
+\begin{scope}
+  \node[fusion] (v1) at (0,0) {};
+\node[fusion] (v2) at (0,1) {};
+
+\draw (v1) -- (-0.7,-1);
+\draw (v1) -- (0.7,-1);
+
+\draw (v2) -- (0.7,2);
+\draw (v2) -- (-0.7,2);
+
+\draw (v1) -- (v2);
+
+\node[left]  at (-0.7,-1) {$\tau$};
+\node[right] at (0.7,-1) {$\tau$};
+\node[left]  at (-0.7,2) {$\tau$};
+\node[right] at (0.7,2) {$\tau$};
+
+\node[left] at (-0.15,0.5) {$1$};
+
+\end{scope}
+
+\node at (1.5,0.5) {$+$};
+
+\node at (2, 0.5) {$E_\tau$};
+
+\begin{scope}[xshift=3cm]
+  \node[fusion] (v1) at (0,0) {};
+  \node[fusion] (v2) at (0,1) {};
+
+  \draw (v1) -- (-0.7,-1);
+  \draw (v1) -- (0.7,-1);
+
+  \draw (v2) -- (0.7,2);
+  \draw (v2) -- (-0.7,2);
+
+  \draw (v1) -- (v2);
+
+  \node[left]  at (-0.7,-1) {$\tau$};
+  \node[right] at (0.7,-1) {$\tau$};
+  \node[left]  at (-0.7,2) {$\tau$};
+  \node[right] at (0.7,2) {$\tau$};
+
+  \node[left] at (-0.15,0.5) {$\tau$};
+
+\end{scope}
+
+\end{tikzpicture}
+\]
+.
+
+In this case we can view the golden chain approach chosen above as a manualization of the tensor network process.
+
+We can also write $H_i$ in its operator form matrix as
+\[
+  H_{i} \in \bigoplus_{a \in 1,\tau} Hom(\mathbb{C}, \mathbb{C})
+\]
+as 
+\[
+  H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
+  & \begin{array}{cc} 1 & \tau \end{array} \\
+  \begin{array}{r} 1 \\ \tau \end{array} & 
+  \begin{pmatrix}
+   E_1 & 0\\
+   0 & E_\tau   \\
+  \end{pmatrix}
+\end{array}
+\]
+
+\[
+H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
+  & \begin{array}{ccccc} \ket{1\tau 1} & \ket{\tau\tau 1} & \ket{1\tau\tau}_1 & \ket{\tau 1 \tau}_2 & \ket{\tau \tau, \tau}_3 \end{array} \\
+  \begin{array}{r} \ket{x_0, \mathbf{1}, \tau} \\ \ket{x_0, \tau, \mathbf{1}} \\ \ket{x_0, \tau, \tau}_1 \\ \ket{x_0, \tau, \tau}_2 \\ \ket{x_0, \tau, \tau}_3 \end{array} & 
+  \begin{pmatrix}
+    1 &   &   &               &               \\
+      & 0 &   &               &               \\
+      &   & 0 &               &               \\
+      &   &   & \varphi^{-2}  & \varphi^{-\frac{3}{2}} \\
+      &   &   & \varphi^{-\frac{3}{2}} & \varphi^{-1}   \\
+  \end{pmatrix}
+\end{array}
+\]
+
+\subsection{Anyonic States}
+
+For simple lattice states, \cite{singhMatrixProductStates2014} defines a bipartition of the lattice into anyons $A$ and $B$. Then we consider the whole space under charge $a_{tot}$ as
+\[
+  V_{a_{tot}} = \bigoplus_{N_{ab}^{a_{tot} } = 1} (V^{A}_a \otimes V^{B}_b)
+\] 
+What i dont get here is why we are allowed to tensor both these sectors together without the space $V_{ab}^{a_{tot} }$ explicitely.
+
+TODO delete all of this and introduce this over the Hom category.
+
+Anyhow, the fundamental building blocks we are using are the vector spaces $V^{ab}_c$ (where we refer to this as the fusion space from types $a$ and $b$ to $c$). This allows us to build the vector space of two anyonic types $a,b$ as the sum over the fusion outcome:
+\[
+  V^{ab} = \bigoplus_{c \in Irr(C)} V^{ab}_c  
+\]
+
+We can directly introduce the $R$ move (a braiding of the initial anyons) to obtain the isomorphic space $V^{ba}$ as
+\[
+  R : \bigoplus_{c \in Irr(C)} V^{ab}_c  \cong \bigoplus_{c \in Irr(C)} V^{ba}_c  
+\] 
+
+We can also write the space $V^{ab}_c = Hom(a \otimes b, c)$ in the categorical language. Here we also need to realize that there is a difference between the isomorphism $\beta$ and the action of $R$, which is really on the hom space $\Hom(-, c)$. So this would be a yoneda perspective? Since we know $R$ for all $a,b,c \in C$, we also know the action of $R$ as an isomorphism. Well technically i believe that this allows us to determine for all simples $c$, and then semisimplicity extends this to all subjects (this would be nice to write down) and then the yoneda embedding is enough to know the whole space. Similarly, in our Rep(G) categories (which i actually belive to be symmetric? Find this in etingof) 
+
+The algebra-category correspondence in the theory of anyons was first noted by \cite[App~E]{kitaevAnyonsExactlySolved2006}

@@ -1,5 +1,5 @@
-\documentclass[10pt,a4paper]{book}
-%\documentclass[11pt,a4paper,draft]{book}
+\documentclass[a4paper]{article}
+%\documentclass[11pt,a4paper,draft]{article}
 \usepackage[margin=0.8in, left=0.8in]{geometry}
 \usepackage{listings}
 \input{preamble.tex}
@@ -19,133 +19,28 @@
 
 \newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
 
+\title{Something about tensor networks, symmetries, anyons and categories.}
+\author{Jeremias Rieser \\ \small{advisors: C. Mendl and B. Decker}}
 \begin{document}
+
+\maketitle
 
 \tableofcontents
 
 
-
 \setcounter{section}{0}
 
-\chapter{Overview}
-
-\section{Symmetries in Physics}
-
-What do i even want to do here? I want to give an overview on the role of symmetries in condensed matter and many body physics that is also of interest to computer scientiests, i.e. describe some sort of of system to compute with. However also, there should be an overview about the flavours of (topological) phases, orders and entanglements. Most important foremost would be a paragraph on what "symmetry" as a concept refers to. Then we would want to classify the symmetries we can (or want to!) adress with tensor networks (and string (spin?) networks!). Landau theory and it's failure would be a great starting point for a condensed matter approach, this is directly correlated with all of topological order, symmetric hamiltonians and dualities. 
-
-So for now im thinking to treat this as a collection of independent chapters. First on global symmetries in tensor networks. Work backwards from the singh papers (however these are actually post-anyon networks (c.f. \cite{pfeiferSimulationAnyonsTensor2010})) and establish the extent that these papers deal with.
-
-Then write one section on the anyonic networks with sparse mentions of symmetries. Of course we could give representations as a special case here if we take the representations to form an anyon theory (really just a fusion category) as given in \cite[§~20]{simonTopologicalQuantum2023} but I do not know if this is desired. Well, the general theory is handled in \cite{devosTensorKitjlJuliaPackage2025} with utmost care, however I would like to give some duly needed proofs (in really all of these papers, I believe the word \emph{proof} only appears once in all of them!) i.e. as done already with our decomposition theorem \ref{DecompositionOfSemisimpleCategories}.
-
-And then it really is just open ended. I think a nice description of dualities is duly managable but this of course requires the discussion of module categories as in \cite{lootensDualitiesOnedimensionalQuantum2024} as well as a restriction on the type of systems we deal with.
-In fact, \cite{bridgemanInvertibleBimoduleCategories2023} gives us a version of schurs lemma for bimodule categories and mentions its application as clebsch gordan tensors.
-
-Another option would be to explore MPO-symmetries, as these share quite a lot of language with our decompositions (in fact, the symmetries they generate are a direct superset of ours!). There is also the consideration of virtual only symmetries, and I currently remember a description of them here \cite{degrootTopologicalPhasesSymmetries2022}. Both the MPO-case and the virtual symmetry case require a discussion of projective symmetries as well.
-
-Someting I currently know nothing about is the theory on \emph{symmetry protected topological} (SPT) phases, but it does sound relevant. \cite{degrootTopologicalPhasesSymmetries2022} also gives some tensor network methods in this context.
-
-The topic of topological order would require a discussion of string nets, and inthereof the toric code. I need to understand this anyways, so why not write it down nicely? 
-
-On a side note, all of this is an instance of penrose notation \cite{Penrose1971Applications}, and im not yet sure what the difference between spin and string diagrams are. Also, structures such as the metric Lie Algebra TTS given in \cite{nlab:tree_tensor_network_state} seem to admit a very similar calculus, but not with defined braiding as such. Also, there is the topic of categorical computationl using finite groups (but this also seems to be similar to the formalism in Simon TQ), accounts are in the work of Mochon \cite{mochonAnyonsNonsolvableFinite2003}\cite{mochonAnyonComputersSmaller2004a} and i remember something about abelian groups not being suitable in a paper of Bravyi and Koening (find this). And of course, categorical computation in general although i do not believe this matters here \cite{kongCategoricalComputation2023}.
-
-\section{Review: Landau Theory and it's limitations}
-
-All matter is made of (what exactly? 3 fundamentals), but can display many different structural properties called \emph{phases}, such as liquid, crystal, solid, (what else? condensations? is there a nice diagram?). These arrangements of matter can be manipulated, should the structural property change we say that a \emph{phase transition} has occured.
-
-Landaus \emph{symmetry breaking} theory \cite{} was thought to classify all phases of matter (What are the 230 Groups/Crystals here?). However, as shown by \cite{wenTopologicalOrdersEdge1995}, there are phases that are not described by spontaneous symmetry breaking but rather a new quantity, the dependence on the topology of the ground state.
-
-There is a nice review here \cite{wenTopologicalOrderLongrange2013}. There is also a paper by Xiao-Gan Wen from 2020, find this. 
+\section{Overview}
+%\input{chapters/intro.tex} # TODO: rewrite everywthing here.
 
 
-% If we use this layout, where do we put Fermionic ones? it isnt its own chapter, we only need a summary. Do we put them into the overview/introduction? 
-
-% \chapter{Symmetric Tensor Networks}
-% 
-% \chapter{Fermionic \& Anyonic Tensor Networks}
-% 
-% \chapter{Categorified Tensor Networks}
-
-\section{Introduction}
-
-\subsection{Some basic Category Theory}
-
-Here we introduce some basic category concepts. For a review of categories for quantum systems see \cite{selingerSurveyGraphicalLanguages2011}, for a use in tensor networks see \cite{vercleyenMathematicalStructureTensor2018} or \cite{biamonteLecturesQuantumTensor2020}(Check this!).
-
-Similarly to the concepts above, we introduce categories because there are some that mirror the graphical language used by tensor networks exactly. Furthermore, both our later treatment of anyons and symmetries in Chapters .... makes use of these concepts. Here we mostly follow the language used by \cite{VakilRisingSea2025}.
-
-\begin{definition}[Category]
-  \label{def:category}
-  A category $\mathrm{C} $  is built by a collection of of objects, which we usually denote by $obj(\mathrm{C} )$, and a set of morphisms $\Hom_C(A,B)$ for each pair $A,B$ of objects, where we refer to $A$ as the domain and $B$ as the codomain. If we want to refer to an object in $\mathrm{C} $, we usually just write $A \in \mathrm{C}$.
-
-  Furthermore, there is a binary operator $\circ : Hom_C(A,B) \times Hom_C(B, C) \to Hom(A,C)$ such that this is associative. Also, we have an identity morphism for each object $A$ denoted by $id_A$ s.t. $id_A \circ f = f$ and $g \circ id_B = g$ for all appropriate morphisms. 
-
-  We say there is an \emph{isomorphism} between two objects if there exists an inverse morphism (Just copy vakil here.).
-\end{definition}
-
-As an example $Hilb_{fd}$ forms a category where the objects are f.d. Hilber spaces and the morphisms are the linear maps between them.
-
-Realize that this encodes all the needed information about sequential composition.
-
-
-\begin{definition}[Functor]
-  \label{def:functor}
-  A \emph{Functor} is a map from category $\mathrm{A} $ to category $\mathrm{B} $ and is given by the data
-  \[
-    F : obj(\mathrm{A} ) \to obj(\mathrm{B} ) \quad \text{and} \quad F : Hom(A,B) \to Hom(F(A), F(B))
-  \]
-  such that $F$ preserves the identity and composition
-  \[
-    F(id_A) = id_{F(A)} \quad \text{and} \quad F(f \circ g) = F(f) \circ F(g)
-  \]
-\end{definition}
-
-Now, in a quantum system we want the option to also describe \emph{parallel composition}. If we have two systems $A$ and $B$ we want to apply processes $f$ and $g$ on the combined system $A \otimes B$ as $f \otimes g$. So we introduce extra structure to our categories in the form of a functor $- \otimes -$. This acts between 
-\[
-  \otimes : \mathrm{C} \times \mathrm{C} \to C
-\]
-where
-\[
-  \otimes : obj(\mathrm{C} ) \times obj(\mathrm{C} ) \to \mathrm{C} : (a,b) \mapsto a \otimes b
-\]
-and
-\[
-  \otimes : Mor(A,A^\prime) \times Hom_{\mathrm{C} }(B,B^\prime ) \to Hom_{\mathrm{C} }(A \otimes A^\prime , B \otimes B^\prime ), (f,g) \mapsto f \otimes g.
-\]
-
-Now, the tensor product in general is not associative, i.e. the spaces $A \otimes (B \otimes C)$ and $(A \otimes B) \otimes C$ are only isomporphic. So we further define a natural isomorphism
-\[
-  \alpha : (A \otimes B) \otimes C \to A \otimes (B \otimes C)
-\]
-called the associator.
-
-We can now make this construction a formal definition:
-
-
-
-\begin{definition}[Monoidal Category]
-  \label{def:monoidalCategory}
-  A monoidal category is a category $C$ equipped with
-  \begin{enumerate}
-    \item A bifunctor $\otimes : C \times C \to C$.
-    \item A unit element $1 \in C$
-    \item An isomorphism
-      \[
-        \alpha : - \otimes (- \otimes -) \to (- \otimes -) \otimes -
-      \]
-    \item Left and right unitors $\gamma : 1 \otimes - \to -$ and $\delta : - \otimes 1 \to -$.
-  \end{enumerate} 
-  We denote this by the triple $(C,\otimes,1)$ where we omit the unitors. Otherwise this is a 5 or 6 tuple TODO.
-\end{definition}
-
-TODO: graphical calculus.
-
-
-\chapter{Symmetric Tensor Networks}
+\section{Symmetric Tensor Networks}
+\label{sect:symmetricTensorNetworks}
 \input{chapters/symmetry.tex}
 
 
 
-\chapter{Decompositions for Categorical Networks}
+\section{Decompositions for Categorical Networks}
 
 This chapter generalizes the decomposition in \cite[Equation~27]{singhTensorNetworkStates2012a} to both Fusion Categories and the Representation categories of compact groups. Note that in \cite{devosTensorKitjlJuliaPackage2025}, such a generalization is given for representations of finite groups, which does not include $SU(2)$. However I do not yet know if we should do so, since I not yet sure how to argue the F moves here. If we instead take the deformation $U_q(sl_2)$ we get finiteness (and fusion cats?), unfortunately $U_q(sl_2)$ is not a group.
 
@@ -309,7 +204,7 @@ to[out=-45,in=90]
 %
 %Some examples of these groups include $\U{1}, \SU 2, \mathbb{Z}_{n}$
 %
-%Now where the intutition is more shaky: Consider a symmetry space $V_i$ on a single site (why single). Then we get that it decomposes into a direct sum of irreps $V_{i}^a$,
+%Now where the intutitionAdiabatic nature of topological quantum gate is more shaky: Consider a symmetry space $V_i$ on a single site (why single). Then we get that it decomposes into a direct sum of irreps $V_{i}^a$,
 %\[
 %  V_{i}  = \bigoplus_a \bigoplus_{i = 1}^{d_{a} } V_{i}^a
 %\]
@@ -1082,7 +977,7 @@ The motivation for this section is to introduce the necessary categoy theory bac
 \end{definition}
 
 
-\begin{lemma}[Schurs 1st lemma (which one?)]
+\begin{lemma}[Schur's lemma \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}]
   If $S$ and $T$ are simple objects in a semisimple category over an algebraically closed field (this is always C in our case), then it holds that
   \[
     \Hom(S,T) = \begin{dcases}
@@ -1241,7 +1136,7 @@ and projections
   Let $(V,\rho_V)$ be a representation.
 \end{definition}
 
-\begin{definition}[Twists from $R$ moves]
+\begin{definition}[Twists from $R$ moves {\cite[Equation~?]{simonTopologicalQuantum2023}}]
   Suppose we are in a braided monoidal category with $F$ and $R$ symbols. Then we compute the \emph{twist} (a self braiding) as follows:
   \[
     R^{ab}_{c} R^{ba}_c = \frac{\theta_c}{\theta_a \theta_b}.  
@@ -1256,159 +1151,10 @@ and projections
   \]
 \end{example}
 
-\section{Anyonic Hamiltionians}
 
-
-\subsubsection{Symmetric States}
-
-A state $\ket{\psi}$ is symmetric if $U^n(g) \psi = \psi$. Similarly, its densitiy need require that $U^n(g) \rho U^n(g) = \rho$.
-
-\subsection{1D Lattice Models}
-
-So from what i can read here (also the nlab or wikipedia) a spin chain specifically only refers to a per site construction with a tensor product hilbert space. An anyon chain is, well, an anyonic chain. These do not admit such a decomposition. So we should call these simply 1D lattice models.
-
-In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically in the $Fib$ model, are introduced simply as the fusion space of $n$ anyons. Further, the authors define a primitive hamiltonian that assigns $-1$ to the interaction $\tau \otimes \tau = 1$ and $0$ to the interaction $\tau \otimes \tau = \tau$. This is in turn realized on the basis of the intermediate states, and evaluated using the method of exact diagonalization \cite{}. This is extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
-
-The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010}, \cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and in terms of categories this is done in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
-
-For the golden chain, we consider $n+2$ Fib anyons as our ground state. Their combined state yields a Fusion Tree $\Hom(\tau^{\otimes n+1}, \tau)$ with intermediate charges $x_1, \ldots , x_n$. These intermediate charges are further restricted as in that there are no possibilities to assign adjacent $1$s to them (In fact this is what causes the dimension of the hilbert space to reduce to $\phi^n$).
-
-Generally, we can define an analogue of a general state of this $N$ site lattice.
-
-
-There is a three local hamiltonian for the golden chain defined as
-\[
-  H_i = - \sum_{x_i^\prime }^{} [F_{x_{i+1} }^{x_{i-1}\tau\tau}]_{x_i}^{x_i^\prime } E_{x_{i}^\prime } [F_{x_{i+1} }^{x_{i-1}\tau\tau }]_{x_{i^\prime }}^{x_{i^{\prime\prime}}}
-\]
-
-Write this three local hamiltonian in an operator form
-\[
-  H_i = -J \begin{pmatrix}
-    1 &  &  &  &   \\
-     & 0 &  &  &   \\
-     &  & 0 &  &   \\
-     &  &  & \varphi^{-2}  & \varphi^{-\frac{3}{2}}  \\
-     &  &  & \varphi^{-\frac{3}{2}} & \varphi^{-1}    \\
-  \end{pmatrix}
-\]
-
-We can build this as an anyonic operator in $Hom(\tau \otimes \tau, \tau \otimes \tau)$ as
-\[
-  \begin{tikzpicture}[scale=1.2,
-    every node/.style={font=\small},
-    fusion/.style={circle,fill=black,inner sep=1.2pt}
-]
-
-\node at (-2, 0.5) {$H_i = $};
-
-\node at (-1, 0.5) {$E_1$};
-
-\begin{scope}
-  \node[fusion] (v1) at (0,0) {};
-\node[fusion] (v2) at (0,1) {};
-
-\draw (v1) -- (-0.7,-1);
-\draw (v1) -- (0.7,-1);
-
-\draw (v2) -- (0.7,2);
-\draw (v2) -- (-0.7,2);
-
-\draw (v1) -- (v2);
-
-\node[left]  at (-0.7,-1) {$\tau$};
-\node[right] at (0.7,-1) {$\tau$};
-\node[left]  at (-0.7,2) {$\tau$};
-\node[right] at (0.7,2) {$\tau$};
-
-\node[left] at (-0.15,0.5) {$1$};
-
-\end{scope}
-
-\node at (1.5,0.5) {$+$};
-
-\node at (2, 0.5) {$E_\tau$};
-
-\begin{scope}[xshift=3cm]
-  \node[fusion] (v1) at (0,0) {};
-  \node[fusion] (v2) at (0,1) {};
-
-  \draw (v1) -- (-0.7,-1);
-  \draw (v1) -- (0.7,-1);
-
-  \draw (v2) -- (0.7,2);
-  \draw (v2) -- (-0.7,2);
-
-  \draw (v1) -- (v2);
-
-  \node[left]  at (-0.7,-1) {$\tau$};
-  \node[right] at (0.7,-1) {$\tau$};
-  \node[left]  at (-0.7,2) {$\tau$};
-  \node[right] at (0.7,2) {$\tau$};
-
-  \node[left] at (-0.15,0.5) {$\tau$};
-
-\end{scope}
-
-\end{tikzpicture}
-\]
-.
-
-In this case we can view the golden chain approach chosen above as a manualization of the tensor network process.
-
-We can also write $H_i$ in its operator form matrix as
-\[
-  H_{i} \in \bigoplus_{a \in 1,\tau} Hom(\mathbb{C}, \mathbb{C})
-\]
-as 
-\[
-  H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
-  & \begin{array}{cc} 1 & \tau \end{array} \\
-  \begin{array}{r} 1 \\ \tau \end{array} & 
-  \begin{pmatrix}
-   E_1 & 0\\
-   0 & E_\tau   \\
-  \end{pmatrix}
-\end{array}
-\]
-
-\[
-H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
-  & \begin{array}{ccccc} \ket{1\tau 1} & \ket{\tau\tau 1} & \ket{1\tau\tau}_1 & \ket{\tau 1 \tau}_2 & \ket{\tau \tau, \tau}_3 \end{array} \\
-  \begin{array}{r} \ket{x_0, \mathbf{1}, \tau} \\ \ket{x_0, \tau, \mathbf{1}} \\ \ket{x_0, \tau, \tau}_1 \\ \ket{x_0, \tau, \tau}_2 \\ \ket{x_0, \tau, \tau}_3 \end{array} & 
-  \begin{pmatrix}
-    1 &   &   &               &               \\
-      & 0 &   &               &               \\
-      &   & 0 &               &               \\
-      &   &   & \varphi^{-2}  & \varphi^{-\frac{3}{2}} \\
-      &   &   & \varphi^{-\frac{3}{2}} & \varphi^{-1}   \\
-  \end{pmatrix}
-\end{array}
-\]
-
-\subsection{Anyonic States}
-
-For simple lattice states, \cite{singhMatrixProductStates2014} defines a bipartition of the lattice into anyons $A$ and $B$. Then we consider the whole space under charge $a_{tot}$ as
-\[
-  V_{a_{tot}} = \bigoplus_{N_{ab}^{a_{tot} } = 1} (V^{A}_a \otimes V^{B}_b)
-\] 
-What i dont get here is why we are allowed to tensor both these sectors together without the space $V_{ab}^{a_{tot} }$ explicitely.
-
-TODO delete all of this and introduce this over the Hom category.
-
-Anyhow, the fundamental building blocks we are using are the vector spaces $V^{ab}_c$ (where we refer to this as the fusion space from types $a$ and $b$ to $c$). This allows us to build the vector space of two anyonic types $a,b$ as the sum over the fusion outcome:
-\[
-  V^{ab} = \bigoplus_{c \in Irr(C)} V^{ab}_c  
-\]
-
-We can directly introduce the $R$ move (a braiding of the initial anyons) to obtain the isomorphic space $V^{ba}$ as
-\[
-  R : \bigoplus_{c \in Irr(C)} V^{ab}_c  \cong \bigoplus_{c \in Irr(C)} V^{ba}_c  
-\] 
-
-We can also write the space $V^{ab}_c = Hom(a \otimes b, c)$ in the categorical language. Here we also need to realize that there is a difference between the isomorphism $\beta$ and the action of $R$, which is really on the hom space $\Hom(-, c)$. So this would be a yoneda perspective? Since we know $R$ for all $a,b,c \in C$, we also know the action of $R$ as an isomorphism. Well technically i believe that this allows us to determine for all simples $c$, and then semisimplicity extends this to all subjects (this would be nice to write down) and then the yoneda embedding is enough to know the whole space. Similarly, in our Rep(G) categories (which i actually belive to be symmetric? Find this in etingof) 
-
-The algebra-category correspondence in the theory of anyons was first noted by \cite[App~E]{kitaevAnyonsExactlySolved2006}
-
+\section{Anyonic Tensor Networks}
+\label{sect:Anyons}
+\input{chapters/anyons.tex}
 I think we may be able to build a nice summary with this diagram:
 % https://q.uiver.app/#q=WzAsMTIsWzAsMCwiKEFcXG90aW1lcyBCKVxcb3RpbWVzIEMiXSxbMiwwLCJBIFxcb3RpbWVzIChCIFxcb3RpbWVzIEMpIl0sWzAsMiwiSG9tKChBXFxvdGltZXMgQikgXFxvdGltZXMgQywgRCkiXSxbMiwyLCJIb20oQVxcb3RpbWVzIChCIFxcb3RpbWVzIEMpLCBEKSJdLFswLDUsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c19jIFZee0FCfV9jIFxcb3RpbWVzIFZee2NDfV9EIl0sWzIsNSwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX2MgVl57QWN9X0QgXFxvdGltZXMgVl57QkN9X2MiXSxbMSw0LCJcXGNvbmciXSxbMCw2LCJcXHVuZGVyc2V0e1xcYmx1ZXtcXG11IFxcaW4gMSxcXGxkb3RzLCBOXntBQn1fY30gXFxxdWFkIFxcYmx1ZXtcXG51IFxcaW4gMSxcXGxkb3RzLE5ee2NDLER9fX17XFx2ZXJ0IChBLEIpO2M7XFxtdVxccmFuZ2xlIFxcb3RpbWVzIFxcdmVydCBjLEM7IEQ7IFxcbnUgXFxyYW5nbGV9Il0sWzIsNiwiXFxkaXNwbGF5c3R5bGVcXHN1bV97ZixcXGFscGhhLFxcYmV0YX0gW0ZfRF57QUJDfV1feyhjXFxtdVxcbnUpfV57KGZcXGFscGhhXFxiZXRhKX0gXFx2ZXJ0IEEsZjtEO1xcYmV0YVxccmFuZ2xlIFxcb3RpbWVzIFxcdmVydCBCLEM7IGY7IFxcYWxwaGEgXFxyYW5nbGUiXSxbMCw0LCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2NcXGluIElycihDQVQpfSBIb20oQSBcXG90aW1lcyBCLCBjKSBcXG90aW1lcyBIb20oYyBcXG90aW1lcyBDLCBEKSJdLFsyLDQsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c197ZCBcXGluIElycihcXG1hdGhzZntDYXR9KX0gSG9tKEEgXFxvdGltZXMgZCwgRCkgXFxvdGltZXMgSG9tKEIgXFxvdGltZXMgQywgZCkiXSxbMSw1LCJcXGNvbmciXSxbMCwyLCJIb20oLSxEKSIsMV0sWzEsMywiSG9tKC0sRCkiLDFdLFswLDEsIlxcdW5kZXJzZXR7XFxzaW19e1xcYWxwaGFfe0FCQ319Il0sWzQsNywiXFxpbiIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs3LDgsIlxcdW5kZXJzZXR7XFxncmVlbntcXHRleHR7Nmotc3ltYm9sc319fXtGXntBQkN9X0R9IiwxLHsic2hvcnRlbiI6eyJzb3VyY2UiOjEwLCJ0YXJnZXQiOjEwfX1dLFsyLDksIlxcdW5kZXJzZXR7XFx0ZXh0e1xcZ3JlZW57c2VtaXNpbXBsaWNpdHl9fX17XFxjb25nfSIsMyx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFszLDEwLCJcXHVuZGVyc2V0e1xcdGV4dHtcXGdyZWVue3NlbWlzaW1wbGljaXR5fX19e1xcY29uZ30iLDMseyJvZmZzZXQiOi0yLCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbOSw0LCI9IiwzLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzEwLDUsIj0iLDMseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJub25lIn0sImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNSw4LCJcXGluIiwzLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzIsMywiXFx1bmRlcnNldHtcXHNpbX17XFxhbHBoYV97QSxCLEN9fSJdLFsyLDMsIlxcc21hbGxcXGdyZWVue1xcdGV4dHthc3NvY2lhdG9yIGluZHVjZXMgaXNvbW9ycGhpbXMgdW5kZXIgeW9uZWRhfX0iLDAseyJvZmZzZXQiOjUsInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
 \[\begin{tikzcd}
@@ -1495,14 +1241,7 @@ I think we may be able to build a nice summary with this diagram:
 
 
 
-\subsection{Rydberg-blockade ladder}
-
-This is given by the fusion category $so(3)_2$. Here we have fusion rules
-\[
-  1 \otimes 1 = 0 \oplus 1 \oplus 2, \quad 2 \otimes 1 = 1, \quad 2 \otimes 2 = 0.
-\]
-
-\section{I dont know where to put this yet}
+\subsection{I dont know where to put this yet}
 
 If we start out on anyonic chains, like the $SU(2)_3$ case, this provideds a nice generalization for chains with $C = Rep(SU(2)_k)$ with fusion rules
 \[
@@ -1553,36 +1292,36 @@ TODO: check if we can give symmetries such as in the wanniers kramer dual that a
 
 
 
-\chapter{Appendix}
+\section{Appendix}
 
-Implementations that are available:
+\input{chapters/implementations.tex}
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
-\begin{tabular}{llll}
-\hline
-\textbf{Name} & \textbf{Symmetry} & \textbf{Citation}(Software, Publication) & Language \\
-\hline
-ITensor & Nonabelian (Fermion?) & \cite{fishmanITensorSoftwareLibrary2022} & Julia \\
-Cyten & Categorical & \cite{unfriedCyten} \cite{dissertation} & python \\
-TeNPy & Abelian & \cite{hauschildTensorNetworkPython2024} & python \\
-QSpace & Nonabelian & \cite{weichselbaumQSpaceOpensourceTensor2024} \cite{weichselbaumNonabelianSymmetriesTensor2012} & ? \\
-ChemTensor & $SU(2)$ & \cite{QctumChemtensor2026} & C \\
-UniTensor & ? & \cite{} & ? (Python, C++)\\
-YasTn & Abelian & \cite{ramsYASTNAnotherSymmetric2025} & Python \\
-TensorKit.jl & Categorical & \cite{devosTensorKitjlJuliaPackage2025} & Julia \\
-Cytnx & Abelian only (i think) & \cite{} & C++ \\
-quimb & Fermion? & \cite{} & julia \\
-MPSKit.jl & like TensorKit? & \cite{} & julia \\
-TeMFpy & Fermion? & \cite{temfpy} & python \\
-abeliantensor & $U(1)$ and  $\mathbb{Z}_n$ & \cite{hauruMhauruAbeliantensors2026} & python \\
-symmray & Fermion & \cite{gaoFermionicTensorNetwork2025} \cite{grayJcmgraySymmray2026} & ? \\
-grassmanntn & Grassmann & \cite{yosprakobAyosprakobGrassmanntn2026} & ? \\ 
-SymLibrary & ? (OnSite) & \cite{mcmahonQnlaSymLibrary2019} \cite{mcmahonHolographicDualityLifted2020} & MatLab? \\
-\hline
+\begin{tabular}{ll}
+\toprule
+Symbol & Meaning \\
+\midrule
+$\mathbb{C}$ & Complex numbers \\
+$\mathbb{F}$ & Base field \\
+$\mathbb{N}$ & Natural numbers \\
+$\mathfrak{g}$ & Lie algebra \\
+$\mathfrak{sl}_2$ & Special linear Lie algebra of degree 2 \\
+$U_q(\mathfrak{sl}_2)$ & Quantum group associated with $\mathfrak{sl}_2$ \\
+$\mathcal{C}$ & Category \\
+$\mathbf{1}$ & Monoidal unit object \\
+$V^*$ & Dual vector space/object \\
+$\mathrm{Hom}(V,W)$ & Space of morphisms from $V$ to $W$ \\
+$\operatorname{Rep}(G)$ & Representation category of group $G$ \\
+$\mathrm{Hom}_G(V,W)$ & Space of intertwiners between representations of $G$ \\
+\bottomrule
 \end{tabular}
-\caption{Overview of tensor network libraries and symmetry support. (There are some closed source things here as well, also what is the software used by singh et al.?). Software is included if it has a website or documentation and an account of the symmetries it exploits. Applications or theory are listed in the Citation column.}
+\caption{Notation conventions.}
+\label{tab:notation}
 \end{table}
+
+
+\newpage
 
 %\definecolor{codegreen}{rgb}{0,0.6,0}
 %\definecolor{codegray}{rgb}{0.5,0.5,0.5}

@@ -33,6 +33,9 @@
 %\usepackage{dsfont}
 \usepackage{bbold}
 \usepackage[dvipsnames]{xcolor}
+\usetikzlibrary{decorations.markings}
+
+\captionsetup{width=\textwidth, labelfont=bf, font=small}
 
 \definecolor{greenii}{RGB}{20,140,10}
 \definecolor{darkgreen}{rgb}{0.00,0.85,0.1}
@@ -108,18 +111,37 @@
 \newcommand{\GL}[2]{\mathrm{GL}(#1, #2)} % e.g., GL(n, R)
 \newcommand{\SL}[2]{\mathrm{SL}(#1, #2)}
 
+\newcommand{\liesl}[1]{\mathfrak{sl}_{#1}} % sl_2 lie algebra.
+
+%\theoremstyle{definition}
+%\newtheorem{definition}{Definition}[section]
+%\newtheorem{theorem}[definition]{Theorem}
+%\newtheorem{lemma}[definition]{Lemma}
+%\newtheorem{example}{Example}
+%\newtheorem{corollary}{Corollary}[definition]
+%\newtheorem{literature}{Literature}[theorem]
+
+\theoremstyle{italics}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{theorem}[definition]{Theorem}
-\newtheorem{lemma}[definition]{Lemma}
-\newtheorem{example}{Example}
-\newtheorem{corollary}{Corollary}[definition]
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{literature}[theorem]{Literature}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{examples}[theorem]{Examples}
+\newtheorem{remark}[theorem]{Remark}
 
 % --- Category Theory Shorthands ---
 \newcommand{\Cat}{\mathbf{Cat}}          % Category of categories
 %\newcommand{\VecCat}{\mathbf{Vect}}      % Category of Vector spaces
 \newcommand{\Rep}{\mathrm{Rep}}          % Representation category
-\newcommand{\Hom}{\operatorname{Hom}}    % Homomorphism set
+\newcommand{\Hom}{\mathrm{Hom}}    % Homomorphism set
 \newcommand{\End}{\operatorname{End}}    % Endomorphism set
 \newcommand{\id}{\operatorname{id}}      % Identity morphism
 \newcommand{\Hilb}{\mathbf{Hilb_fd}}
