@@ -1,0 +1,46 @@
+\begin{literature}[\bf Tensor Networks]
+  The modern theory of \emph{tensor networks} shaped out of the study of \emph{renormalization}
+  and quantum many-body systems, initially with the \emph{density-matrix-renormalization-group} of \textcite{whiteDensityMatrixFormulation1992,whiteDensitymatrixAlgorithmsQuantum1993} and later extended by \textcite{ostlundThermodynamicLimitDensity1995} as a variational method (ansatz?) in the form of \emph{matrix product states} (MPS) (Maybe this is actually due to \cite{fannesFinitelyCorrelatedStates1992}). This was further generalized to 2 dimensions with the introduction of \emph{projected entangled-pair states} (PEPS) \cite{verstraeteRenormalizationAlgorithmsQuantumMany2004}. \emph{Multiscale-entanglement renormalization ansatz} (MERA) \cite{vidalClassQuantumManybody2008} can be considered as an extension of MPS allowing for long-range entanglement (this is probably wrong). Whats missing? Holography \cite{singhHolographicSpinNetworks2018} but there are earlier ones.
+
+  In the purely mathematical view as a network of tensor contractions however, both concept and the notation we use today were introduced by \cite{Penrose1971Applications} under the name of \emph{tensor-systems}.
+\end{literature}
+
+While we introduce this concept classically and endow it with symmetry as a start, we will start concerning ourselves with a categorical embedding of tensor networks in what is commonly reffereed to as a \emph{fusion-category} (Lit ???).
+
+\begin{literature}[\bf Symmetric Tensor Network]
+  Originally, the idea to exploit symmetries of the hamiltonian for a speedup was proposed to be used in dmrg by \cite{mccullochNonAbelianDensityMatrix2002} (What is \cite{sierraDensityMatrixRenormalization1998a}? This sounds like it as well.). More general theory for \emph{globally invariant tensor networks}, i.e. networks that are built of tensors that are globally invariant is given by \textcite{singhTensorNetworkDecompositions2010a} preceeding more detailed accounts on abelian symmetries \cite{singhTensorNetworkStates2011} and nonabelian ($\SU{2}$) symmetries in \cite{singhTensorNetworkStates2012a}. A similar approach to (non)abelian symmetries is given by \textcite{weichselbaumNonabelianSymmetriesTensor2012, weichselbaumXsymbolsNonAbelianSymmetries2020}. These rely on the general idea, that under representations of some compact group $G$, there are on site symmetries on each tensor, i.e. $[A, U_g^{\otimes k}] = 0$ there is a generalized \emph{wigner-eckart-theorem} for tensors with $n$ legs of the form
+  \[
+    T = \bigoplus_a D_a \otimes V_a
+  \]
+  where $D_a$ is a matrix and $V_a$ is a \emph{fusion-tree}, i.e. a clebsch-gordan tensor.
+  Reviews and specific algorithms in the SU(2) case are given by \cite{schmollBenchmarkingGlobal$SU2$2020, schmollTensorNetworkSimulations2020, schmollProgrammingGuideTensor2020}.
+  \cite[§~8]{schmollProgrammingGuideTensor2020} proposes that this method is appropriate for Anyonic simulation as well (although this is done earlier by singh \& pfeiffer.).
+  Symmetries as categorified networks, as we will present in \cite{}, are explained in \cite{dissertation} 
+  and \cite{devosTensorKitjlJuliaPackage2025} and in this work in \cref{sect:Anyons}.
+
+  For a list of software implementing symmetries see \cref{app}.
+\end{literature}
+
+
+\begin{literature}[Anyons]
+  \emph{Anyons} as quasiparticles with exotic exchange statistics were originally propsed by \cite{wilcek} 
+\end{literature}
+
+\begin{literature}[Anyons as Categories]
+  The correspondence between the \emph{physical} treatment of anyons and the \emph{categorical treatment} of anyons as a \emph{braided fusion category} (modular functor?) was originally descibed by \textcite[§~E, §~8]{kitaevAnyonsExactlySolved2006} based on previous work in quantum field theory already making use of modular categories and their diagrammatic algebras such as \cite{reshetikhinInvariants3manifoldsLink1991} Further treatments are found in \cite{wang} and \cite{simon-nayak-das-sarma}. A modern treatment of the realization through the Configuration space of $n$-anyons if given by \cite{90eb98357acd4634abd18d906cc3811d} and in terms of modular functors by \cite{burtonShortGuideAnyons2016}.
+\end{literature}
+
+\begin{literature}[Anyonic Spin Chains and Tensor Networks]
+  (Check if this is the first). A first appearance of \emph{Anyonic Tensor Networks} in terms of spin chains is given in \cite{feiguinInteractingAnyonsTopological2007} as the \emph{golden chain}, which realizes a interacting $2$-local hamiltonian on a $n$ anyon Fibonacci lattice. This is reviewed in \cite{trebstShortIntroductionFibonacci2008a} with generalizations to $3$ local and longer range hamiltonians. A general account outside of the Fib-model can be found in \cite{gilsAnyonicQuantumSpin2013} and \cite{buicanAnyonicChainsTopological2017} (Check these again.). We can consider these approaches as a \" manualization \" of the tensor network approach. Anyonic tensor networks are first introduced by \cite{pfeiferSimulationAnyonsTensor2010} and \cite{pfeiferSimulationAnyonsUsing2012} already making use of the symmetric approach defined in \cref{sect:symmetricTensorNetworks}. Furthermore, stuctures such as an anyonic MERA are introduced. 
+\end{literature}
+
+\begin{literature}[Simulation of Anyons and String Nets]
+  This should probably go in the previous section. \cite{liuMethodsSimulatingStringNet2022} \cite{kirchnerNumericalSimulationNonabelian2023}
+\end{literature}
+
+\begin{literature}[Categorified Quantum Mechanics]
+  There are multiple approach to a diagramatic and categorified approach to quantum mechanics. Generally one wants both spaces and maps represented by a framework that allows for parallel and entangled operations, i.e. has a tensor product structure. \cite{selingerSurveyGraphicalLanguages2011} gives a review of this \cite{vercleyenMathematicalStructureTensor2018} does for tensor networks specifically.
+
+  TODO: find the XZ-calculus literature by Kissinger? Specific examples such as \emph{XZ}-calculus in the context of TQC is handled by \cite{ahmadiZXcalculusLanguageTopological2023}.
+\end{literature}
+

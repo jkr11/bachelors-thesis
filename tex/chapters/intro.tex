@@ -1,110 +1,13 @@
+Tensor Networks allow the efficient representation and computation of quantum states for large $N$ using methods such as DMRG. Symmetric Tensor Networks yield a speedup over traditional methods for 
+appropriate Hamiltonians. 
+Furthermore, we would also like to represent \emph{Anyonic} states and Hamiltonians by these operations, and since some anyon species are universal for quantum computation, we would like to represent circuits as well. Furthermore it is folklore that tensor networks and quantum systems in general are goverened by category-theoretic constructions. 
 
-\subsection{Symmetries in Physics}
+In this thesis we give a formal overview how all these concepts fit into a categorical
+framework while presenting a review of the existing literature, i.e. we give an interpretation of the results of \textcite{singhTensorNetworkStates2012a,weichselbaumTensorNetworksNumerical2012,pfeiferSimulationAnyonsTensor2010,dissertation,devosTensorKitjlJuliaPackage2025} % Missing ayeni, bultnick? maybe kirchner, read that.
 
-What do i even want to do here? I want to give an overview on the role of symmetries in condensed matter and many body physics that is also of interest to computer scientiests, i.e. describe some sort of of system to compute with. However also, there should be an overview about the flavours of (topological) phases, orders and entanglements. Most important foremost would be a paragraph on what "symmetry" as a concept refers to. Then we would want to classify the symmetries we can (or want to!) adress with tensor networks (and string (spin?) networks!). Landau theory and it's failure would be a great starting point for a condensed matter approach, this is directly correlated with all of topological order, symmetric hamiltonians and dualities. 
+\subsection{Thesis Outline}
 
-So for now im thinking to treat this as a collection of independent chapters. First on global symmetries in tensor networks. Work backwards from the singh papers (however these are actually post-anyon networks (c.f. \cite{pfeiferSimulationAnyonsTensor2010})) and establish the extent that these papers deal with.
+In \cref{sect:background} we review the technical literature which is shared by the chapters (sections?). We give accounts on symmetries, representation theory, fermionic networks, anyons and categories. \Cref{DecompositionOfSemisimpleCategories} presents the main theorem that is the backend of our tensor system. While we will state the first $2$ sections with scarce proofs, chapter \cref{???} will be quite rigorous and supercede all statements from the previous sections.
 
-Then write one section on the anyonic networks with sparse mentions of symmetries. Of course we could give representations as a special case here if we take the representations to form an anyon theory (really just a fusion category) as given in \cite[§~20]{simonTopologicalQuantum2023} but I do not know if this is desired. Well, the general theory is handled in \cite{devosTensorKitjlJuliaPackage2025} with utmost care, however I would like to give some duly needed proofs (in really all of these papers, I believe the word \emph{proof} only appears once in all of them!) i.e. as done already with our decomposition theorem \ref{DecompositionOfSemisimpleCategories}.
+Maybe we will present a outlook on Modular Categories 
 
-And then it really is just open ended. I think a nice description of dualities is duly managable but this of course requires the discussion of module categories as in \cite{lootensDualitiesOnedimensionalQuantum2024} as well as a restriction on the type of systems we deal with.
-In fact, \cite{bridgemanInvertibleBimoduleCategories2023} gives us a version of schurs lemma for bimodule categories and mentions its application as clebsch gordan tensors.
-
-Another option would be to explore MPO-symmetries, as these share quite a lot of language with our decompositions (in fact, the symmetries they generate are a direct superset of ours!). There is also the consideration of virtual only symmetries, and I currently remember a description of them here \cite{degrootTopologicalPhasesSymmetries2022}. Both the MPO-case and the virtual symmetry case require a discussion of projective symmetries as well.
-
-Someting I currently know nothing about is the theory on \emph{symmetry protected topological} (SPT) phases, but it does sound relevant. \cite{degrootTopologicalPhasesSymmetries2022} also gives some tensor network methods in this context.
-
-The topic of topological order would require a discussion of string nets, and inthereof the toric code. I need to understand this anyways, so why not write it down nicely? 
-
-On a side note, all of this is an instance of penrose notation \cite{Penrose1971Applications}, and im not yet sure what the difference between spin and string diagrams are. Also, structures such as the metric Lie Algebra TTS given in \cite{nlab:tree_tensor_network_state} seem to admit a very similar calculus, but not with defined braiding as such. Also, there is the topic of categorical computationl using finite groups (but this also seems to be similar to the formalism in Simon TQ), accounts are in the work of Mochon \cite{mochonAnyonsNonsolvableFinite2003}\cite{mochonAnyonComputersSmaller2004a} and i remember something about abelian groups not being suitable in a paper of Bravyi and Koening (find this). And of course, categorical computation in general although i do not believe this matters here \cite{kongCategoricalComputation2023}.
-
-\subsection{Review: Landau Theory and it's limitations}
-
-All matter is made of (what exactly? 3 fundamentals), but can display many different structural properties called \emph{phases}, such as liquid, crystal, solid, (what else? condensations? is there a nice diagram?). These arrangements of matter can be manipulated, should the structural property change we say that a \emph{phase transition} has occured.
-
-Landaus \emph{symmetry breaking} theory \cite{} was thought to classify all phases of matter (What are the 230 Groups/Crystals here?). However, as shown by \cite{wenTopologicalOrdersEdge1995}, there are phases that are not described by spontaneous symmetry breaking but rather a new quantity, the dependence on the topology of the ground state.
-
-There is a nice review here \cite{wenTopologicalOrderLongrange2013}. There is also a paper by Xiao-Gan Wen from 2020, find this. 
-
-
-% If we use this layout, where do we put Fermionic ones? it isnt its own chapter, we only need a summary. Do we put them into the overview/introduction? 
-
-% \chapter{Symmetric Tensor Networks}
-% 
-% \chapter{Fermionic \& Anyonic Tensor Networks}
-% 
-% \chapter{Categorified Tensor Networks}
-
-\subsection{Introduction}
-
-\subsection{Some basic Category Theory}
-
-Here we introduce some basic category concepts. For a review of categories for quantum systems see \cite{selingerSurveyGraphicalLanguages2011}, for a use in tensor networks see \cite{vercleyenMathematicalStructureTensor2018} or \cite{biamonteLecturesQuantumTensor2020}(Check this!).
-
-Similarly to the concepts above, we introduce categories because there are some that mirror the graphical language used by tensor networks exactly. Furthermore, both our later treatment of anyons and symmetries in Chapters .... makes use of these concepts. Here we mostly follow the language used by \cite{VakilRisingSea2025}.
-
-\begin{definition}[Category]
-  \label{def:category}
-  A category $\mathrm{C} $  is built by a collection of of objects, which we usually denote by $obj(\mathrm{C} )$, and a set of morphisms $\Hom_C(A,B)$ for each pair $A,B$ of objects, where we refer to $A$ as the domain and $B$ as the codomain. If we want to refer to an object in $\mathrm{C} $, we usually just write $A \in \mathrm{C}$.
-
-  Furthermore, there is a binary operator $\circ : Hom_C(A,B) \times Hom_C(B, C) \to Hom(A,C)$ such that this is associative. Also, we have an identity morphism for each object $A$ denoted by $id_A$ s.t. $id_A \circ f = f$ and $g \circ id_B = g$ for all appropriate morphisms. 
-
-  We say there is an \emph{isomorphism} between two objects if there exists an inverse morphism (Just copy vakil here.).
-\end{definition}
-
-As an example $Hilb_{fd}$ forms a category where the objects are f.d. Hilber spaces and the morphisms are the linear maps between them.
-
-Realize that this encodes all the needed information about sequential composition.
-
-
-\begin{definition}[Functor]
-  \label{def:functor}
-  A \emph{Functor} is a map from category $\mathrm{A} $ to category $\mathrm{B} $ and is given by the data
-  \[
-    F : obj(\mathrm{A} ) \to obj(\mathrm{B} ) \quad \text{and} \quad F : Hom(A,B) \to Hom(F(A), F(B))
-  \]
-  such that $F$ preserves the identity and composition
-  \[
-    F(id_A) = id_{F(A)} \quad \text{and} \quad F(f \circ g) = F(f) \circ F(g)
-  \]
-\end{definition}
-
-Now, in a quantum system we want the option to also describe \emph{parallel composition}. If we have two systems $A$ and $B$ we want to apply processes $f$ and $g$ on the combined system $A \otimes B$ as $f \otimes g$. So we introduce extra structure to our categories in the form of a functor $- \otimes -$. This acts between 
-\[
-  \otimes : \mathrm{C} \times \mathrm{C} \to C
-\]
-where
-\[
-  \otimes : obj(\mathrm{C} ) \times obj(\mathrm{C} ) \to \mathrm{C} : (a,b) \mapsto a \otimes b
-\]
-and
-\[
-  \otimes : Mor(A,A^\prime) \times Hom_{\mathrm{C} }(B,B^\prime ) \to Hom_{\mathrm{C} }(A \otimes A^\prime , B \otimes B^\prime ), (f,g) \mapsto f \otimes g.
-\]
-
-Now, the tensor product in general is not associative, i.e. the spaces $A \otimes (B \otimes C)$ and $(A \otimes B) \otimes C$ are only isomporphic. So we further define a natural isomorphism
-\[
-  \alpha : (A \otimes B) \otimes C \to A \otimes (B \otimes C)
-\]
-called the associator.
-
-We can now make this construction a formal definition:
-
-
-
-\begin{definition}[Monoidal Category]
-  \label{def:monoidalCategory}
-  A monoidal category is a category $C$ equipped with
-  \begin{enumerate}
-    \item A bifunctor $\otimes : C \times C \to C$.
-    \item A unit element $1 \in C$
-    \item An isomorphism
-      \[
-        \alpha : - \otimes (- \otimes -) \to (- \otimes -) \otimes -
-      \]
-    \item Left and right unitors $\gamma : 1 \otimes - \to -$ and $\delta : - \otimes 1 \to -$.
-  \end{enumerate} 
-  We denote this by the triple $(C,\otimes,1)$ where we omit the unitors. Otherwise this is a 5 or 6 tuple TODO.
-\end{definition}
-
-TODO: graphical calculus.

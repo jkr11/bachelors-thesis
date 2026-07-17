@@ -5,10 +5,10 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{bbm}  % for \mathbb and \mathbbm symbols
 \usepackage{amsmath,amsfonts,amssymb, amsthm}
+\usepackage{cleveref} % this needs to go after hyperref and amsmath
+
 %\usepackage[chapter]{algorithm}  % for algorithm environment, option: use chapters for numering
-\usepackage{enumitem}
 \usepackage{mathtools}
-\usepackage{paracol}  % independent columns in nonabelian section
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
@@ -17,20 +17,18 @@
 \pgfplotsset{compat=1.18}
 \usepackage{tikz-cd}  % commuting diagrams based on tikz
 \usetikzlibrary{calc}
-\usepackage{framed}
 \usepackage[export]{adjustbox}
 \usepackage{relsize}  % for \mathlarger command, e.g. for dagger of a whole diagram, want a large dagger.
 \usepackage{mathdots}  % for \iddots in Z isomorphism matrix
 \usepackage{booktabs}  % for clean tables (tabular environment) 
-\usepackage{multirow}
 \usepackage{caption}  % for setting caption width
 \usepackage{mathrsfs}
 \captionsetup{width=\linewidth}
 \definecolor{Green}{rgb}{0, 0.5, 0.2}
 \usepackage[T1]{fontenc}
-%\usepackage{euscript}
-%\usepackage{pxfonts}
-%\usepackage{dsfont}
+\usepackage{euscript}
+\usepackage{pxfonts}
+\usepackage{dsfont}
 \usepackage{bbold}
 \usepackage[dvipsnames]{xcolor}
 \usetikzlibrary{decorations.markings}
@@ -55,7 +53,7 @@
 \makeatother
 
 
-\usepackage[backend=biber, maxbibnames=4,style=alphabetic, backref,backrefstyle=none]{biblatex}
+\usepackage[backend=biber, maxbibnames=2,style=alphabetic, backref,backrefstyle=none]{biblatex}
 \addbibresource{bachelors.bib}
 
 %\DeclareFieldFormat{urlprefix}{}
@@ -94,6 +92,10 @@
   }
   {\clearfield{url}}
   {}
+}
+
+\DeclareFieldFormat[software]{eprint:github}{%
+  \href{https://github.com/#1}{github:#1}%
 }
 
 
@@ -169,3 +171,14 @@
 F_{#1\,#2\,#3}^{#4}
 \Bigr]}
 
+\makeatletter
+\definecolor{RoyalBlue}{HTML}{4169E1}
+\definecolor{CiteViolet}{HTML}{7B2CBF}
+\hypersetup{
+    colorlinks=true,
+		%linkcolor=green!50!black,
+    %linkcolor = CiteViolet,
+		citecolor=RoyalBlue,
+    urlcolor=RoyalBlue
+}
+\makeatother

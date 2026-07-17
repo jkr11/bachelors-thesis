@@ -1,29 +1,6 @@
-
-
-\begin{literature}[\bf Tensor Networks]
-  The modern theory of \emph{tensor networks} shaped out of the study of \emph{renormalization} and quantum many-body systems, initially with the \emph{density-matrix-renormalization-group} of White \cite{whiteDensityMatrixFormulation1992}\cite{whiteDensitymatrixAlgorithmsQuantum1993} and later extended by Oestlund \& Rommer \cite{ostlundThermodynamicLimitDensity1995} as a variational method (ansatz?) in the form of \emph{matrix product states} (MPS) (Maybe this is actually due to \cite{fannesFinitelyCorrelatedStates1992}). This was further generalized to 2 dimensions with the introduction of \emph{projected entangled-pair states} (PEPS) \cite{verstraeteRenormalizationAlgorithmsQuantumMany2004}. \emph{Multiscale-entanglement renormalization ansatz} (MERA) \cite{vidalClassQuantumManybody2008} can be considered as an extension of MPS allowing for long-range entanglement (this is probably wrong). Whats missing? Holography \cite{singhHolographicSpinNetworks2018} but there are earlier ones.
-
-  In the purely mathematical view as a network of contractions, both concept and notation were introduced by \cite{Penrose1971Applications} in the form of \emph{spin-networks}.
-\end{literature}
-
-While we introduce this concept classically and endow it with symmetry as a start, we will start concerning ourselves with a categorical embedding of tensor networks in what is commonly reffereed to as a \emph{fusion-categoty} (Lit ???).
-
-\begin{literature}[\bf Symmetric Tensor Network]
-  Originally, the idea to exploit symmetries of the hamiltonian for a speedup was proposed to be used in dmrg by \cite{}. More general theory for \emph{globally invariant tensor networks}, i.e. networks that are built of tensors that are globally invariant is given by \cite{singhTensorNetworkDecompositions2010a}, an account for abelian symmetries \cite{singhTensorNetworkStates2011} and for nonabelian (SU2) symmetries in \cite{singhTensorNetworkStates2012a}. Another approach is done by \cite{weichselbaumNonabelianSymmetriesTensor2012} and \cite{weichselbaumXsymbolsNonAbelianSymmetries2020}. These rely on the general idea, that under representations of some compact group $G$, there are on site symmetries on each tensor, i.e. $[A, U_g^{\otimes k}] = 0$ there is a generalized \emph{wigner-eckart-theorem} for tensors with $n$ legs of the form
-  \[
-    T = \bigoplus_a D_a \otimes V_a
-  \]
-  where $D_a$ is a matrix and $V_a$ is a \emph{fusion-tree}, i.e. a clebsch-gordan tensor.
-  Reviews and specific implementations in the SU(2) case are given by \cite{schmollBenchmarkingGlobal$SU2$2020}\cite{schmollTensorNetworkSimulations2020}\cite{schmollProgrammingGuideTensor2020}. \cite[§~8]{schmollProgrammingGuideTensor2020} proposes that this method is appropriate for Anyonic simulation as well (although this is done earlier by singh \& pfeiffer.). Symmetries as categorified networks, as we will present in \cite{}, are explained in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
-
-
-\end{literature}
-
-\begin{literature}[Categorified Quantum Mechanics]
-  There are multiple approach to a diagramatic and categorified approach to quantum mechanics. Generally one wants both spaces and maps represented by a framework that allows for parallel and entangled operations, i.e. has a tensor product structure.
-\end{literature}
-
 \subsection{Tensors (Everything here is $fdVect_k$)}
+
+Generally, we want to regard a tensor as a thing equipped with legs, where each legs holds a vector space. But we also want to be able to regard tensors as operators such as Hamiltonians.
 
 Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
 \[
@@ -37,9 +14,9 @@ Given finite dimensional Vector spaces $V$ and $W$, we have the identity that $V
 \]
 Note that we present the domain here in a contravariant fashion due to the contravariance of the dual.
 
-Lets look at an example, let $t : V_1 \otimes V_2 \otimes W_{2}^\ast \otimes W_1^\ast$. We can represent as an operator in dirac notation:
+Lets look at an example, let $t \in V_1 \otimes V_2 \otimes W_{2}^\ast \otimes W_1^\ast$. We can represent as an operator in dirac notation:
 \[
-  t = \sum_{i_1,i_2,j_1,j_2}^{} T_{i1 i2}^{j1 j2}  \ket{v_{i_1}} \ket{v_{i_2}} \bra{w_{j_1}} \bra{w_{j_2}}
+  t = \sum_{i_1,i_2,j_1,j_2}^{} T^{i_1 i_2}_{j_1 j_2}  \ket{v^1_{i_1}} \ket{v^2_{i_2}} \bra{w^1_{j_1}} \bra{w^2_{j_2}}
 \] 
 where $\ket{v_i}$ 
 
@@ -191,7 +168,7 @@ and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{../experiments/plots/su2_block_structure.pdf}
-  \caption{Three different presentations of the XXZ Hamiltonian. (i): In the default computational basis of spin vectors. (ii) In a reordering of the computational basis into equal spin up (down) classes, i.e. no spin up, one spin up etc..., here $U$ is simply a permutation matrix. (iii) After changing the basis into the $S^2$ basis.}
+  \caption{Three different presentations of the XXZ Hamiltonian. (i): In the default computational basis of spin vectors. (ii) In a reordering of the computational basis into equal spin up (down) classes, i.e. no spin up, one spin up etc..., here $U$ is simply a permutation matrix. (iii) After changing the basis into the $(S^2,S_Z)$ basis.}
   \label{fig:diagonal_hamiltonians}
 \end{figure}
 
@@ -207,9 +184,9 @@ and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
   \end{equation}
 \end{definition}
 
-As given in \ref{def:xxzHamiltonian}, this acts on the \emph{spin basis} made of states $\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow, \downarrow\}$.
+As given in \cref{def:xxzHamiltonian}, this acts on the \emph{spin basis} made of states $\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow, \downarrow\}$.
 
-We can plot $H$ and realize the sparsity structure thereof. Furthermore, a suitable rearrangement induces a block structure \ref{fig:diagonal_hamiltonians}.
+We can plot $H$ and realize the sparsity structure thereof. Furthermore, a suitable rearrangement induces a block structure \cref{fig:diagonal_hamiltonians}.
 
 Now, we can realize about this hamiltonian is that there is a symmetry with the representations of $U(1)$. Lets review this shortly. A representation of $U(1)$ is a group homomorphism
 \[
