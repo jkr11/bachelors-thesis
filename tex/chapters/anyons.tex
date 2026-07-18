@@ -146,3 +146,127 @@ We can directly introduce the $R$ move (a braiding of the initial anyons) to obt
 We can also write the space $V^{ab}_c = Hom(a \otimes b, c)$ in the categorical language. Here we also need to realize that there is a difference between the isomorphism $\beta$ and the action of $R$, which is really on the hom space $\Hom(-, c)$. So this would be a yoneda perspective? Since we know $R$ for all $a,b,c \in C$, we also know the action of $R$ as an isomorphism. Well technically i believe that this allows us to determine for all simples $c$, and then semisimplicity extends this to all subjects (this would be nice to write down) and then the yoneda embedding is enough to know the whole space. Similarly, in our Rep(G) categories (which i actually belive to be symmetric? Find this in etingof) 
 
 The algebra-category correspondence in the theory of anyons was first noted by \cite[App~E]{kitaevAnyonsExactlySolved2006}
+
+\begin{equation}
+\text{Hom}\left( \bigotimes_{k=1}^m X_{i_k}, \bigotimes_{l=1}^n X_{j_l} \right) = \text{span}_{\mathbb{C}} \left\{
+\begin{gathered}
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.2,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+]
+    % --- TOP HALF (INPUTS & FUSION TREE) ---
+    % Boundary Input Nodes
+    \node (xi1) at (-3.4, 3.2) [above] {$X_{i_1}$}; % I dont get why it is assym with -3.2
+    \node (xi2) at (-2.5, 3.2) [above] {$X_{i_2}$};
+    \node (xi3) at (-1.8, 3.2) [above] {$X_{i_3}$};
+    \node at (-0.5, 3.2) {$\cdots$};
+    \node (xim1) at (0.8, 3.2) [above] {$X_{i_{m-1}}$};
+    \node (xim) at (1.6, 3.2) [above] {$X_{i_m}$};
+
+    % Internal Vertices
+    \coordinate (Ve1) at (-2.7, 2.5);
+    \coordinate (Ve2) at (-2.2, 1.9);
+    \coordinate (Vem3) at (-1.0, 0.9);
+    \coordinate (Vem2) at (-0.5, 0.4);
+    \coordinate (Btop) at (0, 0.05);
+
+    % Incoming Leaves to Vertices
+    \draw[string arrow] (xi1) -- (Ve1);
+    \draw[string arrow] (xi2) -- (Ve1);
+    \draw[string arrow] (xi3) -- (Ve2);
+    \draw[string arrow] (xim1) -- (Vem2);
+    \draw[string arrow] (xim) -- (Btop);
+
+    % Main Trunk Segments (Top)
+    \draw[string arrow] (Ve1) -- (Ve2) node[below left, pos=0.4] {$e_1$};
+    \draw[string arrow] (Ve2) -- (-1.9, 1.55) node[below left, pos=0.4] {$e_2$};
+    
+    % Diagonal Dots (Top Trunk)
+    \fill (-1.65, 1.35) circle (0.8pt);
+    \fill (-1.50, 1.20) circle (0.8pt);
+    \fill (-1.35, 1.05) circle (0.8pt);
+    
+    %\draw[string arrow] (-1.2, 0.9) -- (Vem3); 
+    \draw[string arrow] (Vem3) -- (Vem2) node[below left, pos=0.4] {$e_{m-3}$};
+    \draw[string arrow] (Vem2) -- (Btop) node[below left, pos=0.4] {$e_{m-2}$};
+
+
+    % --- CENTER COUPLING ---
+    \coordinate (Bbot) at (0, -0.65);
+    \draw[string arrow] (Btop) -- (Bbot) node[right, pos=0.5] {$b$};
+
+
+    % --- BOTTOM HALF (SPLITTING TREE & OUTPUTS) ---
+    % Internal Vertices
+    \coordinate (Vfn2) at (-0.5, -1.0);
+    \coordinate (Vfn3) at (-1.0, -1.5);
+    \coordinate (Vf2) at (-2.2, -2.5);
+    \coordinate (Vf1) at (-2.7, -3.1);
+
+    % Main Trunk Segments (Bottom)
+    \draw[string arrow] (Bbot) -- (Vfn2) node[left, pos=0.6] {$f_{n-2}$};
+    \draw[string arrow] (Vfn2) -- (Vfn3) node[left, pos=0.6] {$f_{n-3}$};
+    
+    % Diagonal Dots (Bottom Trunk)
+    \fill (-1.35, -1.65) circle (0.8pt);
+    \fill (-1.50, -1.80) circle (0.8pt);
+    \fill (-1.65, -1.95) circle (0.8pt);
+    
+    \draw[string arrow] (-1.9, -2.15) -- (Vf2);
+    \draw[string arrow] (Vf2) -- (Vf1) node[left, pos=0.4] {$f_1$};
+    \path (Vf2) -- (Vf1) node[left, pos=1.2] {$f_2$}; % Label position adjustment
+
+    % Outgoing Leaves to Boundary
+    \draw[string arrow] (Vf1) -- (-3.2, -3.8);
+    \draw[string arrow] (Vf1) -- (-2.5, -3.8);
+    \draw[string arrow] (Vf2) -- (-1.8, -3.8);
+    \draw[string arrow] (Vfn2) -- (0.8, -3.8);
+    \draw[string arrow] (Bbot) -- (1.6, -3.8);
+
+    % Boundary Output Nodes
+    \node (xj1) at (-3.2, -3.8) [below] {$X_{j_1}$};
+    \node (xj2) at (-2.5, -3.8) [below] {$X_{j_2}$};
+    \node (xj3) at (-1.8, -3.8) [below] {$X_{j_3}$};
+    \node at (-0.5, -3.8) {$\cdots$};
+    \node (xjn1) at (0.8, -3.8) [below] {$X_{j_{n-1}}$};
+    \node (xjn) at (1.6, -3.8) [below] {$X_{j_n}$};
+
+\end{tikzpicture}
+\end{gathered}
+\right\}_{ \substack{b, \, e_1, \dots,  e_{m-2}, \, f_1, \, \dots, \, f_{n-2} \\ \mu_1, \, \dots, \, \mu_{m-2}, \, \nu_1, \, \dots, \, \nu_{n-2}} }
+\end{equation}
+
+\begin{center} % From the seminar paper and
+\begin{tikzpicture}
+  \node at (0,-0.1) {$\underset{e,f}{\bigoplus} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g $};
+  \draw[->, black] plot coordinates{(0.4,0.5) (2.5,1.5)};
+  \node at (0.9,1.3) {$id_{V_{e}^{ab}} \otimes F^{ecd}_{g}$};
+  \node at (4.0,1.9)  {$\underset{e,l}{\bigoplus} V^{ab}_e \otimes V^{cd}_{f} \otimes V^{el}_g$};
+  \node at (7.6, 1.1) {$F^{abl}_{g} \otimes id_{V^{cd}_{l}}$};
+  \draw[->] plot coordinates{(5.5, 1.5) (7.5,0.5)};
+  \node at (8.0,-0.1) {$\underset{k,l}{\bigoplus} V^{ak}_{g} \otimes V^{bl}_{k} \otimes V^{cd}_{l}$};
+  \node at (-0.4, -1.2) {$F^{abc}_{f} \otimes id_{V^{fd}_{g}}$};
+  \draw[->] plot coordinates{(0.4,-0.5) (1.5,-1.5)};
+  \node at (1.8,-2.1) {$\underset{f,h}{\bigoplus} V^{af}_{h} \otimes V^{bc}_{f}  \otimes V^{hd}_{g}$};
+  \node at (4.3, -2.5) {$F^{afd}_{g} \otimes id_{V^{bc}_{f}}$};
+  \draw[->] plot coordinates {(3.5,-2.0) (4.7, -2.0)};
+  \node at (6.5, -2.1) {$\underset{k,h}{\bigoplus} V^{ak}_{g} \otimes V^{bc}_{h} \otimes V^{hd}_{k} $};
+  \node at (8.2, -1.2) {$F^{bcd}_{k} \otimes id_{V^{ak}_{g}}$};
+  \draw[->] plot coordinates {(6.4, -1.5) (7.5,-0.5) };
+\end{tikzpicture}
+\label{grp:pentagon}
+\end{center}
+
+\begin{equation}
+\begin{tikzcd}[row sep=large, column sep=large]
+V \times W \arrow[r, "\phi"] \arrow[rd, "f" swap] & V \otimes W \arrow[d, "\exists! \, \tilde{f}", dashed] \\
+                                                   & U
+\end{tikzcd}
+\end{equation}

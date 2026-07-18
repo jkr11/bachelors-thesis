@@ -1,7 +1,9 @@
 %\documentclass[a4paper]{article}
-\documentclass[11pt,a4paper,draft]{article}
-\usepackage[margin=0.8in, left=0.8in]{geometry}
-\usepackage{listings}
+%\documentclass[10pt,a4paper,draft]{acmart}
+\documentclass[acmsmall, screen, nonacm, natbib=false]{acmart}
+%\usepackage[margin=0.8in, left=0.8in]{geometry}
+%\usepackage{listings}
+\settopmatter{printacmref=false} % Removes the ACM Reference Format block
 \input{preamble.tex}
 
 
@@ -13,17 +15,17 @@
 \author{Jeremias Rieser \\ \small{advisors: C. Mendl and B. Decker}}
 % \college{} / institute? get TUM template for this.
 % \date{} Declaration / Submission?
-\date{\today}
 
 %% PDF meta info (figure this out before doc)
 % \subjectline{Computer Science}
 % \keywords{tensor networks, anyons, categories, symmetry, dmrg}
 
 \begin{document}
+\date{\today}
 
 \maketitle
 
-\tableofcontents
+%\tableofcontents
 
 
 \setcounter{section}{0}
@@ -41,6 +43,8 @@
 \section{Symmetric Tensor Networks}
 \label{sect:symmetricTensorNetworks}
 \input{chapters/symmetry.tex}
+
+\input{chapters/fermions.tex}
 
 
 
@@ -318,7 +322,7 @@ to[out=-45,in=90]
 %\]
 
 \begin{lemma}
-  \label{IsotopyHelper}
+  \label{lem:IsotopyHelper}
   For a vector space $W$, there is an isomorphism
   \[
     \bigoplus^m W \simeq \mathbb C^m \otimes W.
@@ -436,11 +440,11 @@ $$
   \begin{aligned}
     \Hom_C(D\otimes R,E\otimes S)
     &\cong \Hom_C(R^{\oplus m},S^{\oplus n})
-    && \text{by \cref{IsotopyHelper}} \\[1ex]
+    && \text{by \cref{lem:IsotopyHelper}} \\[1ex]
     &\cong \bigoplus_{i=1}^{m} \bigoplus_{j=1}^{n} \Hom_C(R,S)
     && \text{by additivity of $\Hom_C$} \\[1ex]
     &\cong k^{mn} \otimes \Hom_C(R,S)
-    && \text{by \cref{IsotopyHelper}} \\[1ex]
+    && \text{by \cref{lem:IsotopyHelper}} \\[1ex]
     &\cong \Hom_k(D,E)\otimes \Hom_C(R,S)
     && \text{since $\Hom_k(D,E) \cong k^{mn}$}
   \end{aligned}
@@ -1261,7 +1265,7 @@ Is this the same as the Q deformations? It is for $q = 1$ and $k=\infty$ but wha
 
 So im not sure how this works completely but there seems to be way more literature on this than on (globally) symmetric tensors. However this also seems to be connected to anyonic networks. Also to the Category of MPS and MPO?
 
-There is an account of (projective) representation on a peps that act on all levels in \cite{bridgemanEffectiveEdgeStates}. Actually there are more such as chapter $IV$ section 2 of \cite{cuiperHouchesLectureNotes2026}, \cite{williamsonMatrixProductOperators2016}
+There is an account of (projective) representation on a peps that act on all levels in \cite{bridgemanEffectiveEdgeStates}. Actually there are more such as \cite[§~IV, Section~2]{cuiperHouchesLectureNotes2026}, \cite{williamsonMatrixProductOperators2016}
 
 Some sources here: On Lattice Models with Module Categories: \cite{eckQuantumLatticeModels2025}, \cite{lootensDualitiesOneDimensionalQuantum2023} \cite{lootensDualitiesOneDimensionalQuantum2024} \cite{lootensEntanglementDensityMatrix2025}. Also chapters IV and V of \cite{cuiperHouchesLectureNotes2026}. On the structure see \cite{liuTradingMathematicalPhysical2025}
 

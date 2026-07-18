@@ -1,35 +1,21 @@
-\usepackage{subfiles}
-\usepackage[utf8]{inputenc}
-\usepackage{csquotes}
 \usepackage{graphicx} % Required for inserting images
-\usepackage[hidelinks]{hyperref}
-\usepackage{bbm}  % for \mathbb and \mathbbm symbols
-\usepackage{amsmath,amsfonts,amssymb, amsthm}
+\usepackage{mathtools}
+%\usepackage[hidelinks]{hyperref}
+%\usepackage{bbm}  % for \mathbb and \mathbbm symbols
+%\usepackage{amsmath,amsfonts,amssymb, amsthm}
 \usepackage{cleveref} % this needs to go after hyperref and amsmath
 
 %\usepackage[chapter]{algorithm}  % for algorithm environment, option: use chapters for numering
-\usepackage{mathtools}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 
-\usepackage{pgfplots}
-\usepackage{xstring}
-\pgfplotsset{compat=1.18}
 \usepackage{tikz-cd}  % commuting diagrams based on tikz
 \usetikzlibrary{calc}
-\usepackage[export]{adjustbox}
-\usepackage{relsize}  % for \mathlarger command, e.g. for dagger of a whole diagram, want a large dagger.
-\usepackage{mathdots}  % for \iddots in Z isomorphism matrix
 \usepackage{booktabs}  % for clean tables (tabular environment) 
 \usepackage{caption}  % for setting caption width
-\usepackage{mathrsfs}
 \captionsetup{width=\linewidth}
+
 \definecolor{Green}{rgb}{0, 0.5, 0.2}
-\usepackage[T1]{fontenc}
-\usepackage{euscript}
-\usepackage{pxfonts}
-\usepackage{dsfont}
-\usepackage{bbold}
 \usepackage[dvipsnames]{xcolor}
 \usetikzlibrary{decorations.markings}
 
@@ -43,30 +29,8 @@
 \newcommand{\blue}[1]{{\color{blue} {#1}}}
 \newcommand{\green}[1]{{\color{greenii} {#1}}}
 
-\definecolor{acrocolor}{rgb}{0, 0.3, 0.6}
-\definecolor{bg_left}{rgb}{0.95,0.92,0.9}
-\definecolor{bg_right}{rgb}{0.95,1.0,0.85}
-
-\makeatletter
-\let\old@url\url
-\renewcommand{\url}[1]{\blue{\old@url{#1}}}
-\makeatother
-
-
-\usepackage[backend=biber, maxbibnames=2,style=alphabetic, backref,backrefstyle=none]{biblatex}
+\usepackage[backend=biber, maxbibnames=3,style=alphabetic, backref,backrefstyle=none]{biblatex}
 \addbibresource{bachelors.bib}
-
-%\DeclareFieldFormat{urlprefix}{}
-%
-%% 1. Format the DOI field to look like: [\href{...}{\tt doi:XXX}]
-%\DeclareFieldFormat{doi}{%
-%  \mkbibbrackets{%
-%    \ifhyperref
-%      {\href{https://doi.org/#1}{\texttt{doi:#1}}}
-%      {\texttt{doi:#1}}%
-%  }}
-%
-
 
 \AtEveryBibitem{
   \clearfield{issn}
@@ -94,12 +58,6 @@
   {}
 }
 
-\DeclareFieldFormat[software]{eprint:github}{%
-  \href{https://github.com/#1}{github:#1}%
-}
-
-
-
 \newcommand{\ket}[1]{\ensuremath{\left| #1 \right\rangle}}
 \newcommand{\bra}[1]{\ensuremath{\left\langle #1 \right|}}
 \newcommand{\braket}[2]{\ensuremath{\left\langle #1 \middle| #2 \right\rangle}}
@@ -114,14 +72,6 @@
 \newcommand{\SL}[2]{\mathrm{SL}(#1, #2)}
 
 \newcommand{\liesl}[1]{\mathfrak{sl}_{#1}} % sl_2 lie algebra.
-
-%\theoremstyle{definition}
-%\newtheorem{definition}{Definition}[section]
-%\newtheorem{theorem}[definition]{Theorem}
-%\newtheorem{lemma}[definition]{Lemma}
-%\newtheorem{example}{Example}
-%\newtheorem{corollary}{Corollary}[definition]
-%\newtheorem{literature}{Literature}[theorem]
 
 \theoremstyle{italics}
 \newtheorem{theorem}{Theorem}[section]
@@ -139,7 +89,6 @@
 \newtheorem{examples}[theorem]{Examples}
 \newtheorem{remark}[theorem]{Remark}
 
-% --- Category Theory Shorthands ---
 \newcommand{\Cat}{\mathbf{Cat}}          % Category of categories
 %\newcommand{\VecCat}{\mathbf{Vect}}      % Category of Vector spaces
 \newcommand{\Rep}{\mathrm{Rep}}          % Representation category
@@ -148,28 +97,20 @@
 \newcommand{\id}{\operatorname{id}}      % Identity morphism
 \newcommand{\Hilb}{\mathbf{Hilb_fd}}
 \newcommand{\del}{\boxtimes}
+\newcommand{\sVect}{\mathrm{sVect}}
+\newcommand{\gVSpace}[1]{\mathrm{Vec}_{#1}} % Graded Vector Space
+\newcommand{\Fib}{\mathrm{Fib}}
+\newcommand{\sgotimes}[1]{\otimes_{\scriptscriptstyle#1}} % small Graded Tensor Space
+\newcommand{\gotimes}[1]{\otimes_{#1}} % G-graded vectors space 
+
+\newcommand{\Hilbfd}{\mathrm{Hilb_{\text{fd}}}}
+
+
 
 \newcommand{\FDVec}[1]{\mathrm{FD}#1\mathrm{Vec}}
 \newcommand{\VecCat}[1]{\mathrm{Vec}_#1}
 
-
-% Boundary columns
-\newcommand{\FLeft}[1]{%
-\begin{smallmatrix}
-#1
-\end{smallmatrix}\!\!}
-
-\newcommand{\FRight}[1]{%
-\!\!\begin{smallmatrix}
-#1
-\end{smallmatrix}}
-
-% Core symbol
-\newcommand{\FCore}[4]{%
-\Bigl[
-%{}^{#1}\!F_{#2\,#3\,#4}^{#5}
-F_{#1\,#2\,#3}^{#4}
-\Bigr]}
+\newcommand{\Z}{\mathbb{Z}}
 
 \makeatletter
 \definecolor{RoyalBlue}{HTML}{4169E1}

@@ -1,6 +1,16 @@
 Maybe important for tex:
 https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-tikz
 
+./texcount.pl -inc -html -v -sum main.tex > results.html
+from https://www.maths.ox.ac.uk/members/it/faqs/latex/word-count
+
+## July 18th
+
+So on the wiki there is the decomposition for skein categories as 
+https://en.wikipedia.org/wiki/Fibonacci_anyons#/media/File:Fibonacci-skein.png
+
+and this is generally true, i believe this is part of simon as well. But how does this relate to the planar decompposition from ayeni? Furthermore, see [valera skeins] eq 6.10, there the lhs of this (the non braid) is yet a superposition over the internal channels. But here i supposed it is only to be over tau? dont get this yet.
+
 ## July 15th
 
 Seems like the history of tensor networks come both from spin networks after penrose (why is there a 20 year gap of nothing?) and then the physical parts from dmrg after White et al. and MPS after who exactly? There should be some more care in these literature paragraphs. Should these go at the front? or chapterwise? But i will end up repeating a lot of information regardless. 

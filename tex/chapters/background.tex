@@ -15,7 +15,7 @@ While we introduce this concept classically and endow it with symmetry as a star
   where $D_a$ is a matrix and $V_a$ is a \emph{fusion-tree}, i.e. a clebsch-gordan tensor.
   Reviews and specific algorithms in the SU(2) case are given by \cite{schmollBenchmarkingGlobal$SU2$2020, schmollTensorNetworkSimulations2020, schmollProgrammingGuideTensor2020}.
   \cite[§~8]{schmollProgrammingGuideTensor2020} proposes that this method is appropriate for Anyonic simulation as well (although this is done earlier by singh \& pfeiffer.).
-  Symmetries as categorified networks, as we will present in \cite{}, are explained in \cite{dissertation} 
+  Symmetries as categorified networks, as we will present in \cref{chap:?}, are explained in \cite{dissertation} 
   and \cite{devosTensorKitjlJuliaPackage2025} and in this work in \cref{sect:Anyons}.
 
   For a list of software implementing symmetries see \cref{app}.
@@ -26,21 +26,42 @@ While we introduce this concept classically and endow it with symmetry as a star
   \emph{Anyons} as quasiparticles with exotic exchange statistics were originally propsed by \cite{wilcek} 
 \end{literature}
 
-\begin{literature}[Anyons as Categories]
-  The correspondence between the \emph{physical} treatment of anyons and the \emph{categorical treatment} of anyons as a \emph{braided fusion category} (modular functor?) was originally descibed by \textcite[§~E, §~8]{kitaevAnyonsExactlySolved2006} based on previous work in quantum field theory already making use of modular categories and their diagrammatic algebras such as \cite{reshetikhinInvariants3manifoldsLink1991} Further treatments are found in \cite{wang} and \cite{simon-nayak-das-sarma}. A modern treatment of the realization through the Configuration space of $n$-anyons if given by \cite{90eb98357acd4634abd18d906cc3811d} and in terms of modular functors by \cite{burtonShortGuideAnyons2016}.
-\end{literature}
+
 
 \begin{literature}[Anyonic Spin Chains and Tensor Networks]
-  (Check if this is the first). A first appearance of \emph{Anyonic Tensor Networks} in terms of spin chains is given in \cite{feiguinInteractingAnyonsTopological2007} as the \emph{golden chain}, which realizes a interacting $2$-local hamiltonian on a $n$ anyon Fibonacci lattice. This is reviewed in \cite{trebstShortIntroductionFibonacci2008a} with generalizations to $3$ local and longer range hamiltonians. A general account outside of the Fib-model can be found in \cite{gilsAnyonicQuantumSpin2013} and \cite{buicanAnyonicChainsTopological2017} (Check these again.). We can consider these approaches as a \" manualization \" of the tensor network approach. Anyonic tensor networks are first introduced by \cite{pfeiferSimulationAnyonsTensor2010} and \cite{pfeiferSimulationAnyonsUsing2012} already making use of the symmetric approach defined in \cref{sect:symmetricTensorNetworks}. Furthermore, stuctures such as an anyonic MERA are introduced. 
+  (Check if this is the first). A first appearance of \emph{Anyonic Tensor Networks} in terms of spin chains is given by \textcite{feiguinInteractingAnyonsTopological2007} as the \emph{golden chain}, which realizes a interacting $2$-local hamiltonian on a $n$ $\Fib$-anyon lattice. This is reviewed in \cite{trebstShortIntroductionFibonacci2008a} with generalizations to $3$-local and longer range hamiltonians. A general account outside of the $\Fib$-model can be found in \cite{gilsAnyonicQuantumSpin2013} and \cite{buicanAnyonicChainsTopological2017} (Check these again.). We can consider these approaches as a sort of manualization of the tensor network approach. Anyonic tensor networks are first introduced by \cite{pfeiferSimulationAnyonsTensor2010} and \cite{pfeiferSimulationAnyonsUsing2012}, developed out of the symmetry methods from \cref{sect:symmetricTensorNetworks}. Furthermore, stuctures such as an anyonic MERA are introduced. 
 \end{literature}
 
 \begin{literature}[Simulation of Anyons and String Nets]
   This should probably go in the previous section. \cite{liuMethodsSimulatingStringNet2022} \cite{kirchnerNumericalSimulationNonabelian2023}
 \end{literature}
 
+\begin{literature}[Anyons as Categories]\label{lit:anyonCat}
+  The correspondence between the \emph{physical} treatment of anyons and the \emph{categorical treatment}
+  of anyons as a \emph{braided fusion category} (modular functor?) was originally 
+  descibed by \textcite[§~E, §~8]{kitaevAnyonsExactlySolved2006} based on previous work
+  in quantum field theory already making use of modular categories and their diagrammatic
+  calculus such as \cite{reshetikhinInvariants3manifoldsLink1991}. Further treatments are
+  found in \cite{wang} and \cite{simon-nayak-das-sarma}. A modern treatment of the
+  realization through the Configuration space of $n$-anyons if given by \cite{90eb98357acd4634abd18d906cc3811d}
+  and in terms of modular functors by \cite{burtonShortGuideAnyons2016}.
+\end{literature}
+
+\begin{literature}[\bf Topological Quantum Computation]\label{lit:tqc}
+  \emph{Topological Quantum Computation (TQC)} was originally proposed by \textcite[§~7]{kitaevFaulttolerantQuantumComputation2003}. ??? has shown that there are nonabelian anyon models that are universal \cite{dawsonSolovayKitaevAlgorithm2005a} \cite{mochonAnyonsNonsolvableFinite2003} \cite{mochonAnyonComputersSmaller2004a}. 
+
+  \cite{myersTopologicalQuantumGates2024a} gives nicer literature. \cite{simonTopologicalQuantum2023} is a great textbook account from one of the original authors on quantum compiling and computing. \cite{nayakNonAbelianAnyonsTopological2008b} is also one of the original accounts. This does not need to be any longer. Maybe mention categorical computation in general? but idk what htis is yet \cite{kongCategoricalComputation2023}.
+\end{literature}
+
+\begin{literature}[Quantum Compiling]
+\end{literature}
+
 \begin{literature}[Categorified Quantum Mechanics]
   There are multiple approach to a diagramatic and categorified approach to quantum mechanics. Generally one wants both spaces and maps represented by a framework that allows for parallel and entangled operations, i.e. has a tensor product structure. \cite{selingerSurveyGraphicalLanguages2011} gives a review of this \cite{vercleyenMathematicalStructureTensor2018} does for tensor networks specifically.
 
   TODO: find the XZ-calculus literature by Kissinger? Specific examples such as \emph{XZ}-calculus in the context of TQC is handled by \cite{ahmadiZXcalculusLanguageTopological2023}.
+
+  TODO: How to mention that this results in or from $\Hilbfd$? Does it? The work from selinger et.al does not yet include anyons. For this, one needs \Cref{lit:anyonCat}.
 \end{literature}
+
 

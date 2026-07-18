@@ -1,0 +1,10 @@
+\section{Fermionic Tensor Networks}
+\label{sect:fermionicTensorNetworks}
+
+Here we follow \cite{bultinckFermionicMatrixProduct2017,gaoFermionicTensorNetwork2025,mortierFermionicTensorNetwork2025} primarily. These papers present the theory of fermionic networks over the category of \emph{super vector spaces}, denoted $\sVect$, which is also equal to a $\mathbb{Z}_2$-graded Vector space $\gVSpace{\mathbb{Z}_2}$ as we will see in section \cref{???}. Each $V \in \sVect$ admits a decomposition into \emph{odd} and \emph{even} parity sectors 
+\[
+  V = V_0 \oplus V_1.
+\] Denote the tensor product in $\sVect$ by $\sgotimes{\Z_2}$. Since fermions posess a non-trivial \emph{exchange statistic}, i.e. exchanging two fermions incurs a phase factor of $-1$ on the wave function, the graded tensor product encodes this under its canonical braiding \footnote{Check on the Nlab, the proof that this is canonical is quite copmlex?} % Is this braiding already? be carefull here TODO
+\[
+  \ket{i} \sgotimes{\Z_2} \ket{j} = (-1)^{\left\vert i \right\vert \left\vert j \right\vert } \ket j \sgotimes{\Z_2} \ket{i}
+\]

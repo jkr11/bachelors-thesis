@@ -60,7 +60,7 @@ it follows directly from the definition of global invariance that the tensor mus
   \label{def:symmetricTensor}
   A \emph{symmetric tensor} is an intertwiner of the representations of the group $G$:
   \[
-    \bigotimes_{j=1}^m \sigma_j(g) T = T \bigotimes_{i=1}^n \rho_i(g) \quad \forall g \in G,
+    \bigotimes_{j=1}^m \sigma_j(g) \circ T = T \circ  \bigotimes_{i=1}^n \rho_i(g) \quad \forall g \in G,
   \]
   which we denote by
   \[
@@ -73,18 +73,18 @@ it follows directly from the definition of global invariance that the tensor mus
   \begin{tikzpicture}[
     baseline=(current bounding box.center),
     leg/.style={
-      draw=orange,
+      draw=black,
       line width=1.1pt,
       postaction={
         decorate,
         decoration={
           markings,
-          mark=at position 0.7 with {\arrow{Stealth[scale=1.0, fill=orange]}}
+          mark=at position 0.7 with {\arrow{Stealth[scale=1.0, fill=black]}}
         }
       }
     },
     tensor/.style={
-      draw=orange,
+      draw=black,
       fill=white,
       line width=1.1pt,
       minimum size=18pt,
@@ -261,9 +261,9 @@ Also we have that
   (\mathbb{C}^2)^{\otimes6} \cong V_{\frac{1}{2}}^{\otimes 6} \cong 5 V_0 \oplus 9V_1 \oplus 5V_2 \oplus V_3
 \]
 
-Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs lemma
+Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs lemma\footnote{These are related by a permutation matrix. Proof? Is this the X from \cite{devosTensorKitjlJuliaPackage2025}? }
 \[
-  H \in \bigoplus_{S \in 0,1,2,3} I_{2S+1} \otimes Mat_{m_S \times m_S}(\mathbb{C})
+  H \in \bigoplus_{S \in 0,1,2,3} Mat_{m_S \times m_S} \otimes I_{2S+1} (\mathbb{C}) \cong \bigoplus_{S \in 0,1,2,3} I_{2S+1} \otimes Mat_{m_S \times m_S}(\mathbb{C})
 \]
 
 So we expect 20 blocks? 
