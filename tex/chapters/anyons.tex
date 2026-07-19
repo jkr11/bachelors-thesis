@@ -1,11 +1,132 @@
 
-\subsection{Anyonic Hamiltionians}
+We need to introduce anyons here, or somehow build it into the review of the golden chain.
 
-\subsection{1D Lattice Models}
+\subsection{1D Lattice Models \& The Golden Chain}
 
-So from what i can read here (also the nlab or wikipedia) a spin chain specifically only refers to a per site construction with a tensor product hilbert space. An anyon chain is, well, an anyonic chain. These do not admit such a decomposition. So we should call these simply 1D lattice models.
+%So from what i can read here (also the nlab or wikipedia) a spin chain specifically only refers to a per site construction with a tensor product hilbert space. An anyon chain is, well, an anyonic chain. These do not admit such a decomposition. So we should call these simply 1D lattice models.
 
-In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically in the $Fib$ model, are introduced simply as the fusion space of $n$ anyons. Further, the authors define a primitive hamiltonian that assigns $-1$ to the interaction $\tau \otimes \tau = 1$ and $0$ to the interaction $\tau \otimes \tau = \tau$. This is in turn realized on the basis of the intermediate states, and evaluated using the method of exact diagonalization \cite{}. This is extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
+In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically in the $\Fib$ model, are introduced as a $1$D lattice of $n$ $\tau$ anyons, defined as the fusion space thereof.
+
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.2,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+]
+  \node (tleft) at (-3.9, 2.7) [left] {$\tau$};
+  \node (t1) at (-3.2, 3.2) [above] {$\tau$};
+  \node (t2) at (-2.5, 3.2) [above] {$\tau$};
+  \node (t3) at (-1.8, 3.2) [above] {$\tau$};
+  \node at (-0.5, 3.2) {$\cdots$};
+  \node (tn1) at (0.8, 3.2) [above] {$\tau$};
+  \node (tn) at (1.6, 3.2) [above] {$\tau$};
+
+  \node (xi1) at (-3.2, 2.7) [inner sep=0pt, label=below:{$x_1$}] {};
+  \node (xi2) at (-2.5, 2.7) [inner sep=0pt, label=below:{$x_2$}] {};
+  \node (xi3) at (-1.8, 2.7) [inner sep=0pt, label=below:{$x_3$}] {};
+
+  \draw [string arrow] (tleft) -- (xi1);
+  \draw [string arrow] (t1) -- (xi1);
+
+  \draw [string arrow] (t2) -- (xi2);
+  \draw [string arrow] (xi1) -- (xi2);
+
+  \draw [string arrow] (t3) -- (xi3);
+  \draw [string arrow] (xi2) -- (xi3);
+
+\end{tikzpicture}
+
+Here, the state is fully characterized by its intermediate indeces $x_1 \ldots x_{n-1}$, so we can choose a basis $\ket{x_1 x_2 \cdots x_{n-1} }$.
+
+Similar to the Heisenberg-chain\footnote{Note that $\frac{1}{2} \otimes \frac{1}{2} = 0 \oplus 1$ in the Heisenberg $\SU 2$ model.}, the golden chain introduces a Hamiltonian that assigns $-1$ to the interaction $\tau \otimes \tau = 1$ and $0$ to the interaction $\tau \otimes \tau = \tau$.
+
+We can decompose the whole space $\Hom(\tau^{\otimes n+1}, \tau)$ into the local states
+  \[
+    \Hom(\tau^{\otimes n+1}, \tau) = \bigoplus_{\{x_i\}} \Hom(\tau \otimes \tau, x_1) \otimes \Hom(x_1 \otimes \tau, x_2) \otimes \Hom(x_2 \otimes \tau, x_3) \otimes \cdots \otimes \Hom(x_{n-1} \otimes \tau, \tau )
+  \]
+with the admissability condition that there are not adjacents $1$ in the sequence of $x_i$s.
+
+This is evaluated as a $3$ local hamiltonian, as we can decompose the spin chain into local parts where two $\tau$ anyons are adjacent (check how they call it in the paper.).
+
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.2,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+]
+  \coordinate (tleft) at (-3.9, 2.7);
+  \node (t1) at (-3.2, 3.2) [above] {$\tau$};
+  \node (t2) at (-2.5, 3.2) [above] {$\tau$};
+  
+  \coordinate (v1) at (-3.2, 2.7);
+  \coordinate (v2) at (-2.5, 2.7);
+  \coordinate (v3) at (-1.8, 2.7);
+
+  \draw [string arrow] (tleft) -- node[below] {$x_{i-1}$} (v1);
+  \draw [string arrow] (t1) -- (v1);
+
+  \draw [string arrow] (v1) -- node[below] {$x_{i}$} (v2);
+  \draw [string arrow] (t2) -- (v2);
+  
+  \draw [string arrow] (v2) -- node[below] {$x_{i+1}$} (v3);
+
+  %\node (in1) at (-2.5, 2.0) {\tiny $\in Hom(x_{i-1} \otimes \tau, x_i)$ \\ $\otimes Hom(x_i \otimes \tau, x_{i+1} )$}; 
+  \node (in1) at (-2.5, 1.8) [align=center] {
+    \small $\in \Hom(x_{i-1} \otimes \tau, x_i)$ \\ 
+    \small $\otimes \Hom(x_i \otimes \tau, x_{i+1})$
+  };
+
+
+  \node at (-1.3, 2.9) {$=$};
+  \node at (-0.3, 2.8) {$\displaystyle\sum_{x_i} F^{x_{i-1}\tau \tau }_{x_{i+1} x_i} $};
+
+  \begin{scope}[xshift=4.6cm]
+    \coordinate (rtleft) at (-3.9, 2.7);
+    \node (rt1) at (-3.2, 3.2) [above] {$\tau$};
+    \node (rt2) at (-2.5, 3.2) [above] {$\tau$};
+    \coordinate (rtright) at (-1.8, 2.7);
+    
+    \coordinate (rvtau) at (-2.85, 2.95);
+    
+    \coordinate (rv1) at (-2.85, 2.7);
+
+    \draw [string arrow] (rtleft) -- node[below] {$x_{i-1}$} (rv1);
+    
+    \draw [string arrow] (rt1) -- (rvtau);
+    \draw [string arrow] (rt2) -- (rvtau);
+    
+    \draw [string arrow] (rvtau) -- node[left] {$x_{i}^\prime $} (rv1);
+    
+    \draw [string arrow] (rv1) -- node[below] {$x_{i+1}$} (rtright);
+
+    \node (in1) at (-2.5, 1.8) [align=center] {
+      \small $\in \Hom(x_{i-1} \otimes x_i^\prime , x_{i+1} )$ \\
+      \small $\otimes \Hom(\tau \otimes \tau, x_{i}^\prime  )$
+    }; 
+
+  \end{scope}
+
+\end{tikzpicture}
+
+Now we can apply the interaction based on the intermediate state\footnote{Technically we need a projector here read up again.} $x_i^\prime$ and apply another $F$-move back to the chain basis.
+
+\[
+  H_{[i,i+1]} : \ket{x_{i-1} x_i x_{i+1}  } \to \ket{x_{i-1} x_i^{\prime\prime} x_{i+1} } \coloneqq  - \sum_{x_i^\prime \in \{1,\tau\} }^{} [F_{x_{i+1} }^{x_{i-1}\tau\tau}]_{x_i}^{x_i^\prime } E_{x_{i}^\prime } [F_{x_{i+1} }^{x_{i-1}\tau\tau }]_{x_{i^\prime }}^{x_{i^{\prime\prime}}}
+\]
+
+
+
+This is in turn realized on the basis of the intermediate states, and evaluated using the method of exact diagonalization \cite{}. This is extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
 
 The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010}, \cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and in terms of categories this is done in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
 
@@ -15,9 +136,7 @@ Generally, we can define an analogue of a general state of this $N$ site lattice
 
 
 There is a three local hamiltonian for the golden chain defined as
-\[
-  H_i = - \sum_{x_i^\prime }^{} [F_{x_{i+1} }^{x_{i-1}\tau\tau}]_{x_i}^{x_i^\prime } E_{x_{i}^\prime } [F_{x_{i+1} }^{x_{i-1}\tau\tau }]_{x_{i^\prime }}^{x_{i^{\prime\prime}}}
-\]
+
 
 Write this three local hamiltonian in an operator form
 \[
@@ -161,7 +280,6 @@ The algebra-category correspondence in the theory of anyons was first noted by \
         }
     }
 ]
-    % --- TOP HALF (INPUTS & FUSION TREE) ---
     % Boundary Input Nodes
     \node (xi1) at (-3.4, 3.2) [above] {$X_{i_1}$}; % I dont get why it is assym with -3.2
     \node (xi2) at (-2.5, 3.2) [above] {$X_{i_2}$};
@@ -198,12 +316,10 @@ The algebra-category correspondence in the theory of anyons was first noted by \
     \draw[string arrow] (Vem2) -- (Btop) node[below left, pos=0.4] {$e_{m-2}$};
 
 
-    % --- CENTER COUPLING ---
     \coordinate (Bbot) at (0, -0.65);
     \draw[string arrow] (Btop) -- (Bbot) node[right, pos=0.5] {$b$};
 
 
-    % --- BOTTOM HALF (SPLITTING TREE & OUTPUTS) ---
     % Internal Vertices
     \coordinate (Vfn2) at (-0.5, -1.0);
     \coordinate (Vfn3) at (-1.0, -1.5);
@@ -243,7 +359,8 @@ The algebra-category correspondence in the theory of anyons was first noted by \
 \right\}_{ \substack{b, \, e_1, \dots,  e_{m-2}, \, f_1, \, \dots, \, f_{n-2} \\ \mu_1, \, \dots, \, \mu_{m-2}, \, \nu_1, \, \dots, \, \nu_{n-2}} }
 \end{equation}
 
-\begin{center} % From the seminar paper and
+\begin{equation}
+\begin{gathered} % From the seminar paper and
 \begin{tikzpicture}
   \node at (0,-0.1) {$\underset{e,f}{\bigoplus} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g $};
   \draw[->, black] plot coordinates{(0.4,0.5) (2.5,1.5)};
@@ -261,8 +378,25 @@ The algebra-category correspondence in the theory of anyons was first noted by \
   \node at (8.2, -1.2) {$F^{bcd}_{k} \otimes id_{V^{ak}_{g}}$};
   \draw[->] plot coordinates {(6.4, -1.5) (7.5,-0.5) };
 \end{tikzpicture}
-\label{grp:pentagon}
-\end{center}
+\label{cat:pentagon}
+\end{gathered}
+\end{equation}
+
+% https://q.uiver.app/#q=WzAsNSxbMCwyLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2UsZn0gVl57YWJ9X2UgXFxvdGltZXMgVl57ZWN9X2YgXFxvdGltZXMgVl57ZmR9X2cgIl0sWzAsNCwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFsyLDQsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c197ayxofSBWXntha31fZyBcXG90aW1lcyBWXntiY31faCBcXG90aW1lcyBWXntoZH1fayAiXSxbMSwwLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2YsaH0gVl57YWZ9X2ggXFxvdGltZXMgVl57YmN9X2YgXFxvdGltZXMgVl57aGR9X2cgIl0sWzIsMiwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFswLDEsIkZee2FiY31fZiBcXG90aW1lcyBpZF97Vl97Z31ee2ZkfX0iLDIseyJsYWJlbF9wb3NpdGlvbiI6NDB9XSxbMSwyLCJGXnthYmN9X2YgXFxvdGltZXMgaWRfe1Zfe2d9XntmZH19IiwyXSxbMCwzXSxbMyw0XSxbMiw0XV0=
+\begin{tikzcd}
+	& {\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } & \\
+	\\
+	{\displaystyle\bigoplus_{e,f} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g } && {\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } \\
+	\\
+	{\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } && {\displaystyle\bigoplus_{k,h} V^{ak}_g \otimes V^{bc}_h \otimes V^{hd}_k }
+	\arrow[from=1-2, to=3-3]
+	\arrow[from=3-1, to=1-2]
+	\arrow["{F^{abc}_f \otimes id_{V_{g}^{fd}}}"'{pos=0.4}, from=3-1, to=5-1]
+	\arrow["{F^{abc}_f \otimes id_{V_{g}^{fd}}}"', from=5-1, to=5-3]
+	\arrow[from=5-3, to=3-3]
+\end{tikzcd}
+
+
 
 \begin{equation}
 \begin{tikzcd}[row sep=large, column sep=large]

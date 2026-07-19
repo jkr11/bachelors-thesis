@@ -1,0 +1,49 @@
+\subsection{I dont know where to put this yet}
+
+If we start out on anyonic chains, like the $SU(2)_3$ case, this provideds a nice generalization for chains with $C = Rep(SU(2)_k)$ with fusion rules
+\[
+  j_1 \times j_2 = \sum_{j = \left\vert j_1 - j_2 \right\vert }^{\mathop{\min}(j_1 + j_2, k - j_1 - j_2)} j.
+\]
+However now, if we approach this in the case of $SU(2)_\infty$ these fusion rules read
+\[
+  j_1 \times j_2 = \sum_{j = \left\vert j_1 - j_2 \right\vert }^{j_1 + j_2} 
+\]
+Is this the same as the Q deformations? It is for $q = 1$ and $k=\infty$ but what about the intermediates?
+
+\section{MPO-symmetries}
+
+So im not sure how this works completely but there seems to be way more literature on this than on (globally) symmetric tensors. However this also seems to be connected to anyonic networks. Also to the Category of MPS and MPO?
+
+There is an account of (projective) representation on a peps that act on all levels in \cite{bridgemanEffectiveEdgeStates}. Actually there are more such as \cite[§~IV, Section~2]{cuiperHouchesLectureNotes2026}, \cite{williamsonMatrixProductOperators2016}
+
+Some sources here: On Lattice Models with Module Categories: \cite{eckQuantumLatticeModels2025}, \cite{lootensDualitiesOneDimensionalQuantum2023} \cite{lootensDualitiesOneDimensionalQuantum2024} \cite{lootensEntanglementDensityMatrix2025}. Also chapters IV and V of \cite{cuiperHouchesLectureNotes2026}. On the structure see \cite{liuTradingMathematicalPhysical2025}
+
+I think the original motivation for this is to have the following constraint on MPOs:
+
+\[
+  MPO_a \circ MPO_b = \sum_{c}^{} N_{ab}^c MPO_{c} 
+\]
+which we can obtain by a fusion tensor $X_{ab}^c$ that obeys an intertwining property. 
+
+We immediately obtain our case of global symmetry by encoding
+\[
+  \rho(g) = \rho_1(g) \otimes \cdots \otimes \rho_n(g)
+\]
+as a MPO with bond dimension $1$ by setting 
+\[
+  W^{[a]}_{11,ij} = \rho_a(g)_{ij}
+\]
+
+Call $\rho(g) = MPO_g$. Then $\rho(g) \rho(h) = \rho(hg)$ 
+
+If we want $MPO_g MPO_h = MPO_{hg}$ we also have MPO as a unitary representation with bond dimensions $ > 1$. So this generalizes the symmetry approach. 
+
+TODO: check if we can give symmetries such as in the wanniers kramer dual that are given by $Z_i Z_{i+1}$ by not a $Rep(G)$ but instead a $Rep(\mathrm{G} )$ where $\mathrm{G} $ is a groupoid. 
+
+\begin{definition}[2-Category of MPS]
+  \label{def:mpsCategory}
+  Let $A$ and $B$ be arbitrary MPS with bond collections $d^A, d^B$. Now, define the 1-morphism category $Hom(A \to B)$ where the objects are MPO operators $M$ together with a reduction isometry $Y$.
+\end{definition}
+
+
+
