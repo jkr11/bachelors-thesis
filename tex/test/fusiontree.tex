@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\input{preamble.tex}
+\input{../preamble.tex}
 
 \begin{document}
 
@@ -320,19 +320,58 @@ Let $f : E \to A \otimes B$ and $g : D \to E \otimes C$.
 	\arrow["{\underset{\green{\text{6j-symbols}}}{F^{ABC}_D}}"{description}, from=7-1, to=7-2]
 \end{tikzcd}
 
-\[
-\FLeft{
-\alpha_3\\
-\alpha_2\\
-\alpha_1
-}
-\FCore{A}{B}{C}{D}
-\FRight{
-\beta_3\\
-\beta_2\\
-\beta_1
-}
-\]
+
+
+\begin{tikzpicture}[yscale=1.0]
+  \draw (-2.00, 0.3) node {\color{blue}\scalebox{.6}{1}};
+  \draw (-1.20, 0.3) node {\color{blue}\scalebox{.6}{2}};
+  \draw (-0.40, 0.3) node {\color{blue}\scalebox{.6}{3}};
+  \draw (0.40, 0.3) node {\color{blue}\scalebox{.6}{4}};
+  \draw (1.20, 0.3) node {\color{blue}\scalebox{.6}{5}};
+  \draw (2.00, 0.3) node {\color{blue}\scalebox{.6}{6}};
+  \draw[line width=1.4] (-2.00, 0.00) to (-2.00, -1.50);
+  \draw[line width=1.4] (-1.20, 0.00) to (-1.20, -1.50);
+  \draw[line width=1.4] (1.20, 0.00) to (1.20, -1.50);
+  \draw[line width=1.4] (2.00, 0.00) to (2.00, -1.50);
+  \draw[line width=1.4] (0.40, 0.00) .. controls (0.40, -0.75) and (-0.40, -0.75) .. (-0.40, -1.50);
+  \draw[line width=4.5, white] (-0.40, 0.00) .. controls (-0.40, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+  \draw[line width=1.4] (-0.40, 0.00) .. controls (-0.40, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+  \draw[line width=1.4] (-2.00, -1.50) to (-2.00, -3.00);
+  \draw[line width=1.4] (0.40, -1.50) to (0.40, -3.00);
+  \draw[line width=1.4] (1.20, -1.50) to (1.20, -3.00);
+  \draw[line width=1.4] (2.00, -1.50) to (2.00, -3.00);
+  \draw[line width=1.4] (-1.20, -1.50) .. controls (-1.20, -2.25) and (-0.40, -2.25) .. (-0.40, -3.00);
+  \draw[line width=4.5, white] (-0.40, -1.50) .. controls (-0.40, -2.25) and (-1.20, -2.25) .. (-1.20, -3.00);
+  \draw[line width=1.4] (-0.40, -1.50) .. controls (-0.40, -2.25) and (-1.20, -2.25) .. (-1.20, -3.00);
+  \draw[line width=1.4] (-2.00, -3.00) to (-2.00, -4.50);
+  \draw[line width=1.4] (-1.20, -3.00) to (-1.20, -4.50);
+  \draw[line width=1.4] (-0.40, -3.00) to (-0.40, -4.50);
+  \draw[line width=1.4] (2.00, -3.00) to (2.00, -4.50);
+  \draw[line width=1.4] (1.20, -3.00) .. controls (1.20, -3.75) and (0.40, -3.75) .. (0.40, -4.50);
+  \draw[line width=4.5, white] (0.40, -3.00) .. controls (0.40, -3.75) and (1.20, -3.75) .. (1.20, -4.50);
+  \draw[line width=1.4] (0.40, -3.00) .. controls (0.40, -3.75) and (1.20, -3.75) .. (1.20, -4.50);
+  \draw[line width=1.4] (-2.00, -4.50) to (-2.00, -6.00);
+  \draw[line width=1.4] (-1.20, -4.50) to (-1.20, -6.00);
+  \draw[line width=1.4] (1.20, -4.50) to (1.20, -6.00);
+  \draw[line width=1.4] (2.00, -4.50) to (2.00, -6.00);
+  \draw[line width=1.4] (-0.40, -4.50) .. controls (-0.40, -5.25) and (0.40, -5.25) .. (0.40, -6.00);
+  \draw[line width=4.5, white] (0.40, -4.50) .. controls (0.40, -5.25) and (-0.40, -5.25) .. (-0.40, -6.00);
+  \draw[line width=1.4] (0.40, -4.50) .. controls (0.40, -5.25) and (-0.40, -5.25) .. (-0.40, -6.00);
+  \draw[line width=1.4] (-0.40, -6.00) to (-0.40, -7.50);
+  \draw[line width=1.4] (0.40, -6.00) to (0.40, -7.50);
+  \draw[line width=1.4] (1.20, -6.00) to (1.20, -7.50);
+  \draw[line width=1.4] (2.00, -6.00) to (2.00, -7.50);
+  \draw[line width=1.4] (-1.20, -6.00) .. controls (-1.20, -6.75) and (-2.00, -6.75) .. (-2.00, -7.50);
+  \draw[line width=4.5, white] (-2.00, -6.00) .. controls (-2.00, -6.75) and (-1.20, -6.75) .. (-1.20, -7.50);
+  \draw[line width=1.4] (-2.00, -6.00) .. controls (-2.00, -6.75) and (-1.20, -6.75) .. (-1.20, -7.50);
+  \draw[line width=1.4] (-2.00, -7.50) to (-2.00, -9.00);
+  \draw[line width=1.4] (-1.20, -7.50) to (-1.20, -9.00);
+  \draw[line width=1.4] (-0.40, -7.50) to (-0.40, -9.00);
+  \draw[line width=1.4] (0.40, -7.50) to (0.40, -9.00);
+  \draw[line width=1.4] (1.20, -7.50) .. controls (1.20, -8.25) and (2.00, -8.25) .. (2.00, -9.00);
+  \draw[line width=4.5, white] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
+  \draw[line width=1.4] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
+\end{tikzpicture}
 
 \end{document}
 

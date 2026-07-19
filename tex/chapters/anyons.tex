@@ -1,5 +1,438 @@
 
 We need to introduce anyons here, or somehow build it into the review of the golden chain.
+%
+%\begin{tikzpicture}[yscale=.8]
+%
+%\begin{scope}[shift={(-1.6,0)}]
+%\draw[line width=1.4]
+%  (+.5,1) to (+.5,-1);
+%\draw
+%  (-0,-.1) node {$\mathclap{\cdots}$};
+%\end{scope}
+%\draw[line width=1.4]
+%  (-.35,-1)
+%  .. controls (-.35,0) and (+.35,0)  ..
+%  (+.35,1);
+%
+%\draw[line width=4.5, white]
+%  (+.35,-1)
+%  .. controls (+.35,0) and (-.35,0)  ..
+%  (-.35,1);
+%\draw[line width=1.4]
+%  (+.35,-1)
+%  .. controls (+.35,0) and (-.35,0)  ..
+%  (-.35,1);
+%\begin{scope}[shift={(+1.6,0)}]
+%\draw[line width=1.4]
+%  (-.5,1) to (-.5,-1);
+%\draw
+%  (-0,-.1) node {$\mathclap{\cdots}$};
+%\end{scope}
+%
+%\draw
+%  (-1.1, -1.3) node {\color{blue}\scalebox{.5}{$i\!-\!1$}};
+%\draw
+%  (-.4, -1.3) node {\color{blue}\scalebox{.5}{$i$}};
+%\draw
+%  (+.35, -1.3) node {\color{blue}\scalebox{.5}{$i\!+\!1$}};
+%\draw
+%  (+1.1, -1.3) node {\color{blue}\scalebox{.5}{$i\!+\!2$}};
+%\end{tikzpicture}
+%
+%\begin{tikzpicture}[yscale=.8]
+%
+%\draw[line width=1.4] (-2.0,1) to (-2.0,-1);
+%\draw[line width=1.4] (-1.2,1) to (-1.2,-1);
+%
+%\draw[line width=1.4] (1.2,1) to (1.2,-1);
+%\draw[line width=1.4] (2.0,1) to (2.0,-1);
+%
+%\draw[line width=1.4]
+%  (-0.4,-1)
+%  .. controls (-0.4,0) and (0.4,0)  ..
+%  (0.4,1);
+%
+%\draw[line width=4.5, white]
+%  (0.4,-1)
+%  .. controls (0.4,0) and (-0.4,0)  ..
+%  (-0.4,1);
+%\draw[line width=1.4]
+%  (0.4,-1)
+%  .. controls (0.4,0) and (-0.4,0)  ..
+%  (-0.4,1);
+%
+%\draw (-2.0, -1.3) node {\color{blue}\scalebox{.6}{$1$}};
+%\draw (-1.2, -1.3) node {\color{blue}\scalebox{.6}{$2$}};
+%\draw (-0.4, -1.3) node {\color{blue}\scalebox{.6}{$3$}};
+%\draw (0.4, -1.3) node {\color{blue}\scalebox{.6}{$4$}};
+%\draw (1.2, -1.3) node {\color{blue}\scalebox{.6}{$5$}};
+%\draw (2.0, -1.3) node {\color{blue}\scalebox{.6}{$6$}};
+%
+%\draw (-1.2, -1.9) node {\footnotesize \textbf{Qubit 1} (Strands 1-3)};
+%\draw (1.2, -1.9) node {\footnotesize \textbf{Qubit 2} (Strands 4-6)};
+%
+%\end{tikzpicture}
+%
+%\begin{tikzpicture}[yscale=1.0,rotate=90]
+%  \draw[line width=1.4] (-1.20, 1.90) to (-1.20, 1.50); % Root trunk (tau)
+%  
+%  % First binary split: split left toward Strand 1, right toward the next node
+%  \draw[line width=1.4] (-1.20, 1.50) .. controls (-1.20, 1.10) and (-2.00, 1.10) .. (-2.00, 0.00); % Strand 1
+%  \draw[line width=1.4] (-1.20, 1.50) .. controls (-1.20, 1.10) and (-0.80, 1.10) .. (-0.80, 0.80); % Internal edge
+%  
+%  % Second binary split: splits the internal edge into Strand 2 and Strand 3
+%  \draw[line width=1.4] (-0.80, 0.80) .. controls (-0.80, 0.40) and (-1.20, 0.40) .. (-1.20, 0.00); % Strand 2
+%  \draw[line width=1.4] (-0.80, 0.80) .. controls (-0.80, 0.40) and (-0.40, 0.40) .. (-0.40, 0.00); % Strand 3
+%
+%  % Labels for Qubit 1
+%  %\draw (-1.20, 2.10) node {\scalebox{.8}{$\tau$}};
+%
+%  \draw (0.3,1) node[rotate=-30] {
+%    \scalebox{.7}{
+%      \color{purple}
+%      \bf
+%      \def\arraystretch{.8}
+%      \begin{tabular}{c}
+%        quantum state
+%        \\
+%        preparation
+%     \end{tabular}
+%    }
+%  };
+%
+%
+%  % --- PROPER FUSION TREE FOR QUBIT 2 (Strands 4, 5, 6) ---
+%  \draw[line width=1.4] (1.20, 1.90) to (1.20, 1.50); % Root trunk (tau)
+%  
+%  % First binary split: split left toward the next node, right toward Strand 6
+%  \draw[line width=1.4] (1.20, 1.50) .. controls (1.20, 1.10) and (0.80, 1.10) .. (0.80, 0.80); % Internal edge
+%  \draw[line width=1.4] (1.20, 1.50) .. controls (1.20, 1.10) and (2.00, 1.10) .. (2.00, 0.00); % Strand 6
+%  
+%  % Second binary split: splits the internal edge into Strand 4 and Strand 5
+%  \draw[line width=1.4] (0.80, 0.80) .. controls (0.80, 0.40) and (0.40, 0.40) .. (0.40, 0.00); % Strand 4
+%  \draw[line width=1.4] (0.80, 0.80) .. controls (0.80, 0.40) and (1.20, 0.40) .. (1.20, 0.00); % Strand 5
+%
+%%
+%
+%  \draw (-2.00, 0.3) node {\color{blue}\scalebox{.6}{1}};
+%  \draw (-1.20, 0.3) node {\color{blue}\scalebox{.6}{2}};
+%  \draw (-0.40, 0.3) node {\color{blue}\scalebox{.6}{3}};
+%  \draw (0.40, 0.3) node {\color{blue}\scalebox{.6}{4}};
+%  \draw (1.20, 0.3) node {\color{blue}\scalebox{.6}{5}};
+%  \draw (2.00, 0.3) node {\color{blue}\scalebox{.6}{6}};
+%  \draw[line width=1.4] (-2.00, 0.00) to (-2.00, -1.50);
+%  \draw[line width=1.4] (-1.20, 0.00) to (-1.20, -1.50);
+%  \draw[line width=1.4] (1.20, 0.00) to (1.20, -1.50);
+%  \draw[line width=1.4] (2.00, 0.00) to (2.00, -1.50);
+%  \draw[line width=1.4] (0.40, 0.00) .. controls (0.40, -0.75) and (-0.40, -0.75) .. (-0.40, -1.50);
+%  \draw[line width=4.5, white] (-0.40, 0.00) .. controls (-0.40, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+%  \draw[line width=1.4] (-0.40, 0.00) .. controls (-0.40, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+%  \draw[line width=1.4] (-2.00, -1.50) to (-2.00, -3.00);
+%  \draw[line width=1.4] (0.40, -1.50) to (0.40, -3.00);
+%  \draw[line width=1.4] (1.20, -1.50) to (1.20, -3.00);
+%  \draw[line width=1.4] (2.00, -1.50) to (2.00, -3.00);
+%  \draw[line width=1.4] (-1.20, -1.50) .. controls (-1.20, -2.25) and (-0.40, -2.25) .. (-0.40, -3.00);
+%  \draw[line width=4.5, white] (-0.40, -1.50) .. controls (-0.40, -2.25) and (-1.20, -2.25) .. (-1.20, -3.00);
+%  \draw[line width=1.4] (-0.40, -1.50) .. controls (-0.40, -2.25) and (-1.20, -2.25) .. (-1.20, -3.00);
+%  \draw[line width=1.4] (-2.00, -3.00) to (-2.00, -4.50);
+%  \draw[line width=1.4] (-1.20, -3.00) to (-1.20, -4.50);
+%  \draw[line width=1.4] (-0.40, -3.00) to (-0.40, -4.50);
+%  \draw[line width=1.4] (2.00, -3.00) to (2.00, -4.50);
+%  \draw[line width=1.4] (1.20, -3.00) .. controls (1.20, -3.75) and (0.40, -3.75) .. (0.40, -4.50);
+%  \draw[line width=4.5, white] (0.40, -3.00) .. controls (0.40, -3.75) and (1.20, -3.75) .. (1.20, -4.50);
+%  \draw[line width=1.4] (0.40, -3.00) .. controls (0.40, -3.75) and (1.20, -3.75) .. (1.20, -4.50);
+%  \draw[line width=1.4] (-2.00, -4.50) to (-2.00, -6.00);
+%  \draw[line width=1.4] (-1.20, -4.50) to (-1.20, -6.00);
+%  \draw[line width=1.4] (1.20, -4.50) to (1.20, -6.00);
+%  \draw[line width=1.4] (2.00, -4.50) to (2.00, -6.00);
+%  \draw[line width=1.4] (-0.40, -4.50) .. controls (-0.40, -5.25) and (0.40, -5.25) .. (0.40, -6.00);
+%  \draw[line width=4.5, white] (0.40, -4.50) .. controls (0.40, -5.25) and (-0.40, -5.25) .. (-0.40, -6.00);
+%  \draw[line width=1.4] (0.40, -4.50) .. controls (0.40, -5.25) and (-0.40, -5.25) .. (-0.40, -6.00);
+%  \draw[line width=1.4] (-0.40, -6.00) to (-0.40, -7.50);
+%  \draw[line width=1.4] (0.40, -6.00) to (0.40, -7.50);
+%  \draw[line width=1.4] (1.20, -6.00) to (1.20, -7.50);
+%  \draw[line width=1.4] (2.00, -6.00) to (2.00, -7.50);
+%  \draw[line width=1.4] (-1.20, -6.00) .. controls (-1.20, -6.75) and (-2.00, -6.75) .. (-2.00, -7.50);
+%  \draw[line width=4.5, white] (-2.00, -6.00) .. controls (-2.00, -6.75) and (-1.20, -6.75) .. (-1.20, -7.50);
+%  \draw[line width=1.4] (-2.00, -6.00) .. controls (-2.00, -6.75) and (-1.20, -6.75) .. (-1.20, -7.50);
+%  \draw[line width=1.4] (-2.00, -7.50) to (-2.00, -9.00);
+%  \draw[line width=1.4] (-1.20, -7.50) to (-1.20, -9.00);
+%  \draw[line width=1.4] (-0.40, -7.50) to (-0.40, -9.00);
+%  \draw[line width=1.4] (0.40, -7.50) to (0.40, -9.00);
+%  \draw[line width=1.4] (1.20, -7.50) .. controls (1.20, -8.25) and (2.00, -8.25) .. (2.00, -9.00);
+%  \draw[line width=4.5, white] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
+%  \draw[line width=1.4] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
+%\end{tikzpicture}
+%
+%\vspace{.1cm}
+%\hspace{-1cm}
+%{\small
+%\begin{tikzpicture}[xscale={1.1}]
+%
+%  \draw (-2.8, 0) node { \scalebox{1.1}{$\vert 0 \rangle$} };
+%  \draw (-2.8, -1) node { \scalebox{1.1}{$\vert 0 \rangle$} };
+%
+%  %\draw[line width=2.2]
+%  %  (11,.23) to (11,-.23);
+%  %\draw[line width=2.2]
+%  %  (11,1+.23) to (11,1-.23);
+%
+%  %\draw[
+%  %  line width=1.5pt
+%  %]
+%  %(-2.8,1)
+%  %to
+%  %(+6,1);
+%
+%  \draw[
+%    line width=1.5pt
+%  ]
+%  (-2.5,-1)
+%  to
+%  (+8,-1);
+%
+%  \draw[
+%    line width=1.5pt
+%  ]
+%  (-2.5,0)
+%  to
+%  (+5.5,0);
+%
+%  \draw[
+%    line width=.6pt
+%  ]
+%  (5.5,+.04)
+%  to
+%  (8,+.04);
+%  \draw[
+%    line width=.6pt
+%  ]
+%  (5.5,-.04)
+%  to
+%  (8,-.04);
+%
+%  % Top Measurement
+%  %\draw[
+%  %  line width=.6pt
+%  %]
+%  %(5.5,1+.04)
+%  %to
+%  %(11,1+.04);
+%  %\draw[
+%  %  line width=.6pt
+%  %]
+%  %(5.5,1-.04)
+%  %to
+%  %(11,1-.04);
+%
+%  \def\circuitvspace{1}
+%
+%  \drawGate{-.9}{0}{H}
+%
+%  \drawCNOT{0.6}{0}{1}
+%
+%  %\drawCNOT{2}{1}{1}
+%
+%  %\drawGate{3.5}{1}{H}
+%
+%  %\drawMeasurement{5.6}{1}
+%
+%  \drawMeasurement{5.6}{0}
+%
+%  %\draw[line width=1.1]
+%  %  (7.5, -.37) to (7.5, -1);
+%
+%  %\draw[line width=5.5, color=white]
+%  %  (9.5, +.6) to (9.5, -1);
+%  %\draw[line width=1.1]
+%  %  (9.5, +.65) to (9.5, -1);
+%
+%  %\drawControlledGate{7.5}{-1}{X}{0}
+%  %
+%  %\drawControlledGate{9.5}{-1}{Z}{1}
+%
+%  \draw (-3.56, -.3) node[rotate=-30] {
+%    \scalebox{.7}{
+%      \color{purple}
+%      \bf
+%      \def\arraystretch{.8}
+%      \begin{tabular}{c}
+%        quantum state
+%        \\
+%        preparation
+%     \end{tabular}
+%    }
+%  };
+%
+%  \draw (6.9, +.5) node {
+%    \scalebox{.7}{
+%      \color{purple}
+%      \bf
+%      \def\arraystretch{.8}
+%      \begin{tabular}{c}
+%        quantum
+%        \\
+%        measurement
+%     \end{tabular}
+%    }
+%  };
+%
+%  %\draw (8.45, -.32) node[rotate=-0] {
+%  %  \scalebox{.7}{
+%  %    \color{purple}
+%  %    \bf
+%  %    \def\arraystretch{.8}
+%  %    \begin{tabular}{c}
+%  %      classical
+%  %      control
+%  %   \end{tabular}
+%  %  }
+%  %};
+%
+%  \draw (1-.4, +.5) node[rotate=-6] {
+%    \scalebox{.7}{
+%      \color{darkgreen}
+%      \bf
+%      \def\arraystretch{.8}
+%      \begin{tabular}{c}
+%        plain
+%        quantum gates
+%     \end{tabular}
+%    }
+%  };
+%
+%  %\draw (-3.5, +.85) node[rotate=-0] {
+%  %  \scalebox{.7}{
+%  %    \color{darkblue}
+%  %    \bf
+%  %    \def\arraystretch{.8}
+%  %    \begin{tabular}{c}
+%  %      input
+%  %      \\
+%  %      quantum state
+%  %   \end{tabular}
+%  %  }
+%  %};
+%
+%\end{tikzpicture}
+%}
+
+\vspace{.1cm}
+\hspace{-1cm}
+\begin{tikzpicture}[xscale={1.1}]
+
+  \definecolor{purple}{rgb}{0.6, 0.1, 0.6}
+  \definecolor{darkgreen}{rgb}{0.1, 0.5, 0.1}
+  \definecolor{darkblue}{rgb}{0.1, 0.2, 0.7}
+
+  \draw (-2.8, 0) node { \scalebox{1.1}{$\vert 0 \rangle$} };
+  \draw (-2.8, -1) node { \scalebox{1.1}{$\vert 0 \rangle$} };
+
+  \draw[line width=1.5pt] (-2.5,-1) to (+8,-1);
+  \draw[line width=1.5pt] (-2.5,0) to (+5.5,0);
+
+  \draw[line width=.6pt] (5.5,+.04) to (8,+.04);
+  \draw[line width=.6pt] (5.5,-.04) to (8,-.04);
+
+  \node[draw, fill=white, line width=1pt, minimum width=0.7cm, minimum height=0.7cm] (Hgate) at (-0.9, 0) {$H$};
+
+  \draw[line width=1pt] (0.6, 0) -- (0.6, -1);
+  \filldraw[black] (0.6, 0) circle (2.5pt);
+  \draw[line width=1pt, fill=white] (0.6, -1) circle (4pt);
+  \draw[line width=1pt] (0.6-4pt, -1) -- (0.6+4pt, -1);
+  \draw[line width=1pt] (0.6, -1-4pt) -- (0.6, -1+4pt);
+
+  \node[draw, fill=white, line width=1pt, minimum width=0.8cm, minimum height=0.6cm] (MeasBox) at (5.6, 0) {};
+  \draw[line width=0.8pt] (5.6-0.25, 0-0.1) arc (180:0:0.25);
+  \draw[line width=0.8pt, ->] (5.6, 0-0.1) -- (5.6+0.2, 0+0.2);
+
+  \draw (-3.56, -.3) node[rotate=-30] {
+    \scalebox{.7}{\color{purple}\bf\def\arraystretch{.8}\begin{tabular}{c}quantum state\\preparation\end{tabular}}
+  };
+  \draw (6.9, +.5) node {
+    \scalebox{.7}{\color{purple}\bf\def\arraystretch{.8}\begin{tabular}{c}quantum\\measurement\end{tabular}}
+  };
+  \draw (1-.4, +.5) node[rotate=-6] {
+    \scalebox{.7}{\color{darkgreen}\bf\def\arraystretch{.8}\begin{tabular}{c}plain\\quantum gates\end{tabular}}
+  };
+
+
+  \begin{scope}[shift={(-2.5, -4.5)}, rotate=90, yscale=1.0]
+
+    \draw[line width=1.4] (-1.20, 1.90) to (-1.20, 1.50); 
+    \draw[line width=1.4] (-1.20, 1.50) .. controls (-1.20, 1.10) and (-2.00, 1.10) .. (-2.00, 0.00); 
+    \draw[line width=1.4] (-1.20, 1.50) .. controls (-1.20, 1.10) and (-0.80, 1.10) .. (-0.80, 0.80); 
+    \draw[line width=1.4] (-0.80, 0.80) .. controls (-0.80, 0.40) and (-1.20, 0.40) .. (-1.20, 0.00); 
+    \draw[line width=1.4] (-0.80, 0.80) .. controls (-0.80, 0.40) and (-0.40, 0.40) .. (-0.40, 0.00); 
+
+    \draw (0.3,1) node[rotate=-30] {
+      \scalebox{.7}{\color{purple}\bf\def\arraystretch{.8}\begin{tabular}{c}quantum state\\preparation\end{tabular}}
+    };
+
+    \draw[line width=1.4] (1.20, 1.90) to (1.20, 1.50); 
+    \draw[line width=1.4] (1.20, 1.50) .. controls (1.20, 1.10) and (0.80, 1.10) .. (0.80, 0.80); 
+    \draw[line width=1.4] (1.20, 1.50) .. controls (1.20, 1.10) and (2.00, 1.10) .. (2.00, 0.00); 
+    \draw[line width=1.4] (0.80, 0.80) .. controls (0.80, 0.40) and (0.40, 0.40) .. (0.40, 0.00); 
+    \draw[line width=1.4] (0.80, 0.80) .. controls (0.80, 0.40) and (1.20, 0.40) .. (1.20, 0.00); 
+
+    \draw (-2.00, 0.3) node {\color{blue}\scalebox{.6}{1}};
+    \draw (-1.20, 0.3) node {\color{blue}\scalebox{.6}{2}};
+    \draw (-0.40, 0.3) node {\color{blue}\scalebox{.6}{3}};
+    \draw (0.40, 0.3) node {\color{blue}\scalebox{.6}{4}};
+    \draw (1.20, 0.3) node {\color{blue}\scalebox{.6}{5}};
+    \draw (2.00, 0.3) node {\color{blue}\scalebox{.6}{6}};
+
+    \draw[line width=1.4] (-2.00, 0.00) to (-2.00, -1.50);
+    \draw[line width=1.4] (-1.20, 0.00) to (-1.20, -1.50);
+    \draw[line width=1.4] (1.20, 0.00) to (1.20, -1.50);
+    \draw[line width=1.4] (2.00, 0.00) to (2.00, -1.50);
+    \draw[line width=1.4] (0.40, 0.00) .. controls (0.40, -0.75) and (-0.40, -0.75) .. (-0.40, -1.50);
+    \draw[line width=4.5, white] (-0.40, 0.00) .. controls (-0.40, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+    \draw[line width=1.4] (-0.40, 0.00) .. controls (-0.40, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+    
+    \draw[line width=1.4] (-2.00, -1.50) to (-2.00, -3.00);
+    \draw[line width=1.4] (0.40, -1.50) to (0.40, -3.00);
+    \draw[line width=1.4] (1.20, -1.50) to (1.20, -3.00);
+    \draw[line width=1.4] (2.00, -1.50) to (2.00, -3.00);
+    \draw[line width=1.4] (-1.20, -1.50) .. controls (-1.20, -2.25) and (-0.40, -2.25) .. (-0.40, -3.00);
+    \draw[line width=4.5, white] (-0.40, -1.50) .. controls (-0.40, -2.25) and (-1.20, -2.25) .. (-1.20, -3.00);
+    \draw[line width=1.4] (-0.40, -1.50) .. controls (-0.40, -2.25) and (-1.20, -2.25) .. (-1.20, -3.00);
+    
+    \draw[line width=1.4] (-2.00, -3.00) to (-2.00, -4.50);
+    \draw[line width=1.4] (-1.20, -3.00) to (-1.20, -4.50);
+    \draw[line width=1.4] (-0.40, -3.00) to (-0.40, -4.50);
+    \draw[line width=1.4] (2.00, -3.00) to (2.00, -4.50);
+    \draw[line width=1.4] (1.20, -3.00) .. controls (1.20, -3.75) and (0.40, -3.75) .. (0.40, -4.50);
+    \draw[line width=4.5, white] (0.40, -3.00) .. controls (0.40, -3.75) and (1.20, -3.75) .. (1.20, -4.50);
+    \draw[line width=1.4] (0.40, -3.00) .. controls (0.40, -3.75) and (1.20, -3.75) .. (1.20, -4.50);
+    
+    \draw[line width=1.4] (-2.00, -4.50) to (-2.00, -6.00);
+    \draw[line width=1.4] (-1.20, -4.50) to (-1.20, -6.00);
+    \draw[line width=1.4] (1.20, -4.50) to (1.20, -6.00);
+    \draw[line width=1.4] (2.00, -4.50) to (2.00, -6.00);
+    \draw[line width=1.4] (-0.40, -4.50) .. controls (-0.40, -5.25) and (0.40, -5.25) .. (0.40, -6.00);
+    \draw[line width=4.5, white] (0.40, -4.50) .. controls (0.40, -5.25) and (-0.40, -5.25) .. (-0.40, -6.00);
+    \draw[line width=1.4] (0.40, -4.50) .. controls (0.40, -5.25) and (-0.40, -5.25) .. (-0.40, -6.00);
+    
+    \draw[line width=1.4] (-0.40, -6.00) to (-0.40, -7.50);
+    \draw[line width=1.4] (0.40, -6.00) to (0.40, -7.50);
+    \draw[line width=1.4] (1.20, -6.00) to (1.20, -7.50);
+    \draw[line width=1.4] (2.00, -6.00) to (2.00, -7.50);
+    \draw[line width=1.4] (-1.20, -6.00) .. controls (-1.20, -6.75) and (-2.00, -6.75) .. (-2.00, -7.50);
+    \draw[line width=4.5, white] (-2.00, -6.00) .. controls (-2.00, -6.75) and (-1.20, -6.75) .. (-1.20, -7.50);
+    \draw[line width=1.4] (-2.00, -6.00) .. controls (-2.00, -6.75) and (-1.20, -6.75) .. (-1.20, -7.50);
+    
+    \draw[line width=1.4] (-2.00, -7.50) to (-2.00, -9.00);
+    \draw[line width=1.4] (-1.20, -7.50) to (-1.20, -9.00);
+    \draw[line width=1.4] (-0.40, -7.50) to (-0.40, -9.00);
+    \draw[line width=1.4] (0.40, -7.50) to (0.40, -9.00);
+    \draw[line width=1.4] (1.20, -7.50) .. controls (1.20, -8.25) and (2.00, -8.25) .. (2.00, -9.00);
+    \draw[line width=4.5, white] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
+    \draw[line width=1.4] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
+
+  \end{scope}
+
+\end{tikzpicture}
 
 \subsection{1D Lattice Models \& The Golden Chain}
 

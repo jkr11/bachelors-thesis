@@ -97,7 +97,7 @@
 \newcommand{\Hom}{\operatorname{Hom}}    % 
 \newcommand{\End}{\operatorname{End}}    % Endomorphism set
 \newcommand{\id}{\operatorname{id}}      % Identity morphism
-\newcommand{\Hilb}{\mathbf{Hilb_fd}}
+\newcommand{\Hilb}{\operatorname{Hilb_{fd}}}
 \newcommand{\del}{\boxtimes}
 \newcommand{\sVect}{\mathrm{sVect}}
 \newcommand{\gVSpace}[1]{\mathrm{Vec}_{#1}} % Graded Vector Space
@@ -107,12 +107,13 @@
 
 \newcommand{\Hilbfd}{\mathrm{Hilb_{\text{fd}}}}
 
-\newcommand{\Mod}[1]{\mathop{Mod}_{#1}}
+\newcommand{\Mod}[1]{\operatorname{Mod}_{#1}}
 
 \newcommand{\FDVec}[1]{\mathrm{FD}#1\mathrm{Vec}}
 \newcommand{\VecCat}[1]{\mathrm{Vec}_#1}
 
 \newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
 
 \makeatletter
 \definecolor{RoyalBlue}{HTML}{4169E1}
@@ -125,3 +126,45 @@
     urlcolor=RoyalBlue
 }
 \makeatother
+
+
+\definecolor{purple}{rgb}{0.6, 0.1, 0.6}
+\definecolor{darkgreen}{rgb}{0.1, 0.5, 0.1}
+\definecolor{darkblue}{rgb}{0.1, 0.2, 0.7}
+
+% ==========================================
+% Custom Quantum Circuit Macros
+% ==========================================
+
+% \drawGate{x}{y}{Label}
+% Draws a standard square quantum gate
+\newcommand{\drawGate}[3]{
+  \node[draw, fill=white, line width=1pt, minimum width=0.7cm, minimum height=0.7cm] at (#1, #2) {$#3$};
+}
+
+% \drawCNOT{x}{y_control}{y_drop}
+% Draws a CNOT gate. The target is located at y_control - y_drop.
+\newcommand{\drawCNOT}[3]{
+  % Vertical connection line
+  \draw[line width=1pt] (#1, #2) -- (#1, #2 - #3);
+  % Control dot
+  \filldraw[black] (#1, #2) circle (2.5pt);
+  % Target XOR symbol (white filled circle with cross)
+  \draw[line width=1pt, fill=white] (#1, #2 - #3) circle (4pt);
+  \draw[line width=1pt] (#1-4pt, #2 - #3) -- (#1+4pt, #2 - #3);
+  \draw[line width=1pt] (#1, #2 - #3 - 4pt) -- (#1, #2 - #3 + 4pt);
+}
+
+% \drawMeasurement{x}{y}
+% Draws a measurement box with a meter symbol inside
+\newcommand{\drawMeasurement}[2]{
+  \node[draw, fill=white, line width=1pt, minimum width=0.8cm, minimum height=0.6cm] at (#1, #2) {};
+  \draw[line width=0.8pt] (#1-0.25, #2-0.1) arc (180:0:0.25);
+  \draw[line width=0.8pt, ->] (#1, #2-0.1) -- (#1+0.2, #2+0.2);
+}
+
+% \drawControlledGate{x}{target_y}{Label}{control_y}
+% Draws the target gate. (The classical vertical lines are drawn manually in your snippet).
+\newcommand{\drawControlledGate}[4]{
+  \drawGate{#1}{#2}{#3}
+}
