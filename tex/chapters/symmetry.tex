@@ -72,8 +72,7 @@ it follows directly from the definition of global invariance that the tensor mus
 \begin{array}{c}
   \begin{tikzpicture}[
     baseline=(current bounding box.center),
-    leg/.style={
-      draw=black,
+    leg2/.style={
       line width=1.1pt,
       postaction={
         decorate,
@@ -82,6 +81,13 @@ it follows directly from the definition of global invariance that the tensor mus
           mark=at position 0.7 with {\arrow{Stealth[scale=1.0, fill=black]}}
         }
       }
+    },
+    leg/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
     },
     tensor/.style={
       draw=black,
@@ -138,13 +144,13 @@ it follows directly from the definition of global invariance that the tensor mus
 
   \begin{tikzpicture}[baseline=(current bounding box.center)]
     \node[anchor=north, align=center, text=blue] at (1.5,0) {
-      \tiny Globally invariant \\
-      \tiny $T \in \operatorname{Hom}(A, B \otimes C \otimes D)$
+      \small Globally invariant \\
+      \small $T \in \operatorname{Hom}(A, B \otimes C \otimes D)$
     };
     
     \node[anchor=north, align=center, text=blue] at (8.45,0) {
-      \tiny is an intertwiner \\
-      \tiny $T \in \operatorname{Hom}_G(A, B \otimes C \otimes D)$
+      \small is an intertwiner \\
+      \small $T \in \operatorname{Hom}_G(A, B \otimes C \otimes D)$
     };
   \end{tikzpicture}
 \end{array}

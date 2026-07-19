@@ -46,9 +46,13 @@ Here, the state is fully characterized by its intermediate indeces $x_1 \ldots x
 Similar to the Heisenberg-chain\footnote{Note that $\frac{1}{2} \otimes \frac{1}{2} = 0 \oplus 1$ in the Heisenberg $\SU 2$ model.}, the golden chain introduces a Hamiltonian that assigns $-1$ to the interaction $\tau \otimes \tau = 1$ and $0$ to the interaction $\tau \otimes \tau = \tau$.
 
 We can decompose the whole space $\Hom(\tau^{\otimes n+1}, \tau)$ into the local states
-  \[
-    \Hom(\tau^{\otimes n+1}, \tau) = \bigoplus_{\{x_i\}} \Hom(\tau \otimes \tau, x_1) \otimes \Hom(x_1 \otimes \tau, x_2) \otimes \Hom(x_2 \otimes \tau, x_3) \otimes \cdots \otimes \Hom(x_{n-1} \otimes \tau, \tau )
-  \]
+\begin{equation}
+  \Hom(\tau^{\otimes n+1}, \tau) 
+  =
+  \bigoplus_{\mathclap{\substack{x_1, x_2, \ldots, x_{n-1} \\ \text{\color{RoyalBlue}{all admissible paths}}}}}
+  \Hom(\tau \otimes \tau, x_1) \otimes \Hom(x_1 \otimes \tau, x_2)
+  \otimes \cdots \otimes Hom(x_{n-1} \otimes \tau, \tau) 
+\end{equation}
 with the admissability condition that there are not adjacents $1$ in the sequence of $x_i$s.
 
 This is evaluated as a $3$ local hamiltonian, as we can decompose the spin chain into local parts where two $\tau$ anyons are adjacent (check how they call it in the paper.).
@@ -126,7 +130,7 @@ Now we can apply the interaction based on the intermediate state\footnote{Techni
 
 
 
-This is in turn realized on the basis of the intermediate states, and evaluated using the method of exact diagonalization \cite{}. This is extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
+This method is reviewed and extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
 
 The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010}, \cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and in terms of categories this is done in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
 
@@ -229,9 +233,9 @@ as
 \]
 
 \[
-H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
-  & \begin{array}{ccccc} \ket{1\tau 1} & \ket{\tau\tau 1} & \ket{1\tau\tau}_1 & \ket{\tau 1 \tau}_2 & \ket{\tau \tau, \tau}_3 \end{array} \\
-  \begin{array}{r} \ket{x_0, \mathbf{1}, \tau} \\ \ket{x_0, \tau, \mathbf{1}} \\ \ket{x_0, \tau, \tau}_1 \\ \ket{x_0, \tau, \tau}_2 \\ \ket{x_0, \tau, \tau}_3 \end{array} & 
+H_i = -J \begin{array}{r@{\hspace{0.00em}}c}
+  & \begin{array}{ccccc} \ket{1\tau 1} & \ket{\tau\tau 1} & \ket{1\tau\tau} & \ket{\tau 1 \tau} & \ket{\tau \tau, \tau} \end{array} \\
+  \begin{array}{r} \ket{1\tau 1} \\ \ket{\tau \tau 1} \\ \ket{1 \tau \tau} \\ \ket{\tau 1 \tau} \\ \ket{\tau \tau \tau} \end{array} & 
   \begin{pmatrix}
     1 &   &   &               &               \\
       & 0 &   &               &               \\
@@ -239,6 +243,22 @@ H_i = -J \begin{array}{r@{\hspace{0.5em}}c}
       &   &   & \varphi^{-2}  & \varphi^{-\frac{3}{2}} \\
       &   &   & \varphi^{-\frac{3}{2}} & \varphi^{-1}   \\
   \end{pmatrix}
+\end{array}
+\]
+
+\[
+H_i = -J \begin{array}{r ccccc}
+  & \rotatebox{-90}{\,\ket{1\tau 1}} & \rotatebox{-90}{\,\ket{\tau\tau 1}} & \rotatebox{-90}{\,\ket{1\tau\tau}} & \rotatebox{-90}{\,\ket{\tau 1 \tau}} & \rotatebox{-90}{\,\ket{\tau \tau \tau}} \\
+  \begin{array}{r} \ket{1\tau 1} \\ \ket{\tau \tau 1} \\ \ket{1 \tau \tau} \\ \ket{\tau 1 \tau} \\ \ket{\tau \tau \tau} \end{array} & 
+  \multicolumn{5}{c}{
+    \begin{pmatrix}
+      1 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & \varphi^{-2}  & \varphi^{-\frac{3}{2}} \\
+      0 & 0 & 0 & \varphi^{-\frac{3}{2}} & \varphi^{-1}   \\
+    \end{pmatrix}
+  }
 \end{array}
 \]
 

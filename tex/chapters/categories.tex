@@ -275,7 +275,7 @@ to[out=-45,in=90]
   \label{lem:IsotopyHelper}
   For a vector space $W$, there is an isomorphism
   \[
-    \bigoplus^m W \simeq \mathbb C^m \otimes W.
+    \bigoplus^m W \simeq \mathbb{C}^m \otimes W.
   \]
 \end{lemma}
 \begin{proof}
@@ -384,6 +384,7 @@ isomorphism
 \Hom_k(D,E)\otimes \Hom_C(R,S).
 \]
 \end{lemma}
+
 \begin{proof}
 Let $m=\dim_k D$ and $n=\dim_k E$. Proof by isomorphism chains:
 $$
@@ -402,6 +403,12 @@ $$
 (The last as s)
 \end{proof}
 
+\begin{definition}[Copower]
+  For a $\Veck$-enriched (and tensored?) category $\mathrm{C} $, and $E \in \Veck, X \in C$ the power $X^E$ is the object of $C$ representing the natural isomorphism
+  \[
+    \Hom_C(Y,X^E) \cong \Hom_k(E, \Hom_C(Y,X))
+  \]
+\end{definition}
 
 
 %
