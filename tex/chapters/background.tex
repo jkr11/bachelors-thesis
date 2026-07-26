@@ -22,8 +22,13 @@ While we introduce this concept classically and endow it with symmetry as a star
 \end{literature}
 
 
-\begin{literature}[Anyons]
-  \emph{Anyons} as quasiparticles with exotic exchange statistics were originally propsed by \cite{wilczek1990} \cite{leinaasTheoryIdenticalParticles1977a} 
+\begin{literature}[\bf{Anyons}]\label{Lit:Anyons}
+  \emph{Anyons} as quasiparticles with exotic exchange statistics were originally propsed by \cite{wilczek1990} \cite{leinaasTheoryIdenticalParticles1977a}. Anyons are usually described as \emph{defects} in a (topologically orderd?) medium of dimension two (technically codimension after \cite{SS23AnyonsInTedK}).
+  The exchange statistics of $N$ particles on this medium $M$ is goverend by the \emph{configuration space}
+  \[
+    \mathrm{Conf}_N(M) = \{(x_1,\ldots,x_N) \in M^N : x_i \neq x_j \} \setminus S_N.
+  \]
+  The statistics of the particle exchange is given by the representation of $\pi_1(\mathrm{Conf}_N(M))$ (the fundamental (homology?) group). If $M = \R^2$, this corresponds to the \emph{braid group} on $N$ strands $B_N$. If the dimension of $M \geq 3$ this corresponds to the symmetric group $S_N$. If these representations are unitary and the (ground state?) is degenerate, this allows for \emph{topological quantum computation} (c.f. \Cref{lit:tqc}).
 \end{literature}
 
 
@@ -48,12 +53,13 @@ While we introduce this concept classically and endow it with symmetry as a star
 \end{literature}
 
 \begin{literature}[\bf Topological Quantum Computation]\label{lit:tqc}
-  Fault tolerant \emph{Topological Quantum Computation (TQC)} using anabelian anyons was originally proposed by \textcite[§~7]{kitaevFaulttolerantQuantumComputation2003}. ??? has shown that there are nonabelian anyon models that are universal \cite{dawsonSolovayKitaevAlgorithm2005a} \cite{mochonAnyonsNonsolvableFinite2003} \cite{mochonAnyonComputersSmaller2004a}. 
+  Fault tolerant \emph{Topological Quantum Computation (TQC)} using anabelian anyons was originally proposed by \textcite[§~7]{kitaevFaulttolerantQuantumComputation2003} (Originally published in 1997). Also \cite{freedmanNPQuantumField1998} and .... ??? has shown that there are nonabelian anyon models that are universal \cite{dawsonSolovayKitaevAlgorithm2005a} \cite{mochonAnyonsNonsolvableFinite2003} \cite{mochonAnyonComputersSmaller2004a}. 
 
   \cite{myersTopologicalQuantumGates2024a} gives nicer literature. \cite{simonTopologicalQuantum2023} is a great textbook account from one of the original authors on quantum compiling and computing. \cite{nayakNonAbelianAnyonsTopological2008b} is also one of the original accounts. This does not need to be any longer. Maybe mention categorical computation in general? but idk what htis is yet \cite{kongCategoricalComputation2023}.
 \end{literature}
 
-\begin{literature}[Quantum Compiling]
+\begin{literature}[\bf Quantum Compiling]
+  Some (Many?) anyon theories are universal for quantum computation. The \emph{Solovay-Kitaev theorem} \cite{kitaevQuantumComputationsAlgorithms1997}\cite{dawsonSolovayKitaevAlgorithm2005a} yields an efficient algorithm for approximating any quantum gate using only basic gates from a universal set. 
   Here we can consider 1.) The representation of braid circuits as a tensor nework operation and 2). A natural embedding of injection weaves as proposed by \textcite{simonTopologicalQuantumComputing2006a} where $2$ anyons are braided in their composite fusion channel by realizing this operation as a tensor reshape.
 \end{literature}
 
@@ -80,4 +86,43 @@ While we introduce this concept classically and endow it with symmetry as a star
   \end{tikzcd}
 \end{literature}
 
+\subsection{Tensors (Everything here is $fdVect_k$)}
+
+Generally, we want to regard a tensor as a thing equipped with legs, where each legs holds a vector space. But we also want to be able to regard tensors as operators such as Hamiltonians.
+
+Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
+\[
+  T \in \bigotimes_{j \in J} V_j
+\]
+where each $V_j$ is a finite-dimensional vector space and we say $T$ is a $\left\vert J \right\vert$-legged tensor.
+
+Given !finite! dimensional Vector spaces $V$ and $W$, we have the identity that $V \otimes W^\ast \equiv Hom(W,V)$. This is called the \emph{hom-tensor duality}. (TODO: is this canonical? What about the other way around?)
+
+In a basis expansion, this would relate the expansion of $V \otimes W^\ast$ as
+\[
+  T = \sum_{i}^{} v_i \otimes f_i
+\]
+where $f_i \in W^{\ast}   : W \to k$ with the map $T \in \Hom(W,V)$ as
+\[
+  T = (w \mapsto \sum_{i}^{} f_i(w) v_i).
+\]
+
+
+Now, if we have a Tensor $T \in V_1 \otimes \cdots \otimes V_n$, and since for any Vector space $V$, $(V^\ast)^\ast = V$, we can peel off any number of $V_{i}$s, take their duals and represent $T$ as a map
+\[
+  T : V_{n}^\ast \otimes \cdots \otimes V_{k+1} ^\ast \to V_1 \otimes \cdots \otimes V_k 
+\]
+Note that we present the domain here in a contravariant fashion due to the contravariance of the dual.
+
+Lets look at an example, let $t \in V_1 \otimes V_2 \otimes W_{2}^\ast \otimes W_1^\ast$. We can represent as an operator in dirac notation:
+\[
+  t = \sum_{i_1,i_2,j_1,j_2}^{} T^{i_1 i_2}_{j_1 j_2}  \ket{v^1_{i_1}} \ket{v^2_{i_2}} \bra{w^1_{j_1}} \bra{w^2_{j_2}}
+\] 
+where $\ket{v_i}$ 
+
+Graphically, we represent a general tensor
+\[
+  T : (W_{n}^{\ast} \otimes \cdots \otimes W_1) \to (V_1 \otimes V_2 \otimes \cdots \otimes V_n)
+\]
+as follows, where we choose incoming arrows for duals in the domain and outgoings for normal spaces, and on the bottom we choose incoming for duals and outgoing for normals.
 

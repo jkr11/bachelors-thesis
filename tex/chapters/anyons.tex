@@ -357,7 +357,7 @@ We need to introduce anyons here, or somehow build it into the review of the gol
   };
 
 
-  \begin{scope}[shift={(-2.5, -4.5)}, rotate=90, yscale=1.0]
+  \begin{scope}[shift={(-2.3, -4.5)}, rotate=90, yscale=1.0]
 
     \draw[line width=1.4] (-1.20, 1.90) to (-1.20, 1.50); 
     \draw[line width=1.4] (-1.20, 1.50) .. controls (-1.20, 1.10) and (-2.00, 1.10) .. (-2.00, 0.00); 
@@ -561,20 +561,6 @@ Now we can apply the interaction based on the intermediate state\footnote{Techni
   H_{[i,i+1]} : \ket{x_{i-1} x_i x_{i+1}  } \to \ket{x_{i-1} x_i^{\prime\prime} x_{i+1} } \coloneqq  - \sum_{x_i^\prime \in \{1,\tau\} }^{} [F_{x_{i+1} }^{x_{i-1}\tau\tau}]_{x_i}^{x_i^\prime } E_{x_{i}^\prime } [F_{x_{i+1} }^{x_{i-1}\tau\tau }]_{x_{i^\prime }}^{x_{i^{\prime\prime}}}
 \]
 
-
-
-This method is reviewed and extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
-
-The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010}, \cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and in terms of categories this is done in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
-
-For the golden chain, we consider $n+2$ Fib anyons as our ground state. Their combined state yields a Fusion Tree $\Hom(\tau^{\otimes n+1}, \tau)$ with intermediate charges $x_1, \ldots , x_n$. These intermediate charges are further restricted as in that there are no possibilities to assign adjacent $1$s to them (In fact this is what causes the dimension of the hilbert space to reduce to $\phi^n$).
-
-Generally, we can define an analogue of a general state of this $N$ site lattice.
-
-
-There is a three local hamiltonian for the golden chain defined as
-
-
 Write this three local hamiltonian in an operator form
 \[
   H_i = -J \begin{pmatrix}
@@ -586,7 +572,23 @@ Write this three local hamiltonian in an operator form
   \end{pmatrix}
 \]
 
-We can build this as an anyonic operator in $Hom(\tau \otimes \tau, \tau \otimes \tau)$ as
+
+This method is reviewed and extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
+
+The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010}, \cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and in terms of categories this is done in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
+
+%For the golden chain, we consider $n+2$ Fib anyons as our ground state. Their combined state yields a Fusion Tree $\Hom(\tau^{\otimes n+1}, \tau)$ with intermediate charges $x_1, \ldots , x_n$. These intermediate charges are further restricted as in that there are no possibilities to assign adjacent $1$s to them (In fact this is what causes the dimension of the hilbert space to reduce to $\phi^n$).
+%
+%
+%Generally, we can define an analogue of a general state of this $N$ site lattice.
+%
+%
+%There is a three local hamiltonian for the golden chain defined as
+
+For the tensor network operations, we should consider the changing of the basis as an implicit operation that is performed when contracting, just like it would be in a normal einsum.
+
+
+In a tensor network formalism can build this as an anyonic operator in $Hom(\tau \otimes \tau, \tau \otimes \tau)$ as
 \[
   \begin{tikzpicture}[scale=1.2,
     every node/.style={font=\small},
@@ -645,7 +647,8 @@ We can build this as an anyonic operator in $Hom(\tau \otimes \tau, \tau \otimes
 
 \end{tikzpicture}
 \]
-.
+(Note this is allowed due to $\C$-linearity of $\Fib$.)
+
 
 In this case we can view the golden chain approach chosen above as a manualization of the tensor network process.
 

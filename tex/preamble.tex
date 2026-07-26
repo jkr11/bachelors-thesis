@@ -68,12 +68,12 @@
 \newcommand{\SO}[1]{\mathrm{SO}(#1)}
 \newcommand{\U}[1]{\mathrm{U}(#1)}
 \newcommand{\Sp}[1]{\mathrm{Sp}(#1)}
-\newcommand{\GL}[2]{\mathrm{GL}(#1, #2)} % e.g., GL(n, R)
+\newcommand{\GL}[1]{\mathrm{GL}(#1)} % e.g., GL(n, R)
 \newcommand{\SL}[2]{\mathrm{SL}(#1, #2)}
 
 \newcommand{\liesl}[1]{\mathfrak{sl}_{#1}} % sl_2 lie algebra.
 
-\theoremstyle{italics}
+%\theoremstyle{italics}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{fact}[theorem]{Fact}
@@ -114,6 +114,7 @@
 
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\C}{\mathbb{C}}
+\newcommand{\R}{\mathbb{R}}
 
 \makeatletter
 \definecolor{RoyalBlue}{HTML}{4169E1}
@@ -133,11 +134,10 @@
 \definecolor{darkblue}{rgb}{0.1, 0.2, 0.7}
 
 % ==========================================
-% Custom Quantum Circuit Macros
+% Quantum Circuit Macros
 % ==========================================
 
 % \drawGate{x}{y}{Label}
-% Draws a standard square quantum gate
 \newcommand{\drawGate}[3]{
   \node[draw, fill=white, line width=1pt, minimum width=0.7cm, minimum height=0.7cm] at (#1, #2) {$#3$};
 }
@@ -145,18 +145,15 @@
 % \drawCNOT{x}{y_control}{y_drop}
 % Draws a CNOT gate. The target is located at y_control - y_drop.
 \newcommand{\drawCNOT}[3]{
-  % Vertical connection line
   \draw[line width=1pt] (#1, #2) -- (#1, #2 - #3);
   % Control dot
   \filldraw[black] (#1, #2) circle (2.5pt);
-  % Target XOR symbol (white filled circle with cross)
   \draw[line width=1pt, fill=white] (#1, #2 - #3) circle (4pt);
   \draw[line width=1pt] (#1-4pt, #2 - #3) -- (#1+4pt, #2 - #3);
   \draw[line width=1pt] (#1, #2 - #3 - 4pt) -- (#1, #2 - #3 + 4pt);
 }
 
 % \drawMeasurement{x}{y}
-% Draws a measurement box with a meter symbol inside
 \newcommand{\drawMeasurement}[2]{
   \node[draw, fill=white, line width=1pt, minimum width=0.8cm, minimum height=0.6cm] at (#1, #2) {};
   \draw[line width=0.8pt] (#1-0.25, #2-0.1) arc (180:0:0.25);
@@ -164,7 +161,14 @@
 }
 
 % \drawControlledGate{x}{target_y}{Label}{control_y}
-% Draws the target gate. (The classical vertical lines are drawn manually in your snippet).
 \newcommand{\drawControlledGate}[4]{
   \drawGate{#1}{#2}{#3}
+}
+
+% ======
+% Braid Macros
+
+% \drawInjectionWeave{x}{y}{Label}{a}{b}{c}
+\newcommand{\drawInjectionWeave}[6]{
+  \node[draw, fill=white, line width=1pt, minimum width=0.7cm, minimum height=0.7cm] at (#1, #2) {$#3$};
 }
