@@ -1,8 +1,8 @@
 \usepackage{graphicx} % Required for inserting images
 \usepackage{mathtools}
-%\usepackage[hidelinks]{hyperref}
+\usepackage[hidelinks]{hyperref}
 %\usepackage{bbm}  % for \mathbb and \mathbbm symbols
-%\usepackage{amsmath,amsfonts,amssymb, amsthm}
+\usepackage{amsmath,amsfonts,amssymb, amsthm}
 \usepackage{cleveref} % this needs to go after hyperref and amsmath
 
 %\usepackage[chapter]{algorithm}  % for algorithm environment, option: use chapters for numering
@@ -116,6 +116,8 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\R}{\mathbb{R}}
 
+\newcommand{\CC}{\mathrm{C}}
+
 \makeatletter
 \definecolor{RoyalBlue}{HTML}{4169E1}
 \definecolor{CiteViolet}{HTML}{7B2CBF}
@@ -172,3 +174,6 @@
 \newcommand{\drawInjectionWeave}[6]{
   \node[draw, fill=white, line width=1pt, minimum width=0.7cm, minimum height=0.7cm] at (#1, #2) {$#3$};
 }
+
+\usepackage{libertine}
+\usepackage[libertine]{newtxmath}

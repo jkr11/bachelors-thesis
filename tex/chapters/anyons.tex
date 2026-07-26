@@ -1,5 +1,47 @@
 
 We need to introduce anyons here, or somehow build it into the review of the golden chain.
+
+Also we should do or have done isotopy before. Technically the discussion here also requires the completeness relations.
+
+\begin{equation}\label{anyon:eq:complete}
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.0,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+  ]
+  
+  \draw[string arrow] (-2.5, 1.0) -- (-2.5, 3.0) node[above] {$a$};
+  \draw[string arrow] (-1.9, 1.0) -- (-1.9, 3.0) node[above] {$b$};
+
+  \node at (-1.1, 2.0) {$=$};
+  \node at (-0.1, 2.0) {$\displaystyle\sum_{c,\mu} \sqrt{\frac{d_c}{d_a d_b}} $};
+
+  \coordinate (bot_a) at (1.1, 1.0);
+  \coordinate (bot_b) at (2.1, 1.0);
+  
+  \coordinate (mid_bot) at (1.6, 1.6);
+  \coordinate (mid_top) at (1.6, 2.4);
+  
+  \coordinate (top_a) at (1.1, 3.0);
+  \coordinate (top_b) at (2.1, 3.0);
+
+  \draw[string arrow] (bot_a) -- (mid_bot);
+  \draw[string arrow] (bot_b) -- (mid_bot);
+  
+  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$c$};
+  
+  \draw[string arrow] (mid_top) -- (top_a) node[above] {$a$};
+  \draw[string arrow] (mid_top) -- (top_b) node[above] {$b$};
+
+\end{tikzpicture}
+\end{equation}
+
 %
 %\begin{tikzpicture}[yscale=.8]
 %

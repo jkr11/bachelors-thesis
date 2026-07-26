@@ -1,15 +1,16 @@
 
-Background in representation theory:
+In the following, let $G$ be a compact group and $V,W$ be finite dimensional vector spaces.
 
 \begin{definition}[Representation]
-  A representation of a group $G$ over a vector space $V$ is a group homomorphism
+  A \emph{representation} of a compact group $G$ over a vector space $V$ is a group homomorphism
   \[
     \rho : G \to \GL V, \quad \rho(g)\rho(h) = \rho(g \cdot h), \quad \rho(e) = id_V
   \]
+  The \emph{representation space} is the tuple $(\rho, V)$ but usually we shorten this to just $V$.
 \end{definition}
 We can state this equvalently as the representation under the group action of $G$ on $V$:
 \begin{definition}[Representation in action form]
-  Given a group $G$ and a vector space $V$, a representation is a map
+  A representation is a map
   \[
     \alpha : G \times V \to V, \quad (g,v) \mapsto g \cdot v
   \]
@@ -17,11 +18,11 @@ We can state this equvalently as the representation under the group action of $G
 \end{definition}
 
 \begin{definition}[Intertwiner]
-  A linear map $A : V \to W$ is an intertwiner, if under representations $\rho_V : G \to \GL(V)$ and $\rho_W \to \GL W$ it holds that
+  A linear map $A : V \to W$ is an \emph{intertwiner}, if under representations $\rho_V : G \to \GL(V)$ and $\rho_W : G \to \GL W$ it holds that
   \[
-    T \circ \rho_V(g) = \rho_W (g) \circ T \quad \forall g \in G
+    A \circ \rho_V(g) = \rho_W (g) \circ A \quad \forall g \in G.
   \]
-  we denote the space of all intertwiners as $\Hom_G(V,W)$.
+  Denote the space of all intertwiners as $\Hom_G(V,W)$.
 \end{definition}
 
 \begin{definition}[Unitary representation]
@@ -33,16 +34,19 @@ We can state this equvalently as the representation under the group action of $G
 \end{definition}
 
 \begin{definition}[Tensor product representation]
-  Given reps $\rho_V$ and $\rho_W$, the \emph{tensor product representation}
+  Given reps $(\rho_V, V)$ and $(\rho_W, W)$, the \emph{tensor product representation} $(\rho_{V\otimes W}, V \otimes W)$ is defined by its action on the elements
   \[
-    \rho_V \otimes \rho_W : G \to  \GL {V \otimes W}
+    \rho_{V \otimes W}(g) (v \otimes w) = \rho_V(g) v \otimes \rho_W(g) w
   \]
 \end{definition}
 
 \begin{definition}[Direct sum representation]
-  As above, the direct sum representation is a homomorphism 
+  As above, the \emph{direct sum representation} $(\rho_{V \oplus W}, V \oplus W)$ 
   \[
-    \rho_V \oplus \rho_W : G \to \GL {V \oplus W},
+    \rho_{V \oplus W}(g) = \begin{pmatrix}
+      \rho_V(g) &   \\
+       &  \rho_W(g) \\
+    \end{pmatrix}
   \]
 \end{definition}
 
@@ -59,7 +63,7 @@ We can state this equvalently as the representation under the group action of $G
   \[
     R_{a} \otimes R_{b} \cong \bigoplus_{c \in I} R_c^{\oplus N^{ab}_c}   
   \]
-  where we call $N^{ab}_c$ the \emph{fusion multiplicty} in $G$. 
+  where we call $N^{ab}_c$ the \emph{fusion multiplicty} in $G$. If $N_{ab}^c \leq 1$ for all $a,b,c$, we say that the representation is \emph{multiplicity-free}.  
 \end{definition}
 
 \begin{example}[Clebsch-Gordan series]

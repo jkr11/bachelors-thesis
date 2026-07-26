@@ -34,7 +34,9 @@ While we introduce this concept classically and endow it with symmetry as a star
 
 
 \begin{literature}[Anyonic Spin Chains and Tensor Networks]
-  (Check if this is the first). A first appearance of \emph{Anyonic Tensor Networks} in terms of spin chains is given by \textcite{feiguinInteractingAnyonsTopological2007} as the \emph{golden chain}, which realizes a interacting $2$-local hamiltonian on a $n$ $\Fib$-anyon lattice. This is reviewed in \cite{trebstShortIntroductionFibonacci2008a} with generalizations to $3$-local and longer range hamiltonians. A general account outside of the $\Fib$-model can be found in \cite{gilsAnyonicQuantumSpin2013} and \cite{buicanAnyonicChainsTopological2017} (Check these again.). We can consider these approaches as a sort of manualization of the tensor network approach. Anyonic tensor networks are first introduced by \cite{pfeiferSimulationAnyonsTensor2010} and \cite{pfeiferSimulationAnyonsUsing2012}, developed out of the symmetry methods from \cref{sect:symmetricTensorNetworks}. Furthermore, stuctures such as an anyonic MERA are introduced. 
+  (Check if this is the first). A first appearance of \emph{Anyonic Tensor Networks} in terms of spin chains is given by \textcite{feiguinInteractingAnyonsTopological2007} as the \emph{golden chain}, which realizes a interacting $2$-local hamiltonian on a $n$ $\Fib$-anyon lattice. This is reviewed in \cite{trebstShortIntroductionFibonacci2008a} with generalizations to $3$-local and longer range hamiltonians. A general account outside of the $\Fib$-model can be found in \cite{gilsAnyonicQuantumSpin2013} and \cite{buicanAnyonicChainsTopological2017} (Check these again.). We can consider these approaches as a sort of manualization of the tensor network approach. Anyonic tensor networks are first introduced by \cite{pfeiferSimulationAnyonsTensor2010} and \cite{pfeiferSimulationAnyonsUsing2012}, developed out of the symmetry methods from \cref{sect:symmetricTensorNetworks} and both the \emph{isotopy} rules and anyonic operators defined in \cite{bondersonInterferometryNonAbelianAnyons2008}. Furthermore, stuctures such as an anyonic MERA are introduced. 
+
+  We also need to discuss the topic of \emph{anyonic entanglement entropy}, as given in \cite{pfeiferMeasuresEntanglementNonAbelian2014,bondersonAnyonicEntanglementTopological2017,pfeiferSimulationAnyonsUsing2012}.
 \end{literature}
 
 \begin{literature}[Simulation of Anyons and String Nets]
@@ -76,7 +78,7 @@ While we introduce this concept classically and endow it with symmetry as a star
   
   % https://q.uiver.app/#q=WzAsNixbMSwwLCIoXFxNb2R7XFxDfSwgXFxvdGltZXMsIFxcQykiXSxbMSwyLCJcXE1vZHtcXEN9Il0sWzAsMCwiXFxzdGFja3JlbHtcXHRleHR7ZW50YW5nbGVkIHByb2Nlc3Nlc319e1xcdGV4dHtuby1jbG9uaW5nfX0iXSxbMCwyLCJcXHN0YWNrcmVse1xcdGV4dHtxdWFudHVtIHByb2Nlc3Nlc319e1xcdGV4dHtzdXBlcnBvc2l0aW9ucyBieX0gXFxvcGx1c30iXSxbMywwLCIoXFxIaWxiLFxcb3RpbWVzLD8pIl0sWzMsMiwiXFxIaWxiIl0sWzEsNSwiXFxkYWdnZXJcXHRleHR7LXN0cnVjdHVyZX0iXSxbMCw0LCJcXGRhZ2dlclxcdGV4dHstc3RydWN0dXJlfSJdLFsxLDBdLFs1LDRdXQ==
   \begin{tikzcd}
-	  {\stackrel{\text{entangled processes}}{\text{no-cloning}}} & {(\Mod{\C}, \otimes, \C)} && {(\Hilb,\otimes,?)} \\
+	  {\stackrel{\text{parallel quantum processes}}{\text{entanglement, no-cloning}}} & {(\Mod{\C}, \otimes, \C)} && {(\Hilb,\otimes,?)} \\
 	  \\
 	  {\stackrel{\text{quantum processes}}{\text{superpositions by} \oplus}} & {\Mod{\C}} && \Hilb
 	  \arrow["{\dagger\text{-structure}}", from=1-2, to=1-4]
@@ -84,6 +86,8 @@ While we introduce this concept classically and endow it with symmetry as a star
 	  \arrow["{\dagger\text{-structure}}", from=3-2, to=3-4]
 	  \arrow[from=3-4, to=1-4]
   \end{tikzcd}
+
+  Additionally, many of the concepts of topological order are governed by category theory \cite{kongInvitationTopologicalOrders2022b}, as well as the topic of higher symmetries (should this be its own Lit sect if relevant? It is for MPO symmetries \cite{delcampHigherCategoricalSymmetries2024} \cite{kongAlgebraicHigherSymmetry2020}).
 \end{literature}
 
 \subsection{Tensors (Everything here is $fdVect_k$)}

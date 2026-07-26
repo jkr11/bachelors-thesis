@@ -1,4 +1,174 @@
-\section{Decompositions for Categorical Networks}
+\begin{definition}[Category]\label{cat:def:category}
+  A \emph{category} $\mathcal{C}$ consists of
+  \begin{itemize}
+    \item a set of \emph{objects} $\mathrm{ob}(\mathcal{C})$,
+    \item for every pair $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-set} $\Hom_{\mathcal{C}}(A,B)$ of \emph{morphisms} $f : A \to B$,
+    \item for every $A \in \mathrm{ob}(\mathcal{C})$, an \emph{identity morphism} $\id_A : A \to A$,
+    \item for every triple $A,B,C \in \mathrm{ob}(\mathcal{C})$, a \emph{composition} map
+    \[
+      \circ \, : \, \mathcal{C}(B,C) \times \mathcal{C}(A,B) \longrightarrow \mathcal{C}(A,C),
+    \]
+  \end{itemize}
+  such that composition is \emph{associative}, i.e.\ $(f \circ g) \circ h = f \circ (g \circ h)$ whenever defined, and \emph{unital}, i.e.\ $f \circ \mathrm{id}_A = f = \mathrm{id}_B \circ f$ for all $f : A \to B$.
+\end{definition}
+
+Note that some categories such as $\Rep(G)$ and $\VecCat{\C}$ admit more structures than ordinary categories. For fdVect, the hom spaces of linear maps $V \to W$ have a natural identification as a vector space as well. The composition map is $\C$-bilinear. This immedeately motivates the following definition:
+
+\begin{definition}[$\C$-linear category]\label{cat:def:clinear}
+  A \emph{$\C$-linear category} endows each of its hom-sets with a module structure, such that the composition is bilinear. That is
+  \[
+    \circ \, : \, \Hom_\mathcal{C}(B,C) \times \Hom_\mathcal{C}(A,B) \longrightarrow \Hom_\mathcal{C}(A,C)
+  \]
+  is $\C$-bilinear: for all $f, f' : B \to C$, \,\, $g, g' : A \to B$, and $c \in \C$,
+  \[
+    (f + f') \circ g = f \circ g + f' \circ g, \qquad
+    f \circ (g + g') = f \circ g + f \circ g', \qquad
+    (cf) \circ g = c(f \circ g) = f \circ (cg).
+  \]
+\end{definition}
+
+We will now explore how to use category theory to model quantum processes.
+We want this to be able to do a list of things. First, given two systems $A$ and$B$, we want the combined system to be an object as well.
+Given processes, i.e. operators on each individual system $f : A \to A^\prime$,$g : B \to B^\prime $, there should be a combined process.
+Additionally, structures such as entanglement and no-cloning should be readily apparent in this theory.
+
+Consider the tensor product $\otimes_{\mathbb{C}}$ of vector spaces $V$,$W$. We can define this using a \emph{universal property} ... TODO.
+
+This should motivate the following definition:
+
+\begin{definition}[Monoidal Category]
+  A \emph{monoidal category} $\CC$ is equipped with a unit $I \in \CC$ and a tensor (functor) $\otimes : \CC \times \CC \to \CC$, as well as 3 structural isomorphisms
+  \[
+    \rho_A : A \otimes I \cong A \qquad \lambda_B : I \otimes B \cong B \qquad \alpha_{ABC} : (A \otimes B) \otimes C \cong A \otimes (B \otimes C)
+  \] 
+  such that the following diagrams commute:
+  \begin{center}
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+  \node (AIB)  at (0,1.2)   {$(A \otimes I) \otimes B$};
+  \node (AIB2) at (3,1.2)   {$A \otimes (I \otimes B)$};
+  \node (AB)   at (1.5,0)     {$A \otimes B$};
+
+  \draw[->] (AIB)  -- node[above] {$\scriptstyle \alpha_{A,I,B}$} (AIB2);
+  \draw[->] (AIB)  -- node[below left]  {$\scriptstyle \rho_A \otimes \id_B$} (AB);
+  \draw[->] (AIB2) -- node[below right] {$\scriptstyle \id_A \otimes \lambda_B$} (AB);
+\begin{scope}[shift={(7.0,0)}]
+  \node (TL) at (0,2)     {$((A \otimes B) \otimes C) \otimes D$};
+  \node (TR) at (5,2)     {$(A \otimes (B \otimes C)) \otimes D$};
+  \node (ML) at (0,0.6)   {$(A \otimes B) \otimes (C \otimes D)$};
+  \node (MR) at (5,0.6)   {$A \otimes ((B \otimes C) \otimes D)$};
+  \node (B)  at (2.5,-0.8)  {$A \otimes (B \otimes (C \otimes D))$};
+
+  \draw[->] (TL) -- node[above] {$\scriptstyle \alpha_{A,B,C} \otimes id_D$} (TR);
+  \draw[->] (TL) -- node[left]  {$\scriptstyle \alpha_{A \otimes B, C, D}$} (ML);
+  \draw[->] (TR) -- node[right] {$\scriptstyle \alpha_{A, B \otimes C, D}$} (MR);
+  \draw[->] (ML) -- node[below left]  {$\scriptstyle \alpha_{A,B,C \otimes D}$} (B);
+  \draw[->] (MR) -- node[below right] {$\scriptstyle id_A \otimes \alpha_{B,C,D}$} (B);
+\end{scope}
+\end{tikzpicture}
+\end{center}
+For simplicity we denote a monoidal category as the triple $(\CC, \otimes, I)$.
+\end{definition}
+
+%\begin{definition}[Enriched Category]
+%Let $(\mathcal{V}, \otimes, I, \alpha, \lambda, \rho)$ be a monoidal category. A category $\mathcal{C}$ \emph{enriched over $\mathcal{V}$} (or a \emph{$\mathcal{V}$-category}) consists of
+%
+%\begin{enumerate}
+%  \item a class of objects $\mathrm{ob}(\mathcal{C})$,
+%  \item for every pair $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-object} $\mathcal{C}(A,B) \in \mathcal{V}$ (rather than a hom-\emph{set}),
+%  \item for every triple $A,B,C \in \mathrm{ob}(\mathcal{C})$, a \emph{composition morphism} in $\mathcal{V}$
+%  \[
+%    \circ_{A,B,C} : \mathcal{C}(B,C) \otimes \mathcal{C}(A,B) \longrightarrow \mathcal{C}(A,C),
+%  \]
+%  \item for every $A \in \mathrm{ob}(\mathcal{C})$, a \emph{unit morphism} in $\mathcal{V}$
+%  \[
+%    j_A : I \longrightarrow \mathcal{C}(A,A),
+%  \]
+%\end{enumerate}
+%
+%such that composition is \emph{associative} and \emph{unital}, expressed by the commutativity of the following diagrams in $\mathcal{V}$:
+%
+%\begin{center}
+%\begin{tikzpicture}[baseline=(current bounding box.center)]
+%  \node (TL) at (0,2)     {$(\mathcal{C}(C,D) \otimes \mathcal{C}(B,C)) \otimes \mathcal{C}(A,B)$};
+%  \node (TR) at (5.5,2)   {$\mathcal{C}(C,D) \otimes (\mathcal{C}(B,C) \otimes \mathcal{C}(A,B))$};
+%  \node (ML) at (0,0.6)   {$\mathcal{C}(B,D) \otimes \mathcal{C}(A,B)$};
+%  \node (MR) at (5.5,0.6) {$\mathcal{C}(C,D) \otimes \mathcal{C}(A,C)$};
+%  \node (B)  at (2.75,-1) {$\mathcal{C}(A,D)$};
+%
+%  \draw[->] (TL) -- node[above] {$\scriptstyle \alpha$} (TR);
+%  \draw[->] (TL) -- node[left]  {$\scriptstyle \circ_{B,C,D} \otimes \, \mathcal{C}(A,B)$} (ML);
+%  \draw[->] (TR) -- node[right] {$\scriptstyle \mathcal{C}(C,D) \otimes \, \circ_{A,B,C}$} (MR);
+%  \draw[->] (ML) -- node[below left]  {$\scriptstyle \circ_{A,B,D}$} (B);
+%  \draw[->] (MR) -- node[below right] {$\scriptstyle \circ_{A,C,D}$} (B);
+%\end{tikzpicture}
+%\hspace{1.5cm}
+%\begin{tikzpicture}[baseline=(current bounding box.center)]
+%  \node (IB) at (0,2)     {$I \otimes \mathcal{C}(A,B)$};
+%  \node (BI) at (4,2)     {$\mathcal{C}(A,B) \otimes I$};
+%  \node (TL) at (0,1)     {$\mathcal{C}(B,B) \otimes \mathcal{C}(A,B)$};
+%  \node (TR) at (4,1)     {$\mathcal{C}(A,B) \otimes \mathcal{C}(A,A)$};
+%  \node (CC) at (2,-0.2)  {$\mathcal{C}(A,B)$};
+%
+%  \draw[->] (IB) -- node[right] {$\scriptstyle j_B \otimes id$} (TL);
+%  \draw[->] (BI) -- node[left]  {$\scriptstyle id \otimes j_A$} (TR);
+%  \draw[->] (TL) -- node[below left]  {$\scriptstyle \circ_{A,B,B}$} (CC);
+%  \draw[->] (TR) -- node[below right] {$\scriptstyle \circ_{A,A,B}$} (CC);
+%  \draw[->] (IB) -- node[below left, pos=0.4]  {$\scriptstyle \lambda_{\mathcal{C}(A,B)}$} (CC);
+%  \draw[->] (BI) -- node[below right, pos=0.4] {$\scriptstyle \rho_{\mathcal{C}(A,B)}$} (CC);
+%\end{tikzpicture}
+%\end{center}
+%
+%i.e.\ the associator $\alpha$ intertwines the two ways of composing three morphisms, and composing with a unit morphism $j_A$ or $j_B$ agrees with the unitors $\lambda, \rho$ of $\mathcal{V}$.
+%\end{definition}
+%
+%\begin{remark}
+%Taking $\mathcal{V} = \mathrm{Set}$ (with its cartesian monoidal structure) recovers the notion of an ordinary (locally small) category: $\mathcal{C}(A,B)$ is just a set, and $\circ_{A,B,C}$, $j_A$ are the usual composition and identity, since $I \otimes X \cong X \cong X \otimes I$ becomes the trivial statement $\{*\} \times X \cong X$.
+%
+%Taking $\mathcal{V} = \mathrm{Vect}_k$ (with $\otimes = \otimes_k$, $I = k$) recovers exactly the notion of a \emph{$k$-linear category}: hom-sets become $k$-vector spaces, and $k$-bilinearity of composition is precisely the statement that $\circ_{A,B,C}$ factors through $\mathcal{C}(B,C) \otimes_k \mathcal{C}(A,B)$ rather than merely being a bilinear map out of the product $\mathcal{C}(B,C) \times \mathcal{C}(A,B)$.
+%\end{remark}
+%%
+%
+%\begin{definition}[Biproduct / Direct Sum]
+%Let $\mathcal{C}$ be an additive category (in particular, a category with a zero object $0$ and finite products/coproducts agreeing appropriately). Given objects $X_1, \dots, X_n \in \mathcal{C}$, a \emph{biproduct} $X_1 \oplus \cdots \oplus X_n$ is an object equipped with
+%
+%\begin{itemize}
+%  \item \emph{injection} morphisms $\iota_k : X_k \to X_1 \oplus \cdots \oplus X_n$,
+%  \item \emph{projection} morphisms $\pi_k : X_1 \oplus \cdots \oplus X_n \to X_k$,
+%\end{itemize}
+%
+%for $k = 1, \dots, n$, satisfying
+%
+%\[
+%  \pi_j \circ \iota_k = 
+%  \begin{cases}
+%    \mathrm{id}_{X_k} & j = k \\
+%    0 & j \neq k
+%  \end{cases}
+%  \qquad \text{and} \qquad
+%  \sum_{k=1}^n \iota_k \circ \pi_k = \mathrm{id}_{X_1 \oplus \cdots \oplus X_n}.
+%\]
+%
+%Equivalently (and this is the content of the definition, not an extra assumption): $(X_1\oplus\cdots\oplus X_n, \{\iota_k\})$ is simultaneously
+%
+%\begin{itemize}
+%  \item a \textbf{coproduct}: for every $Y \in \mathcal{C}$ and morphisms $f_k : X_k \to Y$, there is a unique $f : X_1\oplus\cdots\oplus X_n \to Y$ with $f \circ \iota_k = f_k$ for all $k$;
+%  \item a \textbf{product} (via the same object, with the $\pi_k$): for every $Y \in \mathcal{C}$ and morphisms $g_k : Y \to X_k$, there is a unique $g : Y \to X_1\oplus\cdots\oplus X_n$ with $\pi_k \circ g = g_k$ for all $k$;
+%\end{itemize}
+%
+%and these two universal properties agree on the same underlying object.
+%\end{definition}
+%
+%\begin{remark}
+%In a general (additive) category, having a product and having a coproduct on the same finite diagram are \emph{a priori} unrelated universal properties satisfied by \emph{a priori} different objects. What makes $\oplus$ special is that in an $\mathrm{Ab}$-enriched (or $k$-linear) category, product and coproduct on the same finite family, when they exist, automatically coincide — this is precisely what the identities $\pi_j\iota_k = \delta_{jk}$, $\sum_k \iota_k\pi_k = \mathrm{id}$ encode, and the zero morphisms $0 : X_j \to X_k$ used above only make sense because hom-sets are enriched in $\mathrm{Ab}$ (or $\mathrm{Vect}_k$), giving each hom-set a zero element. So biproducts are really a phenomenon of \emph{additive} enrichment, not of monoidal or plain categorical structure alone.
+%\end{remark}
+%
+%\begin{remark}[For a semisimple $\C$-linear category]
+%This is exactly the $\oplus$ used in the decomposition $Y \cong \bigoplus_i X_i^{\oplus n_i}$ from semisimplicity: since $\mathrm{Hom}(X_i, X_j) = 0$ for $i \neq j$ (distinct simples) and $\mathrm{Hom}(X_i,X_i) = \mathbb{C}$, the biproduct structure on $\bigoplus_i X_i^{\oplus n_i}$ is literally witnessed by these $\pi_j\iota_k = \delta_{jk}\,\mathrm{id}$ relations, with the multiplicities $n_i = \dim \mathrm{Hom}(X_i, Y)$ recovered as the number of copies of $\iota$ needed for $X_i$.
+%\end{remark}
+
+
+
+\subsection{Decompositions for Categorical Networks}
 
 This chapter generalizes the decomposition in \cite[Equation~27]{singhTensorNetworkStates2012a} to both Fusion Categories and the Representation categories of compact groups. Note that in \cite{devosTensorKitjlJuliaPackage2025}, such a generalization is given for representations of finite groups, which does not include $SU(2)$. However I do not yet know if we should do so, since I not yet sure how to argue the F moves here. If we instead take the deformation $U_q(sl_2)$ we get finiteness (and fusion cats?), unfortunately $U_q(sl_2)$ is not a group.
 
