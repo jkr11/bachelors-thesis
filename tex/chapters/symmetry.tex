@@ -8,17 +8,16 @@ In the following, let $G$ be a compact group and $V,W$ be finite dimensional vec
   \]
   The \emph{representation space} is the tuple $(\rho, V)$ but usually we shorten this to just $V$.
 \end{definition}
-We can state this equvalently as the representation under the group action of $G$ on $V$:
-\begin{definition}[Representation in action form]
-  A representation is a map
-  \[
+
+\noindent
+Equivalently we can state the definition of a representation of $G$ as imposed by its action on $V$, given as a map
+  \begin{equation}
     \alpha : G \times V \to V, \quad (g,v) \mapsto g \cdot v
-  \]
-  such that this is linear, todo. I think we get the equality to the hom def if we set $g \cdot v = \rho(g)v$
-\end{definition}
+  \end{equation}
+such that this is linear, todo. I think we get the equality to the hom def if we set $g \cdot v = \rho(g)v$
 
 \begin{definition}[Intertwiner]
-  A linear map $A : V \to W$ is an \emph{intertwiner}, if under representations $\rho_V : G \to \GL(V)$ and $\rho_W : G \to \GL W$ it holds that
+  A linear map $A : V \to W$ is an \emph{intertwiner}, if under representations $\rho_V : G \to \GL V$ and $\rho_W : G \to \GL W$ it holds that
   \[
     A \circ \rho_V(g) = \rho_W (g) \circ A \quad \forall g \in G.
   \]
@@ -362,8 +361,71 @@ which are exactly the two degrees of freedom we get by the direct sum. So we exp
   \begin{pmatrix}
     c_0 &  0 \\
     0 &  \id_3 \otimes c_1 \\
-  \end{pmatrix}
+  \end{pmatrix}.
 \]
+
+By direct isomorphism, we can write this as
+\begin{equation}\label{sym:eq:S1S2}
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.0,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+  ]
+  
+  \node at (0.8,2.0) {$\displaystyle -J\frac{3}{4}\,\otimes$};
+  \coordinate (bot_a) at (1.1, 1.0);
+  \coordinate (bot_b) at (2.1, 1.0);
+  
+  \node at (1.6, 0.7) {$\underbrace{\quad\quad}_{\text{dim} 1}$};
+
+
+  \coordinate (mid_bot) at (1.6, 1.6);
+  \coordinate (mid_top) at (1.6, 2.4);
+  
+  \coordinate (top_a) at (1.1, 3.0);
+  \coordinate (top_b) at (2.1, 3.0);
+
+  \draw[string arrow] (bot_a) -- (mid_bot);
+  \draw[string arrow] (bot_b) -- (mid_bot);
+  
+  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$0$};
+  
+  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
+  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
+  
+  \node at (2.5, 2.0) {$\oplus$};
+
+\begin{scope}[shift={(2.2,0.0)}]
+  \node at (1.0,2.0) {$\displaystyle\frac{J}{4}\,\otimes$};
+  \coordinate (bot_a) at (1.1, 1.0);
+  \coordinate (bot_b) at (2.1, 1.0);
+  
+  \node at (1.6, 0.7) {$\underbrace{\quad\quad}_{\text{dim} 3}$};
+
+  \coordinate (mid_bot) at (1.6, 1.6);
+  \coordinate (mid_top) at (1.6, 2.4);
+  
+  \coordinate (top_a) at (1.1, 3.0);
+  \coordinate (top_b) at (2.1, 3.0);
+
+
+  \draw[string arrow] (bot_a) -- (mid_bot);
+  \draw[string arrow] (bot_b) -- (mid_bot);
+  
+  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$1$};
+  
+  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
+  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
+\end{scope}
+
+\end{tikzpicture}
+\end{equation}
 
 
 
