@@ -106,7 +106,7 @@
 \begin{tikzpicture}[scale=1.5]
     \fill[gray!30] (3,0) ellipse (1 and 0.5);
     \draw[thick] (3,0) ellipse (1 and 0.5);
-    
+    \fill[white] (3.6,0) circle (0.1);
     \draw[thick] (2.7,0) ellipse (0.6 and 0.3);
     \node at (3.35,-0.2) {$1$};
     \node[scale=2.5] at (2.4, 0) {$\cdot$};
@@ -371,6 +371,146 @@ Let $f : E \to A \otimes B$ and $g : D \to E \otimes C$.
   \draw[line width=1.4] (1.20, -7.50) .. controls (1.20, -8.25) and (2.00, -8.25) .. (2.00, -9.00);
   \draw[line width=4.5, white] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
   \draw[line width=1.4] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
+\end{tikzpicture}
+
+\begin{tikzpicture}[
+  >=latex,
+  cat/.style={
+      draw,
+      rounded corners,
+      fill=blue!5,
+      text width=3.3cm,
+      align=left,
+      minimum height=1.5cm
+  },
+  prop/.style={
+      draw,
+      fill=yellow!5,
+      text width=4.2cm,
+      align=left,
+      minimum height=1.5cm
+  },
+  ex/.style={
+      draw,
+      fill=green!5,
+      text width=4.8cm,
+      align=left,
+      minimum height=1.5cm
+  }
+]
+
+\node[font=\bfseries] at (0,1) {Category};
+\node[font=\bfseries] at (5.2,1) {Braiding / Twist};
+\node[font=\bfseries] at (11.5,1) {Tensor Network};
+
+\node[cat] (hilb) at (0,0)
+{
+$\mathbf{Hilb}_{fd}$\\
+Monoidal category
+};
+
+\node[prop] (hilbp) at (5.2,0)
+{
+No intrinsic braiding.
+Wire crossings are graphical only.
+};
+
+\node[ex] (hilbe) at (11.5,-0.5)
+{
+Ordinary tensor networks.\\
+Evaluation:
+\[
+\mathrm{ev}:V^*\otimes V\to\mathbb C.
+\]
+};
+
+\node[cat] (braid) at (0,-2.5)
+{
+Braided monoidal category
+};
+
+\node[prop] (braidp) at (5.2,-2.5)
+{
+Braiding
+\[
+c_{X,Y}:X\otimes Y\to Y\otimes X.
+\]
+Crossings carry data.
+};
+
+\node[ex] (braide) at (11.5,-2.5)
+{
+Crossings generate a braiding factor that needs to be absorbed by the structural tensors.
+};
+
+\node[cat] (symm) at (0,-5)
+{
+Symmetric fusion category\\
+$\mathrm{Rep}(G)$
+};
+
+\node[prop] (symmp) at (5.2,-5)
+{
+\[
+c_{Y,X}c_{X,Y}=1.
+\]
+Double exchange is trivial.
+};
+
+\node[ex] (symme) at (11.5,-5)
+{
+Tensor contractions behave much like ordinary TNs.
+
+Example:
+$\mathrm{Rep}(\mathbb Z_2)$,
+$\mathrm{Rep}(S_3)$.
+};
+
+\node[cat] (mod) at (0,-7.8)
+{
+Ribbon / Modular category
+};
+
+\node[prop] (modp) at (5.2,-7.8)
+{
+Nontrivial braiding:
+\[
+c_{Y,X}c_{X,Y}\neq 1.
+\]
+
+Twist:
+\[
+\theta_X:X\to X.
+\]
+};
+
+\node[ex] (mode) at (11.5,-7.8)
+{
+Anyonic tensor networks.
+
+Evaluation may absorb twist:
+\[
+\widetilde{\mathrm{ev}}
+=
+\mathrm{ev}\circ
+(\theta_X\otimes \mathrm{id}).
+\]
+
+Examples:
+Fibonacci,
+Ising,
+$\mathrm{SU}(2)_k$.
+};
+
+
+\draw[->,thick] (hilb.south) -- (braid.north);
+\draw[->,thick] (braid.south) -- (symm.north);
+
+\draw[->,thick]
+(braid.south east)
+to[out=-45,in=90]
+(mod.north);
+
 \end{tikzpicture}
 
 \end{document}

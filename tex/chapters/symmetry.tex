@@ -68,9 +68,9 @@ We can state this equvalently as the representation under the group action of $G
 
 \begin{example}[Clebsch-Gordan series]
   Let $G = \SU{2}$ and let $V_i$ and $V_j$ be two spin irreps of charge $i$ and $j$. These combine to
-  \[
-    (\pi_{V_i \otimes V_{j}}, V_i \otimes V_j) = \bigoplus_{k \in \left\vert i - j \right\vert}^{i + j} (\pi_{V_k}, V_k) 
-  \]
+  \begin{equation}
+    (\pi_{V_i \otimes V_{j}}, V_i \otimes V_j) = \bigoplus_{k \in \left\vert i - j \right\vert}^{i + j} (\pi_{V_k}, V_k) \label{sym:eq:cgseries}
+  \end{equation}
 \end{example}
 
 \subsection{Symmetric Tensors}
@@ -320,9 +320,11 @@ and we need to verify this is indeed the correct operator TODO.
 
 The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
 
-Also we have that
+Again, we can eithe solve htis by diagonalizing all 3 operators?
+
+Or we can do the representation theoritical approach. Let $V_j$ denote the spin-$j$ irrep of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by \cref{sym:eq:cqseries} that
 \[
-  (\mathbb{C}^2)^{\otimes6} \cong V_{\frac{1}{2}}^{\otimes 6} \cong 5 V_0 \oplus 9V_1 \oplus 5V_2 \oplus V_3
+  (\mathbb{C}^2)^{\otimes6} \cong V_{\frac{1}{2}}^{\otimes 6} \cong 5 V_0 \oplus 9V_1 \oplus 5V_2 \oplus V_3 \cong \C^5 \otimes V_{\frac{1}{2}} \oplus \C^9 \otimes V_0 \oplus \C^5 \otimes V_2 \oplus V_3
 \]
 
 Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs lemma\footnote{These are related by a permutation matrix. Proof? Is this the X from \cite{devosTensorKitjlJuliaPackage2025}? }

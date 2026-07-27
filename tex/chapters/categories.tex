@@ -1,5 +1,7 @@
+The general idea of a category is that it admits a sort of \emph{interface}. As noticed, there are many similarities in data and structure between the entities we already dealt with, i.e. the tensor product of vector space, the tensor product of representations, of Hilbert spaces etc.... We can view all these concepts as a category with additional constraints added.
+
 \begin{definition}[Category]\label{cat:def:category}
-  A \emph{category} $\mathcal{C}$ consists of
+  A \emph{\red {category}} $\mathcal{C}$ consists of
   \begin{itemize}
     \item a set of \emph{objects} $\mathrm{ob}(\mathcal{C})$,
     \item for every pair $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-set} $\Hom_{\mathcal{C}}(A,B)$ of \emph{morphisms} $f : A \to B$,
@@ -66,24 +68,72 @@ This should motivate the following definition:
 \end{scope}
 \end{tikzpicture}
 \end{center}
-For simplicity we denote a monoidal category as the triple $(\CC, \otimes, I)$.
+For simplicity we denote a monoidal category as the sextuple $(\CC, \otimes, I, \alpha, \lambda, \rho   )$.
 \end{definition}
 
-%\begin{definition}[Enriched Category]
-%Let $(\mathcal{V}, \otimes, I, \alpha, \lambda, \rho)$ be a monoidal category. A category $\mathcal{C}$ \emph{enriched over $\mathcal{V}$} (or a \emph{$\mathcal{V}$-category}) consists of
-%
-%\begin{enumerate}
-%  \item a class of objects $\mathrm{ob}(\mathcal{C})$,
-%  \item for every pair $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-object} $\mathcal{C}(A,B) \in \mathcal{V}$ (rather than a hom-\emph{set}),
-%  \item for every triple $A,B,C \in \mathrm{ob}(\mathcal{C})$, a \emph{composition morphism} in $\mathcal{V}$
-%  \[
-%    \circ_{A,B,C} : \mathcal{C}(B,C) \otimes \mathcal{C}(A,B) \longrightarrow \mathcal{C}(A,C),
-%  \]
-%  \item for every $A \in \mathrm{ob}(\mathcal{C})$, a \emph{unit morphism} in $\mathcal{V}$
-%  \[
-%    j_A : I \longrightarrow \mathcal{C}(A,A),
-%  \]
-%\end{enumerate}
+TODO: state no cloning after \cite{abramskyNoCloningCategoricalQuantum2012}
+
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWIl0sWzAsMSwiViBcXG90aW1lcyBWIl0sWzIsMCwiVyJdLFsyLDEsIlcgXFxvdGltZXMgVyJdLFswLDIsImYiXSxbMSwzLCJmIFxcb3RpbWVzIGYiXSxbMCwxLCJcXGRlbHRhIiwyXSxbMiwzLCJcXGRlbHRhIl1d
+\begin{tikzcd}[cramped]
+	V && W \\
+	{V \otimes V} && {W \otimes W}
+	\arrow["f", from=1-1, to=1-3]
+	\arrow["\delta"', from=1-1, to=2-1]
+	\arrow["\delta", from=1-3, to=2-3]
+	\arrow["{f \otimes f}", from=2-1, to=2-3]
+\end{tikzcd}
+
+\begin{definition}[Braided Monoidal Category]
+A \emph{braided monoidal category} is a monoidal category $(\mathcal{C}, \otimes, I, \alpha, \lambda, \rho)$ equipped with an additional structural natural isomorphism, the \emph{braiding}
+\[
+  \beta_{A,B} : A \otimes B \; \xrightarrow{\;\sim\;} \; B \otimes A,
+\]
+natural in $A$ and $B$, such that the following two \emph{hexagon} diagrams commute for all $A,B,C \in \mathcal{C}$:
+
+\begin{center}
+% https://q.uiver.app/#q=WzAsMTIsWzAsMCwiKEEgXFxvdGltZXMgQikgXFxvdGltZXMgQyJdLFsxLDAsIkEgXFxvdGltZXMoQlxcb3RpbWVzIEMpIl0sWzIsMCwiKEIgXFxvdGltZXMgQylcXG90aW1lcyBBIl0sWzAsMSwiKEJcXG90aW1lcyBBKVxcb3RpbWVzIEMiXSxbMSwxLCJCIFxcb3RpbWVzIChBIFxcb3RpbWVzIEMpIl0sWzIsMSwiQiBcXG90aW1lcyAoQyBcXG90aW1lcyBBKSJdLFszLDAsIkEgXFxvdGltZXMgKEIgXFxvdGltZXMgQykiXSxbNCwwLCIoQSBcXG90aW1lcyBCKSBcXG90aW1lcyBDIl0sWzUsMCwiQ1xcb3RpbWVzKEFcXG90aW1lcyBCKSJdLFszLDEsIkEgXFxvdGltZXMoQyBcXG90aW1lcyBCKSJdLFs0LDEsIihBIFxcb3RpbWVzIEMpXFxvdGltZXMgQiJdLFs1LDEsIihDIFxcb3RpbWVzIEEpIFxcb3RpbWVzIEIiXSxbMCwxLCJcXGFscGhhIl0sWzEsMiwiXFxiZXRhX3tBLEJcXG90aW1lcyBDfSJdLFszLDQsIlxcYWxwaGEiXSxbNCw1LCJcXGlkX0IgXFxvdGltZXNcXGJldGFfe0EsQ30iXSxbMCwzLCJcXGJldGFfe0EsQn1cXG90aW1lcyBcXGlkX0MiLDJdLFsyLDUsIlxcYWxwaGEiXSxbNiw3LCJcXGFscGhhXnstMX0iXSxbNiw5LCJcXGJldGEiLDJdLFs5LDEwLCJcXGFscGhhXnstMX0iLDJdLFs3LDgsIlxcYmV0YSJdLFs4LDExLCJcXGFscGhhXnstMX0iXSxbMTAsMTEsIlxcYmV0YSIsMl1d
+\begin{tikzcd}[cramped,column sep=scriptsize]
+	{(A \otimes B) \otimes C} & {A \otimes(B\otimes C)} & {(B \otimes C)\otimes A} & {A \otimes (B \otimes C)} & {(A \otimes B) \otimes C} & {C\otimes(A\otimes B)} \\
+	{(B\otimes A)\otimes C} & {B \otimes (A \otimes C)} & {B \otimes (C \otimes A)} & {A \otimes(C \otimes B)} & {(A \otimes C)\otimes B} & {(C \otimes A) \otimes B}
+	\arrow["\alpha", from=1-1, to=1-2]
+	\arrow["{\beta_{A,B}\otimes \id_C}"', from=1-1, to=2-1]
+	\arrow["{\beta_{A,B\otimes C}}", from=1-2, to=1-3]
+	\arrow["\alpha", from=1-3, to=2-3]
+	\arrow["{\alpha^{-1}}", from=1-4, to=1-5]
+	\arrow["\beta"', from=1-4, to=2-4]
+	\arrow["\beta", from=1-5, to=1-6]
+	\arrow["{\alpha^{-1}}", from=1-6, to=2-6]
+	\arrow["\alpha", from=2-1, to=2-2]
+	\arrow["{\id_B \otimes\beta_{A,C}}", from=2-2, to=2-3]
+	\arrow["{\alpha^{-1}}"', from=2-4, to=2-5]
+	\arrow["\beta"', from=2-5, to=2-6]
+\end{tikzcd}
+\end{center}
+\end{definition}
+
+\begin{definition}[Symmetric Monoidal Category]
+A braided monoidal category is \emph{symmetric} if $\beta_{B,A} \circ \beta_{A,B} = \mathrm{id}_{A \otimes B}$ for all $A, B$.
+\end{definition}
+
+%\begin{remark}
+%Symmetric monoidal categories are exactly the setting in which the categorical no-cloning obstruction is vacuous in one direction and sharp in the other: $\mathrm{Set}$ (cartesian, hence symmetric) admits natural copying, while $\mathrm{FdHilb}$, though symmetric ($\beta$ is the usual swap $v \otimes w \mapsto w \otimes v$), is \emph{not} cartesian, and it is exactly this failure — not the presence or absence of $\beta$ itself — that obstructs cloning. For anyon models, $\beta_{A,B} \neq \beta_{B,A}^{-1}$ in general (nontrivial braiding, not mere permutation), which is precisely the extra data making a modular tensor category non-symmetric and physically encoding anyonic exchange statistics.
+%\end{remark}
+
+\begin{definition}[Enriched Category]
+Let $(\mathcal{V}, \otimes, I, \alpha, \lambda, \rho)$ be a monoidal category. A category $\mathcal{C}$ \emph{enriched over $\mathcal{V}$} (or a \emph{$\mathcal{V}$-category}) consists of
+\begin{enumerate}
+  \item a set of objects $\mathrm{ob}(\mathcal{C})$,
+  \item for every $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-object} $\mathcal{C}(A,B) \in \mathcal{V}$ (rather than $Set$),
+  \item for every triple $A,B,C \in \mathrm{ob}(\mathcal{C})$, a \emph{composition morphism} in $\mathcal{V}$
+  \[
+    \circ_{A,B,C} : \mathcal{C}(B,C) \otimes \mathcal{C}(A,B) \longrightarrow \mathcal{C}(A,C),
+  \]
+  \item for every $A \in \mathrm{ob}(\mathcal{C})$, a \emph{unit morphism} in $\mathcal{V}$
+  \[
+    j_A : I \longrightarrow \mathcal{C}(A,A),
+  \]
+\end{enumerate}
+\end{definition}
 %
 %such that composition is \emph{associative} and \emph{unital}, expressed by the commutativity of the following diagrams in $\mathcal{V}$:
 %
@@ -172,145 +222,7 @@ For simplicity we denote a monoidal category as the triple $(\CC, \otimes, I)$.
 
 This chapter generalizes the decomposition in \cite[Equation~27]{singhTensorNetworkStates2012a} to both Fusion Categories and the Representation categories of compact groups. Note that in \cite{devosTensorKitjlJuliaPackage2025}, such a generalization is given for representations of finite groups, which does not include $SU(2)$. However I do not yet know if we should do so, since I not yet sure how to argue the F moves here. If we instead take the deformation $U_q(sl_2)$ we get finiteness (and fusion cats?), unfortunately $U_q(sl_2)$ is not a group.
 
-\begin{tikzpicture}[
-  >=latex,
-  cat/.style={
-      draw,
-      rounded corners,
-      fill=blue!5,
-      text width=3.3cm,
-      align=left,
-      minimum height=1.5cm
-  },
-  prop/.style={
-      draw,
-      fill=yellow!5,
-      text width=4.2cm,
-      align=left,
-      minimum height=1.5cm
-  },
-  ex/.style={
-      draw,
-      fill=green!5,
-      text width=4.8cm,
-      align=left,
-      minimum height=1.5cm
-  }
-]
 
-\node[font=\bfseries] at (0,1) {Category};
-\node[font=\bfseries] at (5.2,1) {Braiding / Twist};
-\node[font=\bfseries] at (11.5,1) {Tensor Network};
-
-\node[cat] (hilb) at (0,0)
-{
-$\mathbf{Hilb}_{fd}$\\
-Monoidal category
-};
-
-\node[prop] (hilbp) at (5.2,0)
-{
-No intrinsic braiding.
-Wire crossings are graphical only.
-};
-
-\node[ex] (hilbe) at (11.5,-0.5)
-{
-Ordinary tensor networks.\\
-Evaluation:
-\[
-\mathrm{ev}:V^*\otimes V\to\mathbb C.
-\]
-};
-
-\node[cat] (braid) at (0,-2.5)
-{
-Braided monoidal category
-};
-
-\node[prop] (braidp) at (5.2,-2.5)
-{
-Braiding
-\[
-c_{X,Y}:X\otimes Y\to Y\otimes X.
-\]
-Crossings carry data.
-};
-
-\node[ex] (braide) at (11.5,-2.5)
-{
-Crossings generate a braiding factor that needs to be absorbed by the structural tensors.
-};
-
-\node[cat] (symm) at (0,-5)
-{
-Symmetric fusion category\\
-$\mathrm{Rep}(G)$
-};
-
-\node[prop] (symmp) at (5.2,-5)
-{
-\[
-c_{Y,X}c_{X,Y}=1.
-\]
-Double exchange is trivial.
-};
-
-\node[ex] (symme) at (11.5,-5)
-{
-Tensor contractions behave much like ordinary TNs.
-
-Example:
-$\mathrm{Rep}(\mathbb Z_2)$,
-$\mathrm{Rep}(S_3)$.
-};
-
-\node[cat] (mod) at (0,-7.8)
-{
-Ribbon / Modular category
-};
-
-\node[prop] (modp) at (5.2,-7.8)
-{
-Nontrivial braiding:
-\[
-c_{Y,X}c_{X,Y}\neq 1.
-\]
-
-Twist:
-\[
-\theta_X:X\to X.
-\]
-};
-
-\node[ex] (mode) at (11.5,-7.8)
-{
-Anyonic tensor networks.
-
-Evaluation may absorb twist:
-\[
-\widetilde{\mathrm{ev}}
-=
-\mathrm{ev}\circ
-(\theta_X\otimes \mathrm{id}).
-\]
-
-Examples:
-Fibonacci,
-Ising,
-$\mathrm{SU}(2)_k$.
-};
-
-
-\draw[->,thick] (hilb.south) -- (braid.north);
-\draw[->,thick] (braid.south) -- (symm.north);
-
-\draw[->,thick]
-(braid.south east)
-to[out=-45,in=90]
-(mod.north);
-
-\end{tikzpicture}
 
 
 
@@ -421,7 +333,7 @@ to[out=-45,in=90]
 %\]
 
 
-\section{Decomposition of semisimple Categories}
+\subsection{Decomposition of semisimple Categories}
 
 %Suppose that $(V,\rho_V)$ and $(W,\rho_W)$ are representations of $G$.
 %
@@ -799,14 +711,10 @@ $$
 &&\text{by \cref{HomTensorFactorization}} 
 .
 \end{align*}
-
 \end{proof}
 
-%\begin{corollary}[Operators are block matrices] Figure out how to cite nicely in thm headers.
-%\leavevmode\hfill\cite[Remark~3.4.8]{kongInvitationTopologicalOrders2022b}
-\begin{corollary}[Operators are block matrices]
+\begin{corollary}[Operators are block matrices \cite{kongInvitationTopologicalOrders2022b}] % TODO figure out why i cant cie theorems in thm header.
   \label{cor:operator_blocks}
-  This is also given here: \cite[Remark~3.4.8]{kongInvitationTopologicalOrders2022b} \\
   An operator
   \[
     Hom(V,W) 
@@ -822,23 +730,6 @@ $$
 \begin{corollary}
   Let $Q_{\mu, \eta}$ be a basis of $Hom_C\bigl(\bigotimes_{\hat{a}} R_{\hat{a}}, \bigotimes_{\hat{b} } R_{\hat{b} }  \bigr)$ where $\mu$ denotes the multiplicities and $\eta$ the internal fusions. In a \emph{multiplicity-free} Category we will omit $\mu$ as a label. 
 \end{corollary}
-
-\begin{example}
-  If we let our monoidal semisimple category just be $\VecCat{\mathbb{C}}$, the only simple object is $\mathbb{C}$. 
-  Thus there is also only the trivial biproduct over one sector. 
-\end{example}
-
-\begin{example}
-  If we restrict to the category $\Rep(SU(2))$ we can build the symmetric tensor networks as given in \cite{singhTensorNetworkStates2012a}. TODO: actual ly do this and convince yourself that the notations amd the triplet basis workd as desired.
-\end{example}
-
-\begin{example}
-  Take a $2$ in $1$ out tensor in $\Rep(SU(2))$ as
-  \[
-    T \in Hom_{\Rep(SU(2))}(V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}, V_{\frac{1}{2}} )
-  \]
-  Since all parts are simple, nothing happens.
-\end{example}
 
 \begin{example}
   However, now assign $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ to each leg in the example above. Each leg then becomes $V_0 \oplus V_1 \cong \mathbb{C} \otimes V_0 \oplus \mathbb{C} \otimes V_1$. Then we can start with the decomposition.
@@ -867,12 +758,6 @@ $$
   \]
 \end{example}
 
-\begin{example}
-  Consider the same operator as in example $5$ but with its incoming legs fused together. So we have $V_{in} = V_{\frac{1}{2}}^{4}$ and $V_{out} = V_{\frac{1}{2}}^2$. This decomposes $V_2 \oplus V_1^{\oplus 3} \oplus V_0^{\oplus 2}$. Then we can directly use \cref{cor:operator_blocks} to obtain
-  \[
-    Hom(V_{in}, V_{out}  ) =
-  \]
-\end{example}
 
 \begin{example}
   Lets look at a tensor with in legs $(\tau \otimes \tau)$ and $\tau$ and out legs $\tau$.
@@ -937,9 +822,6 @@ $$
   Technically we would want to show here that this is simpler in general. TOOD. Make a theorem? Or a corollary?
 \end{example}
 
-\begin{example}[Ground state on 4 anyons]
-  We can be given a ground state in the operator form as $Hom(\tau^4, \tau)$.
-\end{example}
 
 %\begin{equation}
 %  \label{ExternalTensorProductAsCoproductOfFiberwiseTensor}
@@ -958,64 +840,8 @@ $$
 %  \end{aligned}
 %\end{equation}
 
-\subsection{$Q$ intertwiners}
-
-Lets look at 2 paths for the 4 index tensor, $(a,b,c \to d)$ and $(a,b \to c,d)$.
-
-\[
-  (Q_{j_{a} j_{b} j_{c} }^{j_{e}})_{m_1,m_2,m_3,m_4} = \sum_{m_e}^{} \braket{j_1 m_1; j_2 m_2 }{j_e m_e} \braket{j_e m_{e}; j_3 m_3}{j_4 m_4}
-\]
-
-while the other topology would look like
-\[
-  Q\ldots = \sum_{m_e}^{} \braket{j_1 m_1; j_2 m_2}{j_{e} m_{e} } \braket{j_{e} m_{e} }{j_3 m_3; j_4 m_4} 
-\]
-and as an operator this would have to live in $Hom(V_{j_{1}} \otimes V_{j_2} , V_{j_3} \otimes V_{j_4})$
-
-The yoga tree $(-1,1,-3),(-2,1,-4)$ Gives us a good mixture of those. This $Q$ would then have to look like
-\[
-  Q_{-1 -2 -3 -4}^{1} = \sum_{1}^{} \braket{j_{-1} m_{-1}; j_1 m_1  }{j_{-3} m_{-3}  } \braket{j_{-2} m_{-2}  }{j_1 m_{1}; j_{-4} m_{-4}} = \sum_{m_1}^{} C_{-1,1 \to -3} \cdot C_{-2, 1 \to -4} 
-\]
-
-How would we do this when we have a contraction of two simultaneous indices:
-\[
-  Q_{-1 -2}^{1,2} = \sum_{1,2}^{} \braket{-1}{1;2} \braket{1;2}{-2}
-\]
-
-If we define $\tau$ to be the fusion trees topology, then we can define ${}_\tau Q_j^i$
-
-
-What would this look like for general symmetry groups $G$? Lets choose a basis of its invariant decomp $\ket{\lambda_a t_a \mu_a }$. Then the generalized CG coefficient would look like
-\[
-  (C_{\lambda_a \lambda_b \to \lambda_c}^\alpha)_{\mu_a \mu_b}^{\mu_c} = \braket{\lambda_a \mu_a ; \lambda_b \mu_b}{\lambda_c \mu_c}_\alpha
-\]
-where alpha denotes the singular fusion multiplicity at $\mu_c$. 
-
-Now to fully specify $Q$ here for $k$ sectors $(\lambda_i, \mu_i)$, we need to give it $k - 3$ internal edges $(\lambda_{e_{1}}, \ldots, \lambda_{e_{k-3}} )$ along with $k-2$ mulitplicity symbols, $(\alpha_1, \ldots, \alpha_{k-2})$
-
-Can we write down a general formula for $Q$?
-
-This would then be
-
-\[
-  Q_\lambda
-\]
-
-\section{Categories}
 
 \subsection{Tensor and Fusion Categories}
-
-Let $\mathsf{C}$ be a category with bifunctor 
-\[
-  \otimes : C \times C \to C, \quad (X,Y) \to X \otimes Y.
-\] 
-and the isomporphism $F : (- \otimes -) \otimes - \simeq - \otimes (- \otimes - )$ 
-
-... introduce fusion categories here, with associativity and commutativity restrictions, I think this would be a good start.
-
-\begin{definition}[Monoidal Category]
-  A monoidal category is a category $C$ with a bifunctor $\otimes : C \times C \to C$  
-\end{definition}
 
 
 Let $C$ and $D$ be linear abelian categories. Then the \emph{Deligne Tensor Product} $C \boxtimes D$ is a linear abelian category with a bifunctor
@@ -1033,18 +859,6 @@ Let $k$ be a field, and let $\mathcal{C}$ and $\mathcal{D}$ be two $k$-linear, f
 TODOTOD!!
 \end{definition}
 
-%\begin{remark}
-%If $\mathcal{C}$ and $\mathcal{D}$ are semisimple (such as finite fusion categories), then $\mathcal{C} \boxtimes \mathcal{D}$ is also semisimple. Furthermore, if $\{X_i\}_{i \in I}$ and $\{Y_j\}_{j \in J}$ are complete sets of representative simple objects of $\mathcal{C}$ and $\mathcal{D}$ respectively, then the set of simple objects of $\mathcal{C} \boxtimes \mathcal{D}$ is precisely given by:
-%\[ \{ X_i \boxtimes Y_j \mid i \in I, \, j \in J \} \]
-%If $\mathcal{C}$ and $\mathcal{D}$ possess monoidal structures, $\mathcal{C} \boxtimes \mathcal{D}$ naturally inherits a monoidal structure defined by $(X_1 \boxtimes Y_1) \otimes (X_2 \boxtimes Y_2) = (X_1 \otimes X_2) \boxtimes (Y_1 \otimes Y_2)$.
-%\end{remark}
-\begin{definition}[The Category $\mathrm{Vec}_k$]
-  Let $k$ be an algebraically closed field.
-  \begin{itemize}
-    \item \textbf{Objects:} The objects are finite dimensional vectors spaces over $k$.
-    \item \textbf{Morphisms:} Linear maps between vector spaces.  
-  \end{itemize}
-\end{definition}
 
 \begin{definition}[The Category $\Rep_k(G)$]
   Let $G$ be a group and $k$ a field. The \emph{category of linear representations of $G$ over $k$} consists of the following data:
@@ -1068,24 +882,12 @@ TODOTOD!!
   \]
 \end{definition}
 
-\begin{definition}[Direct product of representations]
-  A representation of $G_1 \times G_2$ is a space where the pair $(g_1, g_2)$ acts linearly. SO this is a pair
-  \[
-    (V,\rho), \rho : (G_1 \times G_2) \to GL(V)
-  \]
-\end{definition}
 
-Now, let $(\Rep_{\mathbb{C}}(G), \otimes, \mathbb{C})$ be the monoidal category of representations. We equip the category with a tensor product that acts as follows:
-
-TODO.... 
 
 \begin{theorem}[Fusion Representation Category of finite groups]
   \label{thm:finiteGroupFusionCat}
   Let $G$ be a finite group. Then $\Rep(G)$ is a fusion category.
 \end{theorem}
-%\begin{example}
-%  Lets do an example and look at $\Rep(\SU 2)$. Its objects are then given by $\left\{(V_)\right\}
-%\end{example}
 
 \begin{theorem}
   Let $G_1$ and $G_2$ be finite groups and let $\Rep(G_1), \Rep(G_2)$ be their respective symmetry categories. Then there is an equivalence of categories
@@ -1094,29 +896,12 @@ TODO....
   \]
 \end{theorem}
 
-Big issue here: $\Rep(\SU{2})$ is not a fusion category as it is not finite. But if i read it correctly, the deligne product only requires abelianness of its groups. Now, $\Rep(G)$ is monoidal for any $G$ but is it abelian? 
-
-So this is actually true, it is abelian. We could obtain a restricted versions by for example always restricting $SU(2)$ to some $SU(2)_{k}$ for some finite $k$. But i do not yet know how to present this nicely. 
-
-A second advantage would be that we can always represent fusion trees as monoidal categories (is this true or is fusion required here again?), and we can write down a unified theory for the fusion trees. Then I hope to write a nice method to view the "eval" of such a fusion tree, i.e. its clebsch gordan tensors by contracting down the topology of the tree. 
-
-\section{Categories Needed}
-
-The motivation for this section is to introduce the necessary categoy theory background, and provide all the necessary theorems for a format that includes both representations and fusion categories.
-
-\begin{definition}[Semisimple Category]
-  An abelian category $C$ is semisimple if every object is either simple or a direct sum of simple objects. An object is \emph{simple} if its only subobjects are $0$ or $X$ itself. Any object can be written as
-  \[
-    X = \bigoplus_{i \in I} S_{i}^{\oplus n_i}
-  \]
-\end{definition}
-
 
 \begin{lemma}[Schur's lemma \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}]
   If $S$ and $T$ are simple objects in a semisimple category over an algebraically closed field (this is always C in our case), then it holds that
   \[
     \Hom(S,T) = \begin{dcases}
-      k, &\text{ if } S \cong T ;\\
+      k \cdot \id_S, &\text{ if } S \cong T ;\\
       0 , &\text{ if } S \ncong T .
     \end{dcases}
   \]
@@ -1126,7 +911,7 @@ The motivation for this section is to introduce the necessary categoy theory bac
 
 Lets give a coordinatized approach to fusion categories:
 
-\begin{definition}[Fusion Category]
+\begin{definition}[Fusion Category in Vector Form]
   A \emph{fusion category} is a finite set of labels (sectors?) $L$ and vector spaces $V^{ab}_c$ for all $a,b,c \in L$, as well as the isomorphisms
   \[
     F^{abc}_{d} : \bigoplus_e V^{ab}_e \otimes V^{ec}_d \to \bigoplus_e V^{ae}_d \otimes V^{bc}_e
@@ -1134,33 +919,9 @@ Lets give a coordinatized approach to fusion categories:
   such that the pentagon holds.
 \end{definition}
 
-\begin{lemma}
-Let $C$ be a $k$-linear monoidal category whose tensor product is
-$k$-linear in each variable. Then
-\[
-\bigotimes_{r=1}^{n}
-\left(
-\bigoplus_{a_r} X_{r,a_r}
-\right)
-\cong
-\bigoplus_{\hat a}
-\bigotimes_{r=1}^{n}
-X_{r,a_r},
-\]
-where
-\[
-\hat a=(a_1,\ldots,a_n).
-\]
-\end{lemma}
 
-\begin{lemma}[Finite Groups admit Fusion Category]
-  Let $G$ be a finite group, the $\Rep(G)$ is a fusion category.
-\end{lemma}
 
-Let $\mathrm{Vec}  \coloneqq (\FDVec{\mathbb{C}}, \otimes, \mathbb{C})$ be the monoidal category of finite dimensional complex vector spaces where the last tuple entry $\mathbb{C}$ denotes the unit object, since there are isomorphisms $V \otimes \mathbb{C} \cong V \cong C \otimes V$.
 
-Let $(\mathbb{C}\mathrm{Rep}(G),\otimes,?)$ denote the representation Category for a compact group $G$.
-Here $\otimes$ is the tensor product of representations $(\pi \otimes \rho, V \otimes W)$.
 
 \begin{definition}[Direct sum]
   Given a category $C$ with objects $\{a_n\}$, an object $\bigoplus_{i=1}^n a_i \in C$ is called the \emph{direct sum}. This is equipped with the injections and projections
@@ -1173,116 +934,201 @@ Here $\otimes$ is the tensor product of representations $(\pi \otimes \rho, V \o
   \]
 \end{definition}
 
-\begin{lemma}[Peter Weyl Theorem]
-  \label{lem:PeterWeyl}
-  Let $G$ be a compact group. Then all its unitary representations are completely reducible.
-\end{lemma}
-
-\subsection{Representation Theory}
-
-IG remove this since we will only be dealing with finite groups? discuss!
-
-\begin{definition}[Compact Group]
-  A compact group is a group $G$ equipped with a topology such that
-  \[
-    m : G \times G \to G, \quad (g,h) \mapsto gh,
-  \]
-  is continuous.
-  \[
-    i : G \to G, \quad g \mapsto g^{-1} 
-  \]
-  is continuous
-  and $G$ is compact as a topoligical space.
-\end{definition}
-\begin{example}
-  \begin{enumerate}
-    \item Every finite group with the discrete topology is compact.
-    \item \[
-      U(n) = \{A \in M_n(\mathbb{C}) : A^\ast A = I \}
-    \]
-    is compact for all integer $n$.
-    \item All \[
-      SU(n) = \{A \in U(n) : \det A = 1 \}
-    \]
-    are compact.
-  \end{enumerate}
-\end{example}
-
-\begin{definition}[Representation]
-  \label{def:representation}
-  Let $G$ be a group and $V$ a vector space over a field $\mathbb{F}$ (In our cases $\mathbb{C})$ suffices. A \emph{representation} of \(G\) on \(V\) is a group homomorphism
-  \[
-    \rho : G \longrightarrow \operatorname{GL}(V),
-  \]
-  where $operatorname{GL}(V)$ denotes the group of invertible linear transformations on \(V\). Equivalently
-  \[
-    \rho(gh)=\rho(g)\rho(h),\qquad
-    \rho(e)=I,\qquad
-    \rho(g^{-1})=\rho(g)^{-1}.
-  \]
-  The vector space $V$ is called the \emph{representation space}.
-\end{definition}
-
-\begin{definition}[Projective Representation]
-  Given a group $G$, a linear representation of $G$ over $\mathbb{C}$ of dimension $n$ is a map $U : g \to \mathbb{C}^{n \times n}$.
-  
-\end{definition}
 
 
 
-\subsection{Fusion Trees}
+%\subsection{Fusion Trees}
+%
+%We consider a fusion tree as the basis that spans $Hom(R_a \otimes R_b \ldots \otimes R_m, \otimes R_{a_j} \ldots  )$. Since $R_a \otimes R_b$ is semisimple, we have the relationship
+%\[
+%  R_a \otimes R_b \cong \bigoplus_c R_c^{\oplus N_{ab}^c }
+%\]
+%with embedding (make this formal)
+%\[
+%  g^{ab}_{c, \mu} : R_{c} \to R_{a} \otimes R_{b}  
+%\]
+%and projections
+%\[
+%  f^{c,\mu}_{ab} : R_{a} \otimes R_{b} \to R_{c}
+%\]
+%\[
+%  id_{R_a \otimes R_{b} } = \sum_{c \in L}^{} \sum_{\mu = 1}^{N_{ab}^c} g_{c,\mu}^{ab} f_{ab}^{c,\mu}  
+%\]
+%
+%\begin{lemma}
+%  \[
+%    Hom(R_{a_1} \otimes \cdots \otimes R_{a_N}, R_b)
+%  \]
+%  is spanned by ordinary fusion trees.
+%\end{lemma}
+%\begin{proof}
+%  Base case: $N = 1$. Nothing to prove here.
+%
+%  INductive case:
+%
+%  Under semisimplicity we get that
+%  \[
+%    Hom(R_{a_1} \otimes \cdots \otimes R_{a_n}, R)b) \cong \bigoplus_{c,\mu} Hom(R_c \otimes R_{a_3} \otimes \cdots \otimes R_{a_n}, R_b)
+%  \]
+%\end{proof}
 
-We consider a fusion tree as the basis that spans $Hom(R_a \otimes R_b \ldots \otimes R_m, \otimes R_{a_j} \ldots  )$. Since $R_a \otimes R_b$ is semisimple, we have the relationship
-\[
-  R_a \otimes R_b \cong \bigoplus_c R_c^{\oplus N_{ab}^c }
-\]
-with embedding (make this formal)
-\[
-  g^{ab}_{c, \mu} : R_{c} \to R_{a} \otimes R_{b}  
-\]
-and projections
-\[
-  f^{c,\mu}_{ab} : R_{a} \otimes R_{b} \to R_{c}
-\]
-\[
-  id_{R_a \otimes R_{b} } = \sum_{c \in L}^{} \sum_{\mu = 1}^{N_{ab}^c} g_{c,\mu}^{ab} f_{ab}^{c,\mu}  
-\]
+%\subsection{Monoidal data}
+%
+%\begin{definition}[$\Rep(SU(2))$]
+%  Let $(V,\rho_V)$ be a representation.
+%\end{definition}
+%
+%\begin{definition}[Twists from $R$ moves {\cite[Equation~?]{simonTopologicalQuantum2023}}]
+%  Suppose we are in a braided monoidal category with $F$ and $R$ symbols. Then we compute the \emph{twist} (a self braiding) as follows:
+%  \[
+%    R^{ab}_{c} R^{ba}_c = \frac{\theta_c}{\theta_a \theta_b}.  
+%  \]
+%  (state more possibilities here.)
+%\end{definition}
+%
+%\begin{example}
+%  Take $sVect$. Our simples are $1$ and $f$. This \emph{braiding} is in fact symmetric. Thus we have that
+%  \[
+%    1 = \frac{\theta_1}{\theta_f^2} = 
+%  \]
+%\end{example}
 
-\begin{lemma}
-  \[
-    Hom(R_{a_1} \otimes \cdots \otimes R_{a_N}, R_b)
-  \]
-  is spanned by ordinary fusion trees.
-\end{lemma}
-\begin{proof}
-  Base case: $N = 1$. Nothing to prove here.
 
-  INductive case:
+\begin{equation}
+\text{Hom}\left( \bigotimes_{k=1}^m X_{i_k}, \bigotimes_{l=1}^n X_{j_l} \right) = \text{span}_{\mathbb{C}} \left\{
+\begin{gathered}
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.2,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+]
+    % Boundary Input Nodes
+    \node (xi1) at (-3.4, 3.2) [above] {$X_{i_1}$}; % I dont get why it is assym with -3.2
+    \node (xi2) at (-2.5, 3.2) [above] {$X_{i_2}$};
+    \node (xi3) at (-1.8, 3.2) [above] {$X_{i_3}$};
+    \node at (-0.5, 3.2) {$\cdots$};
+    \node (xim1) at (0.8, 3.2) [above] {$X_{i_{m-1}}$};
+    \node (xim) at (1.6, 3.2) [above] {$X_{i_m}$};
 
-  Under semisimplicity we get that
-  \[
-    Hom(R_{a_1} \otimes \cdots \otimes R_{a_n}, R)b) \cong \bigoplus_{c,\mu} Hom(R_c \otimes R_{a_3} \otimes \cdots \otimes R_{a_n}, R_b)
-  \]
-\end{proof}
+    % Internal Vertices
+    \coordinate (Ve1) at (-2.7, 2.5);
+    \coordinate (Ve2) at (-2.2, 1.9);
+    \coordinate (Vem3) at (-1.0, 0.9);
+    \coordinate (Vem2) at (-0.5, 0.4);
+    \coordinate (Btop) at (0, 0.05);
 
-\subsection{Monoidal data}
+    % Incoming Leaves to Vertices
+    \draw[string arrow] (xi1) -- (Ve1);
+    \draw[string arrow] (xi2) -- (Ve1);
+    \draw[string arrow] (xi3) -- (Ve2);
+    \draw[string arrow] (xim1) -- (Vem2);
+    \draw[string arrow] (xim) -- (Btop);
 
-\begin{definition}[$\Rep(SU(2))$]
-  Let $(V,\rho_V)$ be a representation.
-\end{definition}
+    % Main Trunk Segments (Top)
+    \draw[string arrow] (Ve1) -- (Ve2) node[below left, pos=0.4] {$e_1$};
+    \draw[string arrow] (Ve2) -- (-1.9, 1.55) node[below left, pos=0.4] {$e_2$};
+    
+    % Diagonal Dots (Top Trunk)
+    \fill (-1.65, 1.35) circle (0.8pt);
+    \fill (-1.50, 1.20) circle (0.8pt);
+    \fill (-1.35, 1.05) circle (0.8pt);
+    
+    %\draw[string arrow] (-1.2, 0.9) -- (Vem3); 
+    \draw[string arrow] (Vem3) -- (Vem2) node[below left, pos=0.4] {$e_{m-3}$};
+    \draw[string arrow] (Vem2) -- (Btop) node[below left, pos=0.4] {$e_{m-2}$};
 
-\begin{definition}[Twists from $R$ moves {\cite[Equation~?]{simonTopologicalQuantum2023}}]
-  Suppose we are in a braided monoidal category with $F$ and $R$ symbols. Then we compute the \emph{twist} (a self braiding) as follows:
-  \[
-    R^{ab}_{c} R^{ba}_c = \frac{\theta_c}{\theta_a \theta_b}.  
-  \]
-  (state more possibilities here.)
-\end{definition}
 
-\begin{example}
-  Take $sVect$. Our simples are $1$ and $f$. This \emph{braiding} is in fact symmetric. Thus we have that
-  \[
-    1 = \frac{\theta_1}{\theta_f^2} = 
-  \]
-\end{example}
+    \coordinate (Bbot) at (0, -0.65);
+    \draw[string arrow] (Btop) -- (Bbot) node[right, pos=0.5] {$b$};
 
+
+    % Internal Vertices
+    \coordinate (Vfn2) at (-0.5, -1.0);
+    \coordinate (Vfn3) at (-1.0, -1.5);
+    \coordinate (Vf2) at (-2.2, -2.5);
+    \coordinate (Vf1) at (-2.7, -3.1);
+
+    % Main Trunk Segments (Bottom)
+    \draw[string arrow] (Bbot) -- (Vfn2) node[left, pos=0.6] {$f_{n-2}$};
+    \draw[string arrow] (Vfn2) -- (Vfn3) node[left, pos=0.6] {$f_{n-3}$};
+    
+    % Diagonal Dots (Bottom Trunk)
+    \fill (-1.35, -1.65) circle (0.8pt);
+    \fill (-1.50, -1.80) circle (0.8pt);
+    \fill (-1.65, -1.95) circle (0.8pt);
+    
+    \draw[string arrow] (-1.9, -2.15) -- (Vf2);
+    \draw[string arrow] (Vf2) -- (Vf1) node[left, pos=0.4] {$f_1$};
+    \path (Vf2) -- (Vf1) node[left, pos=1.2] {$f_2$}; % Label position adjustment
+
+    % Outgoing Leaves to Boundary
+    \draw[string arrow] (Vf1) -- (-3.2, -3.8);
+    \draw[string arrow] (Vf1) -- (-2.5, -3.8);
+    \draw[string arrow] (Vf2) -- (-1.8, -3.8);
+    \draw[string arrow] (Vfn2) -- (0.8, -3.8);
+    \draw[string arrow] (Bbot) -- (1.6, -3.8);
+
+    % Boundary Output Nodes
+    \node (xj1) at (-3.2, -3.8) [below] {$X_{j_1}$};
+    \node (xj2) at (-2.5, -3.8) [below] {$X_{j_2}$};
+    \node (xj3) at (-1.8, -3.8) [below] {$X_{j_3}$};
+    \node at (-0.5, -3.8) {$\cdots$};
+    \node (xjn1) at (0.8, -3.8) [below] {$X_{j_{n-1}}$};
+    \node (xjn) at (1.6, -3.8) [below] {$X_{j_n}$};
+
+\end{tikzpicture}
+\end{gathered}
+\right\}_{ \substack{b, \, e_1, \dots,  e_{m-2}, \, f_1, \, \dots, \, f_{n-2} \\ \mu_1, \, \dots, \, \mu_{m-2}, \, \nu_1, \, \dots, \, \nu_{n-2}} }
+\end{equation}
+
+\begin{equation}
+\begin{gathered} % From the seminar paper and
+\begin{tikzpicture}
+  \node at (0,-0.1) {$\underset{e,f}{\bigoplus} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g $};
+  \draw[->, black] plot coordinates{(0.4,0.5) (2.5,1.5)};
+  \node at (0.9,1.3) {$id_{V_{e}^{ab}} \otimes F^{ecd}_{g}$};
+  \node at (4.0,1.9)  {$\underset{e,l}{\bigoplus} V^{ab}_e \otimes V^{cd}_{f} \otimes V^{el}_g$};
+  \node at (7.6, 1.1) {$F^{abl}_{g} \otimes id_{V^{cd}_{l}}$};
+  \draw[->] plot coordinates{(5.5, 1.5) (7.5,0.5)};
+  \node at (8.0,-0.1) {$\underset{k,l}{\bigoplus} V^{ak}_{g} \otimes V^{bl}_{k} \otimes V^{cd}_{l}$};
+  \node at (-0.4, -1.2) {$F^{abc}_{f} \otimes id_{V^{fd}_{g}}$};
+  \draw[->] plot coordinates{(0.4,-0.5) (1.5,-1.5)};
+  \node at (1.8,-2.1) {$\underset{f,h}{\bigoplus} V^{af}_{h} \otimes V^{bc}_{f}  \otimes V^{hd}_{g}$};
+  \node at (4.3, -2.5) {$F^{afd}_{g} \otimes id_{V^{bc}_{f}}$};
+  \draw[->] plot coordinates {(3.5,-2.0) (4.7, -2.0)};
+  \node at (6.5, -2.1) {$\underset{k,h}{\bigoplus} V^{ak}_{g} \otimes V^{bc}_{h} \otimes V^{hd}_{k} $};
+  \node at (8.2, -1.2) {$F^{bcd}_{k} \otimes id_{V^{ak}_{g}}$};
+  \draw[->] plot coordinates {(6.4, -1.5) (7.5,-0.5) };
+\end{tikzpicture}
+\label{cat:pentagon}
+\end{gathered}
+\end{equation}
+
+% https://q.uiver.app/#q=WzAsNSxbMCwyLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2UsZn0gVl57YWJ9X2UgXFxvdGltZXMgVl57ZWN9X2YgXFxvdGltZXMgVl57ZmR9X2cgIl0sWzAsNCwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFsyLDQsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c197ayxofSBWXntha31fZyBcXG90aW1lcyBWXntiY31faCBcXG90aW1lcyBWXntoZH1fayAiXSxbMSwwLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2YsaH0gVl57YWZ9X2ggXFxvdGltZXMgVl57YmN9X2YgXFxvdGltZXMgVl57aGR9X2cgIl0sWzIsMiwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFswLDEsIkZee2FiY31fZiBcXG90aW1lcyBpZF97Vl97Z31ee2ZkfX0iLDIseyJsYWJlbF9wb3NpdGlvbiI6NDB9XSxbMSwyLCJGXnthYmN9X2YgXFxvdGltZXMgaWRfe1Zfe2d9XntmZH19IiwyXSxbMCwzXSxbMyw0XSxbMiw0XV0=
+\begin{tikzcd}
+	& {\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } & \\
+	\\
+	{\displaystyle\bigoplus_{e,f} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g } && {\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } \\
+	\\
+	{\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } && {\displaystyle\bigoplus_{k,h} V^{ak}_g \otimes V^{bc}_h \otimes V^{hd}_k }
+	\arrow[from=1-2, to=3-3]
+	\arrow[from=3-1, to=1-2]
+	\arrow["{F^{abc}_f \otimes id_{V_{g}^{fd}}}"'{pos=0.4}, from=3-1, to=5-1]
+	\arrow["{F^{abc}_f \otimes id_{V_{g}^{fd}}}"', from=5-1, to=5-3]
+	\arrow[from=5-3, to=3-3]
+\end{tikzcd}
+
+
+
+\begin{equation}
+\begin{tikzcd}[row sep=large, column sep=large]
+V \times W \arrow[r, "\phi"] \arrow[rd, "f" swap] & V \otimes W \arrow[d, "\exists! \, \tilde{f}", dashed] \\
+                                                   & U
+\end{tikzcd}
+\end{equation}

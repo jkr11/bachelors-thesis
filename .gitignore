@@ -569,9 +569,11 @@ __marimo__/
 
 
 experiments/fusiontree.ipynb
-
+experiments/compiling.ipynb
 # More tex stuff
 texcount.pl
 result.html
 
 tikz-cache
+
+*_standalone.pdf
