@@ -1,5 +1,5 @@
 
-In the following, let $G$ be a compact group and $V,W$ be finite dimensional vector spaces.
+In the following, let $G$ be a compact group and $V,W$ be finite dimensional vector spaces. For the definitions we follow the textbook by \textcite{woit2016}.
 
 \begin{definition}[Representation]
   A \emph{representation} of a compact group $G$ over a vector space $V$ is a group homomorphism
@@ -328,12 +328,44 @@ Or we can do the representation theoritical approach. Let $V_j$ denote the spin-
 \]
 
 Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs lemma\footnote{These are related by a permutation matrix. Proof? Is this the X from \cite{devosTensorKitjlJuliaPackage2025}? }
-\[
-  H \in \bigoplus_{S \in 0,1,2,3} Mat_{m_S \times m_S} \otimes I_{2S+1} (\mathbb{C}) \cong \bigoplus_{S \in 0,1,2,3} I_{2S+1} \otimes Mat_{m_S \times m_S}(\mathbb{C})
-\]
+\begin{equation}\label{sym:eq:blockdiag}
+  H \in \bigoplus_{S \in 0,1,2,3} Mat_{m_S \times m_S} \otimes I_{2S+1} (\mathbb{C}) \cong \bigoplus_{S \in 0,1,2,3} I_{2S+1} \otimes Mat_{m_S \times m_S}(\mathbb{C}) 
+\end{equation}
 
 So we expect 20 blocks? 
 $5$ have dimension $1$, $9$ have dimension $3$, $5$ have dimension $5$ and $1$ has $7$.
+
+To get an interpretation of the matrix coefficients in $\eqref{sym:eq:cgseries}$, consider a tiny Hamiltonian on $N = 2$ spins
+\[
+  H = \frac{1}{2} (\sigma_1^x \sigma_2^x + \sigma_1^y \sigma_2^y + \sigma_1^z \sigma_2^z)
+  = S_1 \cdot S_2
+\]
+
+This acts on the space $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ and thus on the basis $\{\ket{\uparrow},\ket{\downarrow}\}^{\otimes 2}$ This has two distinct fusion outcomes, $V_0$ and $V_1$. The basis on the rhs is given by $\ket{1,1},\ket{1,0},\ket{1,-1}.\ket{0,0}$, and we want to reformulate $S_1 \cdot S_2$ in the total spin basis. Lets unfold this definition by 
+\[
+  S^2 = S_1^2 + S_2^2 + 2(S_1 \cdot S_2) \implies S_1 \cdot S_2 = \frac{1}{2}(S^2 - S_1^2 - S_2^2).
+\]
+Since $S_i^2 = s(s+1)$ is fixed for $s = \frac{1}{2}$ here, we ought to write
+\[
+  H = \frac{J}{2}(S^2 - 3/2)
+\]
+and this again splits into the sectors for $S = 0$
+\[
+  c_0 = \frac{J}{2}(0 - 3/2) = -\frac{3}{4}J
+\]
+and for $S = 1$ 
+\[
+  c_1 = \frac{J}{2}(2 - 3/2) = \frac{1}{4}J
+\]
+which are exactly the two degrees of freedom we get by the direct sum. So we expect our operator to look like
+\[
+  \begin{pmatrix}
+    c_0 &  0 \\
+    0 &  \id_3 \otimes c_1 \\
+  \end{pmatrix}
+\]
+
+
 
 \begin{definition}[Matrix Product State]
   \label{def:MPS}

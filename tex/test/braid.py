@@ -4,7 +4,10 @@ def generate_braid_tikz(num_strands, crossings):
   - crossings (list of tuples): list (position, over_under)
   """
   dx = 0.8
-  dy = 1.5
+  dy = 1.5  # Def as in mss
+
+  def _strand(i):
+    return (i - (num_strands + 1) / 2) * dx
 
   current_positions = {i: (i - (num_strands + 1) / 2) * dx for i in range(1, num_strands + 1)}
 
@@ -13,7 +16,8 @@ def generate_braid_tikz(num_strands, crossings):
 
   for i in range(1, num_strands + 1):
     x = current_positions[i]
-    lines.append(f"  \\draw ({x:.2f}, 0.3) node {{\\color{{blue}}\\scalebox{{.6}}{{{i}}}}};")
+    lines.append(f"  \\draw ({x:.2f}, 0.3) node "
+    f"{{\\color{{blue}}\\scalebox{{.6}}{{{i}}}}};") # This can be done nicer?
 
   current_y = 0.0
 

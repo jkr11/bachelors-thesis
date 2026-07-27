@@ -1,3 +1,5 @@
+\subsection{Introduction to Category Theory}
+
 The general idea of a category is that it admits a sort of \emph{interface}. As noticed, there are many similarities in data and structure between the entities we already dealt with, i.e. the tensor product of vector space, the tensor product of representations, of Hilbert spaces etc.... We can view all these concepts as a category with additional constraints added.
 
 \begin{definition}[Category]\label{cat:def:category}
@@ -676,7 +678,7 @@ $$
     E_{j,b_j}\otimes R_{b_j}
   \Bigr)
 \right)
-&&\text{by \cref{IsotopicDecomposition}} 
+&\text{(\textcolor{gray}{\Cref{IsotopicDecomposition}})} 
 \\[1.5ex]
 &\cong
 \Hom_C\!\left(
@@ -686,7 +688,7 @@ $$
   \bigoplus_{\hat b}
   E_{\hat b}\otimes R_{\hat b}
 \right)
-&&\text{since $\otimes$ is $k$-linear in each variable}
+&\text{(\textcolor{gray}{linearity of $\otimes$})}
 \\[1.5ex]
 &\cong
 \bigoplus_{\hat a,\hat b}
@@ -694,8 +696,8 @@ $$
   D_{\hat a}\otimes R_{\hat a},
   E_{\hat b}\otimes R_{\hat b}
 \right)
-&&
-\text{by additivity of }\Hom_C
+&
+\text{\textcolor{gray}{(additivity of $\Hom_{\CC}$)}} 
 \\[1.5ex]
 &\cong
 \bigoplus_{\hat a,\hat b}
@@ -708,8 +710,7 @@ $$
   R_{\hat a},
   R_{\hat b}
 \right)
-&&\text{by \cref{HomTensorFactorization}} 
-.
+&\text{\textcolor{gray}{(\Cref{HomTensorFactorization})}} 
 \end{align*}
 \end{proof}
 
