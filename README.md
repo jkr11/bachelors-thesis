@@ -4,6 +4,26 @@ https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-t
 ./texcount.pl -inc -html -v -sum main.tex > results.html
 from https://www.maths.ox.ac.uk/members/it/faqs/latex/word-count
 
+Nice explanation of universal properties
+
+https://math.stackexchange.com/questions/57189/understanding-isomorphic-equivalences-of-tensor-product?rq=1
+
+http://www.matlas.math.csu.ru/?page=search
+
+## July 28th
+
+Somewhere before fermions I need to discuss all the concepts of isotopy and whether or not our vertices are normalized. THis is in Simon and Bonderson, look there. 
+
+Also the discussion on fusiontrees, is this really how they are constructed? Or is there some sort of universal property for choosing these Hom-spaces? 
+
+TODO: normalize notations everywhere, decide on a notation for CG-tensors. Or just leave it symbolically. 
+
+TODO: state exact definition of braids and string diagrams as disjoint images in $R^2$ and the map to $R^3$.    
+
+## July 20th
+
+Maybe adopting the categorical notions for quantum mechanics makes my job easier here. Regardless check our [Abr12] and [SS26].
+
 ## July 18th
 
 So on the wiki there is the decomposition for skein categories as 
