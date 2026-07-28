@@ -935,6 +935,29 @@ Lets give a coordinatized approach to fusion categories:
   \]
 \end{definition}
 
+Recall that for semisimple categories, there is an isomorphism $\Phi: \bigoplus_{c,\mu} R_c \to R_a \otimes R_b$. Then we can build projection and injection maps in dependence of the tensor product by the following diagram:
+\begin{equation}\label{cat:eq:fusionprop}
+% https://q.uiver.app/#q=WzAsNSxbMCwwLCJcXGJpZ29wbHVzX2MgUl9jIl0sWzIsMCwiUl9hIFxcb3RpbWVzIFJfYiJdLFswLDEsIlJfYyJdLFs0LDAsIlxcYmlnb3BsdXNfYyBSX2MiXSxbNCwxLCJSX2MiXSxbMCwxLCJcXFBoaSJdLFsyLDAsIlxcaW90YV9jIl0sWzIsMSwiXFxleGlzdHMgXFxpb3RhX3tjLFxcbXV9XnthYn0iLDJdLFsxLDMsIlxcUGhpXnstMX0iXSxbMyw0LCJcXHBpX2MiXSxbMSw0LCJcXGV4aXN0c1xccGlfe2FifV57YyxcXG11fSIsMl1d
+\begin{tikzcd}[cramped]
+	{\bigoplus_c R_c} && {R_a \otimes R_b} && {\bigoplus_c R_c} \\
+	{R_c} &&&& {R_c}
+	\arrow["\Phi", from=1-1, to=1-3]
+	\arrow["{\Phi^{-1}}", from=1-3, to=1-5]
+	\arrow["{\exists\pi_{ab}^{c,\mu}}"', from=1-3, to=2-5]
+	\arrow["{\pi_c}", from=1-5, to=2-5]
+	\arrow["{\iota_c}", from=2-1, to=1-1]
+	\arrow["{\exists \iota_{c,\mu}^{ab}}"', from=2-1, to=1-3]
+\end{tikzcd}
+\end{equation}
+
+Furthermore, these admit similar constraints as the direct sum:
+\begin{equation}
+  \pi^{c,\mu}_{ab} \iota_{d,\nu}^{ab} = \pi_{c,\mu} \Phi^{-1}\Phi  \iota_{d,\nu} = \delta_{cd}\delta_{\mu\nu} \id_{R_c}
+\end{equation}
+and
+\begin{equation}
+  \sum_{c,\mu}^{} \iota_{c,\mu}^{ab} \pi^{c,\mu}_{ab} = \Phi \sum_{c,\mu}^{} \iota_{c,\mu}\pi_{c,\mu} \Phi^{-1} = \Phi \id_{\bigoplus R_{c}} \Phi^{-1} = \id_{R_a \otimes R_b}  
+\end{equation}
 
 
 

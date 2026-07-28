@@ -54,16 +54,92 @@ such that this is linear, todo. I think we get the equality to the hom def if we
   \[
     V \cong \bigoplus_{i \in I} V^{\oplus n_i}
   \]
-  by grouping isomorphic simples.
+  by grouping isomorphic simples. Is $n_i$ unique?
 \end{definition}
 
-\begin{definition}[???]
-  Let $R_a$ and $R_b$ be two irreducible representation (spaces). Their tensor product is again semisimple and there is a decomposition
-  \[
-    R_{a} \otimes R_{b} \cong \bigoplus_{c \in I} R_c^{\oplus N^{ab}_c}   
-  \]
-  where we call $N^{ab}_c$ the \emph{fusion multiplicty} in $G$. If $N_{ab}^c \leq 1$ for all $a,b,c$, we say that the representation is \emph{multiplicity-free}.  
-\end{definition}
+During a theorem by Maschke \cite{}, the representations of any compact $G$ are semisimple. 
+%Therefore, for any representations $V$ and $W$ it holds that
+%\[
+%  V \otimes W \cong \bigoplus_{c \in I} R_c^{\oplus m_c} 
+%\]
+%where $m_c$ is determined uniquely (why intuitively?) in dependece on the decompositions of $V$ and $W$:
+%\[
+%  V \otimes 
+%\]
+
+Therefore, it must hold for any irreps $R_a,R_b$ of $G$ that their tensor product is completely reducible with the decomposition
+\[
+  R_a \otimes R_b 
+  \cong
+  \bigoplus_{c \in I} R_c^{\oplus N_{ab}^c},
+\]
+with $N_{ab}^c$ called \emph{fusion-multiplicities}. If
+\[
+  N_{ab}^c \leq 1 \quad \forall a,b,c 
+\]
+the decomposition is said to be \emph{multiplicity-free}.
+
+Note as well that the appearance of the \emph{direct sum} here (as discussed in \cref{cat:eq:fusionprop}) is fully characterized (carefull how i phrase this) by its injection and projection maps, for which we provide a graphical calculus.
+\[
+  \iota^{ab}_{c,\mu} : R_c \to R_a \otimes R_b \quad \text{ and } \quad \pi^{c,\mu}_{ab} : R_a \otimes R_b \to R_c \quad \text{ for } \mu \in 1,\ldots,N_{ab}^c  
+\]
+\begin{equation}
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.0,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+]
+\begin{scope}[xshift=-1cm]
+
+\coordinate (a) at (0,0.6);
+\coordinate (b) at (1.2,0.6);
+\coordinate (v) at (0.6,1.2);
+\coordinate (c) at (0.6,2);
+
+\draw[string arrow] (c) -- (v);
+\draw[string arrow] (v) -- (a);
+\draw[string arrow] (v) -- (b);
+
+\node[below] at (a) {$R_a$};
+\node[below] at (b) {$R_b$};
+\node[above] at (c) {$R_c$};
+
+\node[right=1pt] at (v) {$\mu$};
+
+\end{scope}
+
+\begin{scope}[xshift=4cm]
+
+\coordinate (a) at (0,2);
+\coordinate (b) at (1.2,2);
+\coordinate (v) at (0.6,1.2);
+\coordinate (c) at (0.6,0.4);
+
+\draw[string arrow] (a) -- (v);
+\draw[string arrow] (b) -- (v);
+\draw[string arrow] (v) -- (c);
+
+\node[above] at (a) {$R_a$};
+\node[above] at (b) {$R_b$};
+\node[below] at (c) {$R_c$};
+
+\node[right=1pt] at (v) {$\mu$};
+
+\end{scope}
+\end{tikzpicture}
+\end{equation}
+
+
+These maps are more commonly known as \emph{clebsch-gordan coefficients}.
+%\[
+%  \ket{a,i;b,j \vert C,c}
+%\]
 
 \begin{example}[Clebsch-Gordan series]
   Let $G = \SU{2}$ and let $V_i$ and $V_j$ be two spin irreps of charge $i$ and $j$. These combine to
@@ -71,6 +147,8 @@ such that this is linear, todo. I think we get the equality to the hom def if we
     (\pi_{V_i \otimes V_{j}}, V_i \otimes V_j) = \bigoplus_{k \in \left\vert i - j \right\vert}^{i + j} (\pi_{V_k}, V_k) \label{sym:eq:cgseries}
   \end{equation}
 \end{example}
+
+
 
 \subsection{Symmetric Tensors}
 
