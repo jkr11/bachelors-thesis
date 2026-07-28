@@ -19,6 +19,28 @@
 \usepackage[dvipsnames]{xcolor}
 \usetikzlibrary{decorations.markings}
 
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\huge\scshape}
+  {\thechapter}
+  {0.5em}
+  {}
+  [\vspace{0.5ex}\titlerule]
+
+% Section
+\titleformat{\section}
+  {\normalfont\Large\scshape}
+  {\thesection}
+  {0.5em}
+  {}
+
+% Subsection
+\titleformat{\subsection}
+  {\normalfont\large}
+  {\thesubsection}
+  {0.5em}
+  {}
+
 \captionsetup{width=\textwidth, labelfont=bf, font=small}
 
 \definecolor{greenii}{RGB}{20,140,10}
@@ -27,7 +49,7 @@
 \newcommand{\red}[1]{{\color{red} {#1}}}
 \newcommand{\orange}[1]{{\color{orange} {#1}}}
 \newcommand{\blue}[1]{{\color{blue} {#1}}}
-\newcommand{\green}[1]{{\color{greenii} {#1}}}
+\newcommand{\green}[1]{{\color{OliveGreen} {#1}}}
 
 \usepackage[backend=biber, maxbibnames=3,style=alphabetic, backref,backrefstyle=none]{biblatex}
 \addbibresource{bachelors.bib}
@@ -116,14 +138,14 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\R}{\mathbb{R}}
 
-\newcommand{\CC}{\mathrm{C}}
+\newcommand{\CC}{\mathcal{C}}
 
 \makeatletter
 \definecolor{RoyalBlue}{HTML}{4169E1}
 \definecolor{CiteViolet}{HTML}{7B2CBF}
 \hypersetup{
     colorlinks=true,
-		%linkcolor=green!50!black,
+		linkcolor=Maroon,
     %linkcolor = CiteViolet,
 		citecolor=RoyalBlue,
     urlcolor=RoyalBlue

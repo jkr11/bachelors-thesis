@@ -1,5 +1,18 @@
+This section develops the theory underlying \emph{symmetric tensor networks}, specifically
+for nonabelian groups. We give an informal overview on the necessary representation
+theoretic concepts in \Cref{sym:sub:rep}. We first give some motivation with the worked
+example of the $XXZ$-Hamiltonian and then show how the same is achieved in a
+representation theoretic setting. Here we are mostly interested in the \emph{speedup}
+obtained by exploiting the emergend block-structure of symmetric operators. Most of the
+proofs and formal definitions required for this formalism are delegated to
+\Cref{sect:Categories}, however there will still be repetitions of some of the theory.
 
-In the following, let $G$ be a compact group and $V,W$ be finite dimensional vector spaces. For the definitions we follow the textbook by \textcite{woit2016}.
+
+
+\subsection{Representation theory}\label{sym:sub:rep}
+
+In the following and the entire section, let $G$ be a compact group and $V,W$ be finite
+dimensional vector spaces. We mainly follow the textbook by \textcite{woit2016}.
 
 \begin{definition}[Representation]
   A \emph{representation} of a compact group $G$ over a vector space $V$ is a group homomorphism
@@ -29,11 +42,13 @@ such that this is linear, todo. I think we get the equality to the hom def if we
 \end{definition}
 
 \begin{definition}[Irreducible representation (Woit 16)]
-  A representation $\rho$ is an \emph{irrep} if there are no $W \subset V$ such that $(\rho_{\vert W}, W)$ is a representation. 
+  A representation $\rho$ is an \emph{irrep} if there are no $W \subset V$ such that
+  $(\rho_{\vert W}, W)$ is a representation. 
 \end{definition}
 
 \begin{definition}[Tensor product representation]
-  Given reps $(\rho_V, V)$ and $(\rho_W, W)$, the \emph{tensor product representation} $(\rho_{V\otimes W}, V \otimes W)$ is defined by its action on the elements
+  Given reps $(\rho_V, V)$ and $(\rho_W, W)$, the \emph{tensor product representation}
+  $(\rho_{V\otimes W}, V \otimes W)$ is defined by its action on the elements
   \[
     \rho_{V \otimes W}(g) (v \otimes w) = \rho_V(g) v \otimes \rho_W(g) w
   \]
@@ -57,7 +72,8 @@ such that this is linear, todo. I think we get the equality to the hom def if we
   by grouping isomorphic simples. Is $n_i$ unique?
 \end{definition}
 
-During a theorem by Maschke \cite{}, the representations of any compact $G$ are semisimple. 
+Due to a theorem by Peter \& Weyl \cite{}, the unitary representations of any compact $G$ are
+semisimple. 
 %Therefore, for any representations $V$ and $W$ it holds that
 %\[
 %  V \otimes W \cong \bigoplus_{c \in I} R_c^{\oplus m_c} 
@@ -79,7 +95,9 @@ with $N_{ab}^c$ called \emph{fusion-multiplicities}. If
 \]
 the decomposition is said to be \emph{multiplicity-free}.
 
-Note as well that the appearance of the \emph{direct sum} here (as discussed in \cref{cat:eq:fusionprop}) is fully characterized (carefull how i phrase this) by its injection and projection maps, for which we provide a graphical calculus.
+Note as well that the appearance of the \emph{direct sum} here (as discussed in
+\cref{cat:eq:fusionprop}) is fully characterized (carefull how i phrase this) by its
+injection and projection maps, for which we provide a graphical calculus.
 \[
   \iota^{ab}_{c,\mu} : R_c \to R_a \otimes R_b \quad \text{ and } \quad \pi^{c,\mu}_{ab} : R_a \otimes R_b \to R_c \quad \text{ for } \mu \in 1,\ldots,N_{ab}^c  
 \]
@@ -141,14 +159,21 @@ These maps are more commonly known as \emph{clebsch-gordan coefficients}.
 %  \ket{a,i;b,j \vert C,c}
 %\]
 
-\begin{example}[Clebsch-Gordan series]
+\begin{example}
   Let $G = \SU{2}$ and let $V_i$ and $V_j$ be two spin irreps of charge $i$ and $j$. These combine to
   \begin{equation}
     (\pi_{V_i \otimes V_{j}}, V_i \otimes V_j) = \bigoplus_{k \in \left\vert i - j \right\vert}^{i + j} (\pi_{V_k}, V_k) \label{sym:eq:cgseries}
   \end{equation}
+  in what is referred to as the \emph{Clebsch-Gordan-series}.
 \end{example}
 
-
+\begin{example}[$\SU{2}$-CG tensors]
+  Lets look at an example of spin irreps in the $\SU{2}$ theory. The combined basis of two spin-$\frac{1}{2}$ spaces is given by the collection $\{\ket{\uparrow}, \ket{\downarrow}\}^{\otimes 2}$. By the fusion rule \cref{sym:eq:cgseries}, this decomposes as
+  \[
+    \frac{1}{2} \otimes \frac{1}{2} = 0 \oplus 1 
+  \]
+  with its accosiated basis $\{\ket{1,1},\ket{1,0},\ket{1,-1},\ket{0,0}\}$. The change of base tensors acting between these bases are precisely the Clebsch-Gordan tensors as defined in ???
+\end{example}
 
 \subsection{Symmetric Tensors}
 
@@ -292,12 +317,19 @@ it follows directly from the definition of global invariance that the tensor mus
 \]
 
 \begin{corollary}[Networks of symmetric tensors are symmetric]
-  Since a tensor network is built by composition and application of the $(co)ev$ maps, both of which are intertwiners, the full network is also an intertwiner. Important there is that this entire discussion is only about FdVect or FdHilb for now, but i think the same applies to any braided category.    
+  Since a tensor network is built by composition and application of the $(co)ev$ maps,
+  both of which are intertwiners, the full network is also an intertwiner. Important there
+  is that this entire discussion is only about FdVect or FdHilb for now, but i think the
+  same applies to any braided category.    
 \end{corollary}
 
-\subsection{Review of Symmetric Tensor Networks.}
+% Just remove htis heading no? 
+\subsection{Examples in symmetric hamiltonians.}
 
-The motivation for constructing symmetric tensor networks is as follows: Assume we have a (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. If the ground state is unique, we can obtain 
+The motivation for constructing symmetric tensor networks is as follows: Assume we have a
+(unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a
+hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. If the ground state is unique,
+we can obtain 
 \[
   U(g)^{\otimes L} H \ket{\psi_0} = H (U(g)^{\otimes L}) \ket{\psi_0} = E_0 U(g)^{\otimes L} \ket{\psi_0}
 \]
@@ -309,7 +341,11 @@ and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{../experiments/plots/su2_block_structure.pdf}
-  \caption{Three different presentations of the XXZ Hamiltonian. (i): In the default computational basis of spin vectors. (ii) In a reordering of the computational basis into equal spin up (down) classes, i.e. no spin up, one spin up etc..., here $U$ is simply a permutation matrix. (iii) After changing the basis into the $(S^2,S_Z)$ basis.}
+  \caption{ Three different presentations of the XXZ Hamiltonian. (i): In the default
+    computational basis of spin vectors. (ii) In a reordering of the computational basis
+    into equal spin up (down) classes, i.e. no spin up, one spin up etc..., here $U$ is
+    simply a permutation matrix. (iii) After changing the basis into the $(S^2,S_Z)$
+    basis. }
   \label{fig:diagonal_hamiltonians}
 \end{figure}
 
@@ -325,16 +361,21 @@ and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
   \end{equation}
 \end{definition}
 
-As given in \cref{def:xxzHamiltonian}, this acts on the \emph{spin basis} made of states $\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow, \downarrow\}$.
+As given in \cref{def:xxzHamiltonian}, this acts on the \emph{spin basis} made of states
+$\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow, \downarrow\}$.
 
-We can plot $H$ and realize the sparsity structure thereof. Furthermore, a suitable rearrangement induces a block structure \cref{fig:diagonal_hamiltonians}.
+We can plot $H$ and realize the sparsity structure thereof. Furthermore, a suitable
+rearrangement induces a block structure \cref{fig:diagonal_hamiltonians}.
 
-Now, we can realize about this hamiltonian is that there is a symmetry with the representations of $\U 1$. Lets review this shortly. A representation of $U(1)$ is a group homomorphism
+Now, we can realize about this hamiltonian is that there is a symmetry with the
+representations of $\U 1$. Lets review this shortly. A representation of $U(1)$ is a group
+homomorphism
 \[
   \rho : \U 1 \to \GL V n , \quad \rho(e^{i\theta_1}) \rho(e^{i\theta_2}) = \rho(e^{i(\theta_1 + \theta_2)}). 
 \]
 
-The XXZ model lives in the Hilbert Space $\mathcal{\MakeUppercase{H}} = (\C^2)^{\otimes n}$ and the relevant representation is generated by the total magnetization operator
+The XXZ model lives in the Hilbert Space $\mathcal{\MakeUppercase{H}} = (\C^2)^{\otimes
+n}$ and the relevant representation is generated by the total magnetization operator
 \[
   S^z_{\mathrm{tot}}
   =
@@ -357,7 +398,8 @@ Equivalently,
   [H,S^z_{\mathrm{tot}}]=0.
 \]
 
-Recall that when two operators commute, we can \emph{simultaneously diagonalize} them \cite[Theorem~1.3.12]{Horn_Johnson_2012}.
+Recall that when two operators commute, we can \emph{simultaneously diagonalize} them
+\cite[Theorem~1.3.12]{Horn_Johnson_2012}.
 
 \begin{align*}
   [H, S^z_{\mathrm{tot}}] = \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sum_{j = 1}^{N} \sigma_j^z ] 
@@ -373,7 +415,8 @@ and now using the identity $[AB,C] = A[B,C] + [A,C]B$:
 \[
   [\sigma_i^y \sigma_{i+1}^y, \sigma_i^z + \sigma_{i+1}^z  ] = 2i(\sigma_i^x \sigma_{i+1}^{y} + \sigma_i^y \sigma_{i+1}^x  )
 \]
-which cancel out. Furtermore, the $z$ spins commute as well. Thus the whole sum is $0$ and we are done.
+which cancel out. Furtermore, the $z$ spins commute as well. Thus the whole sum is $0$ and
+we are done.
 
 In the $\SU 2$ case, we have the generators
 \[
@@ -399,12 +442,15 @@ The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
 
 Again, we can eithe solve htis by diagonalizing all 3 operators?
 
-Or we can do the representation theoritical approach. Let $V_j$ denote the spin-$j$ irrep of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by \cref{sym:eq:cqseries} that
+Or we can do the representation theoritical approach. Let $V_j$ denote the spin-$j$ irrep
+of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by \cref{sym:eq:cqseries} that
 \[
   (\mathbb{C}^2)^{\otimes6} \cong V_{\frac{1}{2}}^{\otimes 6} \cong 5 V_0 \oplus 9V_1 \oplus 5V_2 \oplus V_3 \cong \C^5 \otimes V_{\frac{1}{2}} \oplus \C^9 \otimes V_0 \oplus \C^5 \otimes V_2 \oplus V_3
 \]
 
-Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs lemma\footnote{These are related by a permutation matrix. Proof? Is this the X from \cite{devosTensorKitjlJuliaPackage2025}? }
+Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs
+lemma\footnote{These are related by a permutation matrix. Proof? Is this the X from
+\cite{devosTensorKitjlJuliaPackage2025}? }
 \begin{equation}\label{sym:eq:blockdiag}
   H \in \bigoplus_{S \in 0,1,2,3} Mat_{m_S \times m_S} \otimes I_{2S+1} (\mathbb{C}) \cong \bigoplus_{S \in 0,1,2,3} I_{2S+1} \otimes Mat_{m_S \times m_S}(\mathbb{C}) 
 \end{equation}
@@ -412,13 +458,18 @@ Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by
 So we expect 20 blocks? 
 $5$ have dimension $1$, $9$ have dimension $3$, $5$ have dimension $5$ and $1$ has $7$.
 
-To get an interpretation of the matrix coefficients in $\eqref{sym:eq:cgseries}$, consider a tiny Hamiltonian on $N = 2$ spins
+To get an interpretation of the matrix coefficients in $\eqref{sym:eq:cgseries}$, consider
+a tiny Hamiltonian on $N = 2$ spins
 \[
   H = \frac{1}{2} (\sigma_1^x \sigma_2^x + \sigma_1^y \sigma_2^y + \sigma_1^z \sigma_2^z)
   = S_1 \cdot S_2
 \]
 
-This acts on the space $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ and thus on the basis $\{\ket{\uparrow},\ket{\downarrow}\}^{\otimes 2}$ This has two distinct fusion outcomes, $V_0$ and $V_1$. The basis on the rhs is given by $\ket{1,1},\ket{1,0},\ket{1,-1}.\ket{0,0}$, and we want to reformulate $S_1 \cdot S_2$ in the total spin basis. Lets unfold this definition by 
+This acts on the space $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ and thus on the basis
+$\{\ket{\uparrow},\ket{\downarrow}\}^{\otimes 2}$ This has two distinct fusion outcomes,
+$V_0$ and $V_1$. The basis on the rhs is given by
+$\ket{1,1},\ket{1,0},\ket{1,-1}.\ket{0,0}$, and we want to reformulate $S_1 \cdot S_2$ in
+the total spin basis. Lets unfold this definition by 
 \[
   S^2 = S_1^2 + S_2^2 + 2(S_1 \cdot S_2) \implies S_1 \cdot S_2 = \frac{1}{2}(S^2 - S_1^2 - S_2^2).
 \]
@@ -434,7 +485,8 @@ and for $S = 1$
 \[
   c_1 = \frac{J}{2}(2 - 3/2) = \frac{1}{4}J
 \]
-which are exactly the two degrees of freedom we get by the direct sum. So we expect our operator to look like
+which are exactly the two degrees of freedom we get by the direct sum. So we expect our
+operator to look like
 \[
   \begin{pmatrix}
     c_0 &  0 \\
@@ -507,9 +559,9 @@ By direct isomorphism, we can write this as
 
 
 
-\begin{definition}[Matrix Product State]
-  \label{def:MPS}
-  A \emph{Matrix Product State} is a quantum state $\ket{\psi}$ with $n$ legs written as the contraction of $n$ trivalent tensors $\{A^{[i]}\}_{i \in [n]}$. Formally this reads
+\begin{definition}\label{def:MPS}
+  A \emph{\green{Matrix Product State}} is a quantum state $\ket{\psi}$ with $n$ legs written as
+  the contraction of $n$ trivalent tensors $\{A^{[i]}\}_{i \in [n]}$. Formally this reads
   \[
     \ket{\psi[A]}
     =
@@ -522,9 +574,11 @@ By direct isomorphism, we can write this as
     \right)
     \ket{i_1i_2\cdots i_n},
   \]
-  where $A^{[i]}_{i_{k}} \in \mathbb{C}^{D_i \times D_{i+1} }$. The elements of the collection $\{D_i\}_{i \in [n]}$ is referred to as the \emph{bond-dimensions}.
+  where $A^{[i]}_{i_{k}} \in \mathbb{C}^{D_i \times D_{i+1} }$. The elements of the
+  collection $\{D_i\}_{i \in [n]}$ is referred to as the \emph{\green{bond-dimensions}}.
 \end{definition}
-Note that this is a state with closed boundaries. If we want open boundaries we have to replace the trace with appropriate end vectors (nice source?).
+Note that this is a state with closed boundaries. If we want open boundaries we have to
+replace the trace with appropriate end vectors (nice source?).
 
 \begin{example}
   We can represent each product state $\ket{\varPsi} = \ket{\psi}^{\otimes n}$ as a MPS with bond dimension $1$.

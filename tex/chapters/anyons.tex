@@ -3,7 +3,10 @@ We need to introduce anyons here, or somehow build it into the review of the gol
 
 \subsection{Algebraic Theory of Anyons}
 
-Anyons are proposed as a \emph{defect} in a $2$ dimensional space (manifold? compact?) with exotic exchange statistics. These exchange statistics differ from fermions in that we allow particles to pick up a arbitrary phase $e^{i\theta}$ on exchange in the abelian case, and a phase in a matrix element in the nonabelian case.
+Anyons are proposed as a \emph{defect} in a $2$ dimensional space (manifold? compact?)
+with exotic exchange statistics. These exchange statistics differ from fermions in that we
+allow particles to pick up a arbitrary phase $e^{i\theta}$ on exchange in the abelian
+case, and a phase in a matrix element in the nonabelian case.
 
 \subsection{Anyons on different topologies}
 
@@ -11,7 +14,10 @@ Anyons are proposed as a \emph{defect} in a $2$ dimensional space (manifold? com
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.8\textwidth]{figures/anyons_sphere.png}
-  \caption{$3$ Anyons on the sphere $S^2$ with the equivalence of the braids $\sigma_1^2$ and $\sigma_2^2$. From an exercise\href{https://github.com/jkr11/maths-notes/tree/main/tq-simons-solutions}{github} in \cite{simonTopologicalQuantum2023}.}
+  \caption{ $3$ Anyons on the sphere $S^2$ with the equivalence of the braids $\sigma_1^2$
+    and $\sigma_2^2$. From an
+    exercise\href{https://github.com/jkr11/maths-notes/tree/main/tq-simons-solutions}{github}
+    in \cite{simonTopologicalQuantum2023}. }
   \label{anyon:fig:sphere}
 \end{figure}
 
@@ -19,7 +25,8 @@ Analysing this case further yields that
 \[
   \pi_1(\mathrm{Conf}_3(S^2)) \cong Br(S^2) \cong \Z_4 \boxtimes \Z_3
 \]
-and thus finite. In fact, we know about the braid group on spheres that the order of $Br_n(S^2)$ is given by
+and thus finite. In fact, we know about the braid group on spheres that the order of
+$Br_n(S^2)$ is given by
 \begin{equation}
   \left\vert Br_n(S^2) \right\vert = \begin{dcases}
     \left\vert \Z_2 \right\vert = 2 &\text{ if } n = 2,\\
@@ -36,7 +43,8 @@ and thus finite. In fact, we know about the braid group on spheres that the orde
 \end{equation}
 
 
-Also we should do or have done isotopy before. Technically the discussion here also requires the completeness relations.
+Also we should do or have done isotopy before. Technically the discussion here also
+requires the completeness relations.
 
 \begin{equation}\label{anyon:eq:complete}
 \begin{tikzpicture}[
@@ -79,9 +87,14 @@ Also we should do or have done isotopy before. Technically the discussion here a
 
 \subsection{1D Lattice Models \& The Golden Chain}
 
-%So from what i can read here (also the nlab or wikipedia) a spin chain specifically only refers to a per site construction with a tensor product hilbert space. An anyon chain is, well, an anyonic chain. These do not admit such a decomposition. So we should call these simply 1D lattice models.
+%So from what i can read here (also the nlab or wikipedia) a spin chain specifically only
+%refers to a per site construction with a tensor product hilbert space. An anyon chain is,
+%well, an anyonic chain. These do not admit such a decomposition. So we should call these
+%simply 1D lattice models.
 
-In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically in the $\Fib$ model, are introduced as a $1$D lattice of $n$ $\tau$ anyons, defined as the fusion space thereof.
+In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically in the
+$\Fib$ model, are introduced as a $1$D lattice of $n$ $\tau$ anyons, defined as the fusion
+space thereof.
 
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
@@ -117,9 +130,13 @@ In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically 
 
 \end{tikzpicture}
 
-Here, the state is fully characterized by its intermediate indeces $x_1 \ldots x_{n-1}$, so we can choose a basis $\ket{x_1 x_2 \cdots x_{n-1} }$.
+Here, the state is fully characterized by its intermediate indeces $x_1 \ldots x_{n-1}$,
+so we can choose a basis $\ket{x_1 x_2 \cdots x_{n-1} }$.
 
-Similar to the Heisenberg-chain\footnote{Note that $\frac{1}{2} \otimes \frac{1}{2} = 0 \oplus 1$ in the Heisenberg $\SU 2$ model.}, the golden chain introduces a Hamiltonian that assigns $-1$ to the interaction $\tau \otimes \tau = 1$ and $0$ to the interaction $\tau \otimes \tau = \tau$.
+Similar to the Heisenberg-chain\footnote{Note that $\frac{1}{2} \otimes \frac{1}{2} = 0
+\oplus 1$ in the Heisenberg $\SU 2$ model.}, the golden chain introduces a Hamiltonian
+that assigns $-1$ to the interaction $\tau \otimes \tau = 1$ and $0$ to the interaction
+$\tau \otimes \tau = \tau$.
 
 We can decompose the whole space $\Hom(\tau^{\otimes n+1}, \tau)$ into the local states
 \begin{equation}
@@ -129,9 +146,11 @@ We can decompose the whole space $\Hom(\tau^{\otimes n+1}, \tau)$ into the local
   \Hom(\tau \otimes \tau, x_1) \otimes \Hom(x_1 \otimes \tau, x_2)
   \otimes \cdots \otimes Hom(x_{n-1} \otimes \tau, \tau) 
 \end{equation}
-with the admissability condition that there are not adjacents $1$ in the sequence of $x_i$s.
+with the admissability condition that there are not adjacents $1$ in the sequence of
+$x_i$s.
 
-This is evaluated as a $3$ local hamiltonian, as we can decompose the spin chain into local parts where two $\tau$ anyons are adjacent (check how they call it in the paper.).
+This is evaluated as a $3$ local hamiltonian, as we can decompose the spin chain into
+local parts where two $\tau$ anyons are adjacent (check how they call it in the paper.).
 
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
@@ -198,7 +217,9 @@ This is evaluated as a $3$ local hamiltonian, as we can decompose the spin chain
 
 \end{tikzpicture}
 
-Now we can apply the interaction based on the intermediate state\footnote{Technically we need a projector here read up again.} $x_i^\prime$ and apply another $F$-move back to the chain basis.
+Now we can apply the interaction based on the intermediate state\footnote{Technically we
+need a projector here read up again.} $x_i^\prime$ and apply another $F$-move back to the
+chain basis.
 
 \[
   H_{[i,i+1]} : \ket{x_{i-1} x_i x_{i+1}  } \to \ket{x_{i-1} x_i^{\prime\prime} x_{i+1} } \coloneqq  - \sum_{x_i^\prime \in \{1,\tau\} }^{} [F_{x_{i+1} }^{x_{i-1}\tau\tau}]_{x_i}^{x_i^\prime } E_{x_{i}^\prime } [F_{x_{i+1} }^{x_{i-1}\tau\tau }]_{x_{i^\prime }}^{x_{i^{\prime\prime}}}
@@ -216,11 +237,21 @@ Write this three local hamiltonian in an operator form
 \]
 
 
-This method is reviewed and extended in \cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It will become apparent that the construction given in these papers is a manualization of the tensor network constructions we will build here. Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using module categories are given in \cite{eckQuantumLatticeModels2025}.
+This method is reviewed and extended in \cite{trebstShortIntroductionFibonacci2008a}, with
+longer ranger interaction. It will become apparent that the construction given in these
+papers is a manualization of the tensor network constructions we will build here.
+Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well
+as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using
+module categories are given in \cite{eckQuantumLatticeModels2025}.
 
-The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010}, \cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and in terms of categories this is done in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
+The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010},
+\cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and
+in terms of categories this is done in \cite{dissertation} and
+\cite{devosTensorKitjlJuliaPackage2025}.
 
-For the tensor network operations, we should consider the changing of the basis as an implicit operation that is performed when contracting, just like it would be in a normal einsum.
+For the tensor network operations, we should consider the changing of the basis as an
+implicit operation that is performed when contracting, just like it would be in a normal
+einsum.
 
 
 In a tensor network formalism can build this as an anyonic operator in $Hom(\tau \otimes \tau, \tau \otimes \tau)$ as
@@ -285,7 +316,8 @@ In a tensor network formalism can build this as an anyonic operator in $Hom(\tau
 (Note this is allowed due to $\C$-linearity of $\Fib$.)
 
 
-In this case we can view the golden chain approach chosen above as a manualization of the tensor network process.
+In this case we can view the golden chain approach chosen above as a manualization of the
+tensor network process.
 
 We can also write $H_i$ in its operator form matrix as
 \[
@@ -306,31 +338,46 @@ as
 
 \subsection{Anyonic States}
 
-For simple lattice states, \cite{singhMatrixProductStates2014} defines a bipartition of the lattice into anyons $A$ and $B$. Then we consider the whole space under charge $a_{tot}$ as
+For simple lattice states, \cite{singhMatrixProductStates2014} defines a bipartition of
+the lattice into anyons $A$ and $B$. Then we consider the whole space under charge
+$a_{tot}$ as
 \[
   V_{a_{tot}} = \bigoplus_{N_{ab}^{a_{tot} } = 1} (V^{A}_a \otimes V^{B}_b)
 \] 
-What i dont get here is why we are allowed to tensor both these sectors together without the space $V_{ab}^{a_{tot} }$ explicitely.
+What i dont get here is why we are allowed to tensor both these sectors together without
+the space $V_{ab}^{a_{tot} }$ explicitely.
 
 TODO delete all of this and introduce this over the Hom category.
 
-Anyhow, the fundamental building blocks we are using are the vector spaces $V^{ab}_c$ (where we refer to this as the fusion space from types $a$ and $b$ to $c$). This allows us to build the vector space of two anyonic types $a,b$ as the sum over the fusion outcome:
+Anyhow, the fundamental building blocks we are using are the vector spaces $V^{ab}_c$
+(where we refer to this as the fusion space from types $a$ and $b$ to $c$). This allows us
+to build the vector space of two anyonic types $a,b$ as the sum over the fusion outcome:
 \[
   V^{ab} = \bigoplus_{c \in Irr(C)} V^{ab}_c  
 \]
 
-We can directly introduce the $R$ move (a braiding of the initial anyons) to obtain the isomorphic space $V^{ba}$ as
+We can directly introduce the $R$ move (a braiding of the initial anyons) to obtain the
+isomorphic space $V^{ba}$ as
 \[
   R : \bigoplus_{c \in Irr(C)} V^{ab}_c  \cong \bigoplus_{c \in Irr(C)} V^{ba}_c  
 \] 
 
-We can also write the space $V^{ab}_c = Hom(a \otimes b, c)$ in the categorical language. Here we also need to realize that there is a difference between the isomorphism $\beta$ and the action of $R$, which is really on the hom space $\Hom(-, c)$. So this would be a yoneda perspective? Since we know $R$ for all $a,b,c \in C$, we also know the action of $R$ as an isomorphism. Well technically i believe that this allows us to determine for all simples $c$, and then semisimplicity extends this to all subjects (this would be nice to write down) and then the yoneda embedding is enough to know the whole space. Similarly, in our Rep(G) categories (which i actually belive to be symmetric? Find this in etingof) 
+We can also write the space $V^{ab}_c = Hom(a \otimes b, c)$ in the categorical language.
+Here we also need to realize that there is a difference between the isomorphism $\beta$
+and the action of $R$, which is really on the hom space $\Hom(-, c)$. So this would be a
+yoneda perspective? Since we know $R$ for all $a,b,c \in C$, we also know the action of
+$R$ as an isomorphism. Well technically i believe that this allows us to determine for all
+simples $c$, and then semisimplicity extends this to all subjects (this would be nice to
+write down) and then the yoneda embedding is enough to know the whole space. Similarly, in
+our Rep(G) categories (which i actually belive to be symmetric? Find this in etingof) 
 
-The algebra-category correspondence in the theory of anyons was first noted by \cite[App~E]{kitaevAnyonsExactlySolved2006}
+The algebra-category correspondence in the theory of anyons was first noted by
+\cite[App~E]{kitaevAnyonsExactlySolved2006}
 
 \subsection{Topological Quantum Computation}
 
-Computing with nonabelian anyons requires a universal gate set built from representations of the \emph{braid-group}:
+Computing with nonabelian anyons requires a universal gate set built from representations
+of the \emph{braid-group}:
 \begin{align}
   \sigma_i\sigma_j &= \sigma_j\sigma_i, \;\; \left\vert i - j \right\vert \geq 2 \label{eq:al1}\\
   \sigma_i\sigma_{i+1}\sigma_{i} &= \sigma_{i+1}\sigma_i\sigma_{i+1}, \;\; i \in [1,n-2] \label{eq:al2}
@@ -455,5 +502,6 @@ and also the \emph{pure-braid-group}:
   \end{scope}
 
 \end{tikzpicture}
-\caption{A standard $2$-qubit quantum circuit and its lowering to a braid-circuit with inection weaves (missing yet).}
+\caption{ A standard $2$-qubit quantum circuit and its lowering to a braid-circuit with
+  inection weaves (missing yet).}
 \end{figure}

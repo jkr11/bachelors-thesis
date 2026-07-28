@@ -1,9 +1,12 @@
-\subsection{Introduction to Category Theory}
+The goal of this chapter is to provide a viewpoint on the previous chapters from the perspective of categories. In \Cref{cat:sub:introCat} we provide a short introduction to category theory, from the perspective of quantum parallelism, and the structures we have already met in the discussion on representations and anyons. In \Cref{cat:sub:decomp} we provide the core theory in terms of the decomposition, which is crucial to previous chapters. Naturally, this incurs a rigorous explanation of fusion trees. 
+
+
+\subsection{Introduction to Category Theory}\label{cat:sub:introCat}
 
 The general idea of a category is that it admits a sort of \emph{interface}. As noticed, there are many similarities in data and structure between the entities we already dealt with, i.e. the tensor product of vector space, the tensor product of representations, of Hilbert spaces etc.... We can view all these concepts as a category with additional constraints added.
 
-\begin{definition}[Category]\label{cat:def:category}
-  A \emph{\red {category}} $\mathcal{C}$ consists of
+\begin{definition}\label{cat:def:category}
+  A \emph{\green {category}} $\mathcal{C}$ consists of
   \begin{itemize}
     \item a set of \emph{objects} $\mathrm{ob}(\mathcal{C})$,
     \item for every pair $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-set} $\Hom_{\mathcal{C}}(A,B)$ of \emph{morphisms} $f : A \to B$,
@@ -12,14 +15,15 @@ The general idea of a category is that it admits a sort of \emph{interface}. As 
     \[
       \circ \, : \, \mathcal{C}(B,C) \times \mathcal{C}(A,B) \longrightarrow \mathcal{C}(A,C),
     \]
-  \end{itemize}
-  such that composition is \emph{associative}, i.e.\ $(f \circ g) \circ h = f \circ (g \circ h)$ whenever defined, and \emph{unital}, i.e.\ $f \circ \mathrm{id}_A = f = \mathrm{id}_B \circ f$ for all $f : A \to B$.
+  \end{itemize} such that composition is \emph{associative}, i.e.\ $(f \circ g) \circ h =
+  f \circ (g \circ h)$ whenever defined, and \emph{unital}, i.e.\ $f \circ \mathrm{id}_A =
+  f = \mathrm{id}_B \circ f$ for all $f : A \to B$.
 \end{definition}
 
 Note that some categories such as $\Rep(G)$ and $\VecCat{\C}$ admit more structures than ordinary categories. For fdVect, the hom spaces of linear maps $V \to W$ have a natural identification as a vector space as well. The composition map is $\C$-bilinear. This immedeately motivates the following definition:
 
-\begin{definition}[$\C$-linear category]\label{cat:def:clinear}
-  A \emph{$\C$-linear category} endows each of its hom-sets with a module structure, such that the composition is bilinear. That is
+\begin{definition}\label{cat:def:clinear}
+  A \green{\emph{$\C$-linear category}} endows each of its hom-sets with a module structure, such that the composition is bilinear. That is
   \[
     \circ \, : \, \Hom_\mathcal{C}(B,C) \times \Hom_\mathcal{C}(A,B) \longrightarrow \Hom_\mathcal{C}(A,C)
   \]
@@ -31,17 +35,20 @@ Note that some categories such as $\Rep(G)$ and $\VecCat{\C}$ admit more structu
   \]
 \end{definition}
 
-We will now explore how to use category theory to model quantum processes.
-We want this to be able to do a list of things. First, given two systems $A$ and$B$, we want the combined system to be an object as well.
-Given processes, i.e. operators on each individual system $f : A \to A^\prime$,$g : B \to B^\prime $, there should be a combined process.
-Additionally, structures such as entanglement and no-cloning should be readily apparent in this theory.
+We will now explore how to use category theory to model quantum processes. We want this to
+be able to do a list of things. First, given two systems $A$ and$B$, we want the combined
+system to be an object as well. Given processes, i.e. operators on each individual system
+$f : A \to A^\prime$,$g : B \to B^\prime $, there should be a combined process.
+Additionally, structures such as entanglement and no-cloning should be readily apparent in
+this theory.
 
-Consider the tensor product $\otimes_{\mathbb{C}}$ of vector spaces $V$,$W$. We can define this using a \emph{universal property} ... TODO.
+Consider the tensor product $\otimes_{\mathbb{C}}$ of vector spaces $V$,$W$. We can define
+this using a \emph{universal property} ... TODO.
 
 This should motivate the following definition:
 
-\begin{definition}[Monoidal Category]
-  A \emph{monoidal category} $\CC$ is equipped with a unit $I \in \CC$ and a tensor (functor) $\otimes : \CC \times \CC \to \CC$, as well as 3 structural isomorphisms
+\begin{definition}\label{cat:def:monoidalCat}
+  A \emph{\green{monoidal category}} $\CC$ is a category that admits a unit object $I \in ob(\CC)$ and a bifunctor $\otimes : \CC \times \CC \to \CC$, as well as 3 constraining isomorphisms
   \[
     \rho_A : A \otimes I \cong A \qquad \lambda_B : I \otimes B \cong B \qquad \alpha_{ABC} : (A \otimes B) \otimes C \cong A \otimes (B \otimes C)
   \] 
@@ -85,16 +92,17 @@ TODO: state no cloning after \cite{abramskyNoCloningCategoricalQuantum2012}
 	\arrow["{f \otimes f}", from=2-1, to=2-3]
 \end{tikzcd}
 
-\begin{definition}[Braided Monoidal Category]
-A \emph{braided monoidal category} is a monoidal category $(\mathcal{C}, \otimes, I, \alpha, \lambda, \rho)$ equipped with an additional structural natural isomorphism, the \emph{braiding}
+\begin{definition}\label{cat:def:braidedMonoidalCat} A \emph{\green{braided monoidal
+category}} is a monoidal category $(\mathcal{C}, \otimes, I, \alpha, \lambda, \rho)$
+equipped with an additional structural natural isomorphism, the \emph{\green{braiding}}
 \[
-  \beta_{A,B} : A \otimes B \; \xrightarrow{\;\sim\;} \; B \otimes A,
+  \beta_{A,B} : A \otimes B \; \cong \; B \otimes A,
 \]
 natural in $A$ and $B$, such that the following two \emph{hexagon} diagrams commute for all $A,B,C \in \mathcal{C}$:
 
 \begin{center}
 % https://q.uiver.app/#q=WzAsMTIsWzAsMCwiKEEgXFxvdGltZXMgQikgXFxvdGltZXMgQyJdLFsxLDAsIkEgXFxvdGltZXMoQlxcb3RpbWVzIEMpIl0sWzIsMCwiKEIgXFxvdGltZXMgQylcXG90aW1lcyBBIl0sWzAsMSwiKEJcXG90aW1lcyBBKVxcb3RpbWVzIEMiXSxbMSwxLCJCIFxcb3RpbWVzIChBIFxcb3RpbWVzIEMpIl0sWzIsMSwiQiBcXG90aW1lcyAoQyBcXG90aW1lcyBBKSJdLFszLDAsIkEgXFxvdGltZXMgKEIgXFxvdGltZXMgQykiXSxbNCwwLCIoQSBcXG90aW1lcyBCKSBcXG90aW1lcyBDIl0sWzUsMCwiQ1xcb3RpbWVzKEFcXG90aW1lcyBCKSJdLFszLDEsIkEgXFxvdGltZXMoQyBcXG90aW1lcyBCKSJdLFs0LDEsIihBIFxcb3RpbWVzIEMpXFxvdGltZXMgQiJdLFs1LDEsIihDIFxcb3RpbWVzIEEpIFxcb3RpbWVzIEIiXSxbMCwxLCJcXGFscGhhIl0sWzEsMiwiXFxiZXRhX3tBLEJcXG90aW1lcyBDfSJdLFszLDQsIlxcYWxwaGEiXSxbNCw1LCJcXGlkX0IgXFxvdGltZXNcXGJldGFfe0EsQ30iXSxbMCwzLCJcXGJldGFfe0EsQn1cXG90aW1lcyBcXGlkX0MiLDJdLFsyLDUsIlxcYWxwaGEiXSxbNiw3LCJcXGFscGhhXnstMX0iXSxbNiw5LCJcXGJldGEiLDJdLFs5LDEwLCJcXGFscGhhXnstMX0iLDJdLFs3LDgsIlxcYmV0YSJdLFs4LDExLCJcXGFscGhhXnstMX0iXSxbMTAsMTEsIlxcYmV0YSIsMl1d
-\begin{tikzcd}[cramped,column sep=scriptsize]
+\begin{tikzcd}[column sep=scriptsize]
 	{(A \otimes B) \otimes C} & {A \otimes(B\otimes C)} & {(B \otimes C)\otimes A} & {A \otimes (B \otimes C)} & {(A \otimes B) \otimes C} & {C\otimes(A\otimes B)} \\
 	{(B\otimes A)\otimes C} & {B \otimes (A \otimes C)} & {B \otimes (C \otimes A)} & {A \otimes(C \otimes B)} & {(A \otimes C)\otimes B} & {(C \otimes A) \otimes B}
 	\arrow["\alpha", from=1-1, to=1-2]
@@ -113,16 +121,63 @@ natural in $A$ and $B$, such that the following two \emph{hexagon} diagrams comm
 \end{center}
 \end{definition}
 
-\begin{definition}[Symmetric Monoidal Category]
-A braided monoidal category is \emph{symmetric} if $\beta_{B,A} \circ \beta_{A,B} = \mathrm{id}_{A \otimes B}$ for all $A, B$.
+\begin{definition}
+A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ \beta_{A,B}
+= \mathrm{id}_{A \otimes B}$ for all $A, B$.
 \end{definition}
 
-%\begin{remark}
-%Symmetric monoidal categories are exactly the setting in which the categorical no-cloning obstruction is vacuous in one direction and sharp in the other: $\mathrm{Set}$ (cartesian, hence symmetric) admits natural copying, while $\mathrm{FdHilb}$, though symmetric ($\beta$ is the usual swap $v \otimes w \mapsto w \otimes v$), is \emph{not} cartesian, and it is exactly this failure — not the presence or absence of $\beta$ itself — that obstructs cloning. For anyon models, $\beta_{A,B} \neq \beta_{B,A}^{-1}$ in general (nontrivial braiding, not mere permutation), which is precisely the extra data making a modular tensor category non-symmetric and physically encoding anyonic exchange statistics.
-%\end{remark}
+%\begin{remark} Symmetric monoidal categories are exactly the setting in which the
+%categorical no-cloning obstruction is vacuous in one direction and sharp in the other:
+%$\mathrm{Set}$ (cartesian, hence symmetric) admits natural copying, while
+%$\mathrm{FdHilb}$, though symmetric ($\beta$ is the usual swap $v \otimes w \mapsto w
+%\otimes v$), is \emph{not} cartesian, and it is exactly this failure — not the presence
+%or absence of $\beta$ itself — that obstructs cloning. For anyon models, $\beta_{A,B}
+%\neq \beta_{B,A}^{-1}$ in general (nontrivial braiding, not mere permutation), which is
+%precisely the extra data making a modular tensor category non-symmetric and physically
+%encoding anyonic exchange statistics. \end{remark}
+
+\begin{definition}\label{cat:def:directSum}
+  Given a category $C$ with objects $\{a_n\}$, an object $\bigoplus_{i=1}^n a_i \in C$ is
+  called the \emph{\green{direct sum}}. This is equipped with the injection and projection
+  map
+  \[
+    \iota_i : a_i \to \bigoplus a_i \quad \text{ and } \quad \pi_i : \bigoplus a_i \to a_i 
+  \]
+  such that
+  \[
+    \pi_i \circ \iota_i = id_{a_i} \forall i \quad \text{ and } \quad \sum_{i}^{} \iota_i \pi_i = \id_{\bigoplus a_i}
+  \]
+\end{definition}
+
+Recall that for semisimple categories, there is an isomorphism $\Phi: \bigoplus_{c,\mu} R_c \to R_a \otimes R_b$. Then we can build projection and injection maps in dependence of the tensor product by the following diagram:
+\begin{equation}\label{cat:eq:fusionprop}
+% https://q.uiver.app/#q=WzAsNSxbMCwwLCJcXGJpZ29wbHVzX2MgUl9jIl0sWzIsMCwiUl9hIFxcb3RpbWVzIFJfYiJdLFswLDEsIlJfYyJdLFs0LDAsIlxcYmlnb3BsdXNfYyBSX2MiXSxbNCwxLCJSX2MiXSxbMCwxLCJcXFBoaSJdLFsyLDAsIlxcaW90YV9jIl0sWzIsMSwiXFxleGlzdHMgXFxpb3RhX3tjLFxcbXV9XnthYn0iLDJdLFsxLDMsIlxcUGhpXnstMX0iXSxbMyw0LCJcXHBpX2MiXSxbMSw0LCJcXGV4aXN0c1xccGlfe2FifV57YyxcXG11fSIsMl1d
+\begin{tikzcd}
+	{\bigoplus_c R_c} && {R_a \otimes R_b} && {\bigoplus_c R_c} \\
+	{R_c} &&&& {R_c}
+	\arrow["\Phi", from=1-1, to=1-3]
+	\arrow["{\Phi^{-1}}", from=1-3, to=1-5]
+	\arrow["{\exists\pi_{ab}^{c,\mu}}"', from=1-3, to=2-5]
+	\arrow["{\pi_c}", from=1-5, to=2-5]
+	\arrow["{\iota_c}", from=2-1, to=1-1]
+	\arrow["{\exists \iota_{c,\mu}^{ab}}"', from=2-1, to=1-3]
+\end{tikzcd}
+\end{equation}
+
+Furthermore, these admit similar constraints as the direct sum:
+\begin{equation}
+  \pi^{c,\mu}_{ab} \iota_{d,\nu}^{ab} = \pi_{c,\mu} \Phi^{-1}\Phi  \iota_{d,\nu} = \delta_{cd}\delta_{\mu\nu} \id_{R_c}
+\end{equation}
+and
+\begin{equation}
+  \sum_{c,\mu}^{} \iota_{c,\mu}^{ab} \pi^{c,\mu}_{ab} = \Phi \left(\sum_{c,\mu}^{} \iota_{c,\mu}\pi_{c,\mu}\right) \Phi^{-1} = \Phi \id_{\bigoplus R_{c}} \Phi^{-1} = \id_{R_a \otimes R_b}  
+\end{equation}
+
 
 \begin{definition}[Enriched Category]
-Let $(\mathcal{V}, \otimes, I, \alpha, \lambda, \rho)$ be a monoidal category. A category $\mathcal{C}$ \emph{enriched over $\mathcal{V}$} (or a \emph{$\mathcal{V}$-category}) consists of
+Let $(\mathcal{V}, \otimes, I, \alpha, \lambda, \rho)$ be a monoidal category. A category
+$\mathcal{C}$ \emph{enriched over $\mathcal{V}$} (or a \emph{$\mathcal{V}$-category})
+consists of
 \begin{enumerate}
   \item a set of objects $\mathrm{ob}(\mathcal{C})$,
   \item for every $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-object} $\mathcal{C}(A,B) \in \mathcal{V}$ (rather than $Set$),
@@ -220,9 +275,16 @@ Let $(\mathcal{V}, \otimes, I, \alpha, \lambda, \rho)$ be a monoidal category. A
 
 
 
-\subsection{Decompositions for Categorical Networks}
+\subsection{Decompositions for Categorical Networks}\label{cat:sub:decomp}
 
-This chapter generalizes the decomposition in \cite[Equation~27]{singhTensorNetworkStates2012a} to both Fusion Categories and the Representation categories of compact groups. Note that in \cite{devosTensorKitjlJuliaPackage2025}, such a generalization is given for representations of finite groups, which does not include $SU(2)$. However I do not yet know if we should do so, since I not yet sure how to argue the F moves here. If we instead take the deformation $U_q(sl_2)$ we get finiteness (and fusion cats?), unfortunately $U_q(sl_2)$ is not a group.
+This chapter generalizes the decomposition in
+\cite[Equation~27]{singhTensorNetworkStates2012a} to both Fusion Categories and the
+Representation categories of compact groups. Note that in
+\cite{devosTensorKitjlJuliaPackage2025}, such a generalization is given for
+representations of finite groups, which does not include $SU(2)$. However I do not yet
+know if we should do so, since I not yet sure how to argue the F moves here. If we instead
+take the deformation $U_q(sl_2)$ we get finiteness (and fusion cats?), unfortunately
+$U_q(sl_2)$ is not a group.
 
 
 
@@ -337,23 +399,22 @@ This chapter generalizes the decomposition in \cite[Equation~27]{singhTensorNetw
 
 \subsection{Decomposition of semisimple Categories}
 
-%Suppose that $(V,\rho_V)$ and $(W,\rho_W)$ are representations of $G$.
-%
-%\begin{definition}
-%  A linear map $f : V \to W$ is called an \emph{intertwiner} if
-%  \[
-%    f \circ \rho_V(g) = \rho_W(g) \circ f \quad g \in G.
-%  \]
-%  Define the \emph{Vector space of Interwtiners} as 
-%  \[
-%    Hom_G(V,W)
-%  \]
-%\end{definition}
-%
-%Suppose now $V^a$ is one of the reps that decomposes as 
-%\[
-%  V^a \eqsim \bigoplus_{\cdot = 1}^{d_a} R_a.
-%\]
+\begin{lemma}[Isotypic Decomposition]
+\label{lem:IsotypicDecomposition}
+Let $C$ be a $k$-enriched semisimple category. Then for every $V \in C$, writing $D_a
+\coloneqq \Hom_C(R_a,V)$ for its \emph{degeneracy spaces}, only finitely many $D_a$ are
+nonzero, each is finite-dimensional, and there is a canonical isomorphism
+\[
+  \bigoplus_{a \in L} D_a \otimes R_a \;\xrightarrow{ \sim }\; V
+\]
+with $D_a\otimes R_a$ as in Lemma~\ref{lem:TensorBiproduct}.
+\end{lemma}
+\begin{proof}
+  Observe that $V = \bigoplus_{i} R_{a}^{\oplus m_a}$ and
+  \[
+    Hom_c(R_a, V) = \bigoplus_b Hom(R_a, R_b^{\oplus m_b})
+  \]
+\end{proof}
 
 \begin{lemma}
   \label{lem:IsotopyHelper}
@@ -379,7 +440,8 @@ This chapter generalizes the decomposition in \cite[Equation~27]{singhTensorNetw
 \end{proof}
 
 \begin{lemma}
-  Let $D$ be a finite dimensional $k$-vector space and let $V$ be an object of a $k$-linear category $C$. Then
+  Let $D$ be a finite dimensional $k$-vector space and let $V$ be an object of a
+  $k$-linear category $C$. Then
   \[
     D \otimes V
     \cong
@@ -391,7 +453,8 @@ This chapter generalizes the decomposition in \cite[Equation~27]{singhTensorNetw
   \[
     D \cong \bigoplus_{i=1}^n k \cdot e_{i} \cong k^n
   \]
-  Since in a $k$-linear category the tensor product is additive (should we prove this?), we can distribute
+  Since in a $k$-linear category the tensor product is additive (should we prove this?),
+  we can distribute
   \[
     D \otimes W \cong \bigoplus_1^n (k \cdot e_{i} \otimes W) \cong \bigoplus W = W^{\oplus n}
   \]
@@ -399,7 +462,8 @@ This chapter generalizes the decomposition in \cite[Equation~27]{singhTensorNetw
 
 \begin{lemma}[Isotopic Decomposition]
   \label{IsotopicDecomposition}
-  Let $C$ be a semisimple $k$-linear category with simple objects $\{R_a\}$. Then every object $V \in C$ admits a canonical decomposition
+  Let $C$ be a semisimple $k$-linear category with simple objects $\{R_a\}$. Then every
+  object $V \in C$ admits a canonical decomposition
   \begin{equation}
     V \cong \bigoplus_a D_a \otimes R_{a}.
   \end{equation}
@@ -532,8 +596,9 @@ $$
 
 \begin{theorem}[Decomposition of Semisimple Categories]
   \label{DecompositionOfSemisimpleCategories}
-  Let $C$ be a semisimple, monoidal, $k$-linear category whose tensor product is $k$-linear in each variable, with simple objects $\{R_a\}_{a\in L}$ and let $V_i, W_i$ be a collection of objects in $C$.
-  Every morphism
+  Let $C$ be a semisimple, monoidal, $k$-linear category whose tensor product is
+  $k$-linear in each variable, with simple objects $\{R_a\}_{a\in L}$ and let $V_i, W_i$
+  be a collection of objects in $C$. Every morphism
   \[
     T\in \mathrm{Hom}_C\left(\bigotimes_{i = 1}^n V_i, \bigotimes_{i = 1}^m W_{i}\right)
   \]
@@ -714,7 +779,9 @@ $$
 \end{align*}
 \end{proof}
 
-\begin{corollary}[Operators are block matrices \cite{kongInvitationTopologicalOrders2022b}] % TODO figure out why i cant cie theorems in thm header.
+\begin{corollary}[Operators are block matrices
+\cite{kongInvitationTopologicalOrders2022b}] % TODO figure out why i cant cie theorems in
+thm header.
   \label{cor:operator_blocks}
   An operator
   \[
@@ -729,11 +796,16 @@ $$
 \end{corollary}
 
 \begin{corollary}
-  Let $Q_{\mu, \eta}$ be a basis of $Hom_C\bigl(\bigotimes_{\hat{a}} R_{\hat{a}}, \bigotimes_{\hat{b} } R_{\hat{b} }  \bigr)$ where $\mu$ denotes the multiplicities and $\eta$ the internal fusions. In a \emph{multiplicity-free} Category we will omit $\mu$ as a label. 
+  Let $Q_{\mu, \eta}$ be a basis of $Hom_C\bigl(\bigotimes_{\hat{a}} R_{\hat{a}},
+  \bigotimes_{\hat{b} } R_{\hat{b} }  \bigr)$ where $\mu$ denotes the multiplicities and
+  $\eta$ the internal fusions. In a \emph{multiplicity-free} Category we will omit $\mu$
+  as a label. 
 \end{corollary}
 
 \begin{example}
-  However, now assign $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ to each leg in the example above. Each leg then becomes $V_0 \oplus V_1 \cong \mathbb{C} \otimes V_0 \oplus \mathbb{C} \otimes V_1$. Then we can start with the decomposition.
+  However, now assign $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ to each leg in the example
+  above. Each leg then becomes $V_0 \oplus V_1 \cong \mathbb{C} \otimes V_0 \oplus
+  \mathbb{C} \otimes V_1$. Then we can start with the decomposition.
   \[
     Hom_C(\bigoplus_{a,b,c \in (0,1)} (C \otimes C \otimes C) \otimes V_a \otimes V_b \otimes V_c, \bigoplus_{b \in (0,1)} C \otimes V_b) 
   \]
@@ -746,8 +818,9 @@ $$
 \end{example}
 
 \begin{example}
-  Easier. 
-  However, now assign $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ to each leg in the example above. Each leg then becomes $V_0 \oplus V_1 \cong \mathbb{C} \otimes V_0 \oplus \mathbb{C} \otimes V_1$. Then we can start with the decomposition.
+  Easier. However, now assign $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ to each leg in the
+  example above. Each leg then becomes $V_0 \oplus V_1 \cong \mathbb{C} \otimes V_0 \oplus
+  \mathbb{C} \otimes V_1$. Then we can start with the decomposition.
   \[
     Hom_C\left(\bigoplus_{a,b\in (0,1)} (C \otimes C) \otimes V_a \otimes V_b \bigoplus_{b \in (0,1)} C \otimes V_b \right) 
   \]
@@ -787,10 +860,9 @@ $$
 \end{example}
 
 \begin{example}[Anyonic matrix operator]
-  Finally, consider a $4 \to 4$ anyon operator with one leg on each side, representing the space $\mathrm{Hom}((\tau \otimes \tau \otimes \tau \otimes \tau), (\tau \otimes \tau \otimes \tau \otimes \tau))$. 
-  THe full decomposition is $2 + 3\tau$.
-  Hence
-  we obtain
+  Finally, consider a $4 \to 4$ anyon operator with one leg on each side, representing the
+  space $\mathrm{Hom}((\tau \otimes \tau \otimes \tau \otimes \tau), (\tau \otimes \tau
+  \otimes \tau \otimes \tau))$. THe full decomposition is $2 + 3\tau$. Hence we obtain
   \[
     \Hom_C\!\left(
       (k^2 \otimes 1)\oplus(k^3\otimes\tau),
@@ -924,40 +996,7 @@ Lets give a coordinatized approach to fusion categories:
 
 
 
-\begin{definition}[Direct sum]
-  Given a category $C$ with objects $\{a_n\}$, an object $\bigoplus_{i=1}^n a_i \in C$ is called the \emph{direct sum}. This is equipped with the injections and projections
-  \[
-    \iota_i : a_i \to \bigoplus a_i \quad \text{ and } \quad \pi_i : \bigoplus a_i \to a_i 
-  \]
-  such that
-  \[
-    \pi_i \circ \iota_i = id_{a_i} \forall i
-  \]
-\end{definition}
 
-Recall that for semisimple categories, there is an isomorphism $\Phi: \bigoplus_{c,\mu} R_c \to R_a \otimes R_b$. Then we can build projection and injection maps in dependence of the tensor product by the following diagram:
-\begin{equation}\label{cat:eq:fusionprop}
-% https://q.uiver.app/#q=WzAsNSxbMCwwLCJcXGJpZ29wbHVzX2MgUl9jIl0sWzIsMCwiUl9hIFxcb3RpbWVzIFJfYiJdLFswLDEsIlJfYyJdLFs0LDAsIlxcYmlnb3BsdXNfYyBSX2MiXSxbNCwxLCJSX2MiXSxbMCwxLCJcXFBoaSJdLFsyLDAsIlxcaW90YV9jIl0sWzIsMSwiXFxleGlzdHMgXFxpb3RhX3tjLFxcbXV9XnthYn0iLDJdLFsxLDMsIlxcUGhpXnstMX0iXSxbMyw0LCJcXHBpX2MiXSxbMSw0LCJcXGV4aXN0c1xccGlfe2FifV57YyxcXG11fSIsMl1d
-\begin{tikzcd}[cramped]
-	{\bigoplus_c R_c} && {R_a \otimes R_b} && {\bigoplus_c R_c} \\
-	{R_c} &&&& {R_c}
-	\arrow["\Phi", from=1-1, to=1-3]
-	\arrow["{\Phi^{-1}}", from=1-3, to=1-5]
-	\arrow["{\exists\pi_{ab}^{c,\mu}}"', from=1-3, to=2-5]
-	\arrow["{\pi_c}", from=1-5, to=2-5]
-	\arrow["{\iota_c}", from=2-1, to=1-1]
-	\arrow["{\exists \iota_{c,\mu}^{ab}}"', from=2-1, to=1-3]
-\end{tikzcd}
-\end{equation}
-
-Furthermore, these admit similar constraints as the direct sum:
-\begin{equation}
-  \pi^{c,\mu}_{ab} \iota_{d,\nu}^{ab} = \pi_{c,\mu} \Phi^{-1}\Phi  \iota_{d,\nu} = \delta_{cd}\delta_{\mu\nu} \id_{R_c}
-\end{equation}
-and
-\begin{equation}
-  \sum_{c,\mu}^{} \iota_{c,\mu}^{ab} \pi^{c,\mu}_{ab} = \Phi \sum_{c,\mu}^{} \iota_{c,\mu}\pi_{c,\mu} \Phi^{-1} = \Phi \id_{\bigoplus R_{c}} \Phi^{-1} = \id_{R_a \otimes R_b}  
-\end{equation}
 
 
 
