@@ -1,9 +1,20 @@
-The goal of this chapter is to provide a viewpoint on the previous chapters from the perspective of categories. In \Cref{cat:sub:introCat} we provide a short introduction to category theory, from the perspective of quantum parallelism, and the structures we have already met in the discussion on representations and anyons. In \Cref{cat:sub:decomp} we provide the core theory in terms of the decomposition, which is crucial to previous chapters. Naturally, this incurs a rigorous explanation of fusion trees. 
-
+The goal of this chapter is to provide a viewpoint on the previous chapters from the
+perspective of categories. In \Cref{cat:sub:introCat} we provide a short introduction to
+category theory, from the perspective of quantum parallelism, and the structures we have
+already met in the discussion on representations and anyons.
+\Cref{cat:sub:categoricalQuantum} provides a short review of how familiar structures such
+as the no-cloning theorem arise from the categorification of quantum mechanics. In
+\Cref{cat:sub:decomp} we provide the core theory in terms of the decomposition, which is
+crucial to previous chapters. Naturally, this incurs a rigorous explanation of fusion
+trees. 
 
 \subsection{Introduction to Category Theory}\label{cat:sub:introCat}
 
-The general idea of a category is that it admits a sort of \emph{interface}. As noticed, there are many similarities in data and structure between the entities we already dealt with, i.e. the tensor product of vector space, the tensor product of representations, of Hilbert spaces etc.... We can view all these concepts as a category with additional constraints added.
+The general idea of a category is that it admits a sort of \emph{interface}. As noticed,
+there are many similarities in data and structure between the entities we already dealt
+with, i.e. the tensor product of vector space, the tensor product of representations, of
+Hilbert spaces etc.... We can view all these concepts as a category with additional
+constraints added.
 
 \begin{definition}\label{cat:def:category}
   A \emph{\green {category}} $\mathcal{C}$ consists of
@@ -20,7 +31,10 @@ The general idea of a category is that it admits a sort of \emph{interface}. As 
   f = \mathrm{id}_B \circ f$ for all $f : A \to B$.
 \end{definition}
 
-Note that some categories such as $\Rep(G)$ and $\VecCat{\C}$ admit more structures than ordinary categories. For fdVect, the hom spaces of linear maps $V \to W$ have a natural identification as a vector space as well. The composition map is $\C$-bilinear. This immedeately motivates the following definition:
+Note that some categories such as $\Rep(G)$ and $\VecCat{\C}$ admit more structures than
+ordinary categories. For fdVect, the hom spaces of linear maps $V \to W$ have a natural
+identification as a vector space as well. The composition map is $\C$-bilinear. This
+immedeately motivates the following definition:
 
 \begin{definition}\label{cat:def:clinear}
   A \green{\emph{$\C$-linear category}} endows each of its hom-sets with a module structure, such that the composition is bilinear. That is
@@ -80,17 +94,7 @@ This should motivate the following definition:
 For simplicity we denote a monoidal category as the sextuple $(\CC, \otimes, I, \alpha, \lambda, \rho   )$.
 \end{definition}
 
-TODO: state no cloning after \cite{abramskyNoCloningCategoricalQuantum2012}
 
-% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWIl0sWzAsMSwiViBcXG90aW1lcyBWIl0sWzIsMCwiVyJdLFsyLDEsIlcgXFxvdGltZXMgVyJdLFswLDIsImYiXSxbMSwzLCJmIFxcb3RpbWVzIGYiXSxbMCwxLCJcXGRlbHRhIiwyXSxbMiwzLCJcXGRlbHRhIl1d
-\begin{tikzcd}[cramped]
-	V && W \\
-	{V \otimes V} && {W \otimes W}
-	\arrow["f", from=1-1, to=1-3]
-	\arrow["\delta"', from=1-1, to=2-1]
-	\arrow["\delta", from=1-3, to=2-3]
-	\arrow["{f \otimes f}", from=2-1, to=2-3]
-\end{tikzcd}
 
 \begin{definition}\label{cat:def:braidedMonoidalCat} A \emph{\green{braided monoidal
 category}} is a monoidal category $(\mathcal{C}, \otimes, I, \alpha, \lambda, \rho)$
@@ -126,16 +130,6 @@ A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ \b
 = \mathrm{id}_{A \otimes B}$ for all $A, B$.
 \end{definition}
 
-%\begin{remark} Symmetric monoidal categories are exactly the setting in which the
-%categorical no-cloning obstruction is vacuous in one direction and sharp in the other:
-%$\mathrm{Set}$ (cartesian, hence symmetric) admits natural copying, while
-%$\mathrm{FdHilb}$, though symmetric ($\beta$ is the usual swap $v \otimes w \mapsto w
-%\otimes v$), is \emph{not} cartesian, and it is exactly this failure — not the presence
-%or absence of $\beta$ itself — that obstructs cloning. For anyon models, $\beta_{A,B}
-%\neq \beta_{B,A}^{-1}$ in general (nontrivial braiding, not mere permutation), which is
-%precisely the extra data making a modular tensor category non-symmetric and physically
-%encoding anyonic exchange statistics. \end{remark}
-
 \begin{definition}\label{cat:def:directSum}
   Given a category $C$ with objects $\{a_n\}$, an object $\bigoplus_{i=1}^n a_i \in C$ is
   called the \emph{\green{direct sum}}. This is equipped with the injection and projection
@@ -149,7 +143,13 @@ A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ \b
   \]
 \end{definition}
 
-Recall that for semisimple categories, there is an isomorphism $\Phi: \bigoplus_{c,\mu} R_c \to R_a \otimes R_b$. Then we can build projection and injection maps in dependence of the tensor product by the following diagram:
+\begin{definition}
+  A category $\CC$ is called \green{\emph{semisimple}} if every object can be written as a direct sum of simple objects. TODO: simple. 
+\end{definition}
+
+Recall that for semisimple categories, there is an isomorphism $\Phi: \bigoplus_{c,\mu}
+R_c \to R_a \otimes R_b$. Then we can build projection and injection maps in dependence of
+the tensor product by the following diagram:
 \begin{equation}\label{cat:eq:fusionprop}
 % https://q.uiver.app/#q=WzAsNSxbMCwwLCJcXGJpZ29wbHVzX2MgUl9jIl0sWzIsMCwiUl9hIFxcb3RpbWVzIFJfYiJdLFswLDEsIlJfYyJdLFs0LDAsIlxcYmlnb3BsdXNfYyBSX2MiXSxbNCwxLCJSX2MiXSxbMCwxLCJcXFBoaSJdLFsyLDAsIlxcaW90YV9jIl0sWzIsMSwiXFxleGlzdHMgXFxpb3RhX3tjLFxcbXV9XnthYn0iLDJdLFsxLDMsIlxcUGhpXnstMX0iXSxbMyw0LCJcXHBpX2MiXSxbMSw0LCJcXGV4aXN0c1xccGlfe2FifV57YyxcXG11fSIsMl1d
 \begin{tikzcd}
@@ -191,89 +191,23 @@ consists of
   \]
 \end{enumerate}
 \end{definition}
-%
-%such that composition is \emph{associative} and \emph{unital}, expressed by the commutativity of the following diagrams in $\mathcal{V}$:
-%
-%\begin{center}
-%\begin{tikzpicture}[baseline=(current bounding box.center)]
-%  \node (TL) at (0,2)     {$(\mathcal{C}(C,D) \otimes \mathcal{C}(B,C)) \otimes \mathcal{C}(A,B)$};
-%  \node (TR) at (5.5,2)   {$\mathcal{C}(C,D) \otimes (\mathcal{C}(B,C) \otimes \mathcal{C}(A,B))$};
-%  \node (ML) at (0,0.6)   {$\mathcal{C}(B,D) \otimes \mathcal{C}(A,B)$};
-%  \node (MR) at (5.5,0.6) {$\mathcal{C}(C,D) \otimes \mathcal{C}(A,C)$};
-%  \node (B)  at (2.75,-1) {$\mathcal{C}(A,D)$};
-%
-%  \draw[->] (TL) -- node[above] {$\scriptstyle \alpha$} (TR);
-%  \draw[->] (TL) -- node[left]  {$\scriptstyle \circ_{B,C,D} \otimes \, \mathcal{C}(A,B)$} (ML);
-%  \draw[->] (TR) -- node[right] {$\scriptstyle \mathcal{C}(C,D) \otimes \, \circ_{A,B,C}$} (MR);
-%  \draw[->] (ML) -- node[below left]  {$\scriptstyle \circ_{A,B,D}$} (B);
-%  \draw[->] (MR) -- node[below right] {$\scriptstyle \circ_{A,C,D}$} (B);
-%\end{tikzpicture}
-%\hspace{1.5cm}
-%\begin{tikzpicture}[baseline=(current bounding box.center)]
-%  \node (IB) at (0,2)     {$I \otimes \mathcal{C}(A,B)$};
-%  \node (BI) at (4,2)     {$\mathcal{C}(A,B) \otimes I$};
-%  \node (TL) at (0,1)     {$\mathcal{C}(B,B) \otimes \mathcal{C}(A,B)$};
-%  \node (TR) at (4,1)     {$\mathcal{C}(A,B) \otimes \mathcal{C}(A,A)$};
-%  \node (CC) at (2,-0.2)  {$\mathcal{C}(A,B)$};
-%
-%  \draw[->] (IB) -- node[right] {$\scriptstyle j_B \otimes id$} (TL);
-%  \draw[->] (BI) -- node[left]  {$\scriptstyle id \otimes j_A$} (TR);
-%  \draw[->] (TL) -- node[below left]  {$\scriptstyle \circ_{A,B,B}$} (CC);
-%  \draw[->] (TR) -- node[below right] {$\scriptstyle \circ_{A,A,B}$} (CC);
-%  \draw[->] (IB) -- node[below left, pos=0.4]  {$\scriptstyle \lambda_{\mathcal{C}(A,B)}$} (CC);
-%  \draw[->] (BI) -- node[below right, pos=0.4] {$\scriptstyle \rho_{\mathcal{C}(A,B)}$} (CC);
-%\end{tikzpicture}
-%\end{center}
-%
-%i.e.\ the associator $\alpha$ intertwines the two ways of composing three morphisms, and composing with a unit morphism $j_A$ or $j_B$ agrees with the unitors $\lambda, \rho$ of $\mathcal{V}$.
-%\end{definition}
-%
-%\begin{remark}
-%Taking $\mathcal{V} = \mathrm{Set}$ (with its cartesian monoidal structure) recovers the notion of an ordinary (locally small) category: $\mathcal{C}(A,B)$ is just a set, and $\circ_{A,B,C}$, $j_A$ are the usual composition and identity, since $I \otimes X \cong X \cong X \otimes I$ becomes the trivial statement $\{*\} \times X \cong X$.
-%
-%Taking $\mathcal{V} = \mathrm{Vect}_k$ (with $\otimes = \otimes_k$, $I = k$) recovers exactly the notion of a \emph{$k$-linear category}: hom-sets become $k$-vector spaces, and $k$-bilinearity of composition is precisely the statement that $\circ_{A,B,C}$ factors through $\mathcal{C}(B,C) \otimes_k \mathcal{C}(A,B)$ rather than merely being a bilinear map out of the product $\mathcal{C}(B,C) \times \mathcal{C}(A,B)$.
-%\end{remark}
-%%
-%
-%\begin{definition}[Biproduct / Direct Sum]
-%Let $\mathcal{C}$ be an additive category (in particular, a category with a zero object $0$ and finite products/coproducts agreeing appropriately). Given objects $X_1, \dots, X_n \in \mathcal{C}$, a \emph{biproduct} $X_1 \oplus \cdots \oplus X_n$ is an object equipped with
-%
-%\begin{itemize}
-%  \item \emph{injection} morphisms $\iota_k : X_k \to X_1 \oplus \cdots \oplus X_n$,
-%  \item \emph{projection} morphisms $\pi_k : X_1 \oplus \cdots \oplus X_n \to X_k$,
-%\end{itemize}
-%
-%for $k = 1, \dots, n$, satisfying
-%
-%\[
-%  \pi_j \circ \iota_k = 
-%  \begin{cases}
-%    \mathrm{id}_{X_k} & j = k \\
-%    0 & j \neq k
-%  \end{cases}
-%  \qquad \text{and} \qquad
-%  \sum_{k=1}^n \iota_k \circ \pi_k = \mathrm{id}_{X_1 \oplus \cdots \oplus X_n}.
-%\]
-%
-%Equivalently (and this is the content of the definition, not an extra assumption): $(X_1\oplus\cdots\oplus X_n, \{\iota_k\})$ is simultaneously
-%
-%\begin{itemize}
-%  \item a \textbf{coproduct}: for every $Y \in \mathcal{C}$ and morphisms $f_k : X_k \to Y$, there is a unique $f : X_1\oplus\cdots\oplus X_n \to Y$ with $f \circ \iota_k = f_k$ for all $k$;
-%  \item a \textbf{product} (via the same object, with the $\pi_k$): for every $Y \in \mathcal{C}$ and morphisms $g_k : Y \to X_k$, there is a unique $g : Y \to X_1\oplus\cdots\oplus X_n$ with $\pi_k \circ g = g_k$ for all $k$;
-%\end{itemize}
-%
-%and these two universal properties agree on the same underlying object.
-%\end{definition}
-%
-%\begin{remark}
-%In a general (additive) category, having a product and having a coproduct on the same finite diagram are \emph{a priori} unrelated universal properties satisfied by \emph{a priori} different objects. What makes $\oplus$ special is that in an $\mathrm{Ab}$-enriched (or $k$-linear) category, product and coproduct on the same finite family, when they exist, automatically coincide — this is precisely what the identities $\pi_j\iota_k = \delta_{jk}$, $\sum_k \iota_k\pi_k = \mathrm{id}$ encode, and the zero morphisms $0 : X_j \to X_k$ used above only make sense because hom-sets are enriched in $\mathrm{Ab}$ (or $\mathrm{Vect}_k$), giving each hom-set a zero element. So biproducts are really a phenomenon of \emph{additive} enrichment, not of monoidal or plain categorical structure alone.
-%\end{remark}
-%
-%\begin{remark}[For a semisimple $\C$-linear category]
-%This is exactly the $\oplus$ used in the decomposition $Y \cong \bigoplus_i X_i^{\oplus n_i}$ from semisimplicity: since $\mathrm{Hom}(X_i, X_j) = 0$ for $i \neq j$ (distinct simples) and $\mathrm{Hom}(X_i,X_i) = \mathbb{C}$, the biproduct structure on $\bigoplus_i X_i^{\oplus n_i}$ is literally witnessed by these $\pi_j\iota_k = \delta_{jk}\,\mathrm{id}$ relations, with the multiplicities $n_i = \dim \mathrm{Hom}(X_i, Y)$ recovered as the number of copies of $\iota$ needed for $X_i$.
-%\end{remark}
 
+\subsection{Categorical Quantum Mechanics}\label{cat:sub:categoricalQuantum}
 
+By a result of \textcite{abramskyNoCloningCategoricalQuantum2012}, building on the theory
+of coecke et al., we can state the no-cloning theorem in categorical form: This asserts
+that there is no diagonal $\delta : V \to  V \otimes V$ such that the following diagram
+commutes: 
+
+% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWIl0sWzAsMSwiViBcXG90aW1lcyBWIl0sWzIsMCwiVyJdLFsyLDEsIlcgXFxvdGltZXMgVyJdLFswLDIsImYiXSxbMSwzLCJmIFxcb3RpbWVzIGYiXSxbMCwxLCJcXGRlbHRhIiwyXSxbMiwzLCJcXGRlbHRhIl1d
+\begin{tikzcd}
+  V && W \\
+	{V \otimes V} && {W \otimes W}
+	\arrow["f", from=1-1, to=1-3]
+	\arrow["\delta"', from=1-1, to=2-1]
+	\arrow["\delta", from=1-3, to=2-3]
+	\arrow["{f \otimes f}", from=2-1, to=2-3]
+\end{tikzcd}
 
 \subsection{Decompositions for Categorical Networks}\label{cat:sub:decomp}
 
@@ -397,8 +331,6 @@ $U_q(sl_2)$ is not a group.
 %\]
 
 
-\subsection{Decomposition of semisimple Categories}
-
 \begin{lemma}[Isotypic Decomposition]
 \label{lem:IsotypicDecomposition}
 Let $C$ be a $k$-enriched semisimple category. Then for every $V \in C$, writing $D_a
@@ -415,6 +347,8 @@ with $D_a\otimes R_a$ as in Lemma~\ref{lem:TensorBiproduct}.
     Hom_c(R_a, V) = \bigoplus_b Hom(R_a, R_b^{\oplus m_b})
   \]
 \end{proof}
+
+
 
 \begin{lemma}
   \label{lem:IsotopyHelper}
@@ -927,7 +861,9 @@ with morphisms given by
 \]
 
 \begin{definition}[The Deligne Tensor Product of Categories]
-Let $k$ be a field, and let $\mathcal{C}$ and $\mathcal{D}$ be two $k$-linear, finite abelian categories. The \textbf{Deligne tensor product}, denoted by $\mathcal{C} \boxtimes \mathcal{D}$, is a $k$-linear finite abelian category equipped with a $k$-bilinear functor
+Let $k$ be a field, and let $\mathcal{C}$ and $\mathcal{D}$ be two $k$-linear, finite
+abelian categories. The \textbf{Deligne tensor product}, denoted by $\mathcal{C} \boxtimes
+\mathcal{D}$, is a $k$-linear finite abelian category equipped with a $k$-bilinear functor
 \[ \boxtimes: \mathcal{C} \times \mathcal{D} \longrightarrow \mathcal{C} \boxtimes \mathcal{D}, \quad (X, Y) \mapsto X \boxtimes Y \]
 TODOTOD!!
 \end{definition}
@@ -937,8 +873,12 @@ TODOTOD!!
   Let $G$ be a group and $k$ a field. The \emph{category of linear representations of $G$ over $k$} consists of the following data:
 
   \begin{itemize}
-    \item \textbf{Objects:} The objects $\Rep_k(G)$ are pairs $(V, \rho_V)$, where $V$ is a $k$-vector space and $\rho_V : G  \to \mathrm{GL}(V)$.  
-    \item \textbf{Morphisms:} For any two objects $(V, \rho_V)$ and $(W, \rho_W)$ in $\Rep_k(G)$, a morphism from $V$ to $W$ is a $k$-linear transformation $f: V \to W$ that is $G$-invariant (also called an \textit{intertwiner}). That is, for every element $g \in G$, the following diagram commutes:
+    \item \textbf{Objects:} The objects $\Rep_k(G)$ are pairs $(V, \rho_V)$, where $V$ is
+    a $k$-vector space and $\rho_V : G  \to \mathrm{GL}(V)$.  
+    \item \textbf{Morphisms:} For any two objects $(V, \rho_V)$ and $(W, \rho_W)$ in
+    $\Rep_k(G)$, a morphism from $V$ to $W$ is a $k$-linear transformation $f: V \to W$
+    that is $G$-invariant (also called an \textit{intertwiner}). That is, for every
+    element $g \in G$, the following diagram commutes:
     \[
     \begin{tikzcd}
     V \arrow[r, "\rho_V(g)"] \arrow[d, "f"'] & V \arrow[d, "f"] \\
@@ -983,14 +923,6 @@ TODOTOD!!
 
 
 Lets give a coordinatized approach to fusion categories:
-
-\begin{definition}[Fusion Category in Vector Form]
-  A \emph{fusion category} is a finite set of labels (sectors?) $L$ and vector spaces $V^{ab}_c$ for all $a,b,c \in L$, as well as the isomorphisms
-  \[
-    F^{abc}_{d} : \bigoplus_e V^{ab}_e \otimes V^{ec}_d \to \bigoplus_e V^{ae}_d \otimes V^{bc}_e
-  \]
-  such that the pentagon holds.
-\end{definition}
 
 
 
@@ -1150,28 +1082,7 @@ Lets give a coordinatized approach to fusion categories:
 \right\}_{ \substack{b, \, e_1, \dots,  e_{m-2}, \, f_1, \, \dots, \, f_{n-2} \\ \mu_1, \, \dots, \, \mu_{m-2}, \, \nu_1, \, \dots, \, \nu_{n-2}} }
 \end{equation}
 
-\begin{equation}
-\begin{gathered} % From the seminar paper and
-\begin{tikzpicture}
-  \node at (0,-0.1) {$\underset{e,f}{\bigoplus} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g $};
-  \draw[->, black] plot coordinates{(0.4,0.5) (2.5,1.5)};
-  \node at (0.9,1.3) {$id_{V_{e}^{ab}} \otimes F^{ecd}_{g}$};
-  \node at (4.0,1.9)  {$\underset{e,l}{\bigoplus} V^{ab}_e \otimes V^{cd}_{f} \otimes V^{el}_g$};
-  \node at (7.6, 1.1) {$F^{abl}_{g} \otimes id_{V^{cd}_{l}}$};
-  \draw[->] plot coordinates{(5.5, 1.5) (7.5,0.5)};
-  \node at (8.0,-0.1) {$\underset{k,l}{\bigoplus} V^{ak}_{g} \otimes V^{bl}_{k} \otimes V^{cd}_{l}$};
-  \node at (-0.4, -1.2) {$F^{abc}_{f} \otimes id_{V^{fd}_{g}}$};
-  \draw[->] plot coordinates{(0.4,-0.5) (1.5,-1.5)};
-  \node at (1.8,-2.1) {$\underset{f,h}{\bigoplus} V^{af}_{h} \otimes V^{bc}_{f}  \otimes V^{hd}_{g}$};
-  \node at (4.3, -2.5) {$F^{afd}_{g} \otimes id_{V^{bc}_{f}}$};
-  \draw[->] plot coordinates {(3.5,-2.0) (4.7, -2.0)};
-  \node at (6.5, -2.1) {$\underset{k,h}{\bigoplus} V^{ak}_{g} \otimes V^{bc}_{h} \otimes V^{hd}_{k} $};
-  \node at (8.2, -1.2) {$F^{bcd}_{k} \otimes id_{V^{ak}_{g}}$};
-  \draw[->] plot coordinates {(6.4, -1.5) (7.5,-0.5) };
-\end{tikzpicture}
-\label{cat:pentagon}
-\end{gathered}
-\end{equation}
+
 
 % https://q.uiver.app/#q=WzAsNSxbMCwyLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2UsZn0gVl57YWJ9X2UgXFxvdGltZXMgVl57ZWN9X2YgXFxvdGltZXMgVl57ZmR9X2cgIl0sWzAsNCwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFsyLDQsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c197ayxofSBWXntha31fZyBcXG90aW1lcyBWXntiY31faCBcXG90aW1lcyBWXntoZH1fayAiXSxbMSwwLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2YsaH0gVl57YWZ9X2ggXFxvdGltZXMgVl57YmN9X2YgXFxvdGltZXMgVl57aGR9X2cgIl0sWzIsMiwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFswLDEsIkZee2FiY31fZiBcXG90aW1lcyBpZF97Vl97Z31ee2ZkfX0iLDIseyJsYWJlbF9wb3NpdGlvbiI6NDB9XSxbMSwyLCJGXnthYmN9X2YgXFxvdGltZXMgaWRfe1Zfe2d9XntmZH19IiwyXSxbMCwzXSxbMyw0XSxbMiw0XV0=
 \begin{tikzcd}

@@ -15,22 +15,26 @@ In the following and the entire section, let $G$ be a compact group and $V,W$ be
 dimensional vector spaces. We mainly follow the textbook by \textcite{woit2016}.
 
 \begin{definition}[Representation]
-  A \emph{representation} of a compact group $G$ over a vector space $V$ is a group homomorphism
+  A \green{\emph{representation}} of a compact group $G$ over a vector space $V$ is a
+  group homomorphism
   \[
     \rho : G \to \GL V, \quad \rho(g)\rho(h) = \rho(g \cdot h), \quad \rho(e) = id_V
   \]
-  The \emph{representation space} is the tuple $(\rho, V)$ but usually we shorten this to just $V$.
+  The \green{\emph{representation space}} is denoted by the tuple $(\rho, V)$ but usually
+  we shorten this to just $V$.
 \end{definition}
 
 \noindent
-Equivalently we can state the definition of a representation of $G$ as imposed by its action on $V$, given as a map
+Equivalently we can state the definition of a representation of $G$ as imposed by its
+action on $V$, given as a map
   \begin{equation}
     \alpha : G \times V \to V, \quad (g,v) \mapsto g \cdot v
   \end{equation}
 such that this is linear, todo. I think we get the equality to the hom def if we set $g \cdot v = \rho(g)v$
 
 \begin{definition}[Intertwiner]
-  A linear map $A : V \to W$ is an \emph{intertwiner}, if under representations $\rho_V : G \to \GL V$ and $\rho_W : G \to \GL W$ it holds that
+  A linear map $A : V \to W$ is an \emph{intertwiner}, if under representations $\rho_V :
+  G \to \GL V$ and $\rho_W : G \to \GL W$ it holds that
   \[
     A \circ \rho_V(g) = \rho_W (g) \circ A \quad \forall g \in G.
   \]
