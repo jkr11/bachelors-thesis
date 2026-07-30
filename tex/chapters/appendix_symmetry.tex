@@ -1,0 +1,25 @@
+This is the proof for statement \Cref{sym:eq:u1_commutes} on page \pageref{sym:eq:u1_commutes}.
+
+\begin{proof}\label{app:proof:u1_commutes}
+  Recall that when two operators commute, we can \emph{simultaneously diagonalize} them
+  \cite[Theorem~1.3.12]{Horn_Johnson_2012}.
+
+  \begin{align*}
+    [H, S^z_{\mathrm{tot}}] = \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sum_{j = 1}^{N} \sigma_j^z ] 
+  \end{align*}
+  and since operators on different sites commute, only $j = i$ and $j = i+1$ contribute.
+  So we ought to write
+  \[
+    \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sigma_i^z + \sigma_{i+1}^z  ] 
+  \]
+  and now using the identity $[AB,C] = A[B,C] + [A,C]B$:
+  \[
+    [\sigma_i^x \sigma_{i+1}^x, \sigma_i^z + \sigma_{i+1}^z  ] = -2i(\sigma_i^y \sigma_{i+1}^x + \sigma_i^x \sigma_{i+1}^y  ) 
+  \]
+  \[
+    [\sigma_i^y \sigma_{i+1}^y, \sigma_i^z + \sigma_{i+1}^z  ] = 2i(\sigma_i^x \sigma_{i+1}^{y} + \sigma_i^y \sigma_{i+1}^x  )
+  \]
+  which cancel out. Furtermore, the $z$ spins commute as well. Thus the whole sum is $0$
+  and we are done.
+\end{proof}
+

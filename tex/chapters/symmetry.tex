@@ -71,7 +71,11 @@ such that this is linear, todo. I think we get the equality to the hom def if we
 \begin{definition}[Isotypic / Semisimple decomposition]
   Each semisimple representation $V$ decomposes as
   \[
-    V \cong \bigoplus_{i \in I} V^{\oplus n_i}
+    V \cong \bigoplus_{i \in I} V_i^{\oplus n_i} 
+    \cong 
+    \bigoplus_{i \in I} \C^{n_i} \otimes V_i
+    \cong
+    \bigoplus_{i \in I} V_i \otimes \C^{n_i}
   \]
   by grouping isomorphic simples. Is $n_i$ unique?
 \end{definition}
@@ -157,11 +161,30 @@ injection and projection maps, for which we provide a graphical calculus.
 \end{tikzpicture}
 \end{equation}
 
-
 These maps are more commonly known as \emph{clebsch-gordan coefficients}.
 %\[
 %  \ket{a,i;b,j \vert C,c}
 %\]
+
+On the operators between tensor products, i.e. $T \in \End(R_a \otimes R_b)$ this yields a formula
+\[
+  T \cong \bigoplus_c \id_{R_c} \otimes \; \C^{N_{ab}^c} 
+\]
+
+\begin{example}
+  The simple objects of $G = \U{1}$ are given by the one-dimensional representations
+  \[
+    \chi_n : U(1) \to \C^{\times}, \quad e^{i\theta} \mapsto e^{i n \theta} 
+  \]
+  and each representation of $\U{1}$ decomposes as 
+  \[
+    V \cong \bigoplus_{n \in \Z} \chi_n^{\oplus m_n}. 
+  \]
+  It's fusion rule is given by
+  \[
+    \chi_n \otimes \chi_m = \chi_{n + m}
+  \]
+\end{example}
 
 \begin{example}
   Let $G = \SU{2}$ and let $V_i$ and $V_j$ be two spin irreps of charge $i$ and $j$. These combine to
@@ -178,6 +201,217 @@ These maps are more commonly known as \emph{clebsch-gordan coefficients}.
   \]
   with its accosiated basis $\{\ket{1,1},\ket{1,0},\ket{1,-1},\ket{0,0}\}$. The change of base tensors acting between these bases are precisely the Clebsch-Gordan tensors as defined in ???
 \end{example}
+
+
+% Just remove htis heading no? 
+\subsection{Examples in symmetric hamiltonians.}
+
+The motivation for constructing symmetric tensor networks is as follows: Assume we have a
+(unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a
+hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. Then there are different
+presentations of $H$ with respect to a certain basis by \emph{simulateneous
+diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as shown in \Cref{fig:diagonal_hamiltonians}. Notably these presentation
+induce a \emph{block-sparse} structure on the respective operators. 
+
+%If the ground state is unique,
+%we can obtain 
+%\[
+%  U(g)^{\otimes L} H \ket{\psi_0} = H (U(g)^{\otimes L}) \ket{\psi_0} = E_0 U(g)^{\otimes L} \ket{\psi_0}
+%\]
+%and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
+%\[
+%  U(g) \ket{\psi_0} = e^{i\theta(g)} \ket{\psi_0}
+%\]
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{../experiments/plots/su2_block_structure.pdf}
+  \caption{ Three different presentations of the XXZ Hamiltonian for $N = 6$. (i): In the default
+    computational basis of spin vectors. (ii) In a reordering of the computational basis
+    into equal spin up (down) classes, i.e. no spin up, one spin up etc..., here $U$ is
+    simply a permutation matrix. (iii) After changing the basis into the $(S^2,S_Z)$
+    basis. }
+  \label{fig:diagonal_hamiltonians}
+\end{figure}
+
+We now show how to obtain this block-sparse structure and more by example of the $XXZ$ hamiltonian:
+
+\begin{definition}\label{def:xxzHamiltonian}
+  The \emph{\green{XXZ Hamiltonian}} on $N$ sites is
+  \begin{equation}
+    H 
+    = 
+    J \cdot 
+    \sum_{i = 1}^{N-1}
+      (\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z  ),
+  \end{equation}
+  acting on the basis $\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow, \downarrow\}$.
+\end{definition}
+
+This operator admits both a $\U{1}$ symmetry, and a $\SU{2}$ symmetry for $\Delta = 1$.
+We elaborate on the (simpler) abelian case first:
+
+The representations of $\U{1}$ here are induced by the operator
+\[
+  S^z_{\mathrm{tot}} = \frac12 \sum_{i = 1}^{N - 1} \sigma_i^z \quad \text{ with action } \quad U(\theta) : \theta \in \U 1 \mapsto e^{-i\theta S^z_{\mathrm{tot}}}
+\]
+
+
+It can be shown that $H$ is invariant under $U(\theta)$:
+\begin{equation}\label{sym:eq:u1_commutes}
+  U(\theta)HU(\theta)^\dagger \quad \underset{\text{suffices by \ref{app:proof:u1_commutes}}}{\iff} \quad  [H,S^z_{\mathrm{tot}}]=0.
+\end{equation} % Something is weird with the reference here.
+
+Diagonalizing both operators yields a block structure as in \Cref{fig:diagonal_hamiltonians}(ii). Note that change of base matrix in this case is given by a permutation matrix.
+
+If we want to state this in terms of irreps, we have to realize that $\C^2 \cong \chi_{-1} \oplus \chi_1$. Then we can state the full space as
+\[
+  (\C^2)^{\otimes 6} \cong \chi_{-3} \oplus \chi_{-2}^6 \oplus \chi_{-1}^{\oplus 15} \oplus \chi_{0}^{\oplus 20} \oplus \chi_{1}^{\oplus 15} \oplus \chi_2^{\oplus 6} \oplus \chi_3 
+\] 
+and so we should expect $7$ blocks in total, just as given in \Cref{fig:diagonal_hamiltonians}.
+
+%% Fine up until here.
+
+
+In the $\SU 2$ case, we have the generators
+\[
+  S_{tot}^\alpha = \frac{1}{2} \sum_{i = 1}^{N} \sigma_i^\alpha, \quad \alpha \in \{x,y,z\} 
+\]
+
+The representation here is  $U(R) = e^{i\theta n \cdot S_{tot} }$ and the Hamiltonian is invariant under
+\[
+  U(R) H U(R)^\dagger = H, \quad R \in \SU 2
+\]
+
+Since
+\[
+  [S_{tot}^x, S_{tot}^y ] = i S_{tot}^z 
+\]
+we need a new operator for the simulatenous diagonalization
+\[
+  S_{tot} = \sum_{a \in \{x,y,z\}}^{} (S_{tot}^{a})^2
+\]
+and we need to verify this is indeed the correct operator TODO.
+
+The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
+
+Again, we can solve this by diagonalizing all 3 operators? Do this calculation as in the .ipynb and put it in the appendix.
+
+%%%
+Or we can do the representation theoritical approach. Let $V_j$ denote the spin-$j$ irrep
+of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by \cref{sym:eq:cqseries} that
+\[
+  (\mathbb{C}^2)^{\otimes6} \cong V_{\frac{1}{2}}^{\otimes 6} \cong 5 V_0 \oplus 9V_1 \oplus 5V_2 \oplus V_3 \cong \C^5 \otimes V_{\frac{1}{2}} \oplus \C^9 \otimes V_0 \oplus \C^5 \otimes V_2 \oplus V_3
+\]
+
+Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs
+lemma\footnote{These are related by a permutation matrix. Proof? Is this the X from
+\cite{devosTensorKitjlJuliaPackage2025}? We prefer the second presentation as this realizes more blocks.   }
+\begin{equation}\label{sym:eq:blockdiag}
+  H \in \bigoplus_{S \in 0,1,2,3} Mat_{m_S \times m_S} \otimes I_{2S+1} (\mathbb{C}) \cong \bigoplus_{S \in 0,1,2,3} I_{2S+1} \otimes Mat_{m_S \times m_S}(\mathbb{C}) 
+\end{equation}
+
+So we expect 20 blocks? 
+$5$ have dimension $1$, $9$ have dimension $3$, $5$ have dimension $5$ and $1$ has $7$.
+
+To get an interpretation of the matrix coefficients in $\eqref{sym:eq:cgseries}$, consider
+a tiny Hamiltonian on $N = 2$ spins
+\[
+  H = \frac{1}{2} (\sigma_1^x \sigma_2^x + \sigma_1^y \sigma_2^y + \sigma_1^z \sigma_2^z)
+  = S_1 \cdot S_2
+\]
+
+This acts on the space $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ and thus on the basis
+$\{\ket{\uparrow},\ket{\downarrow}\}^{\otimes 2}$ This has two distinct fusion outcomes,
+$V_0$ and $V_1$. The basis on the rhs is given by
+$\ket{1,1},\ket{1,0},\ket{1,-1}.\ket{0,0}$, and we want to reformulate $S_1 \cdot S_2$ in
+the total spin basis. Lets unfold this definition by 
+\[
+  S^2 = S_1^2 + S_2^2 + 2(S_1 \cdot S_2) \implies S_1 \cdot S_2 = \frac{1}{2}(S^2 - S_1^2 - S_2^2).
+\]
+Since $S_i^2 = s(s+1)$ is fixed for $s = \frac{1}{2}$ here, we ought to write
+\[
+  H = \frac{J}{2}(S^2 - 3/2)
+\]
+and this again splits into the sectors for $S = 0$ and $S = 1$
+\[
+  c_0 = \frac{J}{2}(0 - 3/2) = -\frac{3}{4}J
+  \quad \text{ and } \quad
+  c_1 = \frac{J}{2}(2 - 3/2) = \frac{1}{4}J
+\]
+which are exactly the two degrees of freedom we get by the direct sum. So we expect our
+operator to look like
+\[
+  \begin{pmatrix}
+    c_0 &  0 \\
+    0 &  \id_3 \otimes c_1 \\
+  \end{pmatrix}.
+\]
+
+By direct isomorphism, we can write this as
+\begin{equation}\label{sym:eq:S1S2}
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.0,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+  ]
+  
+  \node at (0.8,2.0) {$\displaystyle -J\frac{3}{4}\,\otimes$};
+  \coordinate (bot_a) at (1.1, 1.0);
+  \coordinate (bot_b) at (2.1, 1.0);
+  
+  \node at (1.6, 0.7) {$\underbrace{\quad\quad}_{\text{dim} 1}$};
+
+
+  \coordinate (mid_bot) at (1.6, 1.6);
+  \coordinate (mid_top) at (1.6, 2.4);
+  
+  \coordinate (top_a) at (1.1, 3.0);
+  \coordinate (top_b) at (2.1, 3.0);
+
+  \draw[string arrow] (bot_a) -- (mid_bot);
+  \draw[string arrow] (bot_b) -- (mid_bot);
+  
+  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$0$};
+  
+  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
+  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
+  
+  \node at (2.5, 2.0) {$\oplus$};
+
+\begin{scope}[shift={(2.2,0.0)}]
+  \node at (1.0,2.0) {$\displaystyle\frac{J}{4}\,\otimes$};
+  \coordinate (bot_a) at (1.1, 1.0);
+  \coordinate (bot_b) at (2.1, 1.0);
+  
+  \node at (1.6, 0.7) {$\underbrace{\quad\quad}_{\text{dim} 3}$};
+
+  \coordinate (mid_bot) at (1.6, 1.6);
+  \coordinate (mid_top) at (1.6, 2.4);
+  
+  \coordinate (top_a) at (1.1, 3.0);
+  \coordinate (top_b) at (2.1, 3.0);
+
+
+  \draw[string arrow] (bot_a) -- (mid_bot);
+  \draw[string arrow] (bot_b) -- (mid_bot);
+  
+  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$1$};
+  
+  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
+  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
+\end{scope}
+
+\end{tikzpicture}
+\end{equation}
+
+
 
 \subsection{Symmetric Tensors}
 
@@ -327,241 +561,6 @@ it follows directly from the definition of global invariance that the tensor mus
   same applies to any braided category.    
 \end{corollary}
 
-% Just remove htis heading no? 
-\subsection{Examples in symmetric hamiltonians.}
-
-The motivation for constructing symmetric tensor networks is as follows: Assume we have a
-(unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a
-hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. If the ground state is unique,
-we can obtain 
-\[
-  U(g)^{\otimes L} H \ket{\psi_0} = H (U(g)^{\otimes L}) \ket{\psi_0} = E_0 U(g)^{\otimes L} \ket{\psi_0}
-\]
-and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
-\[
-  U(g) \ket{\psi_0} = e^{i\theta(g)} \ket{\psi_0}
-\]
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{../experiments/plots/su2_block_structure.pdf}
-  \caption{ Three different presentations of the XXZ Hamiltonian. (i): In the default
-    computational basis of spin vectors. (ii) In a reordering of the computational basis
-    into equal spin up (down) classes, i.e. no spin up, one spin up etc..., here $U$ is
-    simply a permutation matrix. (iii) After changing the basis into the $(S^2,S_Z)$
-    basis. }
-  \label{fig:diagonal_hamiltonians}
-\end{figure}
-
-\begin{definition}[XXZ-Hamiltonian]
-  \label{def:xxzHamiltonian}
-  The XXZ Hamiltonian on $N$ sites is
-  \begin{equation}
-    H 
-    = 
-    J \cdot 
-    \sum_{i = 1}^{N}
-      (\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z  ).
-  \end{equation}
-\end{definition}
-
-As given in \cref{def:xxzHamiltonian}, this acts on the \emph{spin basis} made of states
-$\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow, \downarrow\}$.
-
-We can plot $H$ and realize the sparsity structure thereof. Furthermore, a suitable
-rearrangement induces a block structure \cref{fig:diagonal_hamiltonians}.
-
-Now, we can realize about this hamiltonian is that there is a symmetry with the
-representations of $\U 1$. Lets review this shortly. A representation of $U(1)$ is a group
-homomorphism
-\[
-  \rho : \U 1 \to \GL V n , \quad \rho(e^{i\theta_1}) \rho(e^{i\theta_2}) = \rho(e^{i(\theta_1 + \theta_2)}). 
-\]
-
-The XXZ model lives in the Hilbert Space $\mathcal{\MakeUppercase{H}} = (\C^2)^{\otimes
-n}$ and the relevant representation is generated by the total magnetization operator
-\[
-  S^z_{\mathrm{tot}}
-  =
-  \frac12 \sum_{i = 1}^{N} \sigma_i^z
-\]
-The group action is given by
-\[
-  U(\theta)
-  =
-  e^{-i\theta S^z_{\mathrm{tot}}}.
-\]
-
-We now claim that $H$ is invariant under $U(\theta)$.
-\[
-  U(\theta) H U(\theta)^\dagger = H,
-  \qquad \forall \theta \in \mathbb R.
-\]
-Equivalently,
-\[
-  [H,S^z_{\mathrm{tot}}]=0.
-\]
-
-Recall that when two operators commute, we can \emph{simultaneously diagonalize} them
-\cite[Theorem~1.3.12]{Horn_Johnson_2012}.
-
-\begin{align*}
-  [H, S^z_{\mathrm{tot}}] = \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sum_{j = 1}^{N} \sigma_j^z ] 
-\end{align*}
-and since operators on different sites commute, only $j = i$ and $j = i+1$ contribute. So we ought to write
-\[
-  \sum_{i}^{N} [\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z, \sigma_i^z + \sigma_{i+1}^z  ] 
-\]
-and now using the identity $[AB,C] = A[B,C] + [A,C]B$:
-\[
-  [\sigma_i^x \sigma_{i+1}^x, \sigma_i^z + \sigma_{i+1}^z  ] = -2i(\sigma_i^y \sigma_{i+1}^x + \sigma_i^x \sigma_{i+1}^y  ) 
-\]
-\[
-  [\sigma_i^y \sigma_{i+1}^y, \sigma_i^z + \sigma_{i+1}^z  ] = 2i(\sigma_i^x \sigma_{i+1}^{y} + \sigma_i^y \sigma_{i+1}^x  )
-\]
-which cancel out. Furtermore, the $z$ spins commute as well. Thus the whole sum is $0$ and
-we are done.
-
-In the $\SU 2$ case, we have the generators
-\[
-  S_{tot}^\alpha = \frac{1}{2} \sum_{i = 1}^{N} \sigma_i^\alpha, \quad \alpha \in \{x,y,z\} 
-\]
-
-The representation here is  $U(R) = e^{i\theta n \cdot S_{tot} }$ and the Hamiltonian is invariant under
-\[
-  U(R) H U(R)^\dagger = H, \quad R \in \SU 2
-\]
-
-Since
-\[
-  [S_{tot}^x, S_{tot}^y ] = i S_{tot}^z 
-\]
-we need a new operator for the simulatenous diagonalization
-\[
-  S_{tot} = \sum_{a \in \{x,y,z\}}^{} (S_{tot}^{a})^2
-\]
-and we need to verify this is indeed the correct operator TODO.
-
-The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
-
-Again, we can eithe solve htis by diagonalizing all 3 operators?
-
-Or we can do the representation theoritical approach. Let $V_j$ denote the spin-$j$ irrep
-of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by \cref{sym:eq:cqseries} that
-\[
-  (\mathbb{C}^2)^{\otimes6} \cong V_{\frac{1}{2}}^{\otimes 6} \cong 5 V_0 \oplus 9V_1 \oplus 5V_2 \oplus V_3 \cong \C^5 \otimes V_{\frac{1}{2}} \oplus \C^9 \otimes V_0 \oplus \C^5 \otimes V_2 \oplus V_3
-\]
-
-Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs
-lemma\footnote{These are related by a permutation matrix. Proof? Is this the X from
-\cite{devosTensorKitjlJuliaPackage2025}? }
-\begin{equation}\label{sym:eq:blockdiag}
-  H \in \bigoplus_{S \in 0,1,2,3} Mat_{m_S \times m_S} \otimes I_{2S+1} (\mathbb{C}) \cong \bigoplus_{S \in 0,1,2,3} I_{2S+1} \otimes Mat_{m_S \times m_S}(\mathbb{C}) 
-\end{equation}
-
-So we expect 20 blocks? 
-$5$ have dimension $1$, $9$ have dimension $3$, $5$ have dimension $5$ and $1$ has $7$.
-
-To get an interpretation of the matrix coefficients in $\eqref{sym:eq:cgseries}$, consider
-a tiny Hamiltonian on $N = 2$ spins
-\[
-  H = \frac{1}{2} (\sigma_1^x \sigma_2^x + \sigma_1^y \sigma_2^y + \sigma_1^z \sigma_2^z)
-  = S_1 \cdot S_2
-\]
-
-This acts on the space $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ and thus on the basis
-$\{\ket{\uparrow},\ket{\downarrow}\}^{\otimes 2}$ This has two distinct fusion outcomes,
-$V_0$ and $V_1$. The basis on the rhs is given by
-$\ket{1,1},\ket{1,0},\ket{1,-1}.\ket{0,0}$, and we want to reformulate $S_1 \cdot S_2$ in
-the total spin basis. Lets unfold this definition by 
-\[
-  S^2 = S_1^2 + S_2^2 + 2(S_1 \cdot S_2) \implies S_1 \cdot S_2 = \frac{1}{2}(S^2 - S_1^2 - S_2^2).
-\]
-Since $S_i^2 = s(s+1)$ is fixed for $s = \frac{1}{2}$ here, we ought to write
-\[
-  H = \frac{J}{2}(S^2 - 3/2)
-\]
-and this again splits into the sectors for $S = 0$
-\[
-  c_0 = \frac{J}{2}(0 - 3/2) = -\frac{3}{4}J
-\]
-and for $S = 1$ 
-\[
-  c_1 = \frac{J}{2}(2 - 3/2) = \frac{1}{4}J
-\]
-which are exactly the two degrees of freedom we get by the direct sum. So we expect our
-operator to look like
-\[
-  \begin{pmatrix}
-    c_0 &  0 \\
-    0 &  \id_3 \otimes c_1 \\
-  \end{pmatrix}.
-\]
-
-By direct isomorphism, we can write this as
-\begin{equation}\label{sym:eq:S1S2}
-\begin{tikzpicture}[
-    baseline=(current bounding box.center),
-    scale=1.0,
-    string arrow/.style={
-        postaction={decorate},
-        decoration={
-            markings,
-            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
-        }
-    }
-  ]
-  
-  \node at (0.8,2.0) {$\displaystyle -J\frac{3}{4}\,\otimes$};
-  \coordinate (bot_a) at (1.1, 1.0);
-  \coordinate (bot_b) at (2.1, 1.0);
-  
-  \node at (1.6, 0.7) {$\underbrace{\quad\quad}_{\text{dim} 1}$};
-
-
-  \coordinate (mid_bot) at (1.6, 1.6);
-  \coordinate (mid_top) at (1.6, 2.4);
-  
-  \coordinate (top_a) at (1.1, 3.0);
-  \coordinate (top_b) at (2.1, 3.0);
-
-  \draw[string arrow] (bot_a) -- (mid_bot);
-  \draw[string arrow] (bot_b) -- (mid_bot);
-  
-  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$0$};
-  
-  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
-  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
-  
-  \node at (2.5, 2.0) {$\oplus$};
-
-\begin{scope}[shift={(2.2,0.0)}]
-  \node at (1.0,2.0) {$\displaystyle\frac{J}{4}\,\otimes$};
-  \coordinate (bot_a) at (1.1, 1.0);
-  \coordinate (bot_b) at (2.1, 1.0);
-  
-  \node at (1.6, 0.7) {$\underbrace{\quad\quad}_{\text{dim} 3}$};
-
-  \coordinate (mid_bot) at (1.6, 1.6);
-  \coordinate (mid_top) at (1.6, 2.4);
-  
-  \coordinate (top_a) at (1.1, 3.0);
-  \coordinate (top_b) at (2.1, 3.0);
-
-
-  \draw[string arrow] (bot_a) -- (mid_bot);
-  \draw[string arrow] (bot_b) -- (mid_bot);
-  
-  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$1$};
-  
-  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
-  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
-\end{scope}
-
-\end{tikzpicture}
-\end{equation}
-
-
 
 \begin{definition}\label{def:MPS}
   A \emph{\green{Matrix Product State}} is a quantum state $\ket{\psi}$ with $n$ legs written as
@@ -594,3 +593,6 @@ replace the trace with appropriate end vectors (nice source?).
   
   Proof \cite{ciracMatrixProductDensity2017},\cite{vercleyenMathematicalStructureTensor2018}, \cite{perez-garciaStringOrderSymmetries2008a}.
 \end{theorem}
+
+\subsection{Algorithms for block-sparse
+tensors}\label{sym:sec:algorithms_for_block_sparse_tensors}

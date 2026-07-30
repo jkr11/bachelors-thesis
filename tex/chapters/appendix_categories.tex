@@ -1,5 +1,7 @@
+Note on universal properties: When dealing with categories, we are fundamentally dealing with abstractions that behave alike to a known construction. These behaviours are made precise by the use of a \emph{universal property}. We illustrate this with the definition of a (co)product: 
+
 \begin{definition}\label{app:def:product_coproduct}
-  Let $\CC$ be a category and $x,y \in ob(\CC)$. Their \emph{\green{product}} is an object $x \prod y$ in $\CC$ with morphisms $\pi_x : x \prod y \to x$ and $\pi_y : x \prod y \to y$. Their \emph{\green{coproduct}} is defined as the object $x \coprod y$ together with the maps $\iota_x : x \to x \coprod y$ and $\iota_y : y \to x \coprod y$. Both of these definitions are universal with their properties.
+  Let $\CC$ be a category and $x,y \in ob(\CC)$. Their \emph{\green{product}} is an object $x \prod y$ in $\CC$ with morphisms $\pi_x : x \prod y \to x$ and $\pi_y : x \prod y \to y$. Their \emph{\green{coproduct}} is defined as the object $x \coprod y$ together with the maps $\iota_x : x \to x \coprod y$ and $\iota_y : y \to x \coprod y$. Both of these definitions are universal with their properties. 
 \end{definition}
 
 \begin{definition}[\cite{moses25}]
@@ -9,7 +11,7 @@
   \]
   such that the pentagon holds:
   \begin{equation}
-  \begin{gathered} % From the seminar paper and
+  \begin{gathered} % From the seminar paper, adapted after skein paper.
   \begin{tikzpicture}
     \node at (0,-0.1) {$\underset{e,f}{\bigoplus} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g $};
     \draw[->, black] plot coordinates{(0.4,0.5) (2.5,1.5)};

@@ -1,17 +1,10 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[ 11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
-%\documentclass[10pt,a4paper,draft]{acmart}
 %\documentclass[acmsmall, screen, nonacm, natbib=false]{acmart}
 \usepackage[margin=0.8in, left=0.8in]{geometry}
 %\usepackage{listings}
 %\settopmatter{printacmref=false} % Removes the ACM Reference Format block
 
-%\usepackage{mathpazo}
-%\usepackage{libertinus}
-%\usepackage{stix2}
-%\usepackage{newtxtext}
-%\usepackage{newtxmath}
-%\usepackage{mathptmx}
 
 
 \input{preamble.tex}
@@ -153,13 +146,17 @@ I think we may be able to build a nice summary with this diagram:
 	\arrow["{\underset{\green{\text{6j-symbols}}}{F^{ABC}_D}}"{description},  from=7-1, to=7-3]
 \end{tikzcd}\]
 
-
 % \input{chapters/extra.tex}
 
-
+\appendix
 \section{Appendix}
+\subsection{Proofs for \Cref{sect:symmetricTensorNetworks}}
+\input{chapters/appendix_symmetry.tex}
+
+\subsection{Supplementary categorical constructions}
 \input{chapters/appendix_categories.tex}
 
+\subsection{Overview of existing implementations}
 \input{chapters/implementations.tex}
 
 \begin{table}[ht]
@@ -190,59 +187,7 @@ $\Hom_k(-,-)$ & Linear morphisms between $k$-vector spaces \\
 
 
 \newpage
-\newpage
-%\definecolor{codegreen}{rgb}{0,0.6,0}
-%\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-%\definecolor{codepurple}{rgb}{0.58,0,0.82}
-%\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
-%
-%\lstdefinestyle{mystyle}{
-%    backgroundcolor=\color{backcolour},   
-%    commentstyle=\color{codegreen},
-%    keywordstyle=\color{magenta},
-%    numberstyle=\tiny\color{codegray},
-%    stringstyle=\color{codepurple},
-%    basicstyle=\ttfamily\footnotesize,
-%    breakatwhitespace=false,         
-%    breaklines=true,                 
-%    captionpos=b,                    
-%    keepspaces=true,                 
-%    numbers=left,                    
-%    numbersep=5pt,                  
-%    showspaces=false,                
-%    showstringspaces=false,
-%    showtabs=false,                  
-%    tabsize=2
-%}
-%
-%\lstset{style=mystyle}
-%
-%We want to be able to represent a traditional tensor op such as 
-%\begin{lstlisting}[language=Python]
-%np.einsum("ijklmn,nkol -> ijmo", a, b)
-%\end{lstlisting}
-%for symmetric tensors. As we want to reuse code form existing librariries that is written using numpy, it would be ideal to write our classes in a way that would only require substituting $np$ for our own libraries $snp$. Towards this goal we define a abstractclass Tensor
-%\begin{lstlisting}[language=Python]
-%class Tensor(abc.ABC):
-%  ...
-%  @abstractmethod
-%  def transpose(cls, new_shape:list[int]): ...
-%  ...
-%\end{lstlisting}
-%
-%and we implement both an $np$ wrapper $NPTensor$ and our symmetric Tensor as $STensor$, i.e.
-%\begin{lstlisting}[language=Python]
-%class STensor(Tensor):
-%  
-%  def __init__(self, ...):
-%    self.open_legs:list[int|str]
-%    self.fusion_tree:FusionTree(self.open_legs, ...)
-%    ...
-%  @abstractmethod
-%  def transpose(cls, new_shape:list[int]): ...
-%  ...
-%\end{lstlisting}
-%
+
 
 \printbibliography
 
