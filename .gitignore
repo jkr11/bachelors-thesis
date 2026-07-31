@@ -572,7 +572,7 @@ experiments/fusiontree.ipynb
 experiments/compiling.ipynb
 # More tex stuff
 texcount.pl
-result.html
+tex/result.html
 
 tikz-cache
 

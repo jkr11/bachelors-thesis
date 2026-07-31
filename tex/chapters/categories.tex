@@ -178,6 +178,28 @@ and
   \sum_{c,\mu}^{} \iota_{c,\mu}^{ab} \pi^{c,\mu}_{ab} = \Phi \left(\sum_{c,\mu}^{} \iota_{c,\mu}\pi_{c,\mu}\right) \Phi^{-1} = \Phi \id_{\bigoplus R_{c}} \Phi^{-1} = \id_{R_a \otimes R_b}  
 \end{equation}
 
+If we want to use contractions between matchings legs, and overall want the ability to take duals just like in $\FDVec{\C}$, we need both a concept of duality and the evaluation maps. This is also the categorification of the \emph{creation} and \emph{annihilation} maps from \Cref{sect:Anyons}. Let this motivate the following definition:
+\begin{definition}
+  A monoidal category $(\CC, \otimes, 1)$ is \emph{\green{rigid}} if, for every $A \in \CC$, there exists a \emph{\green{dual object}} $A^\ast$ with the following maps:
+  \[
+    \ev_A : A^\ast \otimes A \to 1 \quad \text{ and } \quad \coev_A : 1 \to A \otimes A^\ast
+  \]
+  subject to the diagrammatic constraints
+  % https://q.uiver.app/#q=WzAsOCxbMCwwLCIxIFxcb3RpbWVzIEEiXSxbMiwwLCIoQSBcXG90aW1lcyBBXlxcYXN0KSBcXG90aW1lcyBBIl0sWzAsMiwiQSBcXG90aW1lcyAxIl0sWzIsMiwiQSBcXG90aW1lcyAoQV5cXGFzdCBcXG90aW1lcyBBKSJdLFs0LDIsIjEgXFxvdGltZXMgQV5cXGFzdCJdLFs0LDAsIkFeXFxhc3RcXG90aW1lcyAxIl0sWzYsMiwiKEFeXFxhc3QgXFxvdGltZXMgQSkgXFxvdGltZXMgQV5cXGFzdCJdLFs2LDAsIkFeXFxhc3QgXFxvdGltZXMgKEEgXFxvdGltZXMgQV5cXGFzdCkiXSxbMCwxLCJcXGNvZXZfQSBcXG90aW1lcyBcXGlkX0EiXSxbMCwyLCJcXGxhbWJkYV9BIFxcY2lyYyBcXHJob19BIiwyXSxbMiwzLCJcXGlkXzEgXFxvdGltZXMgXFxldl9BIiwyXSxbMSwzLCJcXGFscGhhX3tBLEFeXFxhc3QsQX0iXSxbNCw2LCJcXGV2X0EgXFxvdGltZXNfe0FeXFxhc3R9IiwyXSxbNSw0LCJcXGxhbWJkYV97QV5cXGFzdH0gXFxjaXJjIFxccmhvX3tBXlxcYXN0fSIsMl0sWzYsNywiXFxhbHBoYV97QV5cXGFzdCxBLEFeXFxhc3R9IiwyXSxbNSw3LCJcXGlkX0EgXFxvdGltZXMgXFxjb2V2X0EiXV0=
+  \[\begin{tikzcd}
+	  {1 \otimes A} && {(A \otimes A^\ast) \otimes A} && {A^\ast\otimes 1} && {A^\ast \otimes (A \otimes A^\ast)} \\
+	  \\
+	  {A \otimes 1} && {A \otimes (A^\ast \otimes A)} && {1 \otimes A^\ast} && {(A^\ast \otimes A) \otimes A^\ast}
+	  \arrow["{\coev_A \otimes \id_A}", from=1-1, to=1-3]
+	  \arrow["{\lambda_A \circ \rho_A}"', from=1-1, to=3-1]
+	  \arrow["{\alpha_{A,A^\ast,A}}", from=1-3, to=3-3]
+	  \arrow["{\id_A \otimes \coev_A}", from=1-5, to=1-7]
+	  \arrow["{\lambda_{A^\ast} \circ \rho_{A^\ast}}"', from=1-5, to=3-5]
+	  \arrow["{\id_1 \otimes \ev_A}"', from=3-1, to=3-3]
+	  \arrow["{\ev_A \otimes_{A^\ast}}"', from=3-5, to=3-7]
+	  \arrow["{\alpha_{A^\ast,A,A^\ast}}"', from=3-7, to=1-7]
+  \end{tikzcd}\]
+\end{definition}
 
 \begin{definition}[Enriched Category]
 Let $(\mathcal{V}, \otimes, I, \alpha, \lambda, \rho)$ be a monoidal category. A category

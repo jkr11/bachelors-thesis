@@ -10,11 +10,23 @@ https://math.stackexchange.com/questions/57189/understanding-isomorphic-equivale
 
 http://www.matlas.math.csu.ru/?page=search
 
+## July 31st
+
+I need to look how to reformulate everything in terms of superselection sectors, this would be a nice red-line.
+
+Im also not sure if the representation a penrose, i.e. a tensor system over its type (d(omain), c(odomain)) is appropriate as generall we want mixed ones. THis only works there because $F$ and $R$ moves are trivial.
+
+Also consider structures that appear in MERA: All the intertwiners / fusion opps are trivially isometries. But if we consider the additional structure / superpositions allowed for by the generators of the respective theories, I would expect this to yield a sector-wise conition on isometry: $A_s^\dagger A = id_{A_s}$.
+
+TODO: find a categorical interpretation of Wedderburn–Artin
+
+TODO: Do superpositions allowed for by enrichment map to superpositions over biproduct?
+
 ## July 28th
 
 Somewhere before fermions I need to discuss all the concepts of isotopy and whether or not our vertices are normalized. THis is in Simon and Bonderson, look there. 
 
-Also the discussion on fusiontrees, is this really how they are constructed? Or is there some sort of universal property for choosing these Hom-spaces? 
+Also the discussion on fusiontrees, is this really how they are constructed? Or is there some sort of universal property for choosing these Hom-spaces?
 
 TODO: normalize notations everywhere, decide on a notation for CG-tensors. Or just leave it symbolically. 
 
