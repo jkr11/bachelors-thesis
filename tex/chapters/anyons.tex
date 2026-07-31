@@ -6,19 +6,32 @@ constitute \emph{anyons}. We introduce the fundamental theory of anyons algebrai
 (\Cref{anyon:sec:algebraic_theory_of_anyons}), and make use of the algebraic rules as the
 building blocks for our theory. \Cref{anyon:sec:topology} gives examples of how the
 statistical properties of anyons change with respect to it's ground state. Then, in
-\Cref{anyons:sec:lattice_spin_chains}, we provide a worked examples of how anyons are
+\Cref{anyon:sec:lattice_spin_chains}, we provide a worked examples of how anyons are
 treated on \emph{spin-chains}, which motivates some aspect of the tensor networks
 approach. TODO tensor network chapter. One of the primary motivations for the study of
-anyons are their universality for quantum computation. In \Cref{...} we provide an
+anyons are their universality for quantum computation. In \Cref{anyons:sec:topological_quantum_computation} we provide an
 interpretation of how both normal braiding circuits and a variation in terms of
 \emph{weaves} can be simulated by the tensor network theory.
 
-\subsection{Algebraic Theory of Anyons}\label{anyon:sec:algebraic_theory_of_anyons}
+\section{Algebraic Theory of Anyons}\label{anyon:sec:algebraic_theory_of_anyons}
 
 Anyons are proposed as a \emph{defect} in a $2$ dimensional space (manifold? compact?)
 with exotic exchange statistics. These exchange statistics differ from fermions in that we
 allow particles to pick up a arbitrary phase $e^{i\theta}$ on exchange in the abelian
 case, and a phase in a matrix element in the nonabelian case.
+
+Generally when speaking about anyons, we group them into \emph{theories}. A anyon theory is equipped with a (finite) set of charges $a,b,c,\ldots$ including a \emph{vacuum} charge $I$. Additionally we are provided with a \emph{fusion rule} $a \times b = \sum_{c}^{} N_{ab}^c c$ where $N_{ab}^c$ denotes the multiplicity. Since it can be shown (should I?) that we cannot classify the vector space of two anyons $a,b$ by itself, we need to parametrize this space over its \emph{fusion sectors}, i.e. the outcomes $c$ of the fusion rule. Let $V^{ab}_c$ be the space of 2 anyons of charges $a,b$ fusing to $c$. Then the whole space $V^{ab}$ splits accordingly:
+\[
+  V^{ab} = \bigoplus_{c \in I} V^{ab}_c . 
+\]
+Since we wanted to assign meaning to the \emph{exchange} of particles, we define the exchange operator $R^{ab}$ componentwise:
+\[
+  R^{ab} : V^{ab} \to V^{ba}, \quad \bigoplus_c V^{ab}_c \cong \bigoplus_c V^{ba}_c.   
+\]
+as well as an isomorphism on combinations of more than $3$ particles
+\[
+  F^{abc} : V^{(ab)c} \cong V^{a(bc)}
+\]
 
 \subsection{Anyons on different topologies}\label{anyon:sec:topology}
 
@@ -97,7 +110,7 @@ requires the completeness relations.
 \end{tikzpicture}
 \end{equation}
 
-\subsection{1D Lattice Models \& The Golden Chain}\label{anyon:sec:lattice_spin_chains}
+\section{1D Lattice Models \& The Golden Chain}\label{anyon:sec:lattice_spin_chains}
 
 %So from what i can read here (also the nlab or wikipedia) a spin chain specifically only
 %refers to a per site construction with a tensor product hilbert space. An anyon chain is,

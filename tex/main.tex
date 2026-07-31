@@ -1,10 +1,9 @@
-\documentclass[ 11pt,a4paper]{article}
+\documentclass[ 11pt,a4paper]{report}
 \usepackage[T1]{fontenc}
 %\documentclass[acmsmall, screen, nonacm, natbib=false]{acmart}
 \usepackage[margin=0.8in, left=0.8in]{geometry}
 %\usepackage{listings}
 %\settopmatter{printacmref=false} % Removes the ACM Reference Format block
-
 
 
 \input{preamble.tex}
@@ -33,17 +32,17 @@
 
 \setcounter{section}{0}
 
-\section{Introduction}
+\chapter{Introduction}
 \label{sect:Introduction}
 \input{chapters/intro.tex}
 \newpage
 
-\section{Background}
+\chapter{Background}
 \label{sect:background}
 \input{chapters/background.tex}
 \newpage
 
-\section{Symmetric Tensor Networks}
+\chapter{Symmetric Tensor Networks}
 \label{sect:symmetricTensorNetworks}
 \input{chapters/symmetry.tex}
 \newpage
@@ -52,12 +51,12 @@
 \input{chapters/fermions.tex}
 
 
-\section{Anyonic Tensor Networks}
+\chapter{Anyonic Tensor Networks}
 \label{sect:Anyons}
 \input{chapters/anyons.tex}
 \newpage
 
-\section{Categorical Networks}
+\chapter{Categorical Networks}
 \label{sect:Categories}
 \input{chapters/categories.tex}
 \newpage
@@ -149,14 +148,14 @@ I think we may be able to build a nice summary with this diagram:
 % \input{chapters/extra.tex}
 
 \appendix
-\section{Appendix}
-\subsection{Proofs for \Cref{sect:symmetricTensorNetworks}}
+\chapter{Appendix}
+\section{Proofs for \Cref{sect:symmetricTensorNetworks}}
 \input{chapters/appendix_symmetry.tex}
 
-\subsection{Supplementary categorical constructions}
+\section{Supplementary categorical constructions}
 \input{chapters/appendix_categories.tex}
 
-\subsection{Overview of existing implementations}
+\section{Overview of existing implementations}
 \input{chapters/implementations.tex}
 
 \begin{table}[ht]

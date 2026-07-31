@@ -94,7 +94,7 @@ While we introduce this concept classically and endow it with symmetry as a star
 
 \subsection{Tensors (Everything here is $fdVect_k$)}
 
-Generally, we want to regard a tensor as a thing equipped with legs, where each legs holds a vector space. But we also want to be able to regard tensors as operators such as Hamiltonians.
+Generally, we want to regard a tensor as a multilinear map equipped with legs, where each leg holds a vector space. But we also want to be able to regard tensors as operators from a \emph{domain} vector space to a \emph{codomain} vector space, such as Hamiltonians. So we develop the theory after \textcite{Penrose1971Applications}.
 
 Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
 \[
@@ -102,7 +102,7 @@ Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element
 \]
 where each $V_j$ is a finite-dimensional vector space and we say $T$ is a $\left\vert J \right\vert$-legged tensor.
 
-Given !finite! dimensional Vector spaces $V$ and $W$, we have the identity that $V \otimes W^\ast \equiv Hom(W,V)$. This is called the \emph{hom-tensor duality}. (TODO: is this canonical? What about the other way around?)
+Given \emph{finite} dimensional vector spaces $V$ and $W$, we have the identity that $V \otimes W^\ast \equiv Hom(W,V)$. This is called the \emph{hom-tensor duality}. (TODO: is this canonical? What about the other way around?)
 
 In a basis expansion, this would relate the expansion of $V \otimes W^\ast$ as
 \[
@@ -131,4 +131,13 @@ Graphically, we represent a general tensor
   T : (W_{n}^{\ast} \otimes \cdots \otimes W_1) \to (V_1 \otimes V_2 \otimes \cdots \otimes V_n)
 \]
 as follows, where we choose incoming arrows for duals in the domain and outgoings for normal spaces, and on the bottom we choose incoming for duals and outgoing for normals.
+
+If we have two tensors with matching legs, we can contract them by repeated application of the \emph{evaluation map}
+\[
+  V \otimes V^\ast \to k, \quad v \otimes f \mapsto f(v).
+\]
+and \emph{coevaluation} map
+\[
+  k \to V^\ast \otimes V, \quad \lambda \mapsto \sum_{i}^{} \lambda v_i \otimes f_i 
+\]
 

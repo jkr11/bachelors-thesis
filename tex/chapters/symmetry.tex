@@ -1,15 +1,15 @@
 This section develops the theory underlying \emph{symmetric tensor networks}, specifically
 for nonabelian groups. We give an informal overview on the necessary representation
-theoretic concepts in \Cref{sym:sub:rep}. We first give some motivation with the worked
-example of the $XXZ$-Hamiltonian and then show how the same is achieved in a
-representation theoretic setting. Here we are mostly interested in the \emph{speedup}
-obtained by exploiting the emergend block-structure of symmetric operators. Most of the
-proofs and formal definitions required for this formalism are delegated to
-\Cref{sect:Categories}, however there will still be repetitions of some of the theory.
+theoretic concepts in \Cref{sym:sub:rep}. We employ the example of the $XXZ$-Hamiltonain
+for both abelian and anabelian symmetries and give an exact calculation of its conserved
+values. Here we are mostly interested in the \emph{speedup} obtained by exploiting the
+emergend block-structure of symmetric operators. Most of the proofs and formal definitions
+required for this formalism are delegated to \Cref{sect:Categories}, however there will
+still be repetitions of some of the theory.
 
 
 
-\subsection{Representation theory}\label{sym:sub:rep}
+\section{Representation theory}\label{sym:sub:rep}
 
 In the following and the entire section, let $G$ be a compact group and $V,W$ be finite
 dimensional vector spaces. We mainly follow the textbook by \textcite{woit2016}.
@@ -204,7 +204,7 @@ On the operators between tensor products, i.e. $T \in \End(R_a \otimes R_b)$ thi
 
 
 % Just remove htis heading no? 
-\subsection{Examples in symmetric hamiltonians.}
+\section{Examples in symmetric hamiltonians.}
 
 The motivation for constructing symmetric tensor networks is as follows: Assume we have a
 (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a
@@ -288,7 +288,7 @@ Since
   [S_{tot}^x, S_{tot}^y ] = i S_{tot}^z 
 \]
 we need a new operator for the simulatenous diagonalization
-\[
+\[ 
   S_{tot} = \sum_{a \in \{x,y,z\}}^{} (S_{tot}^{a})^2
 \]
 and we need to verify this is indeed the correct operator TODO.
@@ -411,9 +411,13 @@ By direct isomorphism, we can write this as
 \end{tikzpicture}
 \end{equation}
 
+Now we can analize a example with multiplicites: Consider the same hamiltonian but acting on the ground state $V_{\frac{1}{2}}^{\otimes 3}$ with the hamiltonina $H_2 \otimes \id_{V_{\frac{1}{2}}}$. First note that there are two ways we can obtain this fusion result, and we choose the left bracketing $(\frac{1}{2} \otimes \frac{1}{2}) \otimes \frac{1}{2} = (V_0 \oplus V_1) \otimes V_\frac{1}{2} = V_\frac{1}{2} \oplus V_\frac{1}{2} \oplus V_{\frac{3}{2}}$. By this decomposition we should expect a operator of the form
+\[
+  H \in Mat_{2\times 2} \otimes \id_{\frac{1}{2}} \oplus \C \otimes \id_{\frac{3}{2}}
+\]
 
 
-\subsection{Symmetric Tensors}
+\section{Symmetric Tensors}
 
 %Here we want to define tensors that are invariant under a symmetry $G$ (a compact group). We say that a tensor $T \in ()
 
