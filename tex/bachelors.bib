@@ -1132,6 +1132,26 @@ URI: https://mediatum.ub.tum.de/?id=1658844},
   file = {/home/jkr/Zotero/storage/96VU5GJQ/Freedman and Hastings - 2023 - Entanglement of Sections, Examples Looking for a Theory.pdf}
 }
 
+@article{freedmanLargeFourierTransforms2007,
+  title = {Large {{Fourier}} Transforms Never Exactly Realized by Braiding Conformal Blocks},
+  author = {Freedman, Michael H. and Wang, Zhenghan},
+  date = {2007-03-15},
+  journaltitle = {Physical Review A},
+  shortjournal = {Phys. Rev. A},
+  volume = {75},
+  number = {3},
+  eprint = {cond-mat/0609411},
+  eprinttype = {arXiv},
+  pages = {032322},
+  issn = {1050-2947, 1094-1622},
+  doi = {10.1103/PhysRevA.75.032322},
+  url = {http://arxiv.org/abs/cond-mat/0609411},
+  urldate = {2026-08-03},
+  abstract = {Fourier transform is an essential ingredient in Shor's factoring algorithm. In the standard quantum circuit model with the gate set \$\textbackslash\{\textbackslash U(2), \textbackslash textrm\{CNOT\}\textbackslash\}\$, the discrete Fourier transforms \$F\_N=(ω\textasciicircum\{ij\})\_\{N\textbackslash times N\},i,j=0,1,..., N-1, ω=e\textasciicircum\{\textbackslash frac\{2πi\}\{N\}\}\$, can be realized exactly by quantum circuits of size \$O(n\textasciicircum 2), n=\textbackslash textrm\{log\}N\$, and so can the discrete sine/cosine transforms. In topological quantum computing, the simplest universal topological quantum computer is based on the Fibonacci (2+1)-topological quantum field theory (TQFT), where the standard quantum circuits are replaced by unitary transformations realized by braiding conformal blocks. We report here that the large Fourier transforms \$F\_N\$ and the discrete sine/cosine transforms can never be realized exactly by braiding conformal blocks for a fixed TQFT. It follows that approximation is unavoidable to implement the Fourier transforms by braiding conformal blocks.},
+  keywords = {Condensed Matter - Mesoscale and Nanoscale Physics,Mathematical Physics,Quantum Physics},
+  file = {/home/jkr/Zotero/storage/QRRKPCLS/Freedman and Wang - 2007 - Large Fourier transforms never exactly realized by braiding conformal blocks.pdf;/home/jkr/Zotero/storage/34GD3J9Q/0609411.html}
+}
+
 @article{freedmanNPQuantumField1998,
   title = {P/{{NP}}, and the Quantum Field\,Computer},
   author = {Freedman, Michael H.},
@@ -1480,6 +1500,15 @@ eprinttype: github}
   file = {/home/jkr/Zotero/storage/CH4GNU8U/Jana et al. - 2023 - Topological Quantum Computation on Supersymmetric Spin Chains.pdf}
 }
 
+@software{jeremiasJkr11Exactsynthhs2025,
+  title = {Jkr11/Exactsynth-Hs},
+  author = {Rieser, Jeremias},
+  date = {2025-11-20T17:36:12Z},
+  origdate = {2025-11-17T08:34:14Z},
+  url = {https://github.com/jkr11/exactsynth-hs},
+  urldate = {2026-08-03}
+}
+
 @article{jiangSymmetricTensorNetworks2015,
   title = {Symmetric Tensor Networks and Practical Simulation Algorithms to Sharply Identify Classes of Quantum Phases Distinguishable by Short-Range Physics},
   author = {Jiang, Shenghan and Ran, Ying},
@@ -1658,6 +1687,19 @@ eprinttype: github}
   doi = {10.1070/RM1997v052n06ABEH002155},
   url = {https://www.mathnet.ru/eng/rm892},
   urldate = {2026-07-26}
+}
+
+@online{kliuchnikovAsymptoticallyOptimalTopological2013,
+  title = {Asymptotically {{Optimal Topological Quantum Compiling}}},
+  author = {Kliuchnikov, Vadym and Bocharov, Alex and Svore, Krysta M.},
+  date = {2013-10-15},
+  doi = {10.1103/PhysRevLett.112.140504},
+  url = {https://arxiv.org/abs/1310.4150v1},
+  urldate = {2026-08-03},
+  abstract = {In a topological quantum computer, universality is achieved by braiding and quantum information is natively protected from small local errors. We address the problem of compiling single-qubit quantum operations into braid representations for non-abelian quasiparticles described by the Fibonacci anyon model. We develop a probabilistically polynomial algorithm that outputs a braid pattern to approximate a given single-qubit unitary to a desired precision. We also classify the single-qubit unitaries that can be implemented exactly by a Fibonacci anyon braid pattern and present an efficient algorithm to produce their braid patterns. Our techniques produce braid patterns that meet the uniform asymptotic lower bound on the compiled circuit depth and thus are depth-optimal asymptotically. Our compiled circuits are significantly shorter than those output by prior state-of-the-art methods, resulting in improvements in depth by factors ranging from 20 to 1000 for precisions ranging between \$10\textasciicircum\{-10\}\$ and \$10\textasciicircum\{-30\}\$.},
+  langid = {english},
+  organization = {arXiv.org},
+  file = {/home/jkr/Zotero/storage/8D8W2AJ2/Kliuchnikov et al. - 2013 - Asymptotically Optimal Topological Quantum Compiling.pdf}
 }
 
 @online{kolganovLarge$k$Topological2022,
@@ -3603,4 +3645,21 @@ eprinttype: github}
   abstract = {The analysis of noisy quantum states prepared on current quantum computers is getting beyond the capabilities of classical computing. Quantum neural networks based on parametrized quantum circuits, measurements and feed-forward can process large amounts of quantum data to reduce measurement and computational costs of detecting nonlocal quantum correlations. The tolerance of errors due to decoherence and gate infidelities is a key requirement for the application of quantum neural networks on near-term quantum computers. Here we construct quantum convolutional neural networks (QCNNs) that can, in the presence of incoherent errors, recognize different symmetry-protected topological phases of generalized cluster-Ising Hamiltonians from one another as well as from topologically trivial phases. Using matrix product state simulations, we show that the QCNN output is robust against symmetry-breaking errors below a threshold error probability and against symmetry-preserving errors provided the error channel is invertible. This is in contrast to string order parameters and the output of previously designed QCNNs, which vanish in the presence of any symmetry-breaking errors. To facilitate the implementation of the QCNNs on near-term quantum computers, the QCNN circuits can be shortened from logarithmic to constant depth in system size by performing a large part of the computation in classical postprocessing. These constant-depth QCNNs reduce sample complexity exponentially with system size in comparison to the direct sampling using local Pauli measurements.                                                                               Published by the American Physical Society                   2024},
   langid = {english},
   file = {/home/jkr/Zotero/storage/YCRFC6DS/Zapletal et al. - 2024 - Error-tolerant quantum convolutional neural networks for symmetry-protected topological phases.pdf}
+}
+
+@online{zottoMultipartiteEntanglementTQFT2026,
+  title = {From {{Multipartite Entanglement}} to {{TQFT}}},
+  author = {Zotto, Michele Del and Gadde, Abhijit and Putrov, Pavel},
+  date = {2026-07-23},
+  eprint = {2602.16770},
+  eprinttype = {arXiv},
+  eprintclass = {hep-th},
+  doi = {10.48550/arXiv.2602.16770},
+  url = {http://arxiv.org/abs/2602.16770},
+  urldate = {2026-08-03},
+  abstract = {At long distances, a gapped phase of matter is described by a topological quantum field theory (TQFT). We conjecture a tight and concrete relationship between the genuine (d + 1)-partite entanglement — labelled by a d-dimensional manifold M —in the ground state of a (d − 1) + 1-dimensional gapped theory and the partition function of the low energy TQFT on M . Under certain assumptions, the conjecture implies that for d = 3, the ground state wavefunction can determine the modular tensor category description of the low energy TQFT. We verify our conjecture for general (2+1)-dimensional Levin-Wen string-net models.},
+  pubstate = {prepublished},
+  keywords = {Condensed Matter - Strongly Correlated Electrons,High Energy Physics - Theory,Mathematical Physics,Mathematics - Quantum Algebra,Quantum Physics},
+  note = {Comment: 46 pages, 18 figures. v2: corrections (including the formula in the main conjecture), clarifications, additions},
+  file = {/home/jkr/Zotero/storage/E47R47TH/Zotto et al. - 2026 - From Multipartite Entanglement to TQFT.pdf}
 }

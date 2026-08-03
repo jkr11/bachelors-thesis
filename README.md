@@ -10,6 +10,28 @@ https://math.stackexchange.com/questions/57189/understanding-isomorphic-equivale
 
 http://www.matlas.math.csu.ru/?page=search
 
+## August 3rd
+
+Draft nlab page for (bi)modular categories in appendix.
+
+## August 2nd
+
+https://arxiv.org/pdf/1308.5984 "They generate non-
+abelian unitary operations that projectively represent the braid group $B(S^2)$ of $2n$ points on a sphere.
+
+It seems to me as the R and F moves do change when the ground manifold of the system is a sphere as opposed to a plane. This would mean that the fusion rule and the anyonic data is first and foremost governed by the grothedieck-ring. But the F move is precisely what is lost when moving from the category to the ring. Maybe R is not? Follow this train of thought.
+
+Also start thinkng about examples for the product theories, i think Ising^op \times Ising can simulate a heisenberg chain? 
+
+
+## August 1st
+
+Take spin networks as a definition (as used in QuGra). We can formulate this entire paper as a "spin chain with extra structure" or then as a "spin network with extra data" or as a "dual lattice network (but i dont know if these things are known as dual lattices. Look this up.)"
+
+Why do we need module categories eventually? Also, what is the connection to the "2 + 1D" lattice models? 
+
+
+
 ## July 31st
 
 I need to look how to reformulate everything in terms of superselection sectors, this would be a nice red-line.
