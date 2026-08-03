@@ -518,6 +518,17 @@ The algebra-category correspondence in the theory of anyons was first noted by
 
 \subsection{Topological Quantum Computation}
 
+We want to build a quantum computer that acts purely on the topological data provided by the anyon theories, or as dubbed by \cite{freedmanNPQuantumField1998}, a \emph{Quantum Field Computer}. To do this we need 3 things:
+
+\begin{enumerate}
+  \item[] A ground state that has high enough dimension to represent a quantum bit, i.e. is $\cong \C^2$.
+  \item[] A option to time evolve the system by application of unitaries.
+  \item[] An option to read out the information of the evolved state (\emph{measurement}).
+\end{enumerate}
+
+
+
+
 Computing with nonabelian anyons requires a universal gate set built from representations
 of the \emph{braid-group}:
 \begin{align}
@@ -526,7 +537,103 @@ of the \emph{braid-group}:
 \end{align}\label{eq:artin}
 and also the \emph{pure-braid-group}:
 
-The solovay-kitaev theorem guarantees a polylog time and space algorithm for approximating any gate in $\SU(d)$ to a desired accuracy. This, and similar procedures are realized by the functor $\mathrm{compile}$.
+By the construction of anyon chains in \Cref{anyon:sec:algebraic_theory_of_anyons}, we know that the space of $3$ anyons fusing to $\tau$ is in fact $2$-dimensional. This motivates a choice of qubits as the following:
+
+\begin{equation*}
+  \vert 0 \rangle =
+\raisebox{-20pt}{
+\begin{tikzpicture}[scale=1.5]
+    \fill[gray!30] (3,0) ellipse (1 and 0.5);
+    \draw[->, thick] (3,0) ellipse (1 and 0.5);
+    \fill[white] (3.6,0) circle (0.1);
+    \draw[->, thick] (2.7,0) ellipse (0.6 and 0.3);
+    \node at (3.35,-0.2) {$1$};
+    \node[scale=2.5] at (2.4, 0) {$\cdot$};
+    \node at (2.5,0.1) {$\tau$};
+    \node[scale=2.5] at (3.0, 0) {$\cdot$};
+    \node at (3.1,0.1) {$\tau$};
+    \node[scale=2.5] at (3.6, 0) {$\cdot$};
+    \node at (3.7,0.1) {$\tau$};
+    \node at (4.0,-0.3) {$\tau$};
+\end{tikzpicture}
+} 
+\quad
+\vert 1 \rangle = 
+\raisebox{-20pt}{
+\begin{tikzpicture}[scale=1.5]    
+    \fill[gray!30] (3,0) ellipse (1 and 0.5);
+    \draw[thick] (3,0) ellipse (1 and 0.5);
+    
+    \draw[thick] (2.7,0) ellipse (0.6 and 0.3);
+    \node at (3.35,-0.2) {$\tau$};
+
+    \node[scale=2.5] at (2.4, 0) {$\cdot$};
+    \node at (2.5,0.1) {$\tau$};
+    \node[scale=2.5] at (3.0, 0) {$\cdot$};
+    \node at (3.1,0.1) {$\tau$};
+    \node[scale=2.5] at (3.6, 0) {$\cdot$};
+    \node at (3.7,0.1) {$\tau$};
+    \node at (4.0,-0.3) {$\tau$};
+\end{tikzpicture}
+}
+\quad 
+\vert NC \rangle =
+\raisebox{-20pt}{
+\begin{tikzpicture}[scale=1.5]
+
+    \fill[gray!10] (3,0) ellipse (1 and 0.5);
+    \draw[thick] (3,0) ellipse (1 and 0.5);
+    
+    \draw[thick] (2.7,0) ellipse (0.6 and 0.3);
+    \node at (3.35,-0.2) {$\tau$};
+    \node[scale=2.5] at (2.4, 0) {$\cdot$};
+    \node at (2.5, 0.1) {$\tau$};
+    \node[scale=2.5] at (3.0, 0) {$\cdot$};
+    \node at (3.1,0.1) {$\tau$};
+    \node[scale=2.5] at (3.6, 0) {$\cdot$};
+    \node at (3.7,0.1) {$\tau$};
+    \node at (4.0,-0.3) {$1$};
+
+\end{tikzpicture}
+}
+\end{equation*}
+and we say that $\C^2$ is \emph{embedded} in $V^{\tau \tau \tau}$. We could choose a different presentations, where each anyon is drawn from the vacuum as
+\[
+  TODO!
+\]
+
+The solovay-kitaev theorem guarantees a polylog time and space algorithm for approximating
+any gate in $\SU d$ to a desired accuracy. This, and similar procedures are realized by
+the functor $\texttt{compile}$. A \emph{topological quantum compiler} essentially only
+translates the qubits to their $\Hom$ space equivalences and translates the qudit-gates to
+their braid group representations. There are of course special compilation methods, the
+one we cover here takes first a decomposition of normal gates into CNOTs and then applies
+injection weaving, so we only need to lower single qubit gates to braids.
+
+% https://q.uiver.app/#q=WzAsNSxbMCwwLCIoXFxDXjIpXntcXG90aW1lcyBufSJdLFswLDIsIihcXENeMilee1xcb3RpbWVzIG59Il0sWzIsMiwiXFxIb20oXFx0YXVeezJuKzJ9LCBhKSJdLFsyLDAsIlxcSG9tKFxcdGF1XnsybiArIDJ9LCBhKSJdLFsxLDEsIlxcdGV4dHtDb21tdXRlcyB1cCB0b30gXFxcXCBcXHRleHR7Z2l2ZW4gfSBcXGVwc2lsb24gPSBcXHZlcnQgVSAtIFxccmhvKGIpIFxcdmVydCJdLFswLDMsIlxcdGV4dHR0e2NvbXBpbGV9Il0sWzEsMiwiXFx0ZXh0dHR7Y29tcGlsZX0iXSxbMywyLCJcXHJobyhiKSJdLFswLDEsIlUiLDJdXQ==
+\[
+\begin{tikzcd}
+	{(\C^2)^{\otimes n}} && {\Hom(\tau^{2n + 2}, a)} \\
+	& \begin{array}{c} \text{Commutes up to} \\ \text{given } \epsilon = \vert U - \rho(b) \vert \end{array} \\
+	{(\C^2)^{\otimes n}} && {\Hom(\tau^{2n+2}, a)}
+	\arrow["{\texttt{compile}}", hook, from=1-1, to=1-3]
+	\arrow["U"', from=1-1, to=3-1]
+	\arrow["{\rho(b)}", from=1-3, to=3-3]
+	\arrow["{\texttt{compile}}", hook, from=3-1, to=3-3]
+\end{tikzcd}
+\]
+Because this square commutes and $\texttt{compile}$ runs in polynomial time, we can in fact assert that the $QFC$ can simulate $BQP$.
+
+However, compiling qudits for braids is a \emph{hard} (computationally expensive) and slow
+process, as the dimension of the embedding is usually a constant factor $> 1$ larger than
+the dimension of the desired qudit space. The work of
+\textcite{simonTopologicalQuantumComputing2006a} provides a alternative. We can use
+\emph{weaves} to build \emph{injection gates} which in turn realize control gates. Then,
+by a universality argument of \cite{???} we can approximate any other multiqubit gate, as
+single qubit gates can be computed in little time after an algorithms\footnote{We provide
+an implementation of this process in \texttt{Haskell} \cite{jeremiasJkr11Exactsynthhs2025}
+} of \cite{kliuchnikovAsymptoticallyOptimalTopological2013} based on number theoretic methods (which is in turn itself based on \cite{freedmanLargeFourierTransforms2007}).
+
 
 \begin{figure}[h]
   
@@ -649,3 +756,5 @@ The solovay-kitaev theorem guarantees a polylog time and space algorithm for app
 \caption{ A standard $2$-qubit quantum circuit and its lowering to a braid-circuit with
   inection weaves (missing yet).}
 \end{figure}
+
+\subsection{Application: Evaluating the Jones Polynomial}
