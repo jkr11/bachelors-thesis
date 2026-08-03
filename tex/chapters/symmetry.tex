@@ -91,7 +91,8 @@ semisimple.
 %  V \otimes 
 %\]
 
-Therefore, it must hold for any irreps $R_a,R_b$ of $G$ that their tensor product is completely reducible with the decomposition
+Therefore, it must hold for any irreps $R_a,R_b$ of $G$ that their tensor product is
+completely reducible with the decomposition
 \[
   R_a \otimes R_b 
   \cong
@@ -108,6 +109,10 @@ Note as well that the appearance of the \emph{direct sum} here (as discussed in
 injection and projection maps, for which we provide a graphical calculus.
 \[
   \iota^{ab}_{c,\mu} : R_c \to R_a \otimes R_b \quad \text{ and } \quad \pi^{c,\mu}_{ab} : R_a \otimes R_b \to R_c \quad \text{ for } \mu \in 1,\ldots,N_{ab}^c  
+\]
+or alternatively
+\[
+  \ket{a,b;c,\mu} : R_c \to R_a \otimes R_b \quad \text{ and } \quad \bra{c,\mu; a,b} :R_a \otimes R_b \to R_c   
 \]
 \begin{equation}
 \begin{tikzpicture}[
@@ -161,12 +166,19 @@ injection and projection maps, for which we provide a graphical calculus.
 \end{tikzpicture}
 \end{equation}
 
-These maps are more commonly known as \emph{clebsch-gordan coefficients}.
-%\[
-%  \ket{a,i;b,j \vert C,c}
-%\]
+These maps are more commonly known as \emph{clebsch-gordan coefficients}. Note that the
+equations 
+\begin{equation}
+  \bra{\nu, d; a,b} \ket{a,b ; c,\mu} = \delta_{\mu \nu} \delta_{c d} \id_{R_c} 
+\end{equation}
+and 
+\begin{equation}
+  \sum_{c,\mu}^{} \ket{a,b;c,\mu}\bra{\mu,c; a,b} = \id_{R_a \otimes R_b}.
+\end{equation}
+As a consequence of this relation, the CG-tensors span the space $End(R_a \otimes R_b)$.
 
-On the operators between tensor products, i.e. $T \in \End(R_a \otimes R_b)$ this yields a formula
+On the operators between tensor products, i.e. $T \in \End(R_a \otimes R_b)$ this yields a
+formula
 \[
   T \cong \bigoplus_c \id_{R_c} \otimes \; \C^{N_{ab}^c} 
 \]
@@ -195,11 +207,16 @@ On the operators between tensor products, i.e. $T \in \End(R_a \otimes R_b)$ thi
 \end{example}
 
 \begin{example}[$\SU{2}$-CG tensors]
-  Lets look at an example of spin irreps in the $\SU{2}$ theory. The combined basis of two spin-$\frac{1}{2}$ spaces is given by the collection $\{\ket{\uparrow}, \ket{\downarrow}\}^{\otimes 2}$. By the fusion rule \cref{sym:eq:cgseries}, this decomposes as
+  Lets look at an example of spin irreps in the $\SU{2}$ theory. The combined basis of two
+  spin-$\frac{1}{2}$ spaces is given by the collection $\{\ket{\uparrow},
+  \ket{\downarrow}\}^{\otimes 2}$. By the fusion rule \cref{sym:eq:cgseries}, this
+  decomposes as
   \[
     \frac{1}{2} \otimes \frac{1}{2} = 0 \oplus 1 
   \]
-  with its accosiated basis $\{\ket{1,1},\ket{1,0},\ket{1,-1},\ket{0,0}\}$. The change of base tensors acting between these bases are precisely the Clebsch-Gordan tensors as defined in ???
+  with its accosiated basis $\{\ket{1,1},\ket{1,0},\ket{1,-1},\ket{0,0}\}$. The change of
+  base tensors acting between these bases are precisely the Clebsch-Gordan tensors as
+  defined in ???
 \end{example}
 
 
@@ -210,8 +227,9 @@ The motivation for constructing symmetric tensor networks is as follows: Assume 
 (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a
 hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. Then there are different
 presentations of $H$ with respect to a certain basis by \emph{simulateneous
-diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as shown in \Cref{fig:diagonal_hamiltonians}. Notably these presentation
-induce a \emph{block-sparse} structure on the respective operators. 
+diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as shown in
+\Cref{fig:diagonal_hamiltonians}. Notably these presentation induce a \emph{block-sparse}
+structure on the respective operators. 
 
 %If the ground state is unique,
 %we can obtain 
@@ -510,9 +528,11 @@ Recall that by the isomorphism $\Hom(V,W) \cong W \otimes V^\ast$ as
   w \otimes f \mapsto (v \mapsto f(v)w).
 \]
 We can push the product representation through this isomorphism as
-\[
-  \pi(g)(w \otimes f) = \rho_W(g)w \otimes \rho_{V^\ast}(g)f = \rho_W(g)w \otimes (\rho_V(g)^{-1})^T  f = \rho_W(g)w \otimes f(\rho_V(g)^{-1} )
-\]
+\begin{equation}\label{sym:eq:pushThrough}
+   \pi(g)(w \otimes f) = \rho_W(g)w \otimes \rho_{V^\ast}(g)f = \rho_W(g)w \otimes (\rho_V(g)^{-1})^T  f = \rho_W(g)w \otimes f(\rho_V(g)^{-1} )
+\end{equation}
+ 
+
 \[
   \cong v \mapsto f(\rho_V(g)^{-1}v ) \rho_W(g)w
 \]
@@ -585,7 +605,7 @@ it follows directly from the definition of global invariance that the tensor mus
     \draw[leg] (T2.east) -- (1,0) node[right, yshift=2pt] {\tiny $C$};        
   \end{scope}
 
-  \node at (4.8,0) {$\Longleftrightarrow$};
+  \node at (4.8,0) {$\overset{\eqref{sym:eq:pushThrough}}{\Longleftrightarrow}$};
 
 
   \begin{scope}[xshift=6.8cm]

@@ -202,7 +202,10 @@ If we want to use contractions between matchings legs, and overall want the abil
 \end{definition}
 
 \begin{definition}
-  A \emph{\green{ribbon}} category is a braided monoidal rigid category $(\CC,\otimes,1,\alpha,\gamma,\rho,\beta,\ev,\coev)$ with maps $\theta_A : A \to A$   
+  A \emph{\green{ribbon}} category is a braided monoidal rigid category $(\CC,\otimes,1,\alpha,\gamma,\rho,\beta,\ev,\coev)$ with maps $\theta_A : A \to A$ that realizes a \emph{self-braiding} of the object. This is subject to
+  \[
+    \theta_{A \otimes B} = \beta_A \beta_B \theta_A \theta_B
+  \]
 \end{definition}
 
 \begin{definition}
@@ -222,6 +225,17 @@ consists of
   \]
 \end{enumerate}
 \end{definition}
+
+Now we would like the category that has all of these statements combined: 
+
+\begin{definition}
+  A \green{\emph{fusion-category}} is a semisimple, $\Veck$-enriched rigid braided monoidal category, where each simple object has only \emph{finitely many} isomorphism classes. 
+\end{definition}
+
+\begin{remark}
+  While each representation category $\Rep(G)$ forms a fusion category for finite $G$, this is not the case for infinite $G$ such as $\SU{2}$ or $\U{1}$. These violate the condition that there are finitely many simples. We can remedy this by instead considering a deformment of the underlying Lie-algebra as $U_q(\liesl 2)$.
+\end{remark}
+
 %
 %such that composition is \emph{associative} and \emph{unital}, expressed by the commutativity of the following diagrams in $\mathcal{V}$:
 %
