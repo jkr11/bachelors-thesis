@@ -134,6 +134,46 @@ Graphically, we represent a general tensor
 \]
 as follows, where we choose incoming arrows for duals in the domain and outgoings for normal spaces, and on the bottom we choose incoming for duals and outgoing for normals.
 
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    leg2/.style={
+      line width=1.1pt,
+      postaction={
+        decorate,
+        decoration={
+          markings,
+          mark=at position 0.7 with {\arrow{Stealth[scale=1.0, fill=black]}}
+        }
+      }
+    },
+    leg/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    },
+    tensor/.style={
+      draw=black,
+      fill=white,
+      line width=1.1pt,
+      minimum size=18pt,
+      inner sep=2pt,
+      rectangle
+    }
+  ]
+    
+
+  \begin{scope}
+    \node[tensor] (T1) at (0,0) {\scriptsize $T$};
+
+    \draw[leg] (0,-1) -- (T1.south) node[right] {$W_n$};
+    
+    \draw[leg] (T1.east) -- (1,0) node[right, yshift=2pt] {\tiny $C$} node[midway, above=2pt] {\scriptsize $U$};        
+  \end{scope}
+
+\end{tikzpicture}
+
 If we have two tensors with matching legs, we can contract them by repeated application of the \emph{evaluation map}
 \[
   V \otimes V^\ast \to k, \quad v \otimes f \mapsto f(v).

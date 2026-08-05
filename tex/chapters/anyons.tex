@@ -1,7 +1,7 @@
 
 We need to introduce anyons here, or somehow build it into the review of the golden chain.
 
-This chapter investigates methods that define tensor networks on physical systems that
+This chapter the diagrammatic methods that yield tensor networks on physical systems that
 constitute \emph{anyons}. We introduce the fundamental theory of anyons algebraically
 (\Cref{anyon:sec:algebraic_theory_of_anyons}), and make use of the algebraic rules as the
 building blocks for our theory. \Cref{anyon:sec:topology} gives examples of how the
@@ -10,7 +10,7 @@ statistical properties of anyons change with respect to it's ground state. Then,
 treated on \emph{spin-chains}, which motivates some aspect of the tensor networks
 approach. TODO tensor network chapter. One of the primary motivations for the study of
 anyons are their universality for quantum computation. In
-\Cref{anyons:sec:topological_quantum_computation} we provide an interpretation of how both
+\Cref{anyon:sec:tqc} we provide an interpretation of how both
 normal braiding circuits and a variation in terms of \emph{weaves} can be simulated by the
 tensor network theory.
 
@@ -478,7 +478,7 @@ as
 \]
 
 
-\subsection{Anyonic States}
+\subsection{Topological Entanglement Entropy}
 
 For simple lattice states, \cite{singhMatrixProductStates2014} defines a bipartition of
 the lattice into anyons $A$ and $B$. Then we consider the whole space under charge
@@ -516,9 +516,9 @@ our Rep(G) categories (which i actually belive to be symmetric? Find this in eti
 The algebra-category correspondence in the theory of anyons was first noted by
 \cite[App~E]{kitaevAnyonsExactlySolved2006}
 
-\subsection{Topological Quantum Computation}
+\section{Topological Quantum Computation}\label{sect:anyon:tqc}
 
-We want to build a quantum computer that acts purely on the topological data provided by the anyon theories, or as dubbed by \cite{freedmanNPQuantumField1998}, a \emph{Quantum Field Computer}. To do this we need 3 things:
+We want to build a quantum computer that acts purely on the topological data provided by the anyon theories, or as named by \textcite{freedmanNPQuantumField1998}, a \emph{Quantum Field Computer}. To do this we need 3 things:
 
 \begin{enumerate}
   \item[] A ground state that has high enough dimension to represent a quantum bit, i.e. is $\cong \C^2$.
@@ -601,6 +601,8 @@ and we say that $\C^2$ is \emph{embedded} in $V^{\tau \tau \tau}$. We could choo
 \[
   TODO!
 \]
+
+Then we can build multi-qubit circuits by simply stacking these diagrams (inside their own fusion channel). This is what is called a \emph{sparse-encoding}. A dense encoding would correspond to just choosing the smallest space of appropriate dimension that includes one of the $(\C^2)^{\otimes d}$.
 
 The solovay-kitaev theorem guarantees a polylog time and space algorithm for approximating
 any gate in $\SU d$ to a desired accuracy. This, and similar procedures are realized by

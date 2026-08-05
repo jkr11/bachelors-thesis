@@ -12,6 +12,8 @@ http://www.matlas.math.csu.ru/?page=search
 
 ## August 3rd
 
+Read the spin chain papers and try to write a good literature snippet from them.
+
 Draft nlab page for (bi)modular categories in appendix.
 
 ## August 2nd
