@@ -1,8 +1,10 @@
 import symmnet.symmetry
 from symmnet.symmetry import Symmetry, sector, SU2
 from enum import IntEnum
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
+import numpy as np
+
 
 class TreeSort(IntEnum):
   simple = 0
@@ -13,6 +15,26 @@ class TreeSort(IntEnum):
 class NodeType(IntEnum):
   splitting = 0
   fusion = 10
+
+
+type label = int | str
+
+
+@dataclass
+class OpenEdge:
+  name: label
+  number: int  # TODO what is this
+  direction: int  # (-1 or 1)
+  irreps: list[tuple[sector, int]] = field(default_factory=list)  # (ji, tji)
+  is_fused: bool = False  # TODO
+  original_irreps: list[Any] = field(default_factory=list)  # TODO
+
+
+@dataclass
+class InternalEdge:
+  name: label
+  number: int
+  irreps: list[tuple[sector, int]] = field(default_factory=list)
 
 
 # Determine the type for an elementary tree of two nodes, and return their fusion indices.
@@ -52,33 +74,38 @@ def determine_elementary_type(taus, dirs) -> tuple[TreeSort, tuple[int, int]]:
 
 
 class FusionTree:
-  """
-  The basic blocks of the fusion tree are trivalent vertices, that look as follows
-       c
-       |  (Outgoing leg)
-       |
-       * <-- Multiplicity index α ∈ {1, 2, ..., N_ab^c}
-      / \
-     /   \
-    a     b  (Incoming legs)
-  """
-
-  def __init__(self, open_edges, internal_edges, nodes, directions, symmetry: Symmetry = SU2()):
+  def __init__(
+    self,
+    open_edges: list[OpenEdge],
+    internal_edges: list[InternalEdge],
+    nodes: list[tuple[label, label, label]],
+    directions: list[NodeType],
+    symmetry: Symmetry = SU2(),
+  ):
     # Discuss if we want this as domain and codomain
     self.open_edges = open_edges  # This is a list of (num, dir in {-1,1}, irreps, )
     self.internal_edges = internal_edges  # Same as above but without dir?
     self.nodes = nodes  # List of triples, i.e. [(a,b,c),(c,d,e),(f,e,g),...]
     self.directions: list[NodeType] = list(directions)  # orientation of each node, i.e. "fusion" or "splitting"
-    self.multiplicities:list[int]
+    # self.multiplicities: list[int]
     self.symmetry = symmetry
+
+    self.listOfChargeSectors: list[tuple[Any, ...]] = []
+    self.listOfDegeneracyTensors: list[np.ndarray] = []
     self._verify()
 
   def _verify(self):
     assert all(len(node) == 3 for node in self.nodes), "Tree not made of tau triples"
     assert len(self.nodes) == len(self.directions), "Directions not given for every node."
 
-  def get_node_context(self, edge_id: int | str):
-    assert edge_id in self.internal_edges
+  def _get_open_names(self) -> list[label]:
+    return [e.name for e in self.open_edges]
+
+  def _get_internal_names(self) -> list[label]:
+    return [e.name for e in self.internal_edges]
+
+  def get_node_context(self, edge_id: label):
+    assert edge_id in self._get_internal_names()
     node_indices = [i for i, node in enumerate(self.nodes) if edge_id in node]
     if len(node_indices) < 2:
       raise ValueError(f"Edge {edge_id} does not link 2 internal vertices.")
@@ -88,7 +115,7 @@ class FusionTree:
     )
 
   def determine_type(self) -> TreeSort:
-    found_types = {determine_elementary_type(*self.get_node_context(edge))[0] for edge in self.internal_edges}
+    found_types = {determine_elementary_type(*self.get_node_context(edge))[0] for edge in self._get_internal_names()}
 
     if TreeSort.monster in found_types:
       return TreeSort.monster
@@ -103,14 +130,7 @@ class FusionTree:
         return True
     return False
 
-  def _resolve_identity_nodes(self):
-    for inner in self.internal_edges:
-      taus, _ = self.get_node_context(inner)
-      t0, t1 = taus[0], taus[1]
-      print(t0)
-      print(t1)
-
-  def fmove(self, edge):
+  def fmove(self, edge: label):
     # This one is a bit strange because we only have split split and fuse fuse right, but in one of the theses here there was a full table of fmoves.
     taus, dirs = self.get_node_context(edge)
     print(taus)
@@ -119,6 +139,7 @@ class FusionTree:
     d, e, f = taus[1]
     d0, d1 = dirs[0], dirs[1]
     new_dirs = [d0, d1]
+    new_taus = None
     if sort == TreeSort.simple:
       if d0 == d1 == NodeType.fusion:
         if (i1, i2) == (1, 2):
@@ -160,6 +181,7 @@ class FusionTree:
           raise NotImplementedError(f"Fuse-Split case {(i1, i2)} not implemented")
     else:
       raise NotImplementedError("Error in case ")
+    assert new_taus is not None
     # This can be done better? write something like context for htis?
     node_indices = [idx for idx, node in enumerate(self.nodes) if edge in node]
     self.nodes[node_indices[0]] = new_taus[0]
@@ -176,7 +198,7 @@ class FusionTree:
     pass
 
   # Attempt two at this.
-  def determine_internal_charge_sectors_passes(self, outer_charges: dict[Any, list[Any]]):
+  def _determine_internal_charge_sectors(self, outer_charges: dict[Any, list[Any]]):
     forward_sets: dict[Any, set[Any]] = {}
 
     for edge in self.open_edges:
@@ -240,108 +262,114 @@ class FusionTree:
 
     return valid_configurations
 
-  # I dont like this method here, maybe we can do this better.
-  def determine_internal_charge_sectors(self, outer_charges: dict[Any, list[tuple[Any, int]]]):
-    all_edges = set()
-    for node in self.nodes:
-      all_edges.update(node)
-    # print(f"All edges: {all_edges}")
+  def determine_internal_charge_sectors(self, outer_charges: dict[Any, list[Any]]):
+    forward_sets: dict[Any, set[Any]] = {}
 
-    # TODO: remove
-    normalized_outer = {}
-    degen_lookup = {}
-    for e in self.open_edges:
-      if e in outer_charges:
-        v = outer_charges[e]
-        normalized_outer[e] = list(v) if isinstance(v, (list, tuple, set, range)) else [v]
+    open_names = self._get_open_names()
+    for edge in open_names:
+      if edge in outer_charges:
+        forward_sets[edge] = set(outer_charges[edge])
       else:
-        raise ValueError(f"Required open edge '{e}' is missing from the outer charges input.")
-    # print(f"Normalized outer: {normalized_outer}")
+        raise ValueError(f"Required open edge '{edge}' is missing.")
+
+    all_edges = {e for node in self.nodes for e in node}
+    changed = True
+
+    while changed and len(forward_sets) < len(all_edges):
+      changed = False
+      for node, ntype in zip(self.nodes, self.directions):
+        if ntype == NodeType.fusion:
+          c1, c2, parent = node
+          if c1 in forward_sets and c2 in forward_sets and parent not in forward_sets:
+            possible = set()
+            for q1 in forward_sets[c1]:
+              for q2 in forward_sets[c2]:
+                possible.update(self.symmetry.possible_charge_sectors(q1, q2))
+            forward_sets[parent] = possible
+            changed = True
+        elif ntype == NodeType.splitting:
+          parent, c1, c2 = node
+          if parent in forward_sets and (c1 not in forward_sets or c2 not in forward_sets):
+            pass  # To implement
+
+    backward_sets: dict[Any, set[Any]] = {e: set(forward_sets[e]) for e in forward_sets}
+
+    for node, ntype in reversed(list(zip(self.nodes, self.directions))):
+      if ntype == NodeType.fusion:
+        c1, c2, parent = node
+        valid_c1, valid_c2 = set(), set()
+        for q1 in backward_sets[c1]:
+          for q2 in backward_sets[c2]:
+            overlap = set(self.symmetry.possible_charge_sectors(q1, q2)) & backward_sets[parent]
+            if overlap:
+              valid_c1.add(q1)
+              valid_c2.add(q2)
+        backward_sets[c1] &= valid_c1
+        backward_sets[c2] &= valid_c2
+
+    import itertools
+
     valid_configurations = []
+    keys = list(backward_sets.keys())
+    ranges = [backward_sets[k] for k in keys]
 
-    def backtrack(assignments):
-      # Prune early if any node violates
+    for combo in itertools.product(*ranges):
+      assignment = dict(zip(keys, combo))
+      is_valid = True
       for node in self.nodes:
-        if all(e in assignments for e in node):
-          if not self.symmetry.is_valid(assignments[node[0]], assignments[node[1]], assignments[node[2]]):
-            return
+        if not self.symmetry.is_valid(assignment[node[0]], assignment[node[1]], assignment[node[2]]):
+          is_valid = False
+          break
+      if is_valid:
+        valid_configurations.append(assignment)
 
-      # All edges are handeled
-      if len(assignments) == len(all_edges):
-        valid_configurations.append(assignments.copy())
-        return
-
-      # establish boundary conditions? Unnecessary?
-      unassigned_open = [e for e in self.open_edges if e not in assignments]
-      # print(unassigned_open)
-      if unassigned_open:
-        next_edge = unassigned_open[0]
-        for val in normalized_outer[next_edge]:
-          assignments[next_edge] = val
-          backtrack(assignments)
-          del assignments[next_edge]
-        return
-
-      # Propaagate over all nodes wherethere are exactly 2 nodes known and resolve them.
-      for node in self.nodes:
-        known_edges = [e for e in node if e in assignments]
-        if len(known_edges) == 2:
-          unknown_edges = [e for e in node if e not in assignments]
-          if unknown_edges:
-            unknown_edge = unknown_edges[0]
-            charge_a = assignments[known_edges[0]]
-            charge_b = assignments[known_edges[1]]
-
-            candidates = self.symmetry.possible_charge_sectors(charge_a, charge_b)
-            for candidate in candidates:
-              assignments[unknown_edge] = candidate
-              backtrack(assignments)
-              del assignments[unknown_edge]
-            return
-
-      raise ValueError("Tree cannot be uniquely proped.")
-
-    backtrack({})
     return valid_configurations
-
-def glue(t1:FusionTree,t2:FusionTree, shared_legs:list):
-  # Let this be a contraction whereall the legs are matching already
-  new_outer_legs = t1.open_edges + t2.open_edges
 
 
 if __name__ == "__main__":
   sym = symmnet.symmetry.SU2()
 
   paper_outer_boundary = {
-    -1: [0, 1],  # j1
-    -2: [0, 1],  # j2
-    -3: [0, 1],  # j3
-    -4: [0, 1],  # j4
+    -1: [0, 1],
+    -2: [0, 1],
+    -3: [0, 1],
+    -4: [0, 1],
   }
 
+  # Use the new Dataclass architecture
+  open_edges = [
+    OpenEdge(name=-1, number=1, direction=-1),
+    OpenEdge(name=-2, number=2, direction=-1),
+    OpenEdge(name=-3, number=3, direction=+1),
+    OpenEdge(name=-4, number=4, direction=+1),
+  ]
+
+  internal_edges = [InternalEdge(name="internal_1", number=1)]
+
   paper_tree = FusionTree(
-    open_edges=[-1, -2, -3, -4],
-    internal_edges=["internal_1"],
+    open_edges=open_edges,
+    internal_edges=internal_edges,
     nodes=[(-1, -2, "internal_1"), ("internal_1", -3, -4)],
-    directions=(NodeType.fusion, NodeType.fusion),
+    directions=[NodeType.fusion, NodeType.fusion],
     symmetry=sym,
   )
 
   valid_paper_states = paper_tree.determine_internal_charge_sectors(paper_outer_boundary)
 
-  # Formatting to match 4.6
   formatted_sectors = []
   for state in valid_paper_states:
-    vector = [state["internal_1"], state[-1], state[-2], state[-3], state[-4]]
+    vector = tuple([state["internal_1"], state[-1], state[-2], state[-3], state[-4]])
     formatted_sectors.append(vector)
 
-  formatted_sectors.sort()
-  print(f"Total valid combinations found: {len(formatted_sectors)}")
+  paper_tree.listOfChargeSectors = sorted(formatted_sectors)
+
+  paper_tree.listOfDegeneracyTensors = [np.zeros(1) for _ in paper_tree.listOfChargeSectors]
+
+  print(f"Total valid combinations found: {len(paper_tree.listOfChargeSectors)}")
   print("listOfChargeSectors = {")
-  for sec in formatted_sectors:
+  for sec in paper_tree.listOfChargeSectors:
     print(f"  {sec},")
   print("}\n")
-
 
 # def plot_fusion_tree(fusion_tree):
 #  G = nx.Graph()

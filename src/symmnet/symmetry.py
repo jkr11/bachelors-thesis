@@ -21,11 +21,11 @@ class Symmetry(ABC):
   #  pass
 
   @abstractmethod
-  def R_symbol(self, a: sector, b: sector, c: sector):
+  def R_symbol(self, a: sector, b: sector, c: sector) -> sector:
     pass
 
   @abstractmethod
-  def F_symbol(self, a, b, c, d, e, f):
+  def F_symbol(self, a, b, c, d, e, f) -> sector:
     pass
 
   @classmethod
@@ -75,6 +75,9 @@ class SU2(Symmetry):
   def R_symbol(cls, a, b, c):
     return (-1) ** (a + b - c)
 
+  def F_symbol(self, a, b, c, d, e, f) -> Any:
+    raise NotImplementedError
+
 
 class SU2_3(Symmetry):
   @classmethod
@@ -93,7 +96,7 @@ class Fib(Symmetry):
       return [0.0, 1.0]
     return []
 
-  def R_symbol(self, a, b, c):
+  def R_symbol(self, a, b, c) -> float:
     if a == 1.0 and b == 1.0:
       if c == 0.0:
         return np.exp(-4j * np.pi / 5)
@@ -101,7 +104,7 @@ class Fib(Symmetry):
         return np.exp(3j * np.pi / 5)
     return 1.0
 
-  def F_symbol(self, a, b, c, d, e, f):
+  def F_symbol(self, a, b, c, d, e, f) -> float:
     phi = (1 + np.sqrt(5)) / 2
     if a == b == c == d == 1.0:
       if e == 0.0 and f == 0.0:
@@ -116,24 +119,25 @@ class Fib(Symmetry):
     return 1.0
 
 
-# TODO: either remove this or make this take arbitrariliy many sims.
-class ProductSymmetry(Symmetry):
-  def __init__(self, sym1: Symmetry, sym2: Symmetry):
-    self.sym1 = sym1
-    self.sym2 = sym2
-
-  def possible_charge_sectors(self, a, b):
-    outcomes1 = self.sym1.possible_charge_sectors(a[0], b[0])
-    outcomes2 = self.sym2.possible_charge_sectors(a[1], b[1])
-    return [(j, q) for j in outcomes1 for q in outcomes2]
-
-  @classmethod
-  @staticmethod
-  def structural_tensor(cls, a, b, c, ma, mb, mc):
-    pass
-
-  # def R_symbol(self, a,b,c):
-  #  return self.sym1.R_symbol(a[0],b[0],c[0]) * self.sym2.R_symbol(a[1],b[1],c[1])
+## TODO: either remove this or make this take arbitrariliy many sims.
+#class ProductSymmetry(Symmetry):
+#  def __init__(cls, sym1: Symmetry, sym2: Symmetry):
+#    cls.sym1 = sym1
+#    cls.sym2 = sym2
+#
+#  @classmethod
+#  def possible_charge_sectors(cls, a, b):
+#    outcomes1 = cls.sym1.possible_charge_sectors(a[0], b[0])
+#    outcomes2 = cls.sym2.possible_charge_sectors(a[1], b[1])
+#    return [(j, q) for j in outcomes1 for q in outcomes2]
+#
+#  @classmethod
+#  @staticmethod
+#  def structural_tensor(cls, a, b, c, ma, mb, mc):
+#    pass
+#
+#  # def R_symbol(self, a,b,c):
+#  #  return self.sym1.R_symbol(a[0],b[0],c[0]) * self.sym2.R_symbol(a[1],b[1],c[1])
 
 
 #print(SU2.possible_charge_sectors(1.5, 0.5))

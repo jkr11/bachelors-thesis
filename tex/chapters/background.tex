@@ -180,6 +180,13 @@ If we have two tensors with matching legs, we can contract them by repeated appl
 \]
 and \emph{coevaluation} map
 \[
-  k \to V^\ast \otimes V, \quad \lambda \mapsto \sum_{i}^{} \lambda v_i \otimes f_i 
+  k \to V^\ast \otimes V, \quad \lambda \mapsto \sum_{i}^{} \lambda v_i \otimes f_i .
 \]
+
+The contraction operator $\mathcal{C}$ is then defined as the linear operator that \" removes \" the specified spaces from the product. As an example, the matmul between operators $A : U \otimes V^\ast$ and $B : V \otimes U^\ast$ is defined as
+\[
+  (\id_V \otimes \ev_{W} \otimes \id_{U^\ast})(- \otimes -) : (V \otimes W^\ast, W \otimes U^\ast) \to V \otimes U^\ast
+\]
+
+
 
