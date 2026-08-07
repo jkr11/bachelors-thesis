@@ -4,13 +4,16 @@ from symmnet.symmetry import SU2
 import symmnet.symmetry as symmetry
 
 
-# --- Helpers to generate dataclasses quickly for testing ---
 def make_open(edges: list) -> list[OpenEdge]:
   return [OpenEdge(name=e, number=i + 1, direction=-1) for i, e in enumerate(edges)]
 
 
 def make_internal(edges: list) -> list[InternalEdge]:
   return [InternalEdge(name=e, number=i + 1) for i, e in enumerate(edges)]
+
+
+def make_open_with_charges(edge_charges: dict) -> list[OpenEdge]:
+  return [OpenEdge(name=e, number=i + 1, direction=-1, irreps=[(q, 1) for q in charges]) for i, (e, charges) in enumerate(edge_charges.items())]
 
 
 # -----------------------------------------------------------
@@ -70,7 +73,7 @@ def test_paper_equation_4_11_transformation():
     open_edges=make_open(open_legs),
     internal_edges=make_internal([1, 2, 3, 4, 5]),
     nodes=[
-      (-2, -3, 1) ,
+      (-2, -3, 1),
       (1, -4, 2),
       (-1, 2, 3),
       (3, 4, 5),
@@ -151,14 +154,14 @@ def test_charge_sectors_fib():
   }
 
   tree = FusionTree(
-    open_edges=make_open(list(outer.keys())),
+    open_edges=make_open_with_charges(outer),
     internal_edges=make_internal(["internal_1"]),
     nodes=[(-1, -2, "internal_1"), ("internal_1", -3, "internal_2")],
     directions=[NodeType.fusion, NodeType.fusion],
     symmetry=sym,
   )
 
-  valid_states = tree.determine_internal_charge_sectors(outer)
+  valid_states = tree.determine_internal_charge_sectors()
 
   formatted_sectors = []
   for state in valid_states:
@@ -183,14 +186,14 @@ def test_charge_sectors_su2():
   }
 
   paper_tree = FusionTree(
-    open_edges=make_open([-1, -2, -3, -4]),
+    open_edges=make_open_with_charges(paper_outer_boundary),
     internal_edges=make_internal(["internal_1"]),
     nodes=[(-1, -2, "internal_1"), ("internal_1", -3, -4)],
     directions=[NodeType.fusion, NodeType.fusion],
     symmetry=sym,
   )
 
-  valid_paper_states = paper_tree.determine_internal_charge_sectors(paper_outer_boundary)
+  valid_paper_states = paper_tree.determine_internal_charge_sectors()
 
   # Formatting to match 4.6
   formatted_sectors = []
