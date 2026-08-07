@@ -190,87 +190,63 @@ class FusionTree:
     self.directions[node_indices[0]] = new_dirs[0]
     self.directions[node_indices[1]] = new_dirs[1]
 
+  def get_path_between_legs(self, leg1: label, leg2: label) -> list[label]:
+    from collections import deque
+
+    if leg1 == leg2:
+      return []
+
+    start_nodes = [i for i, node in enumerate(self.nodes) if leg1 in node]
+    target_nodes = [i for i, node in enumerate(self.nodes) if leg2 in node]
+    if not start_nodes or not target_nodes:
+      raise ValueError(f"One or both legs ({leg1}, {leg2}) not found")
+
+    start_idx = start_nodes[0]
+    target_idx = target_nodes[0]
+
+    if start_idx == target_idx:
+      return []  # Both legs share same node
+
+    internal_names = set(self._get_internal_names())
+
+    # (current_node_index, path_of_internal_edge_ids)
+    queue = deque([(start_idx, [])])
+    visited = {start_idx}
+    while queue:
+      curr_idx, path = queue.popleft()
+      if curr_idx == target_idx:
+        return path
+      curr_node = self.nodes[curr_idx]
+      for edge_id in curr_node:
+        if edge_id in internal_names:
+          for neighbor_idx, neighbor_node in enumerate(self.nodes):
+            if neighbor_idx not in visited and edge_id in neighbor_node:
+              visited.add(neighbor_idx)
+              queue.append((neighbor_idx, path + [edge_id]))
+    raise RuntimeError(f"No connected path between '{leg1}' and '{leg2}'.")
+
+  def get_parent_node(self, leg1: label, leg2: label) -> int:
+    for idx, node in enumerate(self.nodes):
+      if leg1 in node and leg2 in node:
+        return idx
+    raise ValueError(f"'{leg1}' and '{leg2}' do not share a common node.")
+
   def permutation(self, swap_sequence: list[tuple[int, int]]):
     for i, j in swap_sequence:
       pass
 
-  def swap(a, b):
-    pass
+  def rmove(self, node_id: int):
+    node = self.nodes[node_id]
+    self.nodes[node_id] = (node[1], node[0], node[2])
 
-  # Attempt two at this.
-  def _determine_internal_charge_sectors(self, outer_charges: dict[Any, list[Any]]):
+  def determine_internal_charge_sectors(self):
     forward_sets: dict[Any, set[Any]] = {}
 
     for edge in self.open_edges:
-      if edge in outer_charges:
-        forward_sets[edge] = set(outer_charges[edge])
-      else:
-        raise ValueError(f"Required open edge '{edge}' is missing.")
-
-    all_edges = {e for node in self.nodes for e in node}
-    changed = True
-
-    while changed and len(forward_sets) < len(all_edges):
-      changed = False
-      for node, ntype in zip(self.nodes, self.directions):
-        if ntype == NodeType.fusion:
-          c1, c2, parent = node
-          if c1 in forward_sets and c2 in forward_sets and parent not in forward_sets:
-            possible = set()
-            for q1 in forward_sets[c1]:
-              for q2 in forward_sets[c2]:
-                possible.update(self.symmetry.possible_charge_sectors(q1, q2))
-            forward_sets[parent] = possible
-            changed = True
-        elif ntype == NodeType.splitting:
-          parent, c1, c2 = node
-          if parent in forward_sets and (c1 not in forward_sets or c2 not in forward_sets):
-            pass
-
-    backward_sets: dict[Any, set[Any]] = {e: set(forward_sets[e]) for e in forward_sets}
-
-    for node, ntype in reversed(list(zip(self.nodes, self.directions))):
-      if ntype == NodeType.fusion:
-        c1, c2, parent = node
-        valid_c1, valid_c2 = set(), set()
-        for q1 in backward_sets[c1]:
-          for q2 in backward_sets[c2]:
-            overlap = set(self.symmetry.possible_charge_sectors(q1, q2)) & backward_sets[parent]
-            if overlap:
-              valid_c1.add(q1)
-              valid_c2.add(q2)
-        backward_sets[c1] &= valid_c1
-        backward_sets[c2] &= valid_c2
-
-    import itertools
-
-    # sorted_edges = sorted(list(all_edges), key=lambda x: str(x))
-
-    valid_configurations = []
-    keys = list(backward_sets.keys())
-    ranges = [backward_sets[k] for k in keys]
-
-    for combo in itertools.product(*ranges):
-      assignment = dict(zip(keys, combo))
-      is_valid = True
-      for node in self.nodes:
-        if not self.symmetry.is_valid(assignment[node[0]], assignment[node[1]], assignment[node[2]]):
-          is_valid = False
-          break
-      if is_valid:
-        valid_configurations.append(assignment)
-
-    return valid_configurations
-
-  def determine_internal_charge_sectors(self, outer_charges: dict[Any, list[Any]]):
-    forward_sets: dict[Any, set[Any]] = {}
-
-    open_names = self._get_open_names()
-    for edge in open_names:
-      if edge in outer_charges:
-        forward_sets[edge] = set(outer_charges[edge])
-      else:
-        raise ValueError(f"Required open edge '{edge}' is missing.")
+      sectors = [irrep[0] for irrep in edge.irreps]
+      if not sectors:
+        raise ValueError(f"Required open edge '{edge.name}' has no associated charge sector. This is required to determine the rest.")
+      forward_sets[edge.name] = set(sectors)
 
     all_edges = {e for node in self.nodes for e in node}
     changed = True
@@ -328,7 +304,11 @@ class FusionTree:
 
 if __name__ == "__main__":
   sym = symmnet.symmetry.SU2()
-
+  #### \  / / #TODO write a plotter for this.
+  ####  \/ /
+  ####   \/
+  ####    |
+  ####
   paper_outer_boundary = {
     -1: [0, 1],
     -2: [0, 1],
@@ -338,10 +318,10 @@ if __name__ == "__main__":
 
   # Use the new Dataclass architecture
   open_edges = [
-    OpenEdge(name=-1, number=1, direction=-1),
-    OpenEdge(name=-2, number=2, direction=-1),
-    OpenEdge(name=-3, number=3, direction=+1),
-    OpenEdge(name=-4, number=4, direction=+1),
+    OpenEdge(name=-1, number=1, direction=-1, irreps=[(0, 1), (1, 1)]),
+    OpenEdge(name=-2, number=2, direction=-1, irreps=[(0, 1), (1, 1)]),
+    OpenEdge(name=-3, number=3, direction=+1, irreps=[(0, 1), (1, 1)]),
+    OpenEdge(name=-4, number=4, direction=+1, irreps=[(0, 1), (1, 1)]),
   ]
 
   internal_edges = [InternalEdge(name="internal_1", number=1)]
@@ -354,7 +334,7 @@ if __name__ == "__main__":
     symmetry=sym,
   )
 
-  valid_paper_states = paper_tree.determine_internal_charge_sectors(paper_outer_boundary)
+  valid_paper_states = paper_tree.determine_internal_charge_sectors()
 
   formatted_sectors = []
   for state in valid_paper_states:
@@ -371,30 +351,30 @@ if __name__ == "__main__":
     print(f"  {sec},")
   print("}\n")
 
-# def plot_fusion_tree(fusion_tree):
-#  G = nx.Graph()
-#
-#  for i, node in enumerate(fusion_tree.nodes):
-#    node_id = f"v{i}"
-#    G.add_node(node_id, label=str(fusion_tree.directions[i]))
-#    for edge_label in node:
-#      G.add_edge(node_id, f"edge_{edge_label}")
-#
-#  pos = nx.spring_layout(G)
-#  nx.draw(G, pos, with_labels=True, node_color="lightblue", node_size=1000)
-#  plt.show()
+  print(paper_tree.get_path_between_legs(-1, -3))
 
+  def make_open(edges: list) -> list[OpenEdge]:
+    return [OpenEdge(name=e, number=i + 1, direction=-1) for i, e in enumerate(edges)]
 
-# We can make all of these tests btw, once i redo the project outside of the test repo.
-# if __name__ == "__main__":
-#  simpe = FusionTree([], [], [(-1, 1, -3), (-2, 1, -4)], directions=(NodeType.splitting, NodeType.splitting))
-#  print(determine_type(simpe.nodes, simpe.directions))
-#  assert simpe.determine_type() == TreeSort.simple
-#  yoga = FusionTree(
-#    [(f"j{i}", [0,1], -1) for i in range(1, 7)],
-#    [(f"i{i}", []) for i in range(1,3)],
-#    [("j1", "j2", "i1"), ("i1", "j4", "i2"), ("i2", "i3", "j3"), ("i3", "j5", "j6")],
-#    directions=(NodeType.fusion, NodeType.splitting, NodeType.fusion, NodeType.splitting),
-#  )
-#  print(yoga.get_node_context("i3"))
-#  assert yoga.determine_type() == TreeSort.yoga
+  def make_internal(edges: list) -> list[InternalEdge]:
+    return [InternalEdge(name=e, number=i + 1) for i, e in enumerate(edges)]
+
+  def make_open_with_charges(edge_charges: dict) -> list[OpenEdge]:
+    return [OpenEdge(name=e, number=i + 1, direction=-1, irreps=[(q, 1) for q in charges]) for i, (e, charges) in enumerate(edge_charges.items())]
+
+  outer_charges = {-1: [0, 1 / 2], -2: [0, 1], -3: [0, 1 / 2, 2, 3 / 2]}
+  outer_edges = make_open_with_charges(outer_charges)
+
+  tree = FusionTree(
+    open_edges=outer_edges,
+    internal_edges=[],
+    nodes=[(-1, -2, -3)],
+    directions=[NodeType.fusion],
+    symmetry=sym,
+  )
+
+  print(tree.determine_internal_charge_sectors())
+  print(tree.nodes)
+  tree.rmove(0)
+  print(tree.determine_internal_charge_sectors())
+  print(tree.nodes)  # This is not yet swapped
