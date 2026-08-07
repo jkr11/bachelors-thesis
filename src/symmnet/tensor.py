@@ -15,7 +15,6 @@ class SymmetricTensor:
     listOfDegeneracyTensors: list[np.ndarray],
     listOfNodes: list[Any],  # TODO
     listOfDirections: list[Any],
-    outerChargeSectors: dict[label, sector],
   ):
     self.sym = sym
     self.listOfOpenEdges = listOfOpenEdges
@@ -25,9 +24,9 @@ class SymmetricTensor:
     self.nOpen = len(self.listOfOpenEdges)
     self.nInternal = len(self.listOfInternalEdges)
     self.nAux = None  # TODO
-    self.outerChargeSectors = outerChargeSectors
-    self.listOfChargeSectors = self.fusionTree.determine_internal_charge_sectors(outerChargeSectors)
+    self.listOfChargeSectors = self.fusionTree.determine_internal_charge_sectors()
 
+  # This has to be here? or make this a function in symmetry?
   def _get_f_symbol(self, old_taus, old_sector, new_sector, edge_id):
     node1, node2 = old_taus[0], old_taus[1]
 
@@ -44,6 +43,14 @@ class SymmetricTensor:
 
     return self.sym.F_symbol(a, b, c, d, e, f)
 
+  def _get_r_symbol(self, node, sector):
+    a_name, b_name, c_name = node
+    a = sector[a_name]
+    b = sector[b_name]
+    c = sector[c_name]
+
+    return self.sym.R_symbol(a, b, c)
+
   def fmove(self, edge_id: label):
     old_charge_sectors = self.listOfChargeSectors
     old_degeneracy_tensors = self.listOfDegeneracyTensors
@@ -51,7 +58,7 @@ class SymmetricTensor:
 
     self.fusionTree.fmove(edge_id)
 
-    new_charge_sectors = self.fusionTree.determine_internal_charge_sectors(self.outerChargeSectors)
+    new_charge_sectors = self.fusionTree.determine_internal_charge_sectors()
     new_degeneracy_tensors = []
     for new_sector in new_charge_sectors:
       new_tensor = None
@@ -69,25 +76,56 @@ class SymmetricTensor:
     self.listOfChargeSectors = new_charge_sectors
     self.listOfDegeneracyTensors = new_degeneracy_tensors
 
+  def rmove(self, node_id: int):
+    old_node = self.fusionTree.nodes[node_id]
+    new_charge_sectors = self.fusionTree.determine_internal_charge_sectors()
+    new_degeneracy_tensors = []
+
+    self.fusionTree.rmove(node_id)
+
+    for new_sector in new_charge_sectors:
+      weight = self._get_r_symbol(old_node, new_sector)
+      old_idx = self.listOfChargeSectors.index(new_sector)
+      old_tensor = self.listOfDegeneracyTensors[old_idx]
+
+      new_degeneracy_tensors.append(weight * old_tensor)
+
+    self.listOfChargeSectors = new_charge_sectors
+    self.listOfDegeneracyTensors = new_degeneracy_tensors
+
+  # TODO i really dont like this, as the seach is quite heavy on performance.
+  def _swap_adjacent(self, leg1, leg2: label):
+    path_edges = self.fusionTree.get_path_between_legs(leg1, leg2)
+    for internal_edge in path_edges:
+      self.fmove(internal_edge)
+
+    common_node_id = self.fusionTree.get_parent_node(leg1, leg2)
+
+    self.rmove(common_node_id)
+
+  def permute(self, target_order: list[label]):
+    current_order = [edge.name for edge in self.listOfOpenEdges]
+    n = len(current_order)
+
+    for i in range(n):
+      for j in range(0, n - i - 1):
+        curr_a, curr_b = current_order[j], current_order[j + 1]
+        if target_order.index(curr_a) > target_order.index(curr_b):
+          self._swap_adjacent(curr_a, curr_b)
+
+          current_order[j], current_order[j + 1] = current_order[j + 1], current_order[j]
+
 
 def test_fmove_transformation():
   from symmnet.fusiontree import NodeType
 
   sym = symmetry.Fib()
 
-
-  outer_boundary = {
-    -1: [1],
-    -2: [1],
-    -3: [1],
-    -4: [1],
-  }
-
   open_edges = [
-    OpenEdge(name=-1, number=1, direction=-1),
-    OpenEdge(name=-2, number=2, direction=-1),
-    OpenEdge(name=-3, number=3, direction=+1),
-    OpenEdge(name=-4, number=4, direction=+1),
+    OpenEdge(name=-1, number=1, direction=+1, irreps=[(1, 1)]),
+    OpenEdge(name=-2, number=2, direction=+1, irreps=[(1, 1)]),
+    OpenEdge(name=-3, number=3, direction=+1, irreps=[(1, 1)]),
+    OpenEdge(name=-4, number=4, direction=+1, irreps=[(1, 1)]),
   ]
 
   internal_edges = [InternalEdge(name="internal_1", number=1)]
@@ -99,10 +137,9 @@ def test_fmove_transformation():
     sym=sym,
     listOfOpenEdges=open_edges,
     listOfInternalEdges=internal_edges,
-    listOfDegeneracyTensors=[], # This ought to be a dict? or do we assume a sort?
+    listOfDegeneracyTensors=[],  # This ought to be a dict? or do we assume a sort?
     listOfNodes=nodes,
     listOfDirections=directions,
-    outerChargeSectors=outer_boundary,
   )
 
   # Like in the goden chain
@@ -119,7 +156,9 @@ def test_fmove_transformation():
 
   old_sectors = list(tensor.listOfChargeSectors)
 
-  tensor.fmove(edge_to_mutate)
+  #tensor.fmove(edge_to_mutate)
+
+  tensor.permute([-1,-3,-2,-4])
 
   print(f"New tree nodes: {tensor.fusionTree.nodes}")
   print(f"Found {len(tensor.listOfChargeSectors)} new charge sectors.")
@@ -128,6 +167,7 @@ def test_fmove_transformation():
     print(f"\n  New Sector {idx}: {new_sector}")
     new_array = tensor.listOfDegeneracyTensors[idx]
     print(f"  Resulting Degeneracy Array:\n{new_array}")
+
 
 if __name__ == "__main__":
   test_fmove_transformation()

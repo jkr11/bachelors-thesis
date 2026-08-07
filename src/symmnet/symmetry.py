@@ -56,6 +56,9 @@ class U1(Symmetry):
   def R_symbol(self, a: int, b: int, c: int) -> int:
     return (-1) ** (a * b)
 
+  def F_symbol(self, a, b, c, d, e, f) -> Any:
+    return 1
+
   @staticmethod
   @classmethod
   def structural_tensor(cls, a, b, c, ma, mb, mc):
@@ -72,7 +75,7 @@ class SU2(Symmetry):
   def structural_tensor(cls, a, b, c, ma, mb, mc):
     return clebsch_gordan(a, b, c, ma, mb, mc)
 
-  def R_symbol(cls, a, b, c):
+  def R_symbol(self, a, b, c):
     return (-1) ** (a + b - c)
 
   def F_symbol(self, a, b, c, d, e, f) -> Any:
@@ -85,6 +88,7 @@ class SU2_3(Symmetry):
     return list(np.arange(abs(a - b), min(a + b, 3.0 - a + b) + 0.1, 1.0))
 
 
+# TODO: rename to '1' and 'tau'? or '1' and 't'?
 class Fib(Symmetry):
   @classmethod
   def possible_charge_sectors(cls, a: float, b: float) -> list[float]:
@@ -120,7 +124,7 @@ class Fib(Symmetry):
 
 
 ## TODO: either remove this or make this take arbitrariliy many sims.
-#class ProductSymmetry(Symmetry):
+# class ProductSymmetry(Symmetry):
 #  def __init__(cls, sym1: Symmetry, sym2: Symmetry):
 #    cls.sym1 = sym1
 #    cls.sym2 = sym2
@@ -140,14 +144,14 @@ class Fib(Symmetry):
 #  #  return self.sym1.R_symbol(a[0],b[0],c[0]) * self.sym2.R_symbol(a[1],b[1],c[1])
 
 
-#print(SU2.possible_charge_sectors(1.5, 0.5))
+# print(SU2.possible_charge_sectors(1.5, 0.5))
 #
-#electroweak_sym = ProductSymmetry(SU2(), U1())
+# electroweak_sym = ProductSymmetry(SU2(), U1())
 #
 #
-#particle_a = (0.5, -1)
-#particle_b = (0.5, 1)
+# particle_a = (0.5, -1)
+# particle_b = (0.5, 1)
 #
-#allowed = electroweak_sym.possible_charge_sectors(particle_a, particle_b)
+# allowed = electroweak_sym.possible_charge_sectors(particle_a, particle_b)
 #
-#print(allowed)
+# print(allowed)
