@@ -217,19 +217,6 @@ class NPTensor(Tensor):
     return str(self.data)
 
 
-class SymmetricTensor(Tensor):
-  def __init__(self, n_open_edges, n_aux_edges, list_of_open_edges, list_of_internal_edges, directions, sym = SU2()):
-    self.fusionTree = FusionTree(list_of_open_edges, [], [], directions=directions)
-    self.degeneracy_tensors: list[Any] = []
-    self.list_of_charge_sectors: list[list[int | float]] = []
-    self.sym = sym
-  
-  def _fmove(self, edge):
-    old_sectors = self.list_of_charge_sectors
-    old_tensors = self.degeneracy_tensors
-
-    self.fusionTree.fmove(edge) 
-    
 
 
 

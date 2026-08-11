@@ -406,57 +406,160 @@ class FusionTree:
 
     return valid_configurations
 
+  # TODO: redo legs as though the contraction is impicity
+  def contract_trees(self, other: "FusionTree", legs_self: list[int], legs_other: list[int]) -> "FusionTree":
+    if len(legs_self) != len(self.open_edges) or len(legs_other) != len(other.open_edges):
+      raise ValueError("legs_self/legs_other must have one entry per open edge")
+
+    self_name_of = {legs_self[i]: self.open_edges[i].name for i in range(len(legs_self))}
+    other_name_of = {legs_other[i]: other.open_edges[i].name for i in range(len(legs_other))}
+    contracted_labels = sorted(l for l in legs_self if l > 0)
+    leg_pairs = [(self_name_of[l], other_name_of[l]) for l in contracted_labels]
+
+    def relabel(node, replacements):
+      return tuple(replacements.get(x, x) for x in node)
+
+    # globally unique consecutive labels for existing internal edges
+    k = len(self.internal_edges)
+    kp = len(other.internal_edges)
+    self_internal_new = {e.name: i + 1 for i, e in enumerate(self.internal_edges)}
+    other_internal_new = {e.name: k + i + 1 for i, e in enumerate(other.internal_edges)}
+    nodes1 = [relabel(n, self_internal_new) for n in self.nodes]
+    nodes2 = [relabel(n, other_internal_new) for n in other.nodes]
+
+    # -- new consecutive labels from k +kp
+    next_label = k + kp + 1
+    contracted_new_label = {}
+    for l in contracted_labels:
+      contracted_new_label[l] = next_label
+      next_label += 1
+
+    self_contracted_replacements = {self.open_edges[i].name: contracted_new_label[legs_self[i]] for i in range(len(legs_self)) if legs_self[i] > 0}
+    other_contracted_replacements = {
+      other.open_edges[i].name: contracted_new_label[legs_other[i]] for i in range(len(legs_other)) if legs_other[i] > 0
+    }
+    nodes1 = [relabel(n, self_contracted_replacements) for n in nodes1]
+    nodes2 = [relabel(n, other_contracted_replacements) for n in nodes2]
+
+    match_irreps_on_legs: list[list] = [list(pair) for pair in leg_pairs]
+
+    # relabel negative edges
+    self_open_replacements = {self.open_edges[i].name: legs_self[i] for i in range(len(legs_self)) if legs_self[i] < 0}
+    other_open_replacements = {other.open_edges[i].name: legs_other[i] for i in range(len(legs_other)) if legs_other[i] < 0}
+    nodes1 = [relabel(n, self_open_replacements) for n in nodes1]
+    nodes2 = [relabel(n, other_open_replacements) for n in nodes2]
+
+    nodes = nodes1 + nodes2
+    directions = list(self.directions) + list(other.directions)
+
+    def other_slot(node, shared: set):
+      return next(x for x in node if x not in shared)
+
+    rename_map: dict = {}
+
+    changed = True
+    while changed:
+      changed = False
+      for i in range(len(nodes)):
+        for j in range(i + 1, len(nodes)):
+          shared = set(nodes[i]) & set(nodes[j])
+          if len(shared) == 2:
+            remaining_i = other_slot(nodes[i], shared)
+            remaining_j = other_slot(nodes[j], shared)
+            match_irreps_on_legs.append([remaining_i, remaining_j])
+            keep, drop = (remaining_i, remaining_j) if remaining_i <= remaining_j else (remaining_j, remaining_i)
+            nodes = [n for idx, n in enumerate(nodes) if idx not in (i, j)]
+            directions = [d for idx, d in enumerate(directions) if idx not in (i, j)]
+            if keep != drop:
+              nodes = [relabel(n, {drop: keep}) for n in nodes]
+              for old, new in list(rename_map.items()):
+                if new == drop:
+                  rename_map[old] = keep
+              rename_map[drop] = keep
+            changed = True
+            break
+        if changed:
+          break
+
+    def resolve(label):
+      while label in rename_map:
+        label = rename_map[label]
+      return label
+
+    # TODO : properties or getters.
+    self_open_by_name = {e.name: e for e in self.open_edges}
+    other_open_by_name = {e.name: e for e in other.open_edges}
+    self_internal_by_name = {e.name: e for e in self.internal_edges}
+    other_internal_by_name = {e.name: e for e in other.internal_edges}
+    self_internal_orig = {v: k_ for k_, v in self_internal_new.items()}
+    other_internal_orig = {v: k_ for k_, v in other_internal_new.items()}
+    final_open_source = {legs_self[i]: self.open_edges[i] for i in range(len(legs_self)) if legs_self[i] < 0}
+    final_open_source.update({legs_other[i]: other.open_edges[i] for i in range(len(legs_other)) if legs_other[i] < 0})
+
+    def get_irreps(x):
+      if x in self_internal_orig:
+        e = self_internal_by_name.get(self_internal_orig[x])
+        return e.irreps if e else None
+      if x in other_internal_orig:
+        e = other_internal_by_name.get(other_internal_orig[x])
+        return e.irreps if e else None
+      if x in final_open_source:
+        return final_open_source[x].irreps
+      if x in self_open_by_name:
+        return self_open_by_name[x].irreps
+      if x in other_open_by_name:
+        return other_open_by_name[x].irreps
+      if x in self_internal_by_name:
+        return self_internal_by_name[x].irreps
+      if x in other_internal_by_name:
+        return other_internal_by_name[x].irreps
+      return None
+
+    for a, b in match_irreps_on_legs:
+      irreps_a, irreps_b = get_irreps(a), get_irreps(b)
+      if irreps_a and irreps_b and irreps_a != irreps_b:
+        raise ValueError(f"Irreps mismatch on contracted legs {a!r} (self) vs {b!r} (other): {irreps_a} != {irreps_b}")
+
+    resolved_open_source: dict = {}
+    for orig_label, edge in final_open_source.items():
+      if resolve(orig_label) == orig_label:
+        resolved_open_source[orig_label] = edge
+    for orig_label, edge in final_open_source.items():
+      resolved_open_source.setdefault(resolve(orig_label), edge)
+
+    open_edges = [
+      OpenEdge(name=label, number=i + 1, direction=src.direction, irreps=list(src.irreps))
+      for i, (label, src) in enumerate(resolved_open_source.items())
+    ]
+    internal_names = sorted({x for n in nodes for x in n if isinstance(x, int) and x > 0})
+    internal_edges = [InternalEdge(name=name, number=i + 1) for i, name in enumerate(internal_names)]
+
+    merged = FusionTree(open_edges, internal_edges, nodes, directions, self.symmetry)
+
+    if len(merged.open_edges) == 0:
+      merged.open_edges = [OpenEdge(name="__scalar_dummy__", number=1, direction=1, irreps=[(0, 1)])]
+    elif len(merged.open_edges) == 2:
+      e1, e2 = merged.open_edges
+      if not merged._legs_share_node(e1.name, e2.name):
+        merged._wrap_with_dummy(e1.name, e2.name, NodeType.fusion)
+
+    return merged
+
+  # Can we inline this?
+  # Some cases:
+  # -- [-1,-2, -3] [-1,-2,-3] with dirs fusion, split
+  # -- -> [-1,-1,dummy]
+  # -- with drs [-1,1,1] and [-1,-1,1]  i.e. split, fuse
+  # -- [-1,-2,int] [int, -3,-4]  stays same
+  # ---
+  # -- [-1,-2,int_1] [int_1, int_2, -5] [int_2, -3, -4] and [-2,-3,int_1] [-1,int_1, int_2] [int_2, -4, -5]
+  # -- f --> [-1,-2,int_1] [int_1, -3, int_2] [int_2, -4, -5]
+  # def merge_trees(tree_A, tree_B, legs_A, legs_B):
+  #  for legA in legs_A:
+
 
 if __name__ == "__main__":
   sym = symmnet.symmetry.SU2()
-  #### \  / / #TODO write a plotter for this.
-  ####  \/ /
-  ####   \/
-  ####    |
-  ####
-  paper_outer_boundary = {
-    -1: [0, 1],
-    -2: [0, 1],
-    -3: [0, 1],
-    -4: [0, 1],
-  }
-
-  # Use the new Dataclass architecture
-  open_edges = [
-    OpenEdge(name=-1, number=1, direction=-1, irreps=[(0, 1), (1, 1)]),
-    OpenEdge(name=-2, number=2, direction=-1, irreps=[(0, 1), (1, 1)]),
-    OpenEdge(name=-3, number=3, direction=+1, irreps=[(0, 1), (1, 1)]),
-    OpenEdge(name=-4, number=4, direction=+1, irreps=[(0, 1), (1, 1)]),
-  ]
-
-  internal_edges = [InternalEdge(name="internal_1", number=1)]
-
-  paper_tree = FusionTree(
-    open_edges=open_edges,
-    internal_edges=internal_edges,
-    nodes=[(-1, -2, "internal_1"), ("internal_1", -3, -4)],
-    directions=[NodeType.fusion, NodeType.fusion],
-    symmetry=sym,
-  )
-
-  valid_paper_states = paper_tree.determine_internal_charge_sectors()
-
-  formatted_sectors = []
-  for state in valid_paper_states:
-    vector = tuple([state["internal_1"], state[-1], state[-2], state[-3], state[-4]])
-    formatted_sectors.append(vector)
-
-  paper_tree.listOfChargeSectors = sorted(formatted_sectors)
-
-  paper_tree.listOfDegeneracyTensors = [np.zeros(1) for _ in paper_tree.listOfChargeSectors]
-
-  print(f"Total valid combinations found: {len(paper_tree.listOfChargeSectors)}")
-  print("listOfChargeSectors = {")
-  for sec in paper_tree.listOfChargeSectors:
-    print(f"  {sec},")
-  print("}\n")
-
-  print(paper_tree.get_path_between_legs(-1, -3))
 
   def make_open(edges: list) -> list[OpenEdge]:
     return [OpenEdge(name=e, number=i + 1, direction=-1) for i, e in enumerate(edges)]
@@ -483,3 +586,60 @@ if __name__ == "__main__":
   tree.rmove(0)
   print(tree.determine_internal_charge_sectors())
   print(tree.nodes)  # This is not yet swapped
+
+  print(tree)
+
+  e1 = OpenEdge(name=-1, number=1, direction=1, irreps=[(0, 1), (1, 2), (2, 3)])
+  e2 = OpenEdge(name=-2, number=2, direction=-1, irreps=[(0, 1), (1, 4)])
+  e3 = OpenEdge(name=-3, number=3, direction=-1, irreps=[(0, 1), (1, 6)])
+
+  tree = FusionTree(open_edges=[e1, e2, e3], internal_edges=[], nodes=[(-1, -2, -3)], directions=[NodeType.splitting], symmetry=SU2())
+
+  print(tree)
+  tree.fuse_legs(-2, -3, "fuse")
+  print(tree)
+  print("nodes: ", tree.nodes)
+
+  print(tree.determine_internal_charge_sectors())  # TODO bug here.
+
+  outer_charges = {-1: [1 / 2], -2: [1 / 2], -3: [1 / 2]}
+
+  outer_edges = make_open_with_charges(outer_charges)
+
+  tree_1 = FusionTree(open_edges=outer_edges, internal_edges=[], nodes=[(-1, -2, -3)], directions=[NodeType.fusion], symmetry=sym)
+
+  outer_charges = {-4: [1 / 2], -5: [1 / 2], -6: [1 / 2]}
+
+  outer_edges = make_open_with_charges(outer_charges)
+  tree_2 = FusionTree(open_edges=outer_edges, internal_edges=[], nodes=[(-4, -5, -6)], directions=[NodeType.splitting], symmetry=sym)
+  print(f"Tree 1: {tree_1}")
+  print(f"Tree_2: {tree_2}")
+  # contracted = tree_2.contract_trees(tree_1, [-4, -6], [-1, -2])
+  # p#rint("after contract")
+  # print(contracted)
+
+  sym = SU2()
+
+  def mk_open(names):
+    return [OpenEdge(name=n, number=i + 1, direction=1, irreps=[(0, 1), (1, 2)]) for i, n in enumerate(names)]
+
+  oe1 = mk_open([-1, -2, -3, -4, -5])
+  tree1 = FusionTree(
+    oe1,
+    [InternalEdge("i1", 1), InternalEdge("i2", 2)],
+    [(-1, -2, "i1"), ("i1", "i2", -5), ("i2", -3, -4)],
+    [NodeType.splitting, NodeType.splitting, NodeType.splitting],
+    sym,
+  )
+
+  oe2 = mk_open([-1, -2, -3, -4])
+  tree2 = FusionTree(oe2, [InternalEdge("j1", 1)], [(-1, -2, "j1"), ("j1", -3, -4)], [NodeType.fusion, NodeType.splitting], sym)
+
+  legs_self = [-3, -4, 1, 2, -2]
+  legs_other = [1, 2, -1, -5]
+
+  merged = tree1.contract_trees(tree2, legs_self, legs_other)
+  print("open edges:", sorted([e.name for e in merged.open_edges], key=str))
+  print("internal edges:", sorted([e.name for e in merged.internal_edges], key=str))
+  print("nodes = ", merged.nodes)
+  print("directions:", merged.directions)
