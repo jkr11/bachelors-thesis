@@ -91,7 +91,6 @@ class FusionTree:
     self.symmetry = symmetry
 
     self.listOfChargeSectors: list[tuple[Any, ...]] = []
-    self.listOfDegeneracyTensors: list[np.ndarray] = []
     self._verify()
 
   def _verify(self):
@@ -103,6 +102,13 @@ class FusionTree:
 
   def _get_internal_names(self) -> list[label]:
     return [e.name for e in self.internal_edges]
+
+  def __str__(self):
+    node_str = " ".join([f"[{node}| {dir}]" for node, dir in zip(self.nodes, self.directions)])
+
+    leg_str = " ".join([f"{e.name} : {e.irreps}" for e in self.open_edges])
+
+    return leg_str + "\n" + node_str
 
   def get_node_context(self, edge_id: label):
     assert edge_id in self._get_internal_names()
@@ -133,7 +139,7 @@ class FusionTree:
   def fmove(self, edge: label):
     # This one is a bit strange because we only have split split and fuse fuse right, but in one of the theses here there was a full table of fmoves.
     taus, dirs = self.get_node_context(edge)
-    print(taus)
+    # print(taus) #TODO
     sort, (i1, i2) = determine_elementary_type(taus, dirs)
     a, b, c = taus[0]
     d, e, f = taus[1]
@@ -231,13 +237,112 @@ class FusionTree:
         return idx
     raise ValueError(f"'{leg1}' and '{leg2}' do not share a common node.")
 
-  def permutation(self, swap_sequence: list[tuple[int, int]]):
-    for i, j in swap_sequence:
-      pass
-
   def rmove(self, node_id: int):
     node = self.nodes[node_id]
     self.nodes[node_id] = (node[1], node[0], node[2])
+
+  def _wrap_with_dummy(self, leg_a: label, leg_b: label, direction: NodeType) -> label:
+    dummy_name = f"__dummy_vacuum_{leg_a}_{leg_b}__"
+    max_num = max((e.number for e in self.open_edges + self.internal_edges), default=0)
+    dummy_edge = OpenEdge(
+      name=dummy_name,
+      number=max_num + 1,
+      direction=1,
+      irreps=[(0, 1)],
+      is_fused=False,
+    )
+    self.open_edges.append(dummy_edge)
+    if direction == NodeType.fusion:
+      new_node = (leg_a, dummy_name, leg_b)
+    else:
+      new_node = (leg_b, leg_a, dummy_name)
+    self.nodes.append(new_node)
+    self.directions.append(direction)
+    return dummy_name
+
+  def _fuse_irreps(self, irreps1, irreps2) -> list[tuple[Any, int]]:  # TODO: implement symmetry abc as the grothendieck ring
+    fused: dict[Any, int] = {}
+    for j1, d1 in irreps1:
+      for j2, d2 in irreps2:
+        for f in self.symmetry.possible_charge_sectors(j1, j2):
+          fused[f] = fused.get(f, 0) + d1 * d2
+    return sorted(fused.items())
+
+  def fuse_legs(self, leg1: label, leg2: label, new_name: label | None = None) -> tuple[OpenEdge, label, bool]:
+    if not self._legs_share_node(leg1, leg2):
+      for internal_edge in self.get_path_between_legs(leg1, leg2):
+        self.fmove(internal_edge)
+
+    try:
+      node_idx = self.get_parent_node(leg1, leg2)
+    except ValueError:
+      raise ValueError(f"{leg1!r} and {leg2!r} do not share lges") from None
+
+    node = self.nodes[node_idx]
+    direction = self.directions[node_idx]
+
+    if direction == NodeType.fusion:
+      c1, c2, parent = node
+    else:
+      parent, c1, c2 = node  # TODO rem
+
+    edge1 = next(e for e in self.open_edges if e.name == leg1)
+    edge2 = next(e for e in self.open_edges if e.name == leg2)
+    fused_irreps = self._fuse_irreps(edge1.irreps, edge2.irreps)
+
+    parent_edge = next((e for e in self.open_edges if e.name == parent), None)
+    parent_was_internal = parent_edge is None
+
+    if parent_was_internal:
+      fused_name = parent if new_name is None else new_name
+    else:
+      if new_name is None:
+        raise ValueError(f"{parent!r} is already used..")
+      fused_name = new_name
+
+    self.nodes = [n for i, n in enumerate(self.nodes) if i != node_idx]
+    self.directions = [d for i, d in enumerate(self.directions) if i != node_idx]
+
+    self.open_edges = [e for e in self.open_edges if e.name not in (leg1, leg2, parent)]
+    self.internal_edges = [e for e in self.internal_edges if e.name != parent]
+
+    fused_edge = OpenEdge(
+      name=fused_name,
+      number=min(edge1.number, edge2.number),
+      direction=edge1.direction,
+      irreps=fused_irreps,
+      is_fused=True,
+      original_irreps=[edge1.irreps, edge2.irreps],
+    )
+    self.open_edges.append(fused_edge)
+
+    if not parent_was_internal:
+      self.open_edges.append(parent_edge)
+
+      dummy_name = f"__dummy_vacuum_{fused_name}_{parent}__"
+      max_num = max((e.number for e in self.open_edges + getattr(self, "internal_edges", [])), default=0)
+
+      dummy_edge = OpenEdge(
+        name=dummy_name,
+        number=max_num + 1,
+        direction=1,
+        irreps=[(0, 1)],  # what happens with dim 0?
+        is_fused=False,
+      )
+      self.open_edges.append(dummy_edge)
+
+      if direction == NodeType.fusion:
+        new_node = (fused_name, dummy_name, parent)
+      else:  # splitting
+        new_node = (parent, fused_name, dummy_name)
+
+      self.nodes.append(new_node)
+      self.directions.append(direction)
+
+    if parent_was_internal and fused_name != parent:
+      self.nodes = [tuple(fused_name if e == parent else e for e in n) for n in self.nodes]
+
+    return fused_edge, parent, parent_was_internal
 
   def determine_internal_charge_sectors(self):
     forward_sets: dict[Any, set[Any]] = {}
@@ -245,7 +350,7 @@ class FusionTree:
     for edge in self.open_edges:
       sectors = [irrep[0] for irrep in edge.irreps]
       if not sectors:
-        raise ValueError(f"Required open edge '{edge.name}' has no associated charge sector. This is required to determine the rest.")
+        raise ValueError(f"No charge at edge {edge}")
       forward_sets[edge.name] = set(sectors)
 
     all_edges = {e for node in self.nodes for e in node}
@@ -266,7 +371,7 @@ class FusionTree:
         elif ntype == NodeType.splitting:
           parent, c1, c2 = node
           if parent in forward_sets and (c1 not in forward_sets or c2 not in forward_sets):
-            pass  # To implement
+            pass
 
     backward_sets: dict[Any, set[Any]] = {e: set(forward_sets[e]) for e in forward_sets}
 
