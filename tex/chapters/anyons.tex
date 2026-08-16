@@ -227,6 +227,16 @@ requires the completeness relations.
 \end{tikzpicture}
 \end{equation}
 
+Solving the pentagon equation for unitary solutions yields a $F$ associator
+$$
+F^{\tau\tau\tau}_\tau : \C \left[\FusionTreeThreeLabel{\tau}{\tau}{\tau}{\tau}{\mathrm{1}}\right] \oplus \C \left[\FusionTreeThreeLabel{\tau}{\tau}{\tau}{\tau}{\tau}\right] \overset{\cong}{\rightarrow}\C \left[\FusionTreeThreeLabelRight{\tau}{\tau}{\tau}{\tau}{\mathrm{1}}\right] \oplus \C \left[\FusionTreeThreeLabelRight{\tau}{\tau}{\tau}{\tau}{\tau}\right]
+$$
+given by the basis expansions (well rather these are given by the solution. But
+the solution exists because of the linearity of the hom spaces.)
+$$
+ \left[\FusionTreeThreeLabel{\tau}{\tau}{\tau}{\tau}{\mathrm{1}}\right] = ? \left[\FusionTreeThreeLabelRight{\tau}{\tau}{\tau}{\tau}{\mathrm{1}}\right] \oplus ? \left[\FusionTreeThreeLabelRight{\tau}{\tau}{\tau}{\tau}{\tau}\right]
+$$
+
 \section{1D Lattice Models \& The Golden Chain}\label{anyon:sec:lattice_spin_chains}
 
 %So from what i can read here (also the nlab or wikipedia) a spin chain specifically only
@@ -626,15 +636,23 @@ injection weaving, so we only need to lower single qubit gates to braids.
 \]
 Because this square commutes and $\texttt{compile}$ runs in polynomial time, we can in fact assert that the $QFC$ can simulate $BQP$.
 
-However, compiling qudits for braids is a \emph{hard} (computationally expensive) and slow
-process, as the dimension of the embedding is usually a constant factor $> 1$ larger than
-the dimension of the desired qudit space. The work of
-\textcite{simonTopologicalQuantumComputing2006a} provides a alternative. We can use
-\emph{weaves} to build \emph{injection gates} which in turn realize control gates. Then,
-by a universality argument of \cite{???} we can approximate any other multiqubit gate, as
-single qubit gates can be computed in little time after an algorithms\footnote{We provide
-an implementation of this process in \texttt{Haskell} \cite{jeremiasJkr11Exactsynthhs2025}
-} of \cite{kliuchnikovAsymptoticallyOptimalTopological2013} based on number theoretic methods (which is in turn itself based on \cite{freedmanLargeFourierTransforms2007}).
+However, compiling qudits for braids is a \emph{hard} (computationally
+expensive) and slow process, as the dimension of the embedding is usually a
+constant factor $> 1$ larger than the dimension of the desired qudit space. 
+
+This process (and these do depend on the topology of the ground state) and the
+indivuual gates are given in \cite{hadjiivanovBraidingFibonacciAnyons2024},
+\cite{georgievDiagonalCosetApproach2024}.
+
+The work of \textcite{simonTopologicalQuantumComputing2006a} provides a
+alternative. We can use \emph{weaves} to build \emph{injection gates} which in
+turn realize control gates. Then, by a universality argument of \cite{freedmanModularFunctorWhich2000a} we
+can approximate any other multiqubit gate, as single qubit gates can be computed
+in little time after an algorithms\footnote{We provide an implementation of this
+process in \texttt{Haskell} \cite{jeremiasJkr11Exactsynthhs2025} } of
+\cite{kliuchnikovAsymptoticallyOptimalTopological2013} based on number theoretic
+methods (which is in turn itself based on
+\cite{freedmanLargeFourierTransforms2007}).
 
 
 \begin{figure}[h]
