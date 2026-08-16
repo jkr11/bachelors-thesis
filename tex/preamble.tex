@@ -202,3 +202,77 @@
 
 \usepackage{libertine}
 \usepackage[libertine]{newtxmath}
+
+\tikzset{
+    fusionarrow/.style={
+        postaction={
+            decorate,
+            decoration={
+                markings,
+                mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+            }
+        }
+    }
+}
+
+% Left-aligned 3-label fusion tree
+\newcommand{\FusionTreeThreeLabel}[5]{%
+\begin{tikzpicture}[
+    x=0.65cm,
+    y=0.65cm,
+    baseline={(current bounding box.center)}
+]
+    \coordinate (A) at (0,2);
+    \coordinate (B) at (0.8,2);
+    \coordinate (C) at (1.6,2);
+    \coordinate (D) at (1.2,0.5);
+
+    \coordinate (Vone) at (0.4,1.5);
+    \coordinate (Vtwo) at (0.8,1);
+
+    \draw[fusionarrow] (A) -- (Vone);
+    \draw[fusionarrow] (B) -- (Vone);
+    \draw[fusionarrow] (Vone) -- (Vtwo);
+    \draw[fusionarrow] (C) -- (Vtwo);
+    \draw[fusionarrow] (Vtwo) -- (D);
+
+    \node[left=1.5pt, font=\scriptsize] at (Vone) {$#5$};
+
+    \node[above, font=\scriptsize] at (A) {$#1$};
+    \node[above, font=\scriptsize] at (B) {$#2$};
+    \node[above, font=\scriptsize] at (C) {$#3$};
+    \node[left, font=\scriptsize] at (D) {$#4$};
+\end{tikzpicture}%
+}
+
+
+
+\newcommand{\FusionTreeThreeLabelRight}[5]{%
+\begin{tikzpicture}[
+    x=0.65cm,
+    y=0.65cm,
+    baseline={(current bounding box.center)}
+]
+    % Incoming leaves
+    \coordinate (A) at (1.6,2);
+    \coordinate (B) at (0.8,2);
+    \coordinate (C) at (0,2);
+    \coordinate (D) at (0.4,0.5);
+
+    \coordinate (Vone) at (1.2,1.5);
+    \coordinate (Vtwo) at (0.8,1);
+
+    \draw[fusionarrow] (A) -- (Vone);
+    \draw[fusionarrow] (B) -- (Vone);
+    \draw[fusionarrow] (Vone) -- (Vtwo);
+    \draw[fusionarrow] (C) -- (Vtwo);
+    \draw[fusionarrow] (Vtwo) -- (D);
+
+    \node[right=1.5pt, font=\scriptsize] at (Vone) {$#5$};
+
+    \node[above, font=\scriptsize] at (A) {$#3$};
+    \node[above, font=\scriptsize] at (B) {$#2$};
+    \node[above, font=\scriptsize] at (C) {$#1$};
+    \node[right, font=\scriptsize] at (D) {$#4$};
+\end{tikzpicture}%
+}
