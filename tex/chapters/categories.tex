@@ -95,6 +95,12 @@ This should motivate the following definition:
 For simplicity we denote a monoidal category as the sextuple $(\CC, \otimes, I, \alpha, \lambda, \rho   )$.
 \end{definition}
 
+The commuting condition here is an instance of the \emph{MacLane-coherence-theorem} (for monoidal categories). 
+This asserts that for any number of objects, from an initial bracketing to a final bracketing, all morphisms must be equal.
+
+In fact, this is important in terms of the algorithms that are used in the
+reshape operation. Link here to the algorithm section. How to minimize? Can we cache these moves?
+
 
 
 \begin{definition}\label{cat:def:braidedMonoidalCat} A \emph{\green{braided monoidal
@@ -224,6 +230,14 @@ consists of
     j_A : I \longrightarrow \mathcal{C}(A,A),
   \]
 \end{enumerate}
+\end{definition}
+
+\begin{definition}
+  A $k$-enriched category $\CC$ is called semisimple if every object $X$ is ismorphic to a finite sum of simple objects. Let $\{R_a\}_a$ be representatives of the isomorphism classes of simple categories (and assume algebraic closure / absolute simplicity). 
+  Then every $X$ admits as \emph{isotypic} decomposition as
+  \[
+    X \cong \bigoplus_{a \in L} \Hom_\CC (R_a, X) \otimes_k R_a
+  \]
 \end{definition}
 
 Now we would like the category that has all of these statements combined: 
@@ -461,7 +475,7 @@ $U_q(sl_2)$ is not a group.
 
 \begin{lemma}[Isotypic Decomposition]
 \label{lem:IsotypicDecomposition}
-Let $C$ be a $k$-enriched semisimple category. Then for every $V \in C$, writing $D_a
+Let $\CC$ be a $k$-enriched semisimple category. Then for every $V \in C$, writing $D_a
 \coloneqq \Hom_C(R_a,V)$ for its \emph{degeneracy spaces}, only finitely many $D_a$ are
 nonzero, each is finite-dimensional, and there is a canonical isomorphism
 \[

@@ -126,6 +126,10 @@
 \newcommand{\Fib}{\mathrm{Fib}}
 \newcommand{\sgotimes}[1]{\otimes_{\scriptscriptstyle#1}} % small Graded Tensor Space
 \newcommand{\gotimes}[1]{\otimes_{#1}} % G-graded vectors space 
+\newcommand{\ot}{\otimes}
+\newcommand{\op}{\oplus}
+\newcommand{\bop}{\bigoplus}
+\newcommand{\bigot}{\bigotimes}
 
 \newcommand{\Hilbfd}{\mathrm{Hilb_{\text{fd}}}}
 
@@ -242,6 +246,21 @@
     \node[above, font=\scriptsize] at (B) {$#2$};
     \node[above, font=\scriptsize] at (C) {$#3$};
     \node[left, font=\scriptsize] at (D) {$#4$};
+\end{tikzpicture}%
+}
+
+\newcommand{\BraidOver}[2]{%
+\begin{tikzpicture}[
+    x=0.65cm,
+    y=0.65cm,
+    baseline={(current bounding box.center)}
+]
+  \draw[line width=1.4] (-2.00, 0.00) to (-2.00, -1.50);
+  \draw[line width=1.4] (-1.20, 0.00) to (-1.20, -1.50);
+  \draw[line width=1.4] (1.20, 0.00) to (1.20, -1.50);
+  \draw[line width=1.4] (2.00, 0.00) to (2.00, -1.50);
+  \draw[line width=1.4] (0.40, 0.00) .. controls (0.40, -0.75) and (-0.40, -0.75) .. (-0.40, -1.50);
+  \draw[line width=4.5, white] (-0.40, 0.00) .. controls (-0.40, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
 \end{tikzpicture}%
 }
 
