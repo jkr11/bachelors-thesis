@@ -1,3 +1,11 @@
+% sources for R and TM symbols:
+% https://tex.stackexchange.com/questions/168938/how-to-insert-a-trademark-symbol-tm
+% https://tex.stackexchange.com/questions/1676/how-to-get-good-looking-copyright-and-registered-symbols
+
+All experiments were run on a machine running Ubuntu 24.04 and an
+Intel\textregistered Core\textsuperscript{\texttrademark} i7-13700H (20 cores,
+??? GHz) with 32.0 GiB of RAM.
+
 Implementations that are available:
 
 \begin{table}[h]
@@ -7,7 +15,7 @@ Implementations that are available:
 \textbf{Name} & \textbf{Symmetry} & \textbf{Citation}(Software, Publication) & Language \\
 \hline
 ITensor & Nonabelian (Fermion?) & \cite{fishmanITensorSoftwareLibrary2022} & Julia \\
-Cyten & Categorical & \cite{unfriedCyten} \cite{dissertation} & python \\
+Cyten & Categorical & \cite{unfriedCyten} \cite{dissertation} & python \& C++ \\
 TeNPy & Abelian & \cite{hauschildTensorNetworkPython2024} & python \\
 QSpace & Nonabelian & \cite{weichselbaumQSpaceOpensourceTensor2024} \cite{weichselbaumNonabelianSymmetriesTensor2012} & ? \\
 ChemTensor & $SU(2)$ & \cite{QctumChemtensor2026} & C \\
@@ -15,14 +23,15 @@ UniTensor & ? & \cite{} & ? (Python, C++)\\
 YasTn & Abelian & \cite{ramsYASTNAnotherSymmetric2025} & Python \\
 TensorKit.jl & Categorical & \cite{devosTensorKitjlJuliaPackage2025} & Julia \\
 Cytnx & Abelian only (i think) & \cite{} & C++ \\
-quimb & Fermion? & \cite{} & julia \\
-MPSKit.jl & like TensorKit? & \cite{} & julia \\
-TeMFpy & Fermion? & \cite{temfpy} & python \\
-abeliantensor & $U(1)$ and  $\mathbb{Z}_n$ & \cite{hauruMhauruAbeliantensors2026} & python \\
+quimb & Fermion? & \cite{} & Julia \\
+MPSKit.jl & like TensorKit? & \cite{} & Julia \\
+TeMFpy & Fermion? & \cite{temfpy} & Python \\
+abeliantensor & $U(1)$ and  $\mathbb{Z}_n$ & \cite{hauruMhauruAbeliantensors2026} & Python \\
 symmray & Fermion & \cite{gaoFermionicTensorNetwork2025} \cite{grayJcmgraySymmray2026} & ? \\
 grassmanntn & Grassmann & \cite{yosprakobAyosprakobGrassmanntn2026} & ? \\ 
 SymLibrary & ? (OnSite) & \cite{mcmahonQnlaSymLibrary2019} \cite{mcmahonHolographicDualityLifted2020} & MatLab? \\
 Telum.jl & NonAbelian & \cite{leeSsbleeTelumjl2026} & Julia \\
+Su2tn & $\SU{2}$ & \cite{fischerVictorfischer2000Su2tn2025,fischerTensorNetworkSymmetries2025} & Python \\
 \hline
 \end{tabular}
 \caption{Overview of tensor network libraries and symmetry support. (There are some closed source things here as well, also what is the software used by singh et al.?). Software is included if it has a website or documentation and an account of the symmetries it exploits. Applications or theory are listed in the Citation column.}

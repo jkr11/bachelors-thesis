@@ -1,15 +1,29 @@
-The goal of this chapter is to provide a viewpoint on the previous chapters from the
-perspective of categories. In \Cref{cat:sub:introCat} we provide a short introduction to
-category theory, from the perspective of quantum parallelism, and the structures we have
-already met in the discussion on representations and anyons. In
-\Cref{cat:sub:categoricalQuantum} we give a short review of how familiar structures such
-as the no-cloning theorem arise from the categorification of quantum mechanics. In
-\Cref{cat:sub:decomp} we provide the core theory in terms of the decomposition, which is
-crucial to previous chapters. Naturally, this incurs a rigorous explanation of fusion
-trees. 
+The goal of this chapter is to provide a viewpoint on the previous chapter from
+the perspective of categories and in turn generalize the approach, as well as
+provide proofs for the general method. However this chapter also serves as background for \Cref{sect:Anyons}. In \Cref{cat:sub:introCat} we provide a
+short introduction to category theory, from the perspective of quantum
+parallelism, and the structures we have already met in the discussion on
+representations and anyons. In \Cref{cat:sub:categoricalQuantum} we give a short
+review of how familiar structures such as the no-cloning theorem arise from the
+categorification of quantum mechanics. In \Cref{cat:sub:decomp} we provide the
+core theory in terms of the decomposition, which is crucial to previous
+chapters. Naturally, this incurs a rigorous explanation of fusion trees. 
 
+There are numerous introductions to the theory of tensor and fusion categories,
+especially in the context of anyon models. Initially proposed by
+\textcite{kitaevAnyonsExactlySolved2006} based on ideas in
+\textcite{reshetikhinInvariants3manifoldsLink1991}, and furhter developed in
+\textcite{bondersonNonAbelianAnyonsInterferometry2007} and \cite{wangTQC}. More
+detailed and modern reviews are given by \textcite{ValeraThesis}\todo{replace iwth
+the publication (shared)} \textcite{Bartlett??}.
 
-\section{Introduction to Category Theory}\label{cat:sub:introCat}
+There also appears to be a difference in treatment, fist only in terms of
+algebras and string algebras \textcite{simonTopologicalQuantum2023}, then in
+terms of categories as purely categorical objects and then again as categoires
+of temperly lieb algebras. How do all these differ in concept / what do we gain
+and lose moving between them?
+
+\section{Tensor \& Fusion Categories}\label{cat:sub:introCat}
 
 The general idea of a category is that it admits a sort of \emph{interface}. As noticed,
 there are many similarities in data and structure between the entities we already dealt
@@ -18,27 +32,27 @@ Hilbert spaces etc.... We can view all these concepts as a category with additio
 constraints added.
 
 \begin{definition}\label{cat:def:category}
-  A \emph{\green {category}} $\mathcal{C}$ consists of
+  A \emph{\green {category}} $\mathcal{C}$ consists of\todo{Mention consisting of data?}
   \begin{itemize}
     \item a set of \emph{objects} $\mathrm{ob}(\mathcal{C})$,
     \item for every pair $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-set} $\Hom_{\mathcal{C}}(A,B)$ of \emph{morphisms} $f : A \to B$,
     \item for every $A \in \mathrm{ob}(\mathcal{C})$, an \emph{identity morphism} $\id_A : A \to A$,
     \item for every triple $A,B,C \in \mathrm{ob}(\mathcal{C})$, a \emph{composition} map
     \[
-      \circ \, : \, \mathcal{C}(B,C) \times \mathcal{C}(A,B) \longrightarrow \mathcal{C}(A,C),
+      \circ \, : \, \Hom_\CC(B,C) \times \Hom_\CC(A,B) \longrightarrow \Hom_\CC(A,C),
     \]
   \end{itemize} such that composition is \emph{associative}, i.e.\ $(f \circ g) \circ h =
   f \circ (g \circ h)$ whenever defined, and \emph{unital}, i.e.\ $f \circ \mathrm{id}_A =
   f = \mathrm{id}_B \circ f$ for all $f : A \to B$.
 \end{definition}
 
-Note that some categories such as $\Rep(G)$ and $\VecCat{\C}$ admit more structures than
-ordinary categories. For fdVect, the hom spaces of linear maps $V \to W$ have a natural
-identification as a vector space as well. The composition map is $\C$-bilinear. This
-immedeately motivates the following definition:
+We want to embed some of the larger structures of $\Rep(G)$ and $\VecCat{\C}$
+into the categorical formalism. For fdVect, the hom spaces of linear maps $V \to
+W$ have a natural identification as a vector space as well. The composition map
+is $\C$-bilinear. This immedeately motivates the following definition:
 
 \begin{definition}\label{cat:def:clinear}
-  A \green{\emph{$\C$-linear category}} endows each of its hom-sets with a module structure, such that the composition is bilinear. That is
+  A \green{\emph{$\C$-linear category}} \todo{Check if we need enrichment.} endows each of its hom-sets with a module structure, such that the composition is bilinear. That is
   \[
     \circ \, : \, \Hom_\mathcal{C}(B,C) \times \Hom_\mathcal{C}(A,B) \longrightarrow \Hom_\mathcal{C}(A,C)
   \]
@@ -57,19 +71,19 @@ $f : A \to A^\prime$,$g : B \to B^\prime $, there should be a combined process.
 Additionally, structures such as entanglement and no-cloning should be readily apparent in
 this theory.
 
-Consider the tensor product $\otimes_{\mathbb{C}}$ of vector spaces $V$,$W$. We can define
-this using a \emph{universal property} ... TODO.
+\todo{Do we need to give an intro to these properties?} Consider the tensor product $\otimes_{\mathbb{C}}$ of vector spaces $V$,$W$. We can define
+this using a \emph{universal property}.
 
 This should motivate the following definition:
 
 \begin{definition}\label{cat:def:monoidalCat}
   A \emph{\green{monoidal category}} $\CC$ is a category that admits a unit object $I \in ob(\CC)$ and a bifunctor $\otimes : \CC \times \CC \to \CC$, as well as 3 constraining isomorphisms
   \[
-    \rho_A : A \otimes I \cong A \qquad \lambda_B : I \otimes B \cong B \qquad \alpha_{ABC} : (A \otimes B) \otimes C \cong A \otimes (B \otimes C)
-  \] 
+      \rho_A : A \otimes I \cong A \qquad \lambda_B : I \otimes B \cong B \qquad \alpha_{ABC} : (A \otimes B) \otimes C \cong A \otimes (B \otimes C)
+  \]
   such that the following diagrams commute:
-  \begin{center}
-\begin{tikzpicture}[baseline=(current bounding box.center)]
+  \begin{center} % Is there really no way ro make this work as a tikzcd?
+\begin{tikzpicture}[baseline=(current bounding box.center)]\label{cat:def:monoidalCat:pentagon}
   \node (AIB)  at (0,1.2)   {$(A \otimes I) \otimes B$};
   \node (AIB2) at (3,1.2)   {$A \otimes (I \otimes B)$};
   \node (AB)   at (1.5,0)     {$A \otimes B$};
@@ -95,21 +109,48 @@ This should motivate the following definition:
 For simplicity we denote a monoidal category as the sextuple $(\CC, \otimes, I, \alpha, \lambda, \rho   )$.
 \end{definition}
 
-The commuting condition here is an instance of the \emph{MacLane-coherence-theorem} (for monoidal categories). 
-This asserts that for any number of objects, from an initial bracketing to a final bracketing, all morphisms must be equal.
+\begin{graphicalCalculus}
+  We denote the elemenets of this Category by simple lines, and the morphisms as
+  boxes between these lines. Since the tensor product corresponds to paralell
+  execution, we describe tensored objects as parallel lines and tensored
+  operators as parallel squares.
+\end{graphicalCalculus}
 
-In fact, this is important in terms of the algorithms that are used in the
-reshape operation. Link here to the algorithm section. How to minimize? Can we cache these moves?
+The commuting condition in \cref{cat:def:monoidalCat:pentagon} is an instance of
+the \emph{MacLane-coherence-theorem} \cite{maclane?} (for monoidal categories). This asserts
+that for any number of objects, from an initial bracketing to a final
+bracketing, all morphisms must be equal.
 
+\todo{In fact, this is important in terms of the algorithms that are used in the
+reshape operation. Link here to the algorithm section. How to minimize? Can we
+cache these moves?}
+
+\begin{definition}
+Let $(\mathcal{V}, \ot_\mathcal{V}, I, \alpha, \lambda, \rho)$ be a monoidal category. A category
+$\CC$ \green{\emph{enriched over $\mathcal{V}$}} (or a \emph{$\mathcal{V}$-category})
+consists of
+\begin{enumerate}
+  \item for every $A, B \in \ob(\CC)$, a \emph{hom-object} $\Hom_\CC(A,B) \in \mathcal{V}$ (as opposed to Set in normal category),
+  \item for every triple $A,B,C \in \ob(\CC)$, a \emph{composition morphism} in $\mathcal{V}$
+  \[
+    \circ_{A,B,C} : \Hom_\CC(B,C) \ot_\mathcal{V} \Hom_\CC(A,B) \longrightarrow \Hom_\CC(A,C),
+  \]
+  \item for every $A \in \ob(\CC)$, a \emph{unit morphism} in $\mathcal{V}$
+  \[
+    j_A : I \longrightarrow \Hom_\CC(A,A),
+  \]
+\end{enumerate}
+\end{definition}
 
 
 \begin{definition}\label{cat:def:braidedMonoidalCat} A \emph{\green{braided monoidal
 category}} is a monoidal category $(\mathcal{C}, \otimes, I, \alpha, \lambda, \rho)$
-equipped with an additional structural natural isomorphism, the \emph{\green{braiding}}
+equipped with an additional isomorphism, the \emph{\green{braiding}}
 \[
   \beta_{A,B} : A \otimes B \; \cong \; B \otimes A,
 \]
-natural in $A$ and $B$, such that the following two \emph{hexagon} diagrams commute for all $A,B,C \in \mathcal{C}$:
+on $A$ and $B$, such that the following two \emph{hexagon} diagrams
+commute for all $A,B,C \in \mathcal{C}$:
 
 \begin{center}
 % https://q.uiver.app/#q=WzAsMTIsWzAsMCwiKEEgXFxvdGltZXMgQikgXFxvdGltZXMgQyJdLFsxLDAsIkEgXFxvdGltZXMoQlxcb3RpbWVzIEMpIl0sWzIsMCwiKEIgXFxvdGltZXMgQylcXG90aW1lcyBBIl0sWzAsMSwiKEJcXG90aW1lcyBBKVxcb3RpbWVzIEMiXSxbMSwxLCJCIFxcb3RpbWVzIChBIFxcb3RpbWVzIEMpIl0sWzIsMSwiQiBcXG90aW1lcyAoQyBcXG90aW1lcyBBKSJdLFszLDAsIkEgXFxvdGltZXMgKEIgXFxvdGltZXMgQykiXSxbNCwwLCIoQSBcXG90aW1lcyBCKSBcXG90aW1lcyBDIl0sWzUsMCwiQ1xcb3RpbWVzKEFcXG90aW1lcyBCKSJdLFszLDEsIkEgXFxvdGltZXMoQyBcXG90aW1lcyBCKSJdLFs0LDEsIihBIFxcb3RpbWVzIEMpXFxvdGltZXMgQiJdLFs1LDEsIihDIFxcb3RpbWVzIEEpIFxcb3RpbWVzIEIiXSxbMCwxLCJcXGFscGhhIl0sWzEsMiwiXFxiZXRhX3tBLEJcXG90aW1lcyBDfSJdLFszLDQsIlxcYWxwaGEiXSxbNCw1LCJcXGlkX0IgXFxvdGltZXNcXGJldGFfe0EsQ30iXSxbMCwzLCJcXGJldGFfe0EsQn1cXG90aW1lcyBcXGlkX0MiLDJdLFsyLDUsIlxcYWxwaGEiXSxbNiw3LCJcXGFscGhhXnstMX0iXSxbNiw5LCJcXGJldGEiLDJdLFs5LDEwLCJcXGFscGhhXnstMX0iLDJdLFs3LDgsIlxcYmV0YSJdLFs4LDExLCJcXGFscGhhXnstMX0iXSxbMTAsMTEsIlxcYmV0YSIsMl1d
@@ -137,30 +178,77 @@ A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ \b
 = \mathrm{id}_{A \otimes B}$ for all $A, B$.
 \end{definition}
 
-%\begin{remark} Symmetric monoidal categories are exactly the setting in which the
-%categorical no-cloning obstruction is vacuous in one direction and sharp in the other:
-%$\mathrm{Set}$ (cartesian, hence symmetric) admits natural copying, while
-%$\mathrm{FdHilb}$, though symmetric ($\beta$ is the usual swap $v \otimes w \mapsto w
-%\otimes v$), is \emph{not} cartesian, and it is exactly this failure — not the presence
-%or absence of $\beta$ itself — that obstructs cloning. For anyon models, $\beta_{A,B}
-%\neq \beta_{B,A}^{-1}$ in general (nontrivial braiding, not mere permutation), which is
-%precisely the extra data making a modular tensor category non-symmetric and physically
-%encoding anyonic exchange statistics. \end{remark}
+\begin{graphicalCalculus}
+  Now the graphical calculus changes, as we need to consider whether the
+  braidings defined by $\beta$ are over or under. We denote the simple braidings
+  as \todo{Check for the correct definition of the ambient space here.}
+\end{graphicalCalculus}
 
 \begin{definition}\label{cat:def:directSum}
-  Given a category $C$ with objects $\{a_n\}$, an object $\bigoplus_{i=1}^n a_i \in C$ is
-  called the \emph{\green{direct sum}}. This is equipped with the injection and projection
+  Given a linear category $\CC$ with objects $\{A_j\}_{j=1}^N \subseteq \ob(\CC)$, an object $\bigoplus_{i=1}^n A_i \in \CC$ is
+  called the \emph{\green{direct sum}} if it is equipped with the injection and projection
   map
   \[
-    \iota_i : a_i \to \bigoplus a_i \quad \text{ and } \quad \pi_i : \bigoplus a_i \to a_i 
+    \iota_i : A_j \to \bigoplus A_i \quad \text{ and } \quad \pi_i : \bigoplus A_j \to A_i 
   \]
   such that
   \[
-    \pi_i \circ \iota_i = id_{a_i} \forall i \quad \text{ and } \quad \sum_{i}^{} \iota_i \pi_i = \id_{\bigoplus a_i}
+    \pi_i \circ \iota_i = \id_{A_i} \forall i \quad \text{ and } \quad \sum_{i}^{} \iota_i \pi_i = \id_{\bigoplus A_i}
   \]
 \end{definition}
 
-Recall that for semisimple categories, there is an isomorphism $\Phi: \bigoplus_{c,\mu} R_c \to R_a \otimes R_b$. Then we can build projection and injection maps in dependence of the tensor product by the following diagram:
+A great resource on semisimple categories \cite{bailieSemisimple2017}.
+
+\begin{definition}\label{cat:def:semisimpleCategory} A \emph{\green{semisimple}}
+  category\footnote{There are multiple definitions of semisimplicity and
+  semisimple categories, and here we are using the definition of \emph{object
+  simplicity}. A review of these definitions is given in
+  \cite{bailieSemisimple2017}.} is a category in which every object $S \in
+  \ob(\CC)$ decomposes as a finite direct sum 
+  \begin{equation}\label{cat:eq:semisimple_decomp_1}
+    S \cong \bop_i S_i, \qquad S_i \text{ simple }
+  \end{equation}
+  where a \emph{\green{simple}} object is an object, where for any other object
+  $A$ that admits an injective \todo{this is vector space intuition, not sure if
+  this works. Maybe we need to introduce monomorphism? Need to review this
+  definition for general categories.} map, the object is either the $0$ morphism
+  or an isomorphism to $S$ \todo{Is this just the first part of schurs lemma?}.
+  If we group these simples by isomorphism, we can restate \eqref{cat:eq:semisimple_decomp_1} equivalently as
+  $$
+    S \cong \bop_i S_i^{\oplus n_i}
+  $$
+  where $n_i = \dim\Hom_\CC(S_i, S)$. Note that by our assumption of
+  $\Veck$-enrichment, all the $n_i$s are finite. \todo{Erichment first.} Further
+  denote the set of simple objects by $\Irr(\CC) \subseteq \ob(\CC)$.
+\end{definition}
+
+\begin{lemma}[Schur's lemma
+    \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}
+  ]
+  \label{cat:lemma:schur}
+  If $A$ and $B$ are simple objects in a linear category over an algebraically
+  closed field $k$ (this is always $\C$ in our case), then it holds that
+  \[
+    \Hom(A,B) = \begin{dcases}
+      k \cdot \id_S, &\text{ if } A \cong B ;\\
+      0 , &\text{ if } A \ncong B .
+    \end{dcases}
+  \]
+  Proof \cite[Theorem~7.5]{ibortIntroductionGroupsGroupoids2019}.
+\end{lemma}
+
+Now assume that we take a semisimple category that is also monoidal. By
+semisimplicity, any of the objects of the form $R_a \ot R_b$ are isomoprhic to $\bop R_c$
+where $R_a,R_b, \{R_c\}$ are all simple. A simple consequence of \Cref{cat:lemma:schur} produces
+\[
+  \dim \Hom_\CC(R_a \ot R_b, R_c) 
+  = \dim \Hom_\CC (\bop_c N^{ab}_d R_d, R_c) 
+  = \dim \bop_d \Hom_\CC (R_d, R_c)^{\op N^{ab}_d} 
+  \overeq{\cref{cat:lemma:schur}} \dim k^{N^{ab}_c}
+\]
+Call this isomorphism $\Phi: \bigoplus_{c,\mu} R_c \to R_a \otimes R_b$. Then we
+can extend projection and injection maps in dependence of the tensor product by
+the following diagram:
 \begin{equation}\label{cat:eq:fusionprop}
 % https://q.uiver.app/#q=WzAsNSxbMCwwLCJcXGJpZ29wbHVzX2MgUl9jIl0sWzIsMCwiUl9hIFxcb3RpbWVzIFJfYiJdLFswLDEsIlJfYyJdLFs0LDAsIlxcYmlnb3BsdXNfYyBSX2MiXSxbNCwxLCJSX2MiXSxbMCwxLCJcXFBoaSJdLFsyLDAsIlxcaW90YV9jIl0sWzIsMSwiXFxleGlzdHMgXFxpb3RhX3tjLFxcbXV9XnthYn0iLDJdLFsxLDMsIlxcUGhpXnstMX0iXSxbMyw0LCJcXHBpX2MiXSxbMSw0LCJcXGV4aXN0c1xccGlfe2FifV57YyxcXG11fSIsMl1d
 \begin{tikzcd}
@@ -180,11 +268,56 @@ Furthermore, these admit similar constraints as the direct sum:
   \pi^{c,\mu}_{ab} \iota_{d,\nu}^{ab} = \pi_{c,\mu} \Phi^{-1}\Phi  \iota_{d,\nu} = \delta_{cd}\delta_{\mu\nu} \id_{R_c}
 \end{equation}
 and
-\begin{equation}
+\begin{equation}\label{cat:eq:basis_completeness}
   \sum_{c,\mu}^{} \iota_{c,\mu}^{ab} \pi^{c,\mu}_{ab} = \Phi \left(\sum_{c,\mu}^{} \iota_{c,\mu}\pi_{c,\mu}\right) \Phi^{-1} = \Phi \id_{\bigoplus R_{c}} \Phi^{-1} = \id_{R_a \otimes R_b}  
 \end{equation}
 
-If we want to use contractions between matchings legs, and overall want the ability to take duals just like in $\FDVec{\C}$, we need both a concept of duality and the evaluation maps. This is also the categorification of the \emph{creation} and \emph{annihilation} maps from \Cref{sect:Anyons}. Let this motivate the following definition:
+We take these maps as above and claim they form a basis of the spaces $\Hom_\CC
+(a \otimes b, c)$ and $\Hom_\CC (c, a \otimes b)$.
+
+\begin{proof}
+  First we show linear independence. Let $\{x_\mu\}_{1}^{N_c^{ab}}$ be a set of
+  scalars and suppose that $\sum_\mu x_\mu \iota_{c,\mu}^{ab} = 0$. Observe that
+  \[
+    \pi_{c,\mu}^{ab} (\sum_{\mu} x_\mu \iota_{c,\mu}^{ab}) = \sum x_\mu \delta_{\mu,\nu} \id_{R_c} = x_\nu \id_{R_c}
+  \]
+  and since $\id_{R_c} \neq 0$ these form a linearly independent set. 
+
+  Now let $f \in \Hom_\CC(R_c, R_a \ot R_b)$ be an arbitrary morphism. By
+  \eqref{cat:eq:basis_completeness}, we can write
+  \[
+    f = \id_{R_a \ot R_b} \circ f = \sum_{d,\nu} \iota_{d,\nu}^{ab} (\pi^{d,\nu}_{ab} \circ f \in \Hom_\CC(R_c,R_d)) \overeq{\Cref{cat:lemma:schur}} \sum_{d,\nu} \iota_{d,\nu}^{ab} \delta_{R_c \cong R_d} \lambda_\nu \id_{R_c} = \sum_\nu \lambda_\nu \iota_{c,\nu}^{ab}
+  \]
+  and $f$ is an arbitrary linear combination and thus
+  \[
+    \text{span}_\C \left\{\iota_{d,\nu}^{ab}\right\}_{\nu = 1}^{N_{ab}^c} \cong \Hom_{\CC}(R_c, R_a \otimes R_b)
+  \]
+  and the statement follows dually for $\Hom_\CC(R_a \otimes R_b, R_c)$.
+\end{proof}
+
+If we look at $\Hom$ spaces of a higher order such as $\Hom_\CC(R_d, (R_a \ot
+R_b) \ot R_c)$, we have to choose a bracketing of the tensor products since we
+can only associate $(R_a \ot R_b) \ot R_c \cong R_a \ot (R_b \ot R_c)$. This
+induces a pullback \footnote{We will later see this (or where i put it) that
+this pullback can be assigned a matrix, and through semisimplicity sort of spans
+the entire space. This is an instance of a lifting through the yoneda lemma,
+i.e. we can define what $\alpha$ is doing by evaluating the action on finitely
+many points, and extending this trhough semisimplicity to the full space.}
+\[
+  \alpha^\ast : \Hom_\CC(R_d, (R_a \otimes R_b \otimes R_c)) \cong \Hom_\CC(R_d, R_a \ot (R_b \ot R_c)).
+\]
+We can also define a basis for these extended spaces. In fact, lets generalize this to the space $\Hom_\CC(R_b, \bigotimes_{i=1}^n R_{a_i})$. Given an ONB $\iota^{}$ for the space $\Hom_\CC(R_b, \bigotimes_{i=1}^{n-1})$ we can extend it to a basis on the larger space by taking
+\[
+  \iota^n = (\iota^{n-1} \ot \id_{R_{a_n}}) \circ \iota_{b,\mu}^{c,a_n}
+\]
+
+
+
+If we want to use contractions between matchings legs, and overall want the
+ability to take duals just like in $\FDVec{\C}$, we need both a concept of
+duality and the evaluation maps. This is also the categorification of the
+\emph{creation} and \emph{annihilation} maps from \Cref{sect:Anyons}. Let this
+motivate the following definition:
 \begin{definition}
   A monoidal category $(\CC, \otimes, 1)$ is \emph{\green{rigid}} if, for every $A \in \CC$, there exists a \emph{\green{dual object}} $A^\ast$ with the following maps:
   \[
@@ -207,6 +340,47 @@ If we want to use contractions between matchings legs, and overall want the abil
   \end{tikzcd}\]
 \end{definition}
 
+\newcommand{\Astrand}[2]{
+  \draw[->, #1] (#2) -- ++(0,1);
+}
+\newcommand{\Adualstrand}[2]{
+  \draw[<- , #1] (#2) -- ++(0,1);
+}
+
+\begin{graphicalCalculus}
+  \todo{Do these need to point up or down?} Now we have to introduce this notion of duality on the level of the graphical
+  calculus. We denote an object in the category by an oriented arrow, and denote
+  its dual object by the reverse.
+  \[
+    \begin{tikzpicture}[baseline=-0.5ex]
+      \Astrand{}{0,0}
+      \node[right] at (0.1,0.5) {$A$};
+    \end{tikzpicture}
+    \qquad\qquad
+    \begin{tikzpicture}[baseline=-0.5ex]
+      \Adualstrand{}{0,0}
+      \node[right] at (0.1,0.5) {$A^\ast$};
+    \end{tikzpicture}
+  \]
+  Similarly the $\ev_{A}$ and $\coev_A$ maps induce a graphical menaing:
+  \[
+  \coev_A :
+  \begin{tikzpicture}[baseline=-0.5ex]
+    \draw[->] (-0.4, 0.6) .. controls (-0.4, -0.2) and (0.4, -0.2) .. (0.4, 0.6);
+    \node at (-0.6, 0.5) {\small $A$};
+    \node at (0.6, 0.5) {\small $A^*$};
+  \end{tikzpicture}
+  \qquad\text{and}\qquad
+  \ev_A :
+  \begin{tikzpicture}
+    \draw[->] (-0.4, -0.6) .. controls (-0.4, 0.2) and (0.4, 0.2) .. (0.4, -0.6);
+    \node at (-0.6, -0.5) {\small $A^*$};
+    \node at (0.6, -0.5) {\small $A$};
+  \end{tikzpicture}.
+\]
+
+\end{graphicalCalculus}
+
 \begin{definition}
   A \emph{\green{ribbon}} category is a braided monoidal rigid category $(\CC,\otimes,1,\alpha,\gamma,\rho,\beta,\ev,\coev)$ with maps $\theta_A : A \to A$ that realizes a \emph{self-braiding} of the object. This is subject to
   \[
@@ -214,23 +388,6 @@ If we want to use contractions between matchings legs, and overall want the abil
   \]
 \end{definition}
 
-\begin{definition}
-Let $(\mathcal{V}, \otimes, I, \alpha, \lambda, \rho)$ be a monoidal category. A category
-$\mathcal{C}$ \green{\emph{enriched over $\mathcal{V}$}} (or a \emph{$\mathcal{V}$-category})
-consists of
-\begin{enumerate}
-  \item a set of objects $\mathrm{ob}(\mathcal{C})$,
-  \item for every $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-object} $\mathcal{C}(A,B) \in \mathcal{V}$ (rather than $Set$),
-  \item for every triple $A,B,C \in \mathrm{ob}(\mathcal{C})$, a \emph{composition morphism} in $\mathcal{V}$
-  \[
-    \circ_{A,B,C} : \mathcal{C}(B,C) \otimes \mathcal{C}(A,B) \longrightarrow \mathcal{C}(A,C),
-  \]
-  \item for every $A \in \mathrm{ob}(\mathcal{C})$, a \emph{unit morphism} in $\mathcal{V}$
-  \[
-    j_A : I \longrightarrow \mathcal{C}(A,A),
-  \]
-\end{enumerate}
-\end{definition}
 
 \begin{definition}
   A $k$-enriched category $\CC$ is called semisimple if every object $X$ is ismorphic to a finite sum of simple objects. Let $\{R_a\}_a$ be representatives of the isomorphism classes of simple categories (and assume algebraic closure / absolute simplicity). 
@@ -249,88 +406,6 @@ Now we would like the category that has all of these statements combined:
 \begin{remark}
   While each representation category $\Rep(G)$ forms a fusion category for finite $G$, this is not the case for infinite $G$ such as $\SU{2}$ or $\U{1}$. These violate the condition that there are finitely many simples. We can remedy this by instead considering a deformment of the underlying Lie-algebra as $U_q(\liesl 2)$.
 \end{remark}
-
-%
-%such that composition is \emph{associative} and \emph{unital}, expressed by the commutativity of the following diagrams in $\mathcal{V}$:
-%
-%\begin{center}
-%\begin{tikzpicture}[baseline=(current bounding box.center)]
-%  \node (TL) at (0,2)     {$(\mathcal{C}(C,D) \otimes \mathcal{C}(B,C)) \otimes \mathcal{C}(A,B)$};
-%  \node (TR) at (5.5,2)   {$\mathcal{C}(C,D) \otimes (\mathcal{C}(B,C) \otimes \mathcal{C}(A,B))$};
-%  \node (ML) at (0,0.6)   {$\mathcal{C}(B,D) \otimes \mathcal{C}(A,B)$};
-%  \node (MR) at (5.5,0.6) {$\mathcal{C}(C,D) \otimes \mathcal{C}(A,C)$};
-%  \node (B)  at (2.75,-1) {$\mathcal{C}(A,D)$};
-%
-%  \draw[->] (TL) -- node[above] {$\scriptstyle \alpha$} (TR);
-%  \draw[->] (TL) -- node[left]  {$\scriptstyle \circ_{B,C,D} \otimes \, \mathcal{C}(A,B)$} (ML);
-%  \draw[->] (TR) -- node[right] {$\scriptstyle \mathcal{C}(C,D) \otimes \, \circ_{A,B,C}$} (MR);
-%  \draw[->] (ML) -- node[below left]  {$\scriptstyle \circ_{A,B,D}$} (B);
-%  \draw[->] (MR) -- node[below right] {$\scriptstyle \circ_{A,C,D}$} (B);
-%\end{tikzpicture}
-%\hspace{1.5cm}
-%\begin{tikzpicture}[baseline=(current bounding box.center)]
-%  \node (IB) at (0,2)     {$I \otimes \mathcal{C}(A,B)$};
-%  \node (BI) at (4,2)     {$\mathcal{C}(A,B) \otimes I$};
-%  \node (TL) at (0,1)     {$\mathcal{C}(B,B) \otimes \mathcal{C}(A,B)$};
-%  \node (TR) at (4,1)     {$\mathcal{C}(A,B) \otimes \mathcal{C}(A,A)$};
-%  \node (CC) at (2,-0.2)  {$\mathcal{C}(A,B)$};
-%
-%  \draw[->] (IB) -- node[right] {$\scriptstyle j_B \otimes id$} (TL);
-%  \draw[->] (BI) -- node[left]  {$\scriptstyle id \otimes j_A$} (TR);
-%  \draw[->] (TL) -- node[below left]  {$\scriptstyle \circ_{A,B,B}$} (CC);
-%  \draw[->] (TR) -- node[below right] {$\scriptstyle \circ_{A,A,B}$} (CC);
-%  \draw[->] (IB) -- node[below left, pos=0.4]  {$\scriptstyle \lambda_{\mathcal{C}(A,B)}$} (CC);
-%  \draw[->] (BI) -- node[below right, pos=0.4] {$\scriptstyle \rho_{\mathcal{C}(A,B)}$} (CC);
-%\end{tikzpicture}
-%\end{center}
-%
-%i.e.\ the associator $\alpha$ intertwines the two ways of composing three morphisms, and composing with a unit morphism $j_A$ or $j_B$ agrees with the unitors $\lambda, \rho$ of $\mathcal{V}$.
-%\end{definition}
-%
-%\begin{remark}
-%Taking $\mathcal{V} = \mathrm{Set}$ (with its cartesian monoidal structure) recovers the notion of an ordinary (locally small) category: $\mathcal{C}(A,B)$ is just a set, and $\circ_{A,B,C}$, $j_A$ are the usual composition and identity, since $I \otimes X \cong X \cong X \otimes I$ becomes the trivial statement $\{*\} \times X \cong X$.
-%
-%Taking $\mathcal{V} = \mathrm{Vect}_k$ (with $\otimes = \otimes_k$, $I = k$) recovers exactly the notion of a \emph{$k$-linear category}: hom-sets become $k$-vector spaces, and $k$-bilinearity of composition is precisely the statement that $\circ_{A,B,C}$ factors through $\mathcal{C}(B,C) \otimes_k \mathcal{C}(A,B)$ rather than merely being a bilinear map out of the product $\mathcal{C}(B,C) \times \mathcal{C}(A,B)$.
-%\end{remark}
-%%
-%
-%\begin{definition}[Biproduct / Direct Sum]
-%Let $\mathcal{C}$ be an additive category (in particular, a category with a zero object $0$ and finite products/coproducts agreeing appropriately). Given objects $X_1, \dots, X_n \in \mathcal{C}$, a \emph{biproduct} $X_1 \oplus \cdots \oplus X_n$ is an object equipped with
-%
-%\begin{itemize}
-%  \item \emph{injection} morphisms $\iota_k : X_k \to X_1 \oplus \cdots \oplus X_n$,
-%  \item \emph{projection} morphisms $\pi_k : X_1 \oplus \cdots \oplus X_n \to X_k$,
-%\end{itemize}
-%
-%for $k = 1, \dots, n$, satisfying
-%
-%\[
-%  \pi_j \circ \iota_k = 
-%  \begin{cases}
-%    \mathrm{id}_{X_k} & j = k \\
-%    0 & j \neq k
-%  \end{cases}
-%  \qquad \text{and} \qquad
-%  \sum_{k=1}^n \iota_k \circ \pi_k = \mathrm{id}_{X_1 \oplus \cdots \oplus X_n}.
-%\]
-%
-%Equivalently (and this is the content of the definition, not an extra assumption): $(X_1\oplus\cdots\oplus X_n, \{\iota_k\})$ is simultaneously
-%
-%\begin{itemize}
-%  \item a \textbf{coproduct}: for every $Y \in \mathcal{C}$ and morphisms $f_k : X_k \to Y$, there is a unique $f : X_1\oplus\cdots\oplus X_n \to Y$ with $f \circ \iota_k = f_k$ for all $k$;
-%  \item a \textbf{product} (via the same object, with the $\pi_k$): for every $Y \in \mathcal{C}$ and morphisms $g_k : Y \to X_k$, there is a unique $g : Y \to X_1\oplus\cdots\oplus X_n$ with $\pi_k \circ g = g_k$ for all $k$;
-%\end{itemize}
-%
-%and these two universal properties agree on the same underlying object.
-%\end{definition}
-%
-%\begin{remark}
-%In a general (additive) category, having a product and having a coproduct on the same finite diagram are \emph{a priori} unrelated universal properties satisfied by \emph{a priori} different objects. What makes $\oplus$ special is that in an $\mathrm{Ab}$-enriched (or $k$-linear) category, product and coproduct on the same finite family, when they exist, automatically coincide — this is precisely what the identities $\pi_j\iota_k = \delta_{jk}$, $\sum_k \iota_k\pi_k = \mathrm{id}$ encode, and the zero morphisms $0 : X_j \to X_k$ used above only make sense because hom-sets are enriched in $\mathrm{Ab}$ (or $\mathrm{Vect}_k$), giving each hom-set a zero element. So biproducts are really a phenomenon of \emph{additive} enrichment, not of monoidal or plain categorical structure alone.
-%\end{remark}
-%
-%\begin{remark}[For a semisimple $\C$-linear category]
-%This is exactly the $\oplus$ used in the decomposition $Y \cong \bigoplus_i X_i^{\oplus n_i}$ from semisimplicity: since $\mathrm{Hom}(X_i, X_j) = 0$ for $i \neq j$ (distinct simples) and $\mathrm{Hom}(X_i,X_i) = \mathbb{C}$, the biproduct structure on $\bigoplus_i X_i^{\oplus n_i}$ is literally witnessed by these $\pi_j\iota_k = \delta_{jk}\,\mathrm{id}$ relations, with the multiplicities $n_i = \dim \mathrm{Hom}(X_i, Y)$ recovered as the number of copies of $\iota$ needed for $X_i$.
-%\end{remark}
 
 \subsection{Categorical Quantum Mechanics}\label{cat:sub:categoricalQuantum}
 
@@ -475,20 +550,12 @@ $U_q(sl_2)$ is not a group.
 
 \begin{lemma}[Isotypic Decomposition]
 \label{lem:IsotypicDecomposition}
-Let $\CC$ be a $k$-enriched semisimple category. Then for every $V \in C$, writing $D_a
-\coloneqq \Hom_C(R_a,V)$ for its \emph{degeneracy spaces}, only finitely many $D_a$ are
-nonzero, each is finite-dimensional, and there is a canonical isomorphism
+Let $\CC$ be a $k$-enriched semisimple category and $V \in \Veck$. We now give the concept of a \emph{\green{degeneracy space}}, where we give a ??? notion of the n-fold direct sum:
 \[
-  \bigoplus_{a \in L} D_a \otimes R_a \;\xrightarrow{ \sim }\; V
+  V \kot R_a \cong R_a^{\op \dim{V}}
 \]
-with $D_a\otimes R_a$ as in Lemma~\ref{lem:TensorBiproduct}.
+How do we make this canonical? by choosing $V = \Hom_{\CC}(R_a, V)$.
 \end{lemma}
-\begin{proof}
-  Observe that $V = \bigoplus_{i} R_{a}^{\oplus m_a}$ and
-  \[
-    Hom_c(R_a, V) = \bigoplus_b Hom(R_a, R_b^{\oplus m_b})
-  \]
-\end{proof}
 
 
 
@@ -634,208 +701,59 @@ $$
   \]
 \end{definition}
 
-
-%
-%\begin{theorem}
-%  A $G$ equivariant tensor is defined as 
-%  \[
-%    T \in Hom_G\left(\bigotimes V_{i} , \bigotimes W_{i} \right).
-%  \]
-%  Then there is a decomposition of $T$ as
-%  \[
-%    T = \bigoplus_{\hat{a} ,\hat{b}} \sum_{\mu}^{} P^{(\hat{a}, \hat{b} , \mu)} \otimes Q^{(\hat{a} , \hat{b} , \mu)} 
-%  \]
-%  where $\hat{a} = (a_1, \ldots , a_n )$ and $\hat{b} = (b_1, \ldots , b_m )$
-%  $P ^\prime in Hom(\otimes D_a^{(i)}, \otimes E_{b_j})$
-%\end{theorem}
-%
-%\begin{proof}
-%  Since $Rep(G)$ is semisimple, by lemma !!! every object decomposes as
-%  \begin{align*}
-%    V_i &\equiv \bigoplus_{a_i} D_{i,a_i} \otimes R_{a_{i} } \\
-%    W_i &\equiv \bigoplus_{b_{j} } E_{j,b_{j} } \otimes R_{b_{j} } 
-%  \end{align*}
-%
-%  Now, we can substitute these decompositions into
-%  \begin{align*}
-%    \bigotimes_i V_i &\equiv \bigotimes_i \left(\bigoplus_{a_{i} } D_{i, a_{i} } \otimes R_{a_{i} }\right) \\
-%    &\equiv \bigoplus_{\hat{a} } \left(\bigotimes_i D_{i,a_{i} }\right) \otimes \left(\bigotimes_i R_{a_{i}} \right)
-%  \end{align*}
-%
-%  Let $D_{\hat{a} } = \bigotimes_i D_{i,a_{i} }$ and define $R_{\hat{a} }, E_{\hat{a} }$ accordingly, then we obtain   
-%  \begin{align*}
-%    Hom_C(\bigotimes_{i} v_{i} , \bigotimes_{j} W_{j} ) &= Hom_C\left(\bigoplus_{\hat{a} } D_{\hat{a} } \otimes R_{\hat{a} }  , \bigoplus_{\hat{b} } E_{\hat{b} } \otimes R_{\hat{b} }   \right) \\
-%    &= \bigoplus_{\hat{a}, \hat{b} } Hom_C(D_{\hat{a}} \otimes R_{\hat{a} }, E_{\hat{b} } \otimes R_{\hat{b} }) \\
-%    &= \bigoplus_{\hat{a}, \hat{b} } Hom(D_{\hat{a} }, E_{\hat{b} }) \otimes Hom_C(R_{\hat{a} }, R_{\hat{b} }  ) 
-%  \end{align*}
-%\end{proof}
-
 \begin{theorem}[Decomposition of Semisimple Categories]
   \label{DecompositionOfSemisimpleCategories}
   Let $C$ be a semisimple, monoidal, $k$-linear category whose tensor product is
   $k$-linear in each variable, with simple objects $\{R_a\}_{a\in L}$ and let $V_i, W_i$
-  be a collection of objects in $C$. Every morphism
+  be a collection of (not necessarily simple) objects in $C$. Every morphism
   \[
-    T\in \mathrm{Hom}_C\left(\bigotimes_{i = 1}^n V_i, \bigotimes_{i = 1}^m W_{i}\right)
+    T \in \Hom_C\left(\bigot_{i = 1}^n V_i, \bigot_{i = 1}^m W_{i}\right)
   \]
   admit a decomposition as
   \[
-    T \in \bigoplus_{\hat a,\hat b}
-    P^{\hat a,\hat b} \otimes Hom_C(R_{\hat a},R_{\hat b}),
+    T \cong \bop_{\hat a,\hat b}
+    \Hom_{k}(D_{\hat a}, E_{\hat b}) \ot_k \Hom_C(R_{\hat a},R_{\hat b}),
   \]
   where $\hat a = (a_1, \ldots , a_n )$ and $P$ is a $k$-vector space of dimension ???
-
-%  admits a decomposition
-%  \[
-%    T = \bigoplus_{\hat a,\hat b}
-%    \sum_\mu
-%    P^{(\hat a,\hat b,\mu)}
-%    \otimes
-%    Q^{(\hat a,\hat b,\mu)},
-%    \]
-%  where
-%  \[
-%    P^{(\hat a,\hat b,\mu)}
-%    \in
-%    \mathrm{Hom}
-%    \!\left(
-%    \bigotimes_i D_{i,a_i},
-%    \bigotimes_j E_{j,b_j}
-%    \right),
-%  \]
-%and
-%\[
-%Q^{(\hat a,\hat b,\mu)}
-%\in
-%\mathrm{Hom}_C(R_{\hat a},R_{\hat b}).
-%\]
 \end{theorem}
 
 \begin{proof}
-%Since $C$ is semisimple, every object decomposes as a finite direct sum
-%of simple objects. Thus, by Lemma~\ref{...} and the distributivity of the tensor product through the biproduct
-%
-%\begin{equation}
-%  \label{TensorProductDecomposition}
-%  \begin{aligned}
-%\bigotimes_i V_i
-%    &\cong
-%      \bigotimes_i
-%      \left(
-%        \bigoplus_{a_i}
-%        D_{i,a_i}\otimes R_{a_i}
-%      \right)
-%\\
-%    &\cong
-%      \bigoplus_{\hat a}
-%      \left(
-%        \bigotimes_i D_{i,a_i}
-%      \right)
-%      \otimes
-%      \left(
-%        \bigotimes_i R_{a_i}
-%      \right).
-%  \\
-%  &\cong 
-%    \bigoplus_{\hat{a} } D_{\hat{a} } \otimes R_{\hat{a} }   
-%\end{aligned}
-%\end{equation}
-%
-%Then
-%
-%$$
-%  \begin{aligned}
-%    \Hom_C \left(
-%      \bigotimes_i V_i,
-%      \bigotimes_j W_j
-%    \right)
-%    &\cong
-%    \mathrm{Hom}_C
-%      \!\left(
-%      \bigoplus_{\hat a}
-%          D_{\hat a}\otimes R_{\hat a},
-%          \,
-%          \bigoplus_{\hat b}
-%          E_{\hat b}\otimes R_{\hat b}
-%          \right)
-%    && \text{by \eqref{TensorProductDecomposition}} \\[1ex]
-%    &\cong
-%    \bigoplus_{\hat a,\hat b}
-%    \mathrm{Hom}_C
-%    (
-%    D_{\hat a}\otimes R_{\hat a},
-%    E_{\hat b}\otimes R_{\hat b}
-%    ) && \text{by additivity of $Hom_C$} \\[1ex]
-%    &\cong
-%    \bigoplus_{\hat a,\hat b}
-%    \mathrm{Hom}(D_{\hat a},E_{\hat b})
-%      \otimes
-%    \mathrm{Hom}_C(R_{\hat a},R_{\hat b}).
-%    && \text{by \eqref{HomTensorFactorization}} 
-%  \end{aligned}
-%$$
-%
-%Choosing a basis
-%\[
-%  \{Q^{(\hat a,\hat b,\mu)}\}_\mu
-%\]
-%of each space
-%\[
-%  \mathrm{Hom}_C(R_{\hat a},R_{\hat b}),
-%\]
-%every morphism $T$ can therefore be written uniquely as
-%\[
-%  T
-%  =
-%  \bigoplus_{\hat a,\hat b}
-%  \sum_\mu
-%  P^{(\hat a,\hat b,\mu)}
-%  \otimes
-%  Q^{(\hat a,\hat b,\mu)},
-%  \]
-%  with
-%  \[
-%  P^{(\hat a,\hat b,\mu)}
-%  \in
-%  \mathrm{Hom}(D_{\hat a},E_{\hat b}).
-%\]
-%
 \begin{align*}
 \Hom_C&\!\left(
-  \bigotimes_i V_i,
-  \bigotimes_j W_j
+  \bigot_i V_i,
+  \bigot_j W_j
 \right) \\
 &\cong
 \Hom_C\!\left(
-  \bigotimes_i
+  \bigot_i
   \Bigl(
-    \bigoplus_{a_i}
-    D_{i,a_i}\otimes R_{a_i}
+    \bop_{a_i}
+    D_{i,a_i}\ot R_{a_i}
   \Bigr),
   \,
-  \bigotimes_j
+  \bigot_j
   \Bigl(
-    \bigoplus_{b_j}
-    E_{j,b_j}\otimes R_{b_j}
+    \bop_{b_j}
+    E_{j,b_j}\ot R_{b_j}
   \Bigr)
 \right)
 &\text{(\textcolor{gray}{\Cref{IsotopicDecomposition}})} 
 \\[1.5ex]
 &\cong
 \Hom_C\!\left(
-  \bigoplus_{\hat a}
-  D_{\hat a}\otimes R_{\hat a},
+  \bop_{\hat a}
+  D_{\hat a}\ot R_{\hat a},
   \,
-  \bigoplus_{\hat b}
-  E_{\hat b}\otimes R_{\hat b}
+  \bop_{\hat b}
+  E_{\hat b}\ot R_{\hat b}
 \right)
-&\text{(\textcolor{gray}{linearity of $\otimes$})}
+&\text{(\textcolor{gray}{linearity of $\ot$})}
 \\[1.5ex]
 &\cong
-\bigoplus_{\hat a,\hat b}
+\bop_{\hat a,\hat b}
 \Hom_C\!\left(
-  D_{\hat a}\otimes R_{\hat a},
-  E_{\hat b}\otimes R_{\hat b}
+  D_{\hat a}\ot R_{\hat a},
+  E_{\hat b}\ot R_{\hat b}
 \right)
 &
 \text{\textcolor{gray}{(additivity of $\Hom_{\CC}$)}} 
@@ -853,6 +771,18 @@ $$
 \right)
 &\text{\textcolor{gray}{(\Cref{HomTensorFactorization})}} 
 \end{align*}
+In a basis expansion this then looks like
+\[
+  \cong
+\bigoplus_{\hat a,\hat b}
+\sum_{e,f,\mu,\nu}
+\Hom\!\left(
+  D_{\hat a},
+  E_{\hat b}
+\right)
+\otimes_k
+\mathsf{T}^{\widehat a,\widehat b}_{e,f;\mu,\nu}
+\]
 \end{proof}
 
 \begin{corollary}[Operators are block matrices
@@ -972,22 +902,22 @@ thm header.
 \end{example}
 
 
-%\begin{equation}
-%  \label{ExternalTensorProductAsCoproductOfFiberwiseTensor}
-%  \begin{aligned}
-%    \mathscr{V}_X \boxtimes \mathscr{V}'_{X'}
-%    &\simeq \Big(\, \coprod_{x \in X} \mathscr{V}_{\{x\}} \Big) \boxtimes \Big(\, \coprod_{x' \in X'} \mathscr{V}'_{\{x'\}} \Big)
-%    && \text{by \eqref{VectorBundleOverSetIsCoproductOfItsRestrictionToSingletons}} \\[1ex]
-%    &\simeq \coprod_{x \in X} \bigg(\!\! \mathscr{V}_{\{x\}} \boxtimes \Big(\, \coprod_{x' \in X'} \mathscr{V}'_{\{x'\}} \Big) \!\! \bigg)
-%    && \text{by assumption (i) in first variable} \\[1ex]
-%    &\simeq \coprod_{x \in X} \; \coprod_{x' \in X'} \Big( \mathscr{V}_{\{x\}} \boxtimes \mathscr{V}'_{\{x'\}} \Big)
-%    && \text{by assumption (i) in second variable} \\[1ex]
-%    &\simeq \coprod_{x \in X} \; \coprod_{x' \in X'} \Big( \iota \big( \mathscr{V}_x \otimes \mathscr{V}_{x'} \big) \Big)
-%    && \text{by assumption (ii)} \\[1ex]
-%    &\simeq \coprod_{(x,x') \,\in\, X \times X'} \Big( \iota \big( \mathscr{V}_x \otimes \mathscr{V}_{x'} \big) \!\Big)
-%    && \text{just to make the base space manifest}
-%  \end{aligned}
-%\end{equation}
+\begin{equation}
+  \label{ExternalTensorProductAsCoproductOfFiberwiseTensor}
+  \begin{aligned}
+    \mathscr{V}_X \boxtimes \mathscr{V}'_{X'}
+    &\simeq \Bigl(\, \coprod_{x \in X} \mathscr{V}_{\{x\}} \Big) \boxtimes \Big(\, \coprod_{x' \in X'} \mathscr{V}'_{\{x'\}} \Big)
+    && \text{by \eqref{VectorBundleOverSetIsCoproductOfItsRestrictionToSingletons}} \\[1ex]
+    &\simeq \coprod_{x \in X} \bigg(\!\! \mathscr{V}_{\{x\}} \boxtimes \Big(\, \coprod_{x' \in X'} \mathscr{V}'_{\{x'\}} \Big) \!\! \bigg)
+    && \text{by assumption (i) in first variable} \\[1ex]
+    &\simeq \coprod_{x \in X} \; \coprod_{x' \in X'} \Big( \mathscr{V}_{\{x\}} \boxtimes \mathscr{V}'_{\{x'\}} \Big)
+    && \text{by assumption (i) in second variable} \\[1ex]
+    &\simeq \coprod_{x \in X} \; \coprod_{x' \in X'} \Big( \iota \big( \mathscr{V}_x \otimes \mathscr{V}_{x'} \big) \Big)
+    && \text{by assumption (ii)} \\[1ex]
+    &\simeq \coprod_{(x,x') \,\in\, X \times X'} \Big( \iota \big( \mathscr{V}_x \otimes \mathscr{V}_{x'} \big) \!\Big)
+    && \text{just to make the base space manifest}
+  \end{aligned}
+\end{equation}
 
 \subsection{Algorithms for contracting dual networks}
 
@@ -1047,16 +977,7 @@ TODOTOD!!
 \end{theorem}
 
 
-\begin{lemma}[Schur's lemma \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}]
-  If $S$ and $T$ are simple objects in a semisimple category over an algebraically closed field (this is always C in our case), then it holds that
-  \[
-    \Hom(S,T) = \begin{dcases}
-      k \cdot \id_S, &\text{ if } S \cong T ;\\
-      0 , &\text{ if } S \ncong T .
-    \end{dcases}
-  \]
-  Proof \cite[Theorem~7.5]{ibortIntroductionGroupsGroupoids2019}.
-\end{lemma}
+
 
 
 Lets give a coordinatized approach to fusion categories:
@@ -1068,70 +989,6 @@ Lets give a coordinatized approach to fusion categories:
   \]
   such that the pentagon holds.
 \end{definition}
-
-
-
-
-
-
-
-
-
-%\subsection{Fusion Trees}
-%
-%We consider a fusion tree as the basis that spans $Hom(R_a \otimes R_b \ldots \otimes R_m, \otimes R_{a_j} \ldots  )$. Since $R_a \otimes R_b$ is semisimple, we have the relationship
-%\[
-%  R_a \otimes R_b \cong \bigoplus_c R_c^{\oplus N_{ab}^c }
-%\]
-%with embedding (make this formal)
-%\[
-%  g^{ab}_{c, \mu} : R_{c} \to R_{a} \otimes R_{b}  
-%\]
-%and projections
-%\[
-%  f^{c,\mu}_{ab} : R_{a} \otimes R_{b} \to R_{c}
-%\]
-%\[
-%  id_{R_a \otimes R_{b} } = \sum_{c \in L}^{} \sum_{\mu = 1}^{N_{ab}^c} g_{c,\mu}^{ab} f_{ab}^{c,\mu}  
-%\]
-%
-%\begin{lemma}
-%  \[
-%    Hom(R_{a_1} \otimes \cdots \otimes R_{a_N}, R_b)
-%  \]
-%  is spanned by ordinary fusion trees.
-%\end{lemma}
-%\begin{proof}
-%  Base case: $N = 1$. Nothing to prove here.
-%
-%  INductive case:
-%
-%  Under semisimplicity we get that
-%  \[
-%    Hom(R_{a_1} \otimes \cdots \otimes R_{a_n}, R)b) \cong \bigoplus_{c,\mu} Hom(R_c \otimes R_{a_3} \otimes \cdots \otimes R_{a_n}, R_b)
-%  \]
-%\end{proof}
-
-%\subsection{Monoidal data}
-%
-%\begin{definition}[$\Rep(SU(2))$]
-%  Let $(V,\rho_V)$ be a representation.
-%\end{definition}
-%
-%\begin{definition}[Twists from $R$ moves {\cite[Equation~?]{simonTopologicalQuantum2023}}]
-%  Suppose we are in a braided monoidal category with $F$ and $R$ symbols. Then we compute the \emph{twist} (a self braiding) as follows:
-%  \[
-%    R^{ab}_{c} R^{ba}_c = \frac{\theta_c}{\theta_a \theta_b}.  
-%  \]
-%  (state more possibilities here.)
-%\end{definition}
-%
-%\begin{example}
-%  Take $sVect$. Our simples are $1$ and $f$. This \emph{braiding} is in fact symmetric. Thus we have that
-%  \[
-%    1 = \frac{\theta_1}{\theta_f^2} = 
-%  \]
-%\end{example}
 
 
 \begin{equation}
