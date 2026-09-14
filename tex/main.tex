@@ -1,4 +1,4 @@
-\documentclass[ 11pt,a4paper]{report}
+\documentclass[11pt,a4paper]{report}
 \usepackage[T1]{fontenc}
 %\documentclass[acmsmall, screen, nonacm, natbib=false]{acmart}
 \usepackage[margin=0.8in, left=0.8in]{geometry}
@@ -48,17 +48,18 @@
 \newpage
 
 % TODO: fix
-\input{chapters/fermions.tex}
-
-
-\chapter{Anyonic Tensor Networks}
-\label{sect:Anyons}
-\input{chapters/anyons.tex}
-\newpage
+\chapter{Anyons I : Introduction}
+\label{sec:anyonsIntro}
+\input{chapters/anyons_1.tex}
 
 \chapter{Categorical Networks}
 \label{sect:Categories}
 \input{chapters/categories.tex}
+\newpage
+
+\chapter{Anyons II: Spin Chains \& Tensor Networks}
+\label{sect:Anyons}
+\input{chapters/anyons.tex}
 \newpage
 
 I think we may be able to build a nice summary with this diagram:
@@ -149,6 +150,9 @@ I think we may be able to build a nice summary with this diagram:
 
 \appendix
 \chapter{Appendix}
+
+\input{chapters/appendix_general.tex}
+
 \section{Proofs for \Cref{sect:symmetricTensorNetworks}}
 \input{chapters/appendix_symmetry.tex}
 

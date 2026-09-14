@@ -1,17 +1,15 @@
-
-We need to introduce anyons here, or somehow build it into the review of the golden chain.
-
-This chapter the diagrammatic methods that yield tensor networks on physical systems that
-constitute \emph{anyons}. We introduce the fundamental theory of anyons algebraically
-(\Cref{anyon:sec:algebraic_theory_of_anyons}), and make use of the algebraic rules as the
-building blocks for our theory. \Cref{anyon:sec:topology} gives examples of how the
-statistical properties of anyons change with respect to it's ground state. Then, in
-\Cref{anyon:sec:lattice_spin_chains}, we provide a worked examples of how anyons are
-treated on \emph{spin-chains}, which motivates some aspect of the tensor networks
-approach. TODO tensor network chapter. One of the primary motivations for the study of
-anyons are their universality for quantum computation. In
-\Cref{anyon:sec:tqc} we provide an interpretation of how both
-normal braiding circuits and a variation in terms of \emph{weaves} can be simulated by the
+This chapter the diagrammatic methods that yield tensor networks on physical
+systems that constitute \emph{anyons}. We introduce the fundamental theory of
+anyons algebraically (\Cref{anyon:sec:algebraic_theory_of_anyons}), and make use
+of the algebraic rules as the building blocks for our theory.
+\Cref{anyon:sec:topology} gives examples of how the statistical properties of
+anyons change with respect to it's ground state. Then, in
+\Cref{anyon:sec:lattice_spin_chains}, we provide a worked examples of how anyons
+are treated on \emph{spin-chains}, which motivates some aspect of the tensor
+networks approach. TODO tensor network chapter. One of the primary motivations
+for the study of anyons are their universality for quantum computation. In
+\Cref{anyon:sec:tqc} we provide an interpretation of how both normal braiding
+circuits and a variation in terms of \emph{weaves} can be simulated by the
 tensor network theory.
 
 \section{Algebraic Theory of Anyons}\label{anyon:sec:algebraic_theory_of_anyons}
@@ -185,8 +183,8 @@ $Br_n(S^2)$ is given by
 \end{equation}
 
 
-Also we should do or have done isotopy before. Technically the discussion here also
-requires the completeness relations.
+Also we should do or have done isotopy before. Technically the discussion here
+also requires the completeness relations.
 
 \begin{equation}\label{anyon:eq:complete}
 \begin{tikzpicture}[
@@ -244,6 +242,14 @@ $$
 %well, an anyonic chain. These do not admit such a decomposition. So we should call these
 %simply 1D lattice models.
 
+What is a $2+1$D critical point? This is relevant for the distinction between
+$1$D and $2$D models. Is a 2D model the same as a fusion surface model?
+
+TODO: Write an outlook section here on work like
+\cite{lootensDualitiesOnedimensionalQuantum2024}
+\cite{eckQuantumLatticeModels2025} etc. This seems like a direct generalization
+of our approach.
+
 In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically in the
 $\Fib$ model, are introduced as a $1$D lattice of $n$ $\tau$ anyons, defined as the fusion
 space thereof.
@@ -292,7 +298,7 @@ $\tau \otimes \tau = \tau$.
 
 We can decompose the whole space $\Hom(\tau^{\otimes n+1}, \tau)$ into the local states
 \begin{equation}
-  \Hom(\tau^{\otimes n+1}, \tau) 
+  \Hom(\tau^{\otimes n+1}, \tau)
   =
   \bigoplus_{\mathclap{\substack{x_1, x_2, \ldots, x_{n-1} \\ \text{\color{RoyalBlue}{all admissible paths}}}}}
   \Hom(\tau \otimes \tau, x_1) \otimes \Hom(x_1 \otimes \tau, x_2)
@@ -371,13 +377,22 @@ local parts where two $\tau$ anyons are adjacent (check how they call it in the 
 
 Now we can apply the interaction based on the intermediate state\footnote{Technically we
 need a projector here read up again.} $x_i^\prime$ and apply another $F$-move back to the
-chain basis.
-
+chain basis:
+$$
+  H_{[i,i+1]} : 
+  \ket{x_{i-1} x_i x_{i+1}  } \to \ket{x_{i-1} x_i^{\prime\prime} x_{i+1} } 
+  \coloneqq
+  \sum_{x_i^\prime \in \{1,\tau\} }^{} [F_{x_{i+1} }^{x_{i-1}\tau\tau}]_{x_i}^{x_i^\prime } 
+    E_{x_{i}^\prime } 
+    [F_{x_{i+1} }^{x_{i-1}\tau\tau }]_{x_{i^\prime }}^{x_{i^{\prime\prime}}}
+  \label{anyon:eq:golden_chain_full}
+$$
+In the golden chain, we set $E_{1} = -1$ and $E_{\tau} = 0$. Then \eqref{anyon:eq:golden_chain_full} reduces to
 \[
-  H_{[i,i+1]} : \ket{x_{i-1} x_i x_{i+1}  } \to \ket{x_{i-1} x_i^{\prime\prime} x_{i+1} } \coloneqq  - \sum_{x_i^\prime \in \{1,\tau\} }^{} [F_{x_{i+1} }^{x_{i-1}\tau\tau}]_{x_i}^{x_i^\prime } E_{x_{i}^\prime } [F_{x_{i+1} }^{x_{i-1}\tau\tau }]_{x_{i^\prime }}^{x_{i^{\prime\prime}}}
+  H_{[i,i+1]} = - [F_{x_{i+1}}^{x_{i-1}\tau\tau}]_{x_i}^1 [F_{x_{i+1}}^{x_{i-1}\tau\tau}]_{1}^{x_{i}^{\prime\prime}}
 \]
 
-Write this three local hamiltonian in an operator form
+and we can write this three local hamiltonian as a matrix 
 \[
   H_i = -J \begin{pmatrix}
     1 &  &  &  &   \\
@@ -401,12 +416,11 @@ The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor20
 in terms of categories this is done in \cite{dissertation} and
 \cite{devosTensorKitjlJuliaPackage2025}.
 
-For the tensor network operations, we should consider the changing of the basis as an
-implicit operation that is performed when contracting, just like it would be in a normal
-einsum.
 
+If we want to write this as a tensor contraction, we first define a hamiltonian
+in a similar fashion to chapter 1. 
 
-In a tensor network formalism can build this as an anyonic operator in $Hom(\tau \otimes \tau, \tau \otimes \tau)$ as
+This takes the form of an operator in $Hom(\tau \otimes \tau, \tau \otimes \tau)$ as
 \[
   \begin{tikzpicture}[scale=1.2,
     every node/.style={font=\small},
@@ -541,10 +555,19 @@ We want to build a quantum computer that acts purely on the topological data pro
 
 Computing with nonabelian anyons requires a universal gate set built from representations
 of the \emph{braid-group}:
-\begin{align}
-  \sigma_i\sigma_j &= \sigma_j\sigma_i, \;\; \left\vert i - j \right\vert \geq 2 \label{eq:al1}\\
-  \sigma_i\sigma_{i+1}\sigma_{i} &= \sigma_{i+1}\sigma_i\sigma_{i+1}, \;\; i \in [1,n-2] \label{eq:al2}
-\end{align}\label{eq:artin}
+\begin{definition}[Braid Group (algebraic)]
+  \[
+    Br(\R^2) 
+    = 
+    \left\langle 
+      \begin{aligned}
+      \sigma_i\sigma_j &= \sigma_j\sigma_i, \;\; \left\vert i - j \right\vert \geq 2\\
+      \sigma_i\sigma_{i+1}\sigma_{i} &= \sigma_{i+1}\sigma_i\sigma_{i+1}, \;\; i \in [1,n-2]
+    \end{aligned}
+    \right\rangle
+  \]
+\end{definition}
+
 and also the \emph{pure-braid-group}:
 
 By the construction of anyon chains in \Cref{anyon:sec:algebraic_theory_of_anyons}, we know that the space of $3$ anyons fusing to $\tau$ is in fact $2$-dimensional. This motivates a choice of qubits as the following:
@@ -652,8 +675,22 @@ in little time after an algorithms\footnote{We provide an implementation of this
 process in \texttt{Haskell} \cite{jeremiasJkr11Exactsynthhs2025} } of
 \cite{kliuchnikovAsymptoticallyOptimalTopological2013} based on number theoretic
 methods (which is in turn itself based on
-\cite{freedmanLargeFourierTransforms2007}).
+\cite{freedmanLargeFourierTransforms2007}).\todo{Rewrite this.}
 
+Specifically, there is a decomposition of an arbitrary gate in $(\C^{2})^{\ot
+n}$ into a universal set of $CNOT$ and $\C^2$ unitaries. All that remains to do is to reexpress a traditional working gate set in the $Fib$ basis of sets.
+
+However we must also ensure that the decomposition in into CNOT does not produce
+nonadjacent control-target pairs, as we can not freely cross the braids over
+another qubit. 
+This can however also be a problem for standard qubit
+architectures, which is why we can decompose every unitary circuit into its
+\emph{linear nearest neighbour} (LNN) form
+\cite{kutinComputationDistance2007,saeediSynthesisQuantumCircuits2011}. Such
+decompositions are already implemented in languages such as {\tt
+Qiskit}\footnote{{\tt Qiskit} documentation:
+\url{https://quantum.cloud.ibm.com/docs/en/api/qiskit}}\cite{javadiabhari2024quantum}.
+%%%%%% This actually does not seem to be correct
 
 \begin{figure}[h]
   

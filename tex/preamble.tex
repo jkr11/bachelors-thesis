@@ -15,9 +15,12 @@
 \usepackage{caption}  % for setting caption width
 \captionsetup{width=\linewidth}
 
+\usepackage[textsize=tiny]{todonotes} % For todos (check opencompl template if more is necessary)
+
 \definecolor{Green}{rgb}{0, 0.5, 0.2}
 \usepackage[dvipsnames]{xcolor}
 \usetikzlibrary{decorations.markings}
+
 
 \usepackage{titlesec}
 \titleformat{\chapter}[display]
@@ -104,6 +107,7 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
+\newtheorem{graphicalCalculus}[theorem]{Graphical Notation}
 \newtheorem{notation}[theorem]{Notation}
 \newtheorem{literature}[theorem]{Literature}
 \newtheorem{example}[theorem]{Example}
@@ -130,6 +134,14 @@
 \newcommand{\op}{\oplus}
 \newcommand{\bop}{\bigoplus}
 \newcommand{\bigot}{\bigotimes}
+\newcommand{\kot}{\otimes^k}
+\newcommand{\overeq}[1]{\overset{#1}{=}} % move
+\newcommand{\ob}{\mathrm{ob}} % \ob of the category
+\newcommand{\Irr}{\mathrm{Irr}} % Irreps of the category
+\newcommand{\uConf}{\mathrm{Conf}} % Unordered ConfigurationSpace
+\newcommand{\oConf}[1]{\underset{\{1, \ldots, #1\}}{\uConf}}
+\newcommand{\Br}{\mathrm{Br}} % Braid Group
+\newcommand{\PBr}{\mathrm{PBr}} % Pure braid group
 
 \newcommand{\Hilbfd}{\mathrm{Hilb_{\text{fd}}}}
 
@@ -206,6 +218,7 @@
 
 \usepackage{libertine}
 \usepackage[libertine]{newtxmath}
+\renewcommand{\ttdefault}{cmtt}
 
 \tikzset{
     fusionarrow/.style={
