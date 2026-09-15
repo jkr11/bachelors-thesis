@@ -25,7 +25,7 @@ identifies a generalized theory of \emph{identical} particles. Denote the space
 where a particle lives by $\Sigma$ and thus the space of $n$ particles possible
 coordinates of equal type by $\Sigma^n$. Since the particles are assumed to be
 identical, any permutation (an action of $S_n$) necessarily leads to the same
-physical state, so we denote the full space of our system by
+physical state, so we denote the full space of our system by the quotient
 \[
     \Sigma^n / S_n.
 \] 
@@ -53,25 +53,32 @@ the following definition:
     and the \emph{\green{unordered Configuration Space}} of $n$ unlabeled
     identical particles is defined as 
     \[
-        \uConf_n (\Sigma) := \oConf n (\Sigma) / S_n
+        \uConf_n (\Sigma) := \oConf n (\Sigma) / S_n.
     \]
 \end{definition}    
+
+\begin{figure}
+  \includegraphics[width=0.5\textwidth]{figures/conf_5.png}
+  \caption{The configuration space of 5 particles in the plane $\R^2$.}
+\end{figure}
 
 Note that while \cite{leinaasTheoryIdenticalParticles1977a} conjectured
 computations for strange exchange statistics in both $2$ and $3$ dimensions, the
 concept of an anyon as a $1$ dimensional representation is due to
 \cite{wilczek1990}. 
 
-To make the intuition of non-contractibility in ??? formal, we need to introduce
-some tools from algebraic geometry. Specifically, we introduce the
-\emph{fundamental group}. The fundamental group collects all the loops at a
-basepoint $x_0$ in the space $\Sigma$ up to their homotopy equivalences. If $D =
-2$ it is known that
+Now we want to classify all the possible motions particles can take in this
+space. The \emph{motion group} of the configuration space is given by the spaces
+\emph{homotopy classes} (c.f. \Cref{app_gen:homotopy}), which are given by the
+fundamental group(oid) of the spcae. Informally, this group collects all the
+loops at some configuration $x_0$ up to homotopy. We want to differentiate two
+cases here: If $D = 2$ it is known that
+
 \[
     \pi_1(\uConf_n (\Sigma)) = \Br_n(\Sigma) \quad \text{ and } \quad \pi_1(\oConf{n} (\Sigma)) = \PBr_n(\Sigma)
 \]
-however if $D >= 3$ we know that these coincide with the symmetric group
-instead\todo{rephrase a lot!}. In fact there is an exact sequence
+however if $D >= 3$ we know that both of these coincide with the symmetric group
+$S_n$ instead. In fact there is an exact sequence
 \[
     1 
     \longrightarrow 
@@ -147,6 +154,103 @@ These generators also have a graphical interpretation as
 \right]
 \end{equation}
 
+Now we can give a process as the \emph{spacetime history} diagram of the $n$ particles.
+
+    \begin{tikzpicture}
+\begin{scope}[scale=0.6]
+  \begin{scope}[shift={(-1.6,0)}]
+    \draw[line width=1.2]
+      (+.5,5) to (+.5,-1);
+  \end{scope}
+
+  \begin{scope}[shift={(0,4)}]
+    \draw[line width=1.4]
+      (-.35,-1)
+      .. controls (-.35,0) and (+.35,0)  ..
+      (+.35,1);
+
+    \draw[line width=4.5, white]
+      (+.35,-1)
+      .. controls (+.35,0) and (-.35,0)  ..
+      (-.35,1);
+    \draw[line width=1.4]
+      (+.35,-1)
+      .. controls (+.35,0) and (-.35,0)  ..
+      (-.35,1);
+  \end{scope}
+
+  \draw[line width=1.4]
+    (-.35,3)
+    --
+    (-.35,1);
+
+  \draw[line width=1.4]
+    (+1.05,5)
+    --
+    (+1.05,3);
+
+  \begin{scope}[shift={(.7,2)}]
+    \draw[line width=1.4]
+      (-.35,-1)
+      .. controls (-.35,0) and (+.35,0)  ..
+      (+.35,1);
+
+    \draw[line width=4.5, white]
+      (+.35,-1)
+      .. controls (+.35,0) and (-.35,0)  ..
+      (-.35,1);
+    \draw[line width=1.4]
+      (+.35,-1)
+      .. controls (+.35,0) and (-.35,0)  ..
+      (-.35,1);
+  \end{scope}
+
+  \begin{scope}
+    \draw[line width=1.4]
+      (-.35,-1)
+      .. controls (-.35,0) and (+.35,0)  ..
+      (+.35,1);
+
+    \draw[line width=4.5, white]
+      (+.35,-1)
+      .. controls (+.35,0) and (-.35,0)  ..
+      (-.35,1);
+    \draw[line width=1.4]
+      (+.35,-1)
+      .. controls (+.35,0) and (-.35,0)  ..
+      (-.35,1);
+  \end{scope}
+
+  \draw[line width=1.4]
+    (1.05,1) to (1.05,-1);
+
+  \begin{scope}[shift={(+2.4,0)}]
+    \draw[line width=1.4]
+      (-.5,5) to (-.5,-1);
+  \end{scope}
+
+  \draw[fill=gray, opacity=0.3] (-2,4.3) rectangle (2.7,5.9);
+
+  \draw[fill=gray, opacity=0.3] (-2,-0.1) rectangle (2.7,-1.7);
+
+  \node[align=center, blue, font=\footnotesize] at (-4.5, 2) 
+        {The spacetime history \\ of $5$ particles in $\R^2$.};
+
+  \end{scope}
+\end{tikzpicture}
+
+Now, if we associate a Hilbert space to this configuration space, we can achieve
+this by using a \emph{Hilbert Bundle}
+\[
+  \mathcal{H} \overset{\pi}{\longrightarrow} \uConf_n(\Sigma),
+\]
+i.e. to each point $[x] \in \uConf_n(\Sigma)$ there is an associated Hilbert
+space $\mathcal{H}_{x}$. Furthermore, a path through the configuration space
+$[\gamma] : x_0 \to x_1 \in \Br_n(\Sigma) = \pi_1(\uConf_n(\Sigma))$ is lifted to some unitary
+representation
+\[
+  \rho([\gamma]) \in U(\mathcal{H}_{x_0} \to \mathcal{H}_{x_1})
+\]
 
 
 
