@@ -668,22 +668,51 @@ indivuual gates are given in \cite{hadjiivanovBraidingFibonacciAnyons2024},
 \cite{georgievDiagonalCosetApproach2024}.
 
 The work of \textcite{simonTopologicalQuantumComputing2006a} provides a
-alternative. We can use \emph{weaves} to build \emph{injection gates} which in
-turn realize control gates. Then, by a universality argument of \cite{freedmanModularFunctorWhich2000a} we
-can approximate any other multiqubit gate, as single qubit gates can be computed
-in little time after an algorithms\footnote{We provide an implementation of this
-process in \texttt{Haskell} \cite{jeremiasJkr11Exactsynthhs2025} } of
-\cite{kliuchnikovAsymptoticallyOptimalTopological2013} based on number theoretic
-methods (which is in turn itself based on
+alternative using the pure braid group. Remember that although we can represent any weave generator as 
+\[
+  T_{ij} = \sigma_i \sigma_{i+1} \cdots \sigma_{j-1} \sigma_{j}^2 \sigma_{j-1} \cdots \sigma_{i+1} \sigma_i
+\]
+a weave is effectively realized by moving only one of the particles (strands)
+around $n-1$ fixed strands. As it turns out, the weave representations are also
+dense in $\SU(2)$. (cite). This can also solve our problem of effectively
+compiing controlled gates. Remember the presentation we chose for our qubits:
+The $\ket{0}$ qubit has an intermediate channel of $1$ and the $\ket{1}$ qubit
+has an intermediate channel of $\tau$. We also know that braiding a $1$-type
+anyon around any other anyon shoulde have no effect. By our construction of
+fusion we know that the tau anyons in the $1$ channel can only produce $1$ when
+fused (i.e. $\tau \ot \tau = 1$). Should we have a superposition of qubits
+$\alpha \ket{0} + \beta \ket{1}$ this means we produce a composite anyon of type
+$0$ with probability $\alpha^2$ and a composite anyon of type $\tau$ with
+probability $\beta^2$. Now if we find a weave realizing our controlled gate on
+the lower qubit, we will have succesfully synthesized a controlled gate. For
+this, we only need to \emph{inject} the composite anyon in the lower qubit
+\emph{without} affecting the state of our system\todo{or doing so invertibly}.
+After fusing in our top qubit, we effectively end up with a braiding problem in
+$ \PBr_n$, however since we only want the $\tau$ part to have an effect we can
+reduce this to $\Br_n$. Practically, this means that we need to find a
+traditional braid $X \in Br_3$ such that the representation of 
+\[
+  \sigma_3
+\]
+
+We can use \emph{weaves} to build \emph{injection gates} which in
+turn realize control gates. Then, by a universality argument of
+\cite{freedmanModularFunctorWhich2000a} we can approximate any other multiqubit
+gate, as single qubit gates can be computed in little time after an
+algorithms\footnote{We provide an implementation of this process in
+\texttt{Haskell} \cite{jeremiasJkr11Exactsynthhs2025} }\footnote{Although we
+cannot reach the claimed bound of $\epsilon$ but instead reach
+$\sqrt{\epsilon}$} of \cite{kliuchnikovAsymptoticallyOptimalTopological2013}
+based on number theoretic methods (which are already mentioned in
 \cite{freedmanLargeFourierTransforms2007}).\todo{Rewrite this.}
 
 Specifically, there is a decomposition of an arbitrary gate in $(\C^{2})^{\ot
-n}$ into a universal set of $CNOT$ and $\C^2$ unitaries. All that remains to do is to reexpress a traditional working gate set in the $Fib$ basis of sets.
+n}$ into a universal set of $CNOT$ and $\C^2$ unitaries. All that remains to do
+is to reexpress a traditional working gate set in the $Fib$ basis of sets.
 
 However we must also ensure that the decomposition in into CNOT does not produce
 nonadjacent control-target pairs, as we can not freely cross the braids over
-another qubit. 
-This can however also be a problem for standard qubit
+another qubit. This can however also be a problem for standard qubit
 architectures, which is why we can decompose every unitary circuit into its
 \emph{linear nearest neighbour} (LNN) form
 \cite{kutinComputationDistance2007,saeediSynthesisQuantumCircuits2011}. Such

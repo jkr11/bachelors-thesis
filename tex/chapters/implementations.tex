@@ -1,38 +1,685 @@
 % sources for R and TM symbols:
 % https://tex.stackexchange.com/questions/168938/how-to-insert-a-trademark-symbol-tm
 % https://tex.stackexchange.com/questions/1676/how-to-get-good-looking-copyright-and-registered-symbols
+% From package managers a la carge (arxiv:2602.18602v5) table.tex
+\newcounter{tabfn}
+\newcommand{\crs}{\color{black}{\ding{55}}}
 
-All experiments were run on a machine running Ubuntu 24.04 and an
-Intel\textregistered Core\textsuperscript{\texttrademark} i7-13700H (20 cores,
-??? GHz) with 32.0 GiB of RAM.
+\newcommand{\tfntext}[2]{%
+  \refstepcounter{tabfn}%
+  \noindent\textsuperscript{\arabic{tabfn}}%
+  \raisebox{7pt}[0pt][0pt]{\phantomsection\label{tabfn-#1}}%
+  #2\par
+}
+\newcommand{\tfnref}[1]{\hyperref[tabfn-#1]{\textsuperscript{\ref{tabfn-#1}}}}
 
-Implementations that are available:
+\newcommand\bcircle[2][]{\ifmmode
+    \Circled[fill color=white,inner color=black,#1]{\mathsf{#2}}
+  \else
+    \Circled[fill color=white,inner color=black,#1]{\sffamily#2}
+  \fi
+}
+
+\newcommand{\cL}{\bcircle{L}} % Library
+\newcommand{\cB}{\bcircle{B}} % Backend / Extension
+\newcommand{\cR}{\bcircle{R}} % Research Code / standalone script
+
+%\begin{table}[h]
+%\centering
+%\rowcolors{2}{gray!10}{white}
+%\begin{tabularx}{\textwidth}{l l X l}
+%\hline
+%\textbf{Software} & \textbf{Symmetry} & \textbf{Citation (Software, Publication)} & \textbf{Language} \\
+%\hline
+%ITensor & Nonabelian (Fermion?) & \cite{fishmanITensorSoftwareLibrary2022} & Julia \\
+%Cyten & Categorical & \cite{unfriedCyten}, \cite{dissertation} & Python \& C++ \\
+%TeNPy & Abelian & \cite{hauschildTensorNetworkPython2024} & Python \\
+%QSpace & Nonabelian & \cite{weichselbaumQSpaceOpensourceTensor2024}, \cite{weichselbaumNonabelianSymmetriesTensor2012} & ? \\
+%ChemTensor & $\SU{2}$ & \cite{QctumChemtensor2026} & C \\
+%UniTensor & ? & \cite{} & ? (Python, C++) \\
+%YASTN & Abelian & \cite{ramsYASTNAnotherSymmetric2025} & Python \\
+%TensorKit.jl\footnotemark & Categorical & \cite{devosTensorKitjlJuliaPackage2025} & Julia \\
+%Cytnx & Abelian only (?) & \cite{} & C++ \\
+%quimb & Fermion? & \cite{} & Python \\
+%MPSKit.jl & (similar to TensorKit?) & \cite{} & Julia \\
+%TeMFpy & Fermion? & \cite{temfpy} & Python \\
+%abeliantensors & $\U{1}$ and $\mathbb{Z}_n$ & \cite{hauruMhauruAbeliantensors2026} & Python \\
+%symmray & Fermion & \cite{gaoFermionicTensorNetwork2025}, \cite{grayJcmgraySymmray2026} & ? \\
+%grassmanntn & Grassmann & \cite{yosprakobAyosprakobGrassmanntn2026} & ? \\
+%SymLibrary & ? (on-site) & \cite{mcmahonQnlaSymLibrary2019}, \cite{mcmahonHolographicDualityLifted2020} & MATLAB? \\
+%%Telum.jl & Nonabelian & \cite{leeSsbleeTelumjl2026} & Julia \\
+%%Su2tn & $\SU{2}$ & \cite{fischerVictorfischer2000Su2tn2025}, \cite{fischerTensorNetworkSymmetries2025} & Python \\
+%%\hline
+%%\end{tabularx}
+%%\captionsetup{justification=centering}
+%%\caption{Overview of tensor network libraries and symmetry support. (There are some closed-source things here as well; also, what is the software used by Singh et al.?) Software is included if it has a website or documentation and an account of the symmetries it exploits. Applications or theory are listed in the Citation column.}
+%%\label{tab:tn-libraries}
+%%\end{table}
+%%\footnotetext{Part of the \texttt{QuantumKit.jl} ecosystem.}
+%%
+%%\newpage
+%
+%\newpage
+%\begin{landscape}
+%
+%\begin{table}[h]
+%\centering
+%\small
+%\label{tab:tn-libraries}
+%
+%\captionsetup{justification=centering}
+%\caption{Overview of tensor network libraries and their support for symmetries.
+%If a specific symmetry is given, the software is restricted to that symmetry. A
+%previous list of existing implementations in 2018 is also given in
+%\cite{hubigGlobalSymmetriesTensora}. }
+%\rowcolors{2}{gray!10}{white}
+%\begin{tabularx}{\textwidth}{l c l | c c c c c}
+%\rowcolor{white}
+%\textbf{Software}
+%& \textbf{Year}
+%& \textbf{Language}
+%& \makecell{\textbf{Abelian}\\ \S\ref{sect:symmetricTensorNetworks}}
+%& \makecell{\textbf{Non-Abelian} \\ \S\ref{sect:symmetricTensorNetworks}}
+%& \makecell{\textbf{Categorical} \\ \S\ref{sect:Categories}}
+%& \makecell{\textbf{Product}\\\textbf{Symmetries} \\ \S\ref{subsect:deligne}}
+%& \textbf{\makecell{Software \& \\ Publication}}
+%\\[-1mm]
+%\hline
+%
+%ITensor
+%& 2022
+%& Julia
+%& $\checkmark$
+%& $\checkmark$
+%& ?
+%& ?
+%& \cite{fishmanITensorSoftwareLibrary2022}
+%\\
+%
+%Cyten\tfnref{cyten}\tfnref{cytnx}
+%& 2024
+%& Python \& C++
+%& $\checkmark$
+%& $\checkmark$
+%& $\checkmark$
+%& $\checkmark$
+%& \cite{unfriedCyten}, \cite{dissertation}
+%\\
+%
+%TeNPy
+%& 2019 % what is this actually? first stable release?
+%& Python
+%& $\checkmark$
+%& 
+%& 
+%& ?
+%& \cite{hauschildTensorNetworkPython2024}
+%\\
+%
+%QSpace
+%& 2012
+%& ?
+%& $\checkmark$
+%& $\checkmark$
+%& $\crs$
+%& ?
+%& \cite{weichselbaumQSpaceOpensourceTensor2024},
+%  \cite{weichselbaumNonabelianSymmetriesTensor2012}
+%\\
+%
+%SyTen
+%& 2017
+%& C++
+%& ?
+%& ?
+%& ?
+%& ?
+%& \cite{hubig:_syten_toolk,hubig17:_symmet_protec_tensor_networ} \\
+%
+%ChemTensor
+%& 2023
+%& C
+%& $\checkmark$
+%& $\mathrm{SU}(2)$
+%& $\crs$
+%& ?
+%& \cite{QctumChemtensor2026}
+%\\
+%
+%Uni10
+%& 2015
+%& Python, C++
+%& ?
+%& ?
+%& ?
+%& ?
+%& \cite{kaoUni10OpensourceLibrary2015}
+%\\
+%
+%YASTN
+%& 2025
+%& Python
+%& $\checkmark$
+%& 
+%& 
+%& ?
+%& \cite{ramsYASTNAnotherSymmetric2025}
+%\\
+%
+%TensorKit.jl\tfnref{tensorkit}
+%& 2025
+%& Julia
+%& $\checkmark$
+%& $\checkmark$
+%& $\checkmark$
+%& $\checkmark$
+%& \cite{devosTensorKitjlJuliaPackage2025}
+%\\
+%
+%Cytnx\tfnref{cytnx}
+%& 2024
+%& C++
+%& only?
+%& 
+%& 
+%& ?
+%& \cite{wuCytnxLibraryTensor2025}
+%\\
+%
+%%quimb
+%%& ?
+%%& Python
+%%& ?
+%%& ?
+%%& $\mathrm{sVect}$
+%%& ?
+%%& \cite{}
+%%\\
+%
+%TeMFpy
+%& 2025
+%& Python
+%& ?
+%& ?
+%& $\mathrm{sVect}$
+%& ?
+%& \cite{temfpy}
+%\\
+%
+%abeliantensors
+%& 2026
+%& Python
+%& $\mathrm{U}(1)$, $\mathbb{Z}_n$
+%& $\crs$
+%& $\crs$
+%& $\crs$
+%& \cite{hauruMhauruAbeliantensors2026}
+%\\
+%
+%symmray\tfnref{quimb_backend}
+%& 2025
+%& Python
+%& \checkmark
+%& \crs
+%& $\mathrm{sVect}$
+%& \checkmark
+%& \cite{gaoFermionicTensorNetwork2025},
+%  \cite{grayJcmgraySymmray2026}
+%\\
+%
+%grassmanntn
+%& 2026
+%& ?
+%& 
+%& 
+%& $\mathrm{sVect}$\tfnref{grassman}
+%& ?
+%& \cite{yosprakobAyosprakobGrassmanntn2026}
+%\\
+%
+%SymLibrary
+%& 2019
+%& MATLAB?
+%& ?
+%& ?
+%& ?
+%& ?
+%& \cite{mcmahonQnlaSymLibrary2019},
+%  \cite{mcmahonHolographicDualityLifted2020}
+%\\
+%
+%Telum.jl
+%& 2026
+%& Julia
+%& $\checkmark$
+%& $\checkmark$
+%& $Ferm$
+%& ?
+%& \cite{leeSsbleeTelumjl2026}
+%\\
+%
+%Su2tn
+%& 2025
+%& Python
+%& \crs
+%& $\mathrm{SU}(2)$
+%& \crs
+%& \crs
+%& \cite{fischerVictorfischer2000Su2tn2025},
+%  \cite{fischerTensorNetworkSymmetries2025}
+%\\
+%
+%CheMPS2 
+%& 2013
+%& C++
+%& $\checkmark$
+%& $\checkmark$ 
+%& $\mathrm{Ferm}$
+%& \crs
+%& \cite{woutersCheMPS2FreeOpensource2014}
+%\\
+%
+%\end{tabularx}
+%\begin{multicols}{2}
+%    \centering
+%\footnotesize\raggedright
+%\tfntext{cyten}{Cyten originated as a branch of TenPy and was later split into its own repository.}
+%\tfntext{grassman}{This supports a variant called \emph{Grassman Tensor Networks}.}
+%\tfntext{cytnx}{Ideas from Cytnx were eventually adapted into Cyten.}
+%\tfntext{tensorkit}{Part of the \texttt{QuantumKit.jl} ecosystem.}
+%\tfntext{quimb_backend}{symmray functions as a backed for the tensor network software quimb \cite{gray2018quimb,grayJcmgrayQuimb2026}}
+%\end{multicols}
+%
+%\end{table}
+%\end{landscape}
+
+%\begin{landscape}
+
+\let\oldfootnotesize\footnotesize
+\renewcommand{\footnotesize}{\fontsize{7pt}{0pt}\selectfont}
+
+\thispagestyle{empty}
+\setlength{\abovecaptionskip}{4pt}
+\setlength{\belowcaptionskip}{0pt}
+\setlength{\multicolsep}{0pt}
 
 \begin{table}[h]
-\centering
-\begin{tabular}{llll}
+%\centering
+\fontsize{6.25pt}{9pt}\selectfont
+\setlength{\tabcolsep}{4.8pt}
+\label{tab:tn-libraries}
+
+\captionsetup{justification=centering}
+\caption{Overview of tensor network libraries and their support for symmetries and features relevant toward symmetry.
+If a specific symmetry is given, the software is restricted to that symmetry. A
+previous list of existing implementations in 2018 is also given in
+\cite{hubigGlobalSymmetriesTensora}. Note that implementations such as the
+original MATLAB implementation by
+\textcite{singhTensorNetworkDecompositions2010a} are not publicly available or
+named.}
+\rowcolors{3}{gray!10}{white}
+\begin{tabularx}{\textwidth}{p{1.9cm} c l l | c c c c c c c | c}
+\rowcolor{white}
+\multicolumn{4}{c|}{Metadata} & \multicolumn{7}{c}{Features} & \multicolumn{1}{c}{}\\
+\textbf{Library/Backend}
+& \textbf{Year}
+& \textbf{Language}
+& \textbf{License}
+& \makecell[b]{\textbf{Abelian}\\ \S\ref{sect:symmetricTensorNetworks}}
+& \makecell[b]{\textbf{Non-Abelian} \\ \S\ref{sect:symmetricTensorNetworks}}
+& \makecell[b]{\textbf{Categorical} \\ \S\ref{sect:Categories}}
+& \makecell[b]{\textbf{Product}\\\textbf{Symmetries} \\ \S\ref{subsect:deligne}}
+& \makecell[b]{\textbf{Fermionic} \\ \textbf{Number}}
+& \makecell[b]{\textbf{GPU}}
+& \makecell[b]{\textbf{Autodiff}}
+& \textbf{\makecell[b]{Software \& \\ Publication}}
+\\
 \hline
-\textbf{Name} & \textbf{Symmetry} & \textbf{Citation}(Software, Publication) & Language \\
-\hline
-ITensor & Nonabelian (Fermion?) & \cite{fishmanITensorSoftwareLibrary2022} & Julia \\
-Cyten & Categorical & \cite{unfriedCyten} \cite{dissertation} & python \& C++ \\
-TeNPy & Abelian & \cite{hauschildTensorNetworkPython2024} & python \\
-QSpace & Nonabelian & \cite{weichselbaumQSpaceOpensourceTensor2024} \cite{weichselbaumNonabelianSymmetriesTensor2012} & ? \\
-ChemTensor & $SU(2)$ & \cite{QctumChemtensor2026} & C \\
-UniTensor & ? & \cite{} & ? (Python, C++)\\
-YasTn & Abelian & \cite{ramsYASTNAnotherSymmetric2025} & Python \\
-TensorKit.jl & Categorical & \cite{devosTensorKitjlJuliaPackage2025} & Julia \\
-Cytnx & Abelian only (i think) & \cite{} & C++ \\
-quimb & Fermion? & \cite{} & Julia \\
-MPSKit.jl & like TensorKit? & \cite{} & Julia \\
-TeMFpy & Fermion? & \cite{temfpy} & Python \\
-abeliantensor & $U(1)$ and  $\mathbb{Z}_n$ & \cite{hauruMhauruAbeliantensors2026} & Python \\
-symmray & Fermion & \cite{gaoFermionicTensorNetwork2025} \cite{grayJcmgraySymmray2026} & ? \\
-grassmanntn & Grassmann & \cite{yosprakobAyosprakobGrassmanntn2026} & ? \\ 
-SymLibrary & ? (OnSite) & \cite{mcmahonQnlaSymLibrary2019} \cite{mcmahonHolographicDualityLifted2020} & MatLab? \\
-Telum.jl & NonAbelian & \cite{leeSsbleeTelumjl2026} & Julia \\
-Su2tn & $\SU{2}$ & \cite{fischerVictorfischer2000Su2tn2025,fischerTensorNetworkSymmetries2025} & Python \\
-\hline
-\end{tabular}
-\caption{Overview of tensor network libraries and symmetry support. (There are some closed source things here as well, also what is the software used by singh et al.?). Software is included if it has a website or documentation and an account of the symmetries it exploits. Applications or theory are listed in the Citation column.}
+
+MPToolkit \hfill\cL\tfnref{symbol}
+& 2002
+& C++
+& GPL-3.0
+& \checkmark
+& \checkmark
+& \crs
+& \checkmark
+& ?
+& \crs 
+& \crs
+& \cite{MptoolkitMptoolkit2026,mccullochNonAbelianDensityMatrix2002} 
+\\
+
+
+QSpace \hfill\cL\hphantom{\tfnref{symbol}}
+& 2012
+& Matlab
+& Apache-2.0
+& $\checkmark$
+& $\checkmark$
+& \crs
+& ?
+& ?
+& ?
+& ?
+& \cite{weichselbaumQSpaceOpensourceTensor2024, weichselbaumNonabelianSymmetriesTensor2012}
+\\
+
+CheMPS2 \hfill\cL\hphantom{\tfnref{symbol}}
+& 2013
+& C++
+& GPL-2.0
+& $\checkmark$
+& $\checkmark$ 
+& $\mathrm{Ferm}$
+& \crs
+& \checkmark
+& ?
+& ?
+& \cite{woutersCheMPS2FreeOpensource2014}
+\\
+
+Uni10 \hfill\cL\hphantom{\tfnref{symbol}}
+& 2015
+& Python, C++
+& ?
+& ?
+& ?
+& ?
+& ?
+& ?
+& ?
+& ?
+& \cite{kaoUni10OpensourceLibrary2015}
+\\
+
+SyTen \hfill\cL\hphantom{\tfnref{symbol}}
+& 2017
+& C++
+& \crs\tfnref{sytenclosed}
+& ?
+& ?
+& ?
+& ?
+& ?
+& ?
+& ?
+& \cite{hubig:_syten_toolk,hubig17:_symmet_protec_tensor_networ} 
+\\
+
+SymLibrary \hfill\cR\hphantom{\tfnref{symbol}}
+& 2019
+& Matlab
+& MIT 
+& \checkmark
+& \checkmark
+& $\SU{2}_k$
+& \checkmark
+& \checkmark
+& ?
+& ?
+& \cite{mcmahonQnlaSymLibrary2019, mcmahonHolographicDualityLifted2020}
+\\
+
+TensorNetwork \hfill\cL\hphantom{\tfnref{symbol}}
+& 2019
+& Python
+& ?
+& \checkmark
+& \crs
+& \crs
+& \crs
+& \crs
+& ?
+& ?
+& \cite{roberts2019tensornetwork}
+\\
+
+TeNPy \hfill\cL\hphantom{\tfnref{symbol}}
+& 2019 % what is this actually? first stable release?
+& Python
+& Apache-2.0
+& $\checkmark$
+& \crs
+& \crs 
+& ?
+& ?
+& ?
+& ?
+& \cite{hauschildTensorNetworkPython2024}
+\\
+
+ITensor \hfill\cL\hphantom{\tfnref{symbol}}
+& 2022
+& Julia
+& Apache-2.0
+& $\checkmark$
+& $\checkmark$
+& ?
+& ?
+& ?
+& ?
+& ?
+& \cite{fishmanITensorSoftwareLibrary2022}
+\\
+
+Block2 \hfill \cL\hphantom{\tfnref{symbol}}
+& 2023
+& C++
+& GPL-3.0
+& $\checkmark$
+& $\SU{2}$
+& \crs
+& \crs
+& ?
+& ?
+& ?
+& \cite{BlockhczhaiBlock2preview2026, zhaiBlock2ComprehensiveOpen2023}
+\\
+
+ChemTensor \hfill\cL\hphantom{\tfnref{symbol}}
+& 2023
+& C
+& Apache-2.0
+& $\checkmark$
+& $\mathrm{SU}(2)$
+& \crs
+& \crs
+& ?
+& \crs
+& \crs
+& \cite{QctumChemtensor2026}
+\\
+
+grassmanntn \hfill\cR\hphantom{\tfnref{symbol}}
+& 2023
+& Python
+& Apache-2.0
+& 
+& 
+& $\mathrm{sVect}$\tfnref{grassman}
+& ?
+& \checkmark
+& ?
+& ?
+& \cite{yosprakobAyosprakobGrassmanntn2026}
+\\
+
+QuantumTea \hfill \cL \hphantom{\tfnref{symbol}}
+& 2024 
+& Python
+& ?
+& \checkmark
+& ?
+& \crs 
+& ?
+& ?
+& ? 
+& ?
+& \cite{baccari_2026_20109357}
+\\
+
+
+Cyten\tfnref{cyten}\tfnref{cytnx}\hfill\cL\cB\hphantom{\tfnref{symbol}}
+& 2024
+& Python \& C++
+& Apache-2.0
+& \checkmark
+& \checkmark
+& \checkmark
+& \checkmark
+& \checkmark
+& \crs
+& ?
+& \cite{TenpyCyten2026,dissertation}
+\\
+
+YASTN
+& 2025
+& Python
+& ?
+& \checkmark
+& \crs
+& \crs
+& \checkmark
+& ?
+& \checkmark
+& \checkmark
+& \cite{ramsYASTNAnotherSymmetric2025}
+\\
+
+TensorKit.jl\tfnref{tensorkit}\hfill\cL\hphantom{\tfnref{symbol}}
+& 2025
+& Julia
+& MIT
+& \checkmark
+& \checkmark
+& \checkmark
+& \checkmark
+& ?
+& ?
+& $\checkmark$
+& \cite{devosTensorKitjlJuliaPackage2025}
+\\
+
+Cytnx\tfnref{cytnx}
+& 2024
+& C++
+& ?
+& \checkmark
+& \crs
+& \crs
+& \checkmark
+& ?
+& \checkmark
+& ?
+& \cite{wuCytnxLibraryTensor2025}
+\\
+
+%quimb
+%& ?
+%& Python
+%& ?
+%& ?
+%& ?
+%& $\mathrm{sVect}$
+%& ?
+%& ?
+%& ?
+%& ?
+%& \cite{}
+%\\
+
+TeMFpy\tfnref{temfpy}\hfill\cB\hphantom{\tfnref{symbol}}
+& 2025
+& Python
+& MIT
+& \crs
+& \crs
+& \crs
+& \crs
+& \checkmark
+& \crs
+& \crs
+& \cite{temfpy}
+\\
+
+abeliantensors
+& 2026
+& Python
+& MIT
+& $\mathrm{U}(1)$, $\mathbb{Z}_n$
+& \crs
+& \crs
+& \crs
+& \crs
+& \crs
+& \crs
+& \cite{hauruMhauruAbeliantensors2026}
+\\
+
+symmray\tfnref{quimb_backend}\hfill\cB\hphantom{\tfnref{symbol}}
+& 2025
+& Python
+& ?
+& \checkmark
+& \crs
+& $\mathrm{sVect}$
+& \checkmark
+& \checkmark
+& ?
+& $\checkmark$
+& \cite{gaoFermionicTensorNetwork2025,grayJcmgraySymmray2026}
+\\
+
+
+
+
+Telum.jl
+& 2026
+& Julia
+& ?
+& $\checkmark$
+& $\checkmark$
+& $Ferm$
+& ?
+& \checkmark
+& ?
+& ?
+& \cite{leeSsbleeTelumjl2026}
+\\
+
+Su2tn\hfill \cR\hphantom{\tfnref{symbol}}
+& 2025
+& Python
+& None
+& \crs
+& $\mathrm{SU}(2)$
+& \crs
+& \crs
+& $\crs$
+& ?
+& ?
+& \cite{fischerVictorfischer2000Su2tn2025,fischerTensorNetworkSymmetries2025}
+\\
+
+
+
+\end{tabularx}
+\par\vspace{12pt}
+\begin{multicols}{3}
+\footnotesize\raggedright
+\tfntext{symbol}{\cL indicates that this is a standalone Library, \cB indicates that this is a backend for another library and \cR indicates that this is a research script and likely not maintained.}
+\tfntext{cyten}{Cyten originated as a branch of TenPy and was later split into its own repository [\href{https://github.com/tenpy/tenpy/pull/309}{Tenpy pull 309}].}
+\tfntext{grassman}{This supports a variant called \emph{Grassman Tensor Networks}.}
+\tfntext{cytnx}{Ideas from Cytnx were eventually adapted into Cyten.}
+\tfntext{tensorkit}{Part of the \texttt{QuantumKit.jl} ecosystem.}
+\tfntext{quimb_backend}{symmray functions as a backed for the tensor network software quimb \cite{gray2018quimb,grayJcmgrayQuimb2026}}
+\tfntext{sytenclosed}{Syten is a closed source program available among collaborations.}
+\tfntext{temfpy}{TeMFpy is built on top of Tenpy.}
+\end{multicols}
+
 \end{table}
+\renewcommand{\footnotesize}{\oldfootnotesize}
+
+%\end{landscape}

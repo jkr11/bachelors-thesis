@@ -17,9 +17,21 @@
 
 \usepackage[textsize=tiny]{todonotes} % For todos (check opencompl template if more is necessary)
 
+\usepackage{tablefootnote}   %
+\usepackage{tabularx}        %
+
 \definecolor{Green}{rgb}{0, 0.5, 0.2}
-\usepackage[dvipsnames]{xcolor}
+\usepackage[dvipsnames,table]{xcolor}
 \usetikzlibrary{decorations.markings}
+\usepackage{float}
+\usepackage{makecell} % for tables
+\usepackage{pifont}
+\usepackage{multicol}
+
+\usepackage{pdflscape} % https://www.namsu.de/Extra/befehle/Querformat.html
+
+\usepackage{circledsteps} % for \Circled
+
 
 
 \usepackage{titlesec}
@@ -54,7 +66,7 @@
 \newcommand{\blue}[1]{{\color{blue} {#1}}}
 \newcommand{\green}[1]{{\color{OliveGreen} {#1}}}
 
-\usepackage[backend=biber, maxbibnames=3,style=alphabetic, backref,backrefstyle=none]{biblatex}
+\usepackage[backend=biber, maxbibnames=3,style=alphabetic , backref,backrefstyle=none]{biblatex}
 \addbibresource{bachelors.bib}
 
 \AtEveryBibitem{
@@ -128,6 +140,7 @@
 \newcommand{\sVect}{\mathrm{sVect}}
 \newcommand{\gVSpace}[1]{\mathrm{Vec}_{#1}} % Graded Vector Space
 \newcommand{\Fib}{\mathrm{Fib}}
+\newcommand{\Set}{\mathrm{Set}}
 \newcommand{\sgotimes}[1]{\otimes_{\scriptscriptstyle#1}} % small Graded Tensor Space
 \newcommand{\gotimes}[1]{\otimes_{#1}} % G-graded vectors space 
 \newcommand{\ot}{\otimes}
@@ -155,9 +168,11 @@
 \newcommand{\R}{\mathbb{R}}
 
 \newcommand{\CC}{\mathcal{C}}
+\newcommand{\CD}{\mathcal{D}}
 
 \newcommand{\ev}{\operatorname{ev}}
 \newcommand{\coev}{\operatorname{coev}}
+\newcommand{\tr}{\operatorname{tr}}
 
 \makeatletter
 \definecolor{RoyalBlue}{HTML}{4169E1}
@@ -307,4 +322,20 @@
     \node[above, font=\scriptsize] at (C) {$#1$};
     \node[right, font=\scriptsize] at (D) {$#4$};
 \end{tikzpicture}%
+}
+
+\tikzset{
+  u path/.style={
+    rounded corners,
+    to path={
+      let \p1 = (\tikztostart.south),
+          \p2 = (\tikztotarget.south),
+          \n1 = {15pt} % Depth of the drop below the nodes
+      in
+      (\p1)
+      -- (\x1, \y1 - \n1)
+      -- (\x2, \y1 - \n1) \tikztonodes
+      -- (\p2)
+    }
+  }
 }

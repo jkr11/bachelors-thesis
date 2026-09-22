@@ -46,6 +46,54 @@ constraints added.
   f = \mathrm{id}_B \circ f$ for all $f : A \to B$.
 \end{definition}
 
+\begin{example}
+  Some examples here:
+  \begin{enumerate}
+    \item The category $\Veck{}$ is the category of finite dimensional vector
+    spaces and its morpisms are the linear operators between vector spaces.
+    \item The category $\Hilb$ is the category whose objects are hilbert spaces
+    and whose morphisms are the bounded linear operators between them. Here we
+    can alternatively take the objects to be the tuple $(\mathcal{H},
+    \left\langle -, -\right\rangle)$.
+    \item The category $\Set$ admits sets as objects and functions between sets
+    as the morphisms.
+  \end{enumerate}
+\end{example}
+
+We can take categories and associate them with each other by use of a \emph{functor}.
+\begin{definition}
+  A \emph{\green{functor}} $F$ between the categories $\CC$ and $\CD$, denoted
+  as $F : \CC \to \CD$ assigns to each object $A \in \CC$ an object $F(A) \in
+  \CD$ as well as to every morphism in $f : A \to B \in \Hom_\CC$ a morphism
+  $F(f) : F(A) \to F(B) \in \Hom_\CD$. 
+  Additionally, this must satisfy
+  \[
+    F(\id_A) = \id_{F(A)}
+  \] as well as one of the cases 
+  \begin{equation}
+    F(g \circ f) = F(g) \circ F(f) \quad \text{ in the \emph{\green{covariant}} case}
+  \end{equation}
+  or 
+  \begin{equation}
+    F(g \circ f) = F(f) \circ F(g) \quad \text{ in the \emph{\green{contravariant}} case.}
+  \end{equation}
+\end{definition}
+
+We can also relate functor with each other through maps between them. An important relation here will be \emph{naturality}:
+\begin{definition}
+  A transformation $\tau$ between functors $F,G : \CC \to \CD$ is \emph{\green{natural}} if the diagram commutes for all $A : \ob(\CC)$ and $f : \Hom_\CC(A,B)$:
+  % https://q.uiver.app/#q=WzAsNCxbMCwwLCJGKEEpIl0sWzIsMCwiRyhBKSJdLFswLDIsIkYoQikiXSxbMiwyLCJHKEIpIl0sWzEsMywiRyhmKSJdLFswLDIsIkYoZikiXSxbMCwxLCJcXHRhdV9BIl0sWzIsMywiXFx0YXVfQiJdXQ==
+  \[\begin{tikzcd}
+	  {F(A)} && {G(A)} \\
+	  \\
+	  {F(B)} && {G(B)}
+	  \arrow["{\tau_A}", from=1-1, to=1-3]
+	  \arrow["{F(f)}", from=1-1, to=3-1]
+	  \arrow["{G(f)}", from=1-3, to=3-3]
+	  \arrow["{\tau_B}", from=3-1, to=3-3]
+  \end{tikzcd}\]
+\end{definition}
+
 We want to embed some of the larger structures of $\Rep(G)$ and $\VecCat{\C}$
 into the categorical formalism. For fdVect, the hom spaces of linear maps $V \to
 W$ have a natural identification as a vector space as well. The composition map
@@ -109,6 +157,14 @@ This should motivate the following definition:
 For simplicity we denote a monoidal category as the sextuple $(\CC, \otimes, I, \alpha, \lambda, \rho   )$.
 \end{definition}
 
+Note that because we defined $- \otimes - : \CC \times \CC \to \CC$ to be a \emph{(bi)functor}, we immedeately gain the follwing relations by functoriality:
+\[
+  (f \ot g) \circ (f^\prime \ot g^\prime) = (f \circ f^\prime) \ot (g \circ g^\prime)
+\]
+\[
+  \id_{A \otimes B} = \id_A \otimes \id_B 
+\]
+
 \begin{graphicalCalculus}
   We denote the elemenets of this Category by simple lines, and the morphisms as
   boxes between these lines. Since the tensor product corresponds to paralell
@@ -124,6 +180,25 @@ bracketing, all morphisms must be equal.
 \todo{In fact, this is important in terms of the algorithms that are used in the
 reshape operation. Link here to the algorithm section. How to minimize? Can we
 cache these moves?}
+
+\begin{example}
+  Some examples of this tensor product here:
+  \begin{enumerate}
+    \item The category $\Rep(G)$ is monoidal and has a tensor product by \cref{symm:def:tensor_product_representation}:
+      \[
+        (V \otimes_k W, \rho_{V \otimes_k W})
+      \]
+      and on morphisms $f \in \Hom_G(V_1, V_2), g \in \Hom_G(W_1,W_2)$ this gives 
+      \[
+        (f \otimes g)(v \otimes w) = f(v) \otimes g(w) \in \Hom_G(V_1 \ot_k W_1, V_2 \ot_k W_2)
+      \]
+    \item Take for example the $\Fib$ anyon theory. We can take products of anyons $a \otimes b$ and we can also identify the vacuum type $I$ over $a \otimes I = a$ and so on. \todo{rephrase!}
+  \end{enumerate}
+\end{example}
+
+\begin{definition}
+  Let $(\CC, \ot_\CC, 1_\CC)$ and $(D,\ot_D, 1_D)$ be monoidal categories. A \emph{\green{monoidal functor}} is a functor $F : \CC \to D$ 
+\end{definition}
 
 \begin{definition}
 Let $(\mathcal{V}, \ot_\mathcal{V}, I, \alpha, \lambda, \rho)$ be a monoidal category. A category
@@ -142,6 +217,11 @@ consists of
 \end{enumerate}
 \end{definition}
 
+This immedeately gives us another defintion: 
+\[
+  \Hom_\CC(-,X) : \CC \to \mathcal{V} \quad \text{ is a contravariant functor. }
+\]
+
 
 \begin{definition}\label{cat:def:braidedMonoidalCat} A \emph{\green{braided monoidal
 category}} is a monoidal category $(\mathcal{C}, \otimes, I, \alpha, \lambda, \rho)$
@@ -149,8 +229,13 @@ equipped with an additional isomorphism, the \emph{\green{braiding}}
 \[
   \beta_{A,B} : A \otimes B \; \cong \; B \otimes A,
 \]
-on $A$ and $B$, such that the following two \emph{hexagon} diagrams
-commute for all $A,B,C \in \mathcal{C}$:
+on $A$ and $B$, such that the condition
+\begin{equation}\label{cat:braiding_naturality}
+  \beta_{A,B\otimes C} = (\id_A \otimes \beta_{A,C}) \circ (\beta_{A,B} \otimes \id_C) \quad\text{ and }\quad \beta_{A \otimes B, C} = (\beta_{A,C} \otimes \id_B) \circ (\id_A \otimes \beta_{B,C})
+\end{equation} 
+
+As a consequence, the \emph{hexagon} relations commute for all $A,B,C \in
+\mathcal{C}$:
 
 \begin{center}
 % https://q.uiver.app/#q=WzAsMTIsWzAsMCwiKEEgXFxvdGltZXMgQikgXFxvdGltZXMgQyJdLFsxLDAsIkEgXFxvdGltZXMoQlxcb3RpbWVzIEMpIl0sWzIsMCwiKEIgXFxvdGltZXMgQylcXG90aW1lcyBBIl0sWzAsMSwiKEJcXG90aW1lcyBBKVxcb3RpbWVzIEMiXSxbMSwxLCJCIFxcb3RpbWVzIChBIFxcb3RpbWVzIEMpIl0sWzIsMSwiQiBcXG90aW1lcyAoQyBcXG90aW1lcyBBKSJdLFszLDAsIkEgXFxvdGltZXMgKEIgXFxvdGltZXMgQykiXSxbNCwwLCIoQSBcXG90aW1lcyBCKSBcXG90aW1lcyBDIl0sWzUsMCwiQ1xcb3RpbWVzKEFcXG90aW1lcyBCKSJdLFszLDEsIkEgXFxvdGltZXMoQyBcXG90aW1lcyBCKSJdLFs0LDEsIihBIFxcb3RpbWVzIEMpXFxvdGltZXMgQiJdLFs1LDEsIihDIFxcb3RpbWVzIEEpIFxcb3RpbWVzIEIiXSxbMCwxLCJcXGFscGhhIl0sWzEsMiwiXFxiZXRhX3tBLEJcXG90aW1lcyBDfSJdLFszLDQsIlxcYWxwaGEiXSxbNCw1LCJcXGlkX0IgXFxvdGltZXNcXGJldGFfe0EsQ30iXSxbMCwzLCJcXGJldGFfe0EsQn1cXG90aW1lcyBcXGlkX0MiLDJdLFsyLDUsIlxcYWxwaGEiXSxbNiw3LCJcXGFscGhhXnstMX0iXSxbNiw5LCJcXGJldGEiLDJdLFs5LDEwLCJcXGFscGhhXnstMX0iLDJdLFs3LDgsIlxcYmV0YSJdLFs4LDExLCJcXGFscGhhXnstMX0iXSxbMTAsMTEsIlxcYmV0YSIsMl1d
@@ -221,6 +306,14 @@ A great resource on semisimple categories \cite{bailieSemisimple2017}.
   $\Veck$-enrichment, all the $n_i$s are finite. \todo{Erichment first.} Further
   denote the set of simple objects by $\Irr(\CC) \subseteq \ob(\CC)$.
 \end{definition}
+
+\begin{example}
+  \item In $\Rep(G)$, we know that either the representations are simple
+  (Irreps) or they decompose as some direct sum representation.
+  \item In Anyonic theories, we primarily only consider simple objects $a,b,c
+  \ldots$ and tensor products between them. Then we assign each combination of
+  anyons a fusion outcome $a \otimes b = c \oplus d \oplus \cdots$. 
+\end{example}
 
 \begin{lemma}[Schur's lemma
     \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}
@@ -324,6 +417,25 @@ motivate the following definition:
     \ev_A : A^\ast \otimes A \to 1 \quad \text{ and } \quad \coev_A : 1 \to A \otimes A^\ast
   \]
   subject to the diagrammatic constraints
+% MODIFIED
+% https://q.uiver.app/#q=WzAsMTIsWzAsMCwiQSJdLFsyLDAsIjFcXG90IEEiXSxbNCwwLCIoQSBcXG90IEFeXFxhc3QpIFxcb3QgQSJdLFs2LDAsIkFcXG90KEFeXFxhc3QgXFxvdCBBKSJdLFs4LDAsIkEgXFxvdCAxICJdLFsxMCwwLCJBIl0sWzAsMiwiQV5cXGFzdCJdLFsyLDIsIiBBXlxcYXN0IFxcb3QgMSJdLFs0LDIsIkFeXFxhc3QgXFxvdCAoQSBcXG90IEFeXFxhc3QpIl0sWzYsMiwiKEFeXFxhc3QgXFxvdCBBKSBcXG90IEFeXFxhc3QiXSxbOCwyLCIxIFxcb3QgQV5cXGFzdCJdLFsxMCwyLCJBXlxcYXN0Il0sWzQsNSwiXFxyaG9fQSJdLFszLDQsIlxcaWRfQSBcXG90IFxcZXZfQSJdLFsyLDMsIlxcYWxwaGFfe0EsQV5cXGFzdCxBfSJdLFsxLDIsIlxcY29ldl9BIFxcb3QgXFxpZF9BIl0sWzAsMSwiXFxsYW1iZGFfQSJdLFs3LDgsIlxcaWRfe0FeXFxhc3R9IFxcb3QgXFxjb2V2X3tBfSJdLFs4LDksIlxcYWxwaGFfe0FeXFxhc3QsQSxBXlxcYXN0fSJdLFs5LDEwLCJcXGV2X0EgXFxvdCBcXGlkX3tBXlxcYXN0fSJdLFsxMCwxMSwiXFxsYW1iZGFfe0FeXFxhc3R9Il0sWzYsNywiXFxyaG9fe0FeXFxhc3R9Il1d
+\[\begin{tikzcd}[cramped, column sep=scriptsize]
+	A && {1\ot A} && {(A \ot A^\ast) \ot A} && {A\ot(A^\ast \ot A)} && {A \ot 1 } && A \\
+	\\
+	{A^\ast} && { A^\ast \ot 1} && {A^\ast \ot (A \ot A^\ast)} && {(A^\ast \ot A) \ot A^\ast} && {1 \ot A^\ast} && {A^\ast}
+	\arrow["{\lambda_A}", from=1-1, to=1-3]
+	\arrow["{\coev_A \ot \id_A}", from=1-3, to=1-5]
+	\arrow["{\alpha_{A,A^\ast,A}}", from=1-5, to=1-7]
+	\arrow["{\id_A \ot \ev_A}", from=1-7, to=1-9]
+	\arrow["{\rho_A}", from=1-9, to=1-11]
+  \arrow[from=1-1, to=1-11, u path, "\id_A"' {below, distance=2pt}]
+	\arrow["{\rho_{A^\ast}}", from=3-1, to=3-3]
+	\arrow["{\id_{A^\ast} \ot \coev_{A}}", from=3-3, to=3-5]
+	\arrow["{\alpha_{A^\ast,A,A^\ast}}", from=3-5, to=3-7]
+	\arrow["{\ev_A \ot \id_{A^\ast}}", from=3-7, to=3-9]
+	\arrow["{\lambda_{A^\ast}}", from=3-9, to=3-11]
+  \arrow[from=3-1, to=3-11, u path, "\id_A"' {below, distance=2pt}]
+\end{tikzcd}\]
   % https://q.uiver.app/#q=WzAsOCxbMCwwLCIxIFxcb3RpbWVzIEEiXSxbMiwwLCIoQSBcXG90aW1lcyBBXlxcYXN0KSBcXG90aW1lcyBBIl0sWzAsMiwiQSBcXG90aW1lcyAxIl0sWzIsMiwiQSBcXG90aW1lcyAoQV5cXGFzdCBcXG90aW1lcyBBKSJdLFs0LDIsIjEgXFxvdGltZXMgQV5cXGFzdCJdLFs0LDAsIkFeXFxhc3RcXG90aW1lcyAxIl0sWzYsMiwiKEFeXFxhc3QgXFxvdGltZXMgQSkgXFxvdGltZXMgQV5cXGFzdCJdLFs2LDAsIkFeXFxhc3QgXFxvdGltZXMgKEEgXFxvdGltZXMgQV5cXGFzdCkiXSxbMCwxLCJcXGNvZXZfQSBcXG90aW1lcyBcXGlkX0EiXSxbMCwyLCJcXGxhbWJkYV9BIFxcY2lyYyBcXHJob19BIiwyXSxbMiwzLCJcXGlkXzEgXFxvdGltZXMgXFxldl9BIiwyXSxbMSwzLCJcXGFscGhhX3tBLEFeXFxhc3QsQX0iXSxbNCw2LCJcXGV2X0EgXFxvdGltZXNfe0FeXFxhc3R9IiwyXSxbNSw0LCJcXGxhbWJkYV97QV5cXGFzdH0gXFxjaXJjIFxccmhvX3tBXlxcYXN0fSIsMl0sWzYsNywiXFxhbHBoYV97QV5cXGFzdCxBLEFeXFxhc3R9IiwyXSxbNSw3LCJcXGlkX0EgXFxvdGltZXMgXFxjb2V2X0EiXV0=
   \[\begin{tikzcd}
 	  {1 \otimes A} && {(A \otimes A^\ast) \otimes A} && {A^\ast\otimes 1} && {A^\ast \otimes (A \otimes A^\ast)} \\
@@ -381,12 +493,44 @@ motivate the following definition:
 
 \end{graphicalCalculus}
 
+Further the natural observation that $A \cong A^{\ast\ast}$ holds should be encoded in these categories.
+\begin{definition}
+  A \emph{\green{pivotal structure}} on a rigid monoidal category is given by a natural isomorphism $\id \to (-)^{\ast\ast}$, i.e. a collection of isomorphisms that identify $\{A \to A^{\ast\ast}\}$.
+\end{definition}
+
+This allows us to define a notion of a traced category.
+\begin{definition}
+  We can define a notion of a \emph{\green{right trace}} on any endomorphism $V \to V$
+  in such categories:
+    % https://q.uiver.app/#q=WzAsNSxbMSwwLCIxIl0sWzMsMCwiQSBcXG90aW1lcyBBXlxcYXN0Il0sWzUsMCwiQV57XFxhc3RcXGFzdH0gXFxvdCBBXlxcYXN0Il0sWzcsMCwiMSJdLFswLDAsIlxcdHJfUiJdLFswLDEsIlxcY29ldl9BIl0sWzEsMiwiKFxcZGVsdGFfQSBcXGNpcmMgKC0pIFxcb3QgXFxpZF97QV5cXGFzdH0pIl0sWzIsMywiXFxldl97QV5cXGFzdH0iXSxbNCwwLCJcXGNvbG9uZ2VxcSIsMSx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
+  \[\begin{tikzcd}[cramped]\label{cat:eq:Rtrace}
+	  {\tr_R} & 1 && {A \otimes A^\ast} && {A^{\ast\ast} \ot A^\ast} && 1
+	  \arrow["\coloneqq"{description}, draw=none, from=1-1, to=1-2]
+	  \arrow["{\coev_A}", from=1-2, to=1-4]
+	  \arrow["{(\delta_A \circ (-) \ot \id_{A^\ast})}", from=1-4, to=1-6]
+	  \arrow["{\ev_{A^\ast}}", from=1-6, to=1-8]
+    \end{tikzcd}\]
+\end{definition}
+
+\begin{definition}
+  A pivotal rigid braided monoidal category is called \emph{\green{spherical}} if 
+  \[
+    \tr_R = \tr_L
+  \]
+  and we can further define the \emph{\green{quantum dimension}} of an object $A$ as
+  \begin{equation}\label{cat:eq:dim}
+    \dim(A) = \tr(\id_A)
+  \end{equation}
+\end{definition}
+
 \begin{definition}
   A \emph{\green{ribbon}} category is a braided monoidal rigid category $(\CC,\otimes,1,\alpha,\gamma,\rho,\beta,\ev,\coev)$ with maps $\theta_A : A \to A$ that realizes a \emph{self-braiding} of the object. This is subject to
   \[
-    \theta_{A \otimes B} = \beta_A \beta_B \theta_A \theta_B
+    \theta_{A \otimes B} = (\theta_A \otimes \theta_B) \circ \beta_{B,A} \circ \beta_{A,B}
   \]
 \end{definition}
+
+
 
 
 \begin{definition}
@@ -918,6 +1062,9 @@ thm header.
     && \text{just to make the base space manifest}
   \end{aligned}
 \end{equation}
+
+\subsection{The Deligne Tensor Product \& Product Theories}
+\label{subsect:deligne}
 
 \subsection{Algorithms for contracting dual networks}
 
