@@ -1,49 +1,117 @@
-The goal of this chapter is to provide a viewpoint on the previous chapter from
-the perspective of categories and in turn generalize the approach, as well as
-provide proofs for the general method. However this chapter also serves as background for \Cref{sect:Anyons}. In \Cref{cat:sub:introCat} we provide a
-short introduction to category theory, from the perspective of quantum
-parallelism, and the structures we have already met in the discussion on
-representations and anyons. In \Cref{cat:sub:categoricalQuantum} we give a short
-review of how familiar structures such as the no-cloning theorem arise from the
-categorification of quantum mechanics. In \Cref{cat:sub:decomp} we provide the
-core theory in terms of the decomposition, which is crucial to previous
-chapters. Naturally, this incurs a rigorous explanation of fusion trees. 
+%The goal of this chapter is to provide a viewpoint on the previous chapter from
+%the perspective of categories and in turn generalize the approach, as well as
+%provide proofs for the general method. However this chapter also serves as background for \Cref{sect:Anyons}. In \Cref{cat:sub:introCat} we provide a
+%short introduction to category theory, from the perspective of quantum
+%parallelism, and the structures we have already met in the discussion on
+%representations and anyons. In \Cref{cat:sub:categoricalQuantum} we give a short
+%review of how familiar structures such as the no-cloning theorem arise from the
+%categorification of quantum mechanics. In \Cref{cat:sub:decomp} we provide the
+%core theory in terms of the decomposition, which is crucial to previous
+%chapters. Naturally, this incurs a rigorous explanation of fusion trees. 
+%
+%There are numerous introductions to the theory of tensor and fusion categories,
+%especially in the context of anyon models. Initially proposed by
+%\textcite{kitaevAnyonsExactlySolved2006} based on ideas in
+%\textcite{reshetikhinInvariants3manifoldsLink1991}, and furhter developed in
+%\textcite{bondersonNonAbelianAnyonsInterferometry2007} and \cite{wangTQC}. More
+%detailed and modern reviews are given by \textcite{ValeraThesis}\todo{replace iwth
+%the publication (shared)} \textcite{Bartlett??}.
+%
+%There also appears to be a difference in treatment, fist only in terms of
+%algebras and string algebras \textcite{simonTopologicalQuantum2023}, then in
+%terms of categories as purely categorical objects and then again as categoires
+%of temperly lieb algebras. How do all these differ in concept / what do we gain
+%and lose moving between them?
 
-There are numerous introductions to the theory of tensor and fusion categories,
-especially in the context of anyon models. Initially proposed by
-\textcite{kitaevAnyonsExactlySolved2006} based on ideas in
-\textcite{reshetikhinInvariants3manifoldsLink1991}, and furhter developed in
-\textcite{bondersonNonAbelianAnyonsInterferometry2007} and \cite{wangTQC}. More
-detailed and modern reviews are given by \textcite{ValeraThesis}\todo{replace iwth
-the publication (shared)} \textcite{Bartlett??}.
+%What is the goal of this chapter? So far weve seen a general definition of
+%vectors as we know them over $\Veck$ and $\Hilb$, and a restriction of these
+%theories onto $\Rep(-)$ networks in \Cref{sect:symmetricTensorNetworks}. Weve
+%also seen in \cref{sect:background} that there is a formal definitions of more
+%general tensor systems that already operate on top of some label space
+%$\mathcal{L}$. And at last we've developed a theory of quasiparticles with
+%exotic exchange statistics that is well known to have a correspondence from the
+%braid representations to the theory of \emph{modular tensor categories (MTCs)}
+%\cite{kitaevAnyonsExactlySolved2006}. In fact all of these notions can be
+%embedded into a categorical framework of \emph{(fusion) tensor categories}.  
+%
+In the existing literature it is well known that all of the concepts we have seen up to know are modeled by a formalism called \emph{tensor categories}:
+\begin{enumerate}
+  \item $\Veck$ and $\Hilb$ tensors are the most trivial and motivating case and
+  trivial build tensor categories.
+  \item $\Rep(G)$ (for $G$ finite) as in \cref{sect:symmetricTensorNetworks} are
+  one of the primary motivations for construction fusion tensor categories.
+  \cite{etingofFusionCategories2017}.
+  \item All anyonic topological orders (i.e species of quasiparticles as in
+  \cref{sect:anyons1:configurations_spaces_and_the_braid_group}) can be
+  classified by \emph{modular tensor categories (MTCs)}
+  \cite{kitaevAnyonsExactlySolved2006}\cite{rowellClassificationModularTensor2009}.
+\end{enumerate}
 
-There also appears to be a difference in treatment, fist only in terms of
-algebras and string algebras \textcite{simonTopologicalQuantum2023}, then in
-terms of categories as purely categorical objects and then again as categoires
-of temperly lieb algebras. How do all these differ in concept / what do we gain
-and lose moving between them?
+\begin{literature}[Tensor Categories]
+  Grothendieck investigated what we now know as tensor categories as part of a
+  larger study on \emph{tannakian categories} to related the methods of
+  representation theory (c.f. 3) to less related mathematical problems. Monoidal
+  categories in turn were introduce by Benabou \cite{} and MacLane \cite{} under
+  the name \emph{bicategory} and \emph{category with multiplication}, although
+  an elementary construction of such categories is given by Tannaka \cite{} 
+
+  The name \emph{tensor category} is due to \textcite{Deligne1990} in
+  "Catégories Tannakiennes" and its followup
+  \cite{deligneCategoriesTensorielles2002} \todo{there is one here from 1982
+  find what this does.}
+  BlaBlub
+
+  The correspondence between the penrose notation (i.e. planar diagrams) and the
+  calculus provdided by tensor categories is explained in great detail in
+  \textcite{joyalGeometryTensorCalculus1991}, although earlier accounts such as
+  \cite{reshetikhinInvariants3manifoldsLink1991} already make use of such a
+  string calculus.
+
+
+\end{literature}
+
+We have also seen a method for evaluating networks built in $\Rep(G)$ in
+\cref{sect:symmetricTensorNetworks} by decomposing a network into its fusion
+tree and it's degneracy spaces. As an immedeate consequence, this yields an
+algorithm for evaluating generalized \emph{anyonic} and \emph{categorical}
+tensor networks, as in
+\cite[§~4]{dissertation}\cite{devosTensorKitjlJuliaPackage2025}
+\cite{pfeiferSimulationAnyonsUsing2012,pfeiferSimulationAnyonsTensor2010}
+\cite{ayeniStudiesBraidedNonAbelian2017}
+\cite[§~?]{schmollProgrammingGuideTensor2020}.
+
+In light of this we provide a bottom-up construction of the theory of fusion
+categories in \cref{cat:sub:introCat}, each concept will carry along an example
+for representations, a physical interpretation in terms of anyonic
+worldlines\todo{or tqfts?} as well as the correspondence to the ATS systems of
+\textcite{Penrose1971Applications}. We formalize the aforementioned
+decomposition in \cref{cat:sub:decomp} and list the algorithms necessary for
+achieving a tensor network out of these theories.
 
 \section{Tensor \& Fusion Categories}\label{cat:sub:introCat}
 
-The general idea of a category is that it admits a sort of \emph{interface}. As noticed,
-there are many similarities in data and structure between the entities we already dealt
-with, i.e. the tensor product of vector space, the tensor product of representations, of
-Hilbert spaces etc.... We can view all these concepts as a category with additional
-constraints added.
+The general idea of a category is that it admits a sort of \emph{interface}. As
+noticed, there are many similarities in data and structure between the entities
+we already dealt with, i.e. the tensor product of vector space, the tensor
+product of representations, of Hilbert spaces etc.... We can view all these
+concepts as a category with additional constraints added.
 
-\begin{definition}\label{cat:def:category}
-  A \emph{\green {category}} $\mathcal{C}$ consists of\todo{Mention consisting of data?}
+\begin{definition}\label{cat:def:category} A \emph{\green {category}}
+  $\mathcal{C}$ consists of\todo{Mention consisting of data?}
   \begin{itemize}
     \item a set of \emph{objects} $\mathrm{ob}(\mathcal{C})$,
-    \item for every pair $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-set} $\Hom_{\mathcal{C}}(A,B)$ of \emph{morphisms} $f : A \to B$,
-    \item for every $A \in \mathrm{ob}(\mathcal{C})$, an \emph{identity morphism} $\id_A : A \to A$,
-    \item for every triple $A,B,C \in \mathrm{ob}(\mathcal{C})$, a \emph{composition} map
+    \item for every pair $A, B \in \mathrm{ob}(\mathcal{C})$, a \emph{hom-set}
+    $\Hom_{\mathcal{C}}(A,B)$ of \emph{morphisms} $f : A \to B$,
+    \item for every $A \in \mathrm{ob}(\mathcal{C})$, an \emph{identity
+    morphism} $\id_A : A \to A$,
+    \item for every triple $A,B,C \in \mathrm{ob}(\mathcal{C})$, a
+    \emph{composition} map
     \[
       \circ \, : \, \Hom_\CC(B,C) \times \Hom_\CC(A,B) \longrightarrow \Hom_\CC(A,C),
     \]
-  \end{itemize} such that composition is \emph{associative}, i.e.\ $(f \circ g) \circ h =
-  f \circ (g \circ h)$ whenever defined, and \emph{unital}, i.e.\ $f \circ \mathrm{id}_A =
-  f = \mathrm{id}_B \circ f$ for all $f : A \to B$.
+  \end{itemize} such that composition is \emph{associative}, i.e.\ $(f \circ g)
+  \circ h = f \circ (g \circ h)$ whenever defined, and \emph{unital}, i.e.\ $f
+  \circ \mathrm{id}_A = f = \mathrm{id}_B \circ f$ for all $f : A \to B$.
 \end{definition}
 
 \begin{example}
@@ -51,22 +119,25 @@ constraints added.
   \begin{enumerate}
     \item The category $\Veck{}$ is the category of finite dimensional vector
     spaces and its morpisms are the linear operators between vector spaces.
-    \item The category $\Hilb$ is the category whose objects are hilbert spaces
+    \item The category $\Hilb$ is the category whose objects are Hilbert spaces
     and whose morphisms are the bounded linear operators between them. Here we
     can alternatively take the objects to be the tuple $(\mathcal{H},
     \left\langle -, -\right\rangle)$.
     \item The category $\Set$ admits sets as objects and functions between sets
     as the morphisms.
+    \item The product category $\CC \times \mathcal{D}$ holds as objects tuples
+    $(a \in \CC, b \in \mathcal{D})$ and as morphisms tuples of maps $(f \in
+    \Hom_\CC(a_1, a_2), g \in \Hom_\mathcal{D}(b_1, b_2))$.
   \end{enumerate}
 \end{example}
 
-We can take categories and associate them with each other by use of a \emph{functor}.
+We can take categories and associate them with each other by use of a
+\emph{functor}.
 \begin{definition}
   A \emph{\green{functor}} $F$ between the categories $\CC$ and $\CD$, denoted
   as $F : \CC \to \CD$ assigns to each object $A \in \CC$ an object $F(A) \in
   \CD$ as well as to every morphism in $f : A \to B \in \Hom_\CC$ a morphism
-  $F(f) : F(A) \to F(B) \in \Hom_\CD$. 
-  Additionally, this must satisfy
+  $F(f) : F(A) \to F(B) \in \Hom_\CD$. Additionally, this must satisfy
   \[
     F(\id_A) = \id_{F(A)}
   \] as well as one of the cases 
@@ -79,12 +150,14 @@ We can take categories and associate them with each other by use of a \emph{func
   \end{equation}
 \end{definition}
 
-We can also relate functor with each other through maps between them. An important relation here will be \emph{naturality}:
+We can also relate functor with each other through maps between them. An
+important relation here will be \emph{naturality}:
 \begin{definition}
-  A transformation $\tau$ between functors $F,G : \CC \to \CD$ is \emph{\green{natural}} if the diagram commutes for all $A : \ob(\CC)$ and $f : \Hom_\CC(A,B)$:
+  A transformation $\tau$ between functors $F,G : \CC \to \CD$ is
+  \emph{\green{natural}} if the diagram commutes for all $A : \ob(\CC)$ and $f :
+  \Hom_\CC(A,B)$:
   % https://q.uiver.app/#q=WzAsNCxbMCwwLCJGKEEpIl0sWzIsMCwiRyhBKSJdLFswLDIsIkYoQikiXSxbMiwyLCJHKEIpIl0sWzEsMywiRyhmKSJdLFswLDIsIkYoZikiXSxbMCwxLCJcXHRhdV9BIl0sWzIsMywiXFx0YXVfQiJdXQ==
-  \[\begin{tikzcd}
-	  {F(A)} && {G(A)} \\
+  \[\begin{tikzcd} {F(A)} && {G(A)} \\
 	  \\
 	  {F(B)} && {G(B)}
 	  \arrow["{\tau_A}", from=1-1, to=1-3]
@@ -94,24 +167,33 @@ We can also relate functor with each other through maps between them. An importa
   \end{tikzcd}\]
 \end{definition}
 
-We want to embed some of the larger structures of $\Rep(G)$ and $\VecCat{\C}$
-into the categorical formalism. For fdVect, the hom spaces of linear maps $V \to
-W$ have a natural identification as a vector space as well. The composition map
-is $\C$-bilinear. This immedeately motivates the following definition:
+\begin{example}
+  As an immedeate appliation, consider the category of Hilbert spaces $\Hilb$
+  and assign it a \emph{forgetfull} functor $\omega : \Hilb \to \Veck$ that
+  takes each Hilbert space to its underlying vector space, and each bounded
+  linear operator to its linear operator between vector spaces.
+\end{example}
 
-\begin{definition}\label{cat:def:clinear}
-  A \green{\emph{$\C$-linear category}} \todo{Check if we need enrichment.} endows each of its hom-sets with a module structure, such that the composition is bilinear. That is
-  \[
-    \circ \, : \, \Hom_\mathcal{C}(B,C) \times \Hom_\mathcal{C}(A,B) \longrightarrow \Hom_\mathcal{C}(A,C)
-  \]
-  is $\C$-bilinear: for all $f, f' : B \to C$, \,\, $g, g' : A \to B$, and $c \in \C$,
-  \[
-    (f + f') \circ g = f \circ g + f' \circ g, \qquad
-    f \circ (g + g') = f \circ g + f \circ g', \qquad
-    (cf) \circ g = c(f \circ g) = f \circ (cg).
-  \]
-\end{definition}
-
+%We want to embed some of the larger structures of $\Rep(G)$ and $\VecCat{\C}$
+%into the categorical formalism. For fdVect, the hom spaces of linear maps $V
+%\to W$ have a natural identification as a vector space as well. The composition
+%map is $\C$-bilinear. This immedeately motivates the following definition:
+%
+%\begin{definition}\label{cat:def:clinear} A \green{\emph{$\C$-linear category}}
+%  \todo{Check if we need enrichment.} endows each of its hom-sets with a module
+%  structure, such that the composition is bilinear. That is
+%  \[
+%    \circ \, : \, \Hom_\mathcal{C}(B,C) \times \Hom_\mathcal{C}(A,B) \longrightarrow \Hom_\mathcal{C}(A,C)
+%  \]
+%  is $\C$-bilinear: for all $f, f' : B \to C$, \,\, $g, g' : A \to B$, and $c
+%  \in \C$,
+%  \[
+%    (f + f') \circ g = f \circ g + f' \circ g, \qquad
+%    f \circ (g + g') = f \circ g + f \circ g', \qquad
+%    (cf) \circ g = c(f \circ g) = f \circ (cg).
+%  \]
+%\end{definition}
+%
 We will now explore how to use category theory to model quantum processes. We want this to
 be able to do a list of things. First, given two systems $A$ and$B$, we want the combined
 system to be an object as well. Given processes, i.e. operators on each individual system
@@ -158,9 +240,9 @@ For simplicity we denote a monoidal category as the sextuple $(\CC, \otimes, I, 
 \end{definition}
 
 Note that because we defined $- \otimes - : \CC \times \CC \to \CC$ to be a \emph{(bi)functor}, we immedeately gain the follwing relations by functoriality:
-\[
+\begin{equation}\label{cat:monoidal:bifunctor}
   (f \ot g) \circ (f^\prime \ot g^\prime) = (f \circ f^\prime) \ot (g \circ g^\prime)
-\]
+\end{equation}
 \[
   \id_{A \otimes B} = \id_A \otimes \id_B 
 \]
@@ -170,20 +252,64 @@ Note that because we defined $- \otimes - : \CC \times \CC \to \CC$ to be a \emp
   boxes between these lines. Since the tensor product corresponds to paralell
   execution, we describe tensored objects as parallel lines and tensored
   operators as parallel squares.
+  \[
+  \begin{tikzpicture}[
+    node distance=1.5cm and 1cm,
+    thick,
+    morphism/.style={draw, rectangle, minimum width=1.2cm, minimum height=0.8cm, fill=white, font=\small}
+  ] 
+    \begin{scope}
+      % Strings / Objects
+      \draw[thick] (0, 0) -- (0, 2.5) node[above] {$A$};
+      \draw[thick] (1, 0) -- (1, 2.5) node[above] {$B$};
+      
+      \node at (0.5, -0.5) {\small Parallel Objects: $A \otimes B$};
+    \end{scope}
+
+    \begin{scope}[shift={(6,0)}]
+      \node[morphism] (f) at (0, 1.25) {$f$};
+      \node[morphism] (g) at (1.5, 1.25) {$g$};
+
+      \draw[thick] (0, 0) node[below] {$A$} -- (f.south);
+      \draw[thick] (1.5, 0) node[below] {$B$} -- (g.south);
+
+      \draw[thick] (f.north) -- (0, 2.5) node[above] {$C$};
+      \draw[thick] (g.north) -- (1.5, 2.5) node[above] {$D$};
+
+      \node at (0.75, -0.5) {\small Parallel Morphisms: $f \otimes g : A \otimes  B \to C \otimes D$};
+    \end{scope}
+
+    \begin{scope}[shift={(12,0)}]
+      \node[morphism] (f) at (0, 1.25) {$f$};
+
+      \draw[thick] (0, 0) node[below] {$A$} -- (f.south);
+      \draw[thick] (f.north) -- (0, 2.5) node[above] {$B$};
+      
+      \draw[thick] (1, 0) -- (1, 2.5) node[above] {$I$};
+
+      \node at (1.5, 1.25) {$=$};
+
+      \node[morphism] (f) at (2.5, 1.25) {$f$};
+
+      \draw[thick] (2.5, 0) node[below] {$A$} -- (f.south);
+      \draw[thick] (f.north) -- (2.5, 2.5) node[above] {$B$};
+
+    \end{scope}
+  \end{tikzpicture}
+  \]
 \end{graphicalCalculus}
 
 The commuting condition in \cref{cat:def:monoidalCat:pentagon} is an instance of
-the \emph{MacLane-coherence-theorem} \cite{maclane?} (for monoidal categories). This asserts
-that for any number of objects, from an initial bracketing to a final
-bracketing, all morphisms must be equal.
-
-\todo{In fact, this is important in terms of the algorithms that are used in the
-reshape operation. Link here to the algorithm section. How to minimize? Can we
-cache these moves?}
+the \emph{MacLane-coherence-theorem} \cite{maclane?} (for monoidal categories).
+This essentially assert that no matter how many objects we look at, their
+tensoring are isomorphic to each other without specifying another isomorphism on
+higher spaces, but instead reusing the $\alpha$ associtator on $3$ strands is
+enough.
 
 \begin{example}
   Some examples of this tensor product here:
   \begin{enumerate}
+    \item In $\Veck$, we denote the tensor product as $\ot_k$, and this is the default kronecker-product on $k$-vector spaces. The monoidal unit in this case is the field $k$. \todo{Does $k$ need to be algebraically closed?}
     \item The category $\Rep(G)$ is monoidal and has a tensor product by \cref{symm:def:tensor_product_representation}:
       \[
         (V \otimes_k W, \rho_{V \otimes_k W})
@@ -223,15 +349,16 @@ This immedeately gives us another defintion:
 \]
 
 
-\begin{definition}\label{cat:def:braidedMonoidalCat} A \emph{\green{braided monoidal
-category}} is a monoidal category $(\mathcal{C}, \otimes, I, \alpha, \lambda, \rho)$
-equipped with an additional isomorphism, the \emph{\green{braiding}}
+\begin{definition}\label{cat:def:braidedMonoidalCat} A \emph{\green{braided
+monoidal category}} is a monoidal category $(\mathcal{C}, \otimes, I, \alpha,
+\lambda, \rho)$ equipped with an additional isomorphism, the
+\emph{\green{braiding}}
 \[
   \beta_{A,B} : A \otimes B \; \cong \; B \otimes A,
 \]
-on $A$ and $B$, such that the condition
+on $A$ and $B$ satisfying
 \begin{equation}\label{cat:braiding_naturality}
-  \beta_{A,B\otimes C} = (\id_A \otimes \beta_{A,C}) \circ (\beta_{A,B} \otimes \id_C) \quad\text{ and }\quad \beta_{A \otimes B, C} = (\beta_{A,C} \otimes \id_B) \circ (\id_A \otimes \beta_{B,C})
+  \beta_{A,B\otimes C} = (\id_A \otimes \beta_{A,C}) \circ (\beta_{A,B} \otimes \id_C) \quad\text{ and }\quad \beta_{A \otimes B, C} = (\beta_{A,C} \otimes \id_B) \circ (\id_A \otimes \beta_{B,C}).
 \end{equation} 
 
 As a consequence, the \emph{hexagon} relations commute for all $A,B,C \in
@@ -259,15 +386,233 @@ As a consequence, the \emph{hexagon} relations commute for all $A,B,C \in
 \end{definition}
 
 \begin{definition}
-A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ \beta_{A,B}
-= \mathrm{id}_{A \otimes B}$ for all $A, B$.
+A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ
+\beta_{A,B} = \mathrm{id}_{A \otimes B}$ for all $A, B$.
 \end{definition}
 
 \begin{graphicalCalculus}
   Now the graphical calculus changes, as we need to consider whether the
   braidings defined by $\beta$ are over or under. We denote the simple braidings
   as \todo{Check for the correct definition of the ambient space here.}
+  \[
+    \begin{tikzpicture}[yscale=1.0]
+      \draw (-0.40, 0.3) node {\color{blue}\scalebox{.6}{A}};
+      \draw (0.40, 0.3) node {\color{blue}\scalebox{.6}{B}};
+      \draw[line width=1.4] (-0.40, 0.00) .. controls (-0.40, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+      \draw[line width=4.5, white] (0.40, 0.00) .. controls (0.40, -0.75) and (-0.40, -0.75) .. (-0.40, -1.50);
+      \draw[line width=1.4] (0.40, 0.00) .. controls (0.40, -0.75) and (-0.40, -0.75) .. (-0.40, -1.50);
+    
+      \begin{scope}[shift={(1,0)}]
+        \draw (0.40, 0.3) node {\color{blue}\scalebox{.6}{A}};
+        \draw (1.20, 0.3) node {\color{blue}\scalebox{.6}{B}};
+        \draw[line width=1.4] (1.20, 0.00) .. controls (1.20, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+        \draw[line width=4.5, white] (0.40, 0.00) .. controls (0.40, -0.75) and (1.20, -0.75) .. (1.20, -1.50);
+        \draw[line width=1.4] (0.40, 0.00) .. controls (0.40, -0.75) and (1.20, -0.75) .. (1.20, -1.50);
+      \end{scope}
+
+      \begin{scope}[shift={(4,0)}]
+  \draw (0.40, 0.3) node {\color{blue}\scalebox{.6}{$A$}};
+  \draw (1.20, 0.3) node {\color{blue}\scalebox{.6}{$B \ot C$}};
+  \draw[line width=1.4] (1.20, 0.00) .. controls (1.20, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+  \draw[line width=1.4] (1.30, 0.00) .. controls (1.30, -0.75) and (0.50, -0.75) .. (0.50, -1.50);
+  \draw[line width=4.5, white] (0.40, 0.00) .. controls (0.40, -0.75) and (1.20, -0.75) .. (1.20, -1.50);
+  \draw[line width=1.4] (0.40, 0.00) .. controls (0.40, -0.75) and (1.20, -0.75) .. (1.20, -1.50);
+  \draw (1.20, -1.80) node {\color{blue}\scalebox{.6}{$A$}};
+  \draw (0.40, -1.80) node {\color{blue}\scalebox{.6}{$B \ot C$}};
+  \end{scope}
+
+  \begin{scope}[shift={(6,0)}, scale=0.5]
+  \draw (-0.40, 0.6) node {\color{blue}\scalebox{.6}{A}};
+  \draw ( 0.40, 0.6) node {\color{blue}\scalebox{.6}{B}};
+  \draw ( 1.20, 0.6) node {\color{blue}\scalebox{.6}{C}};
+  \draw[line width=1.4] (1.20, 0.00) to (1.20, -1.50);
+
+  \draw[line width=1.4] (-0.40, 0.00) .. controls (-0.40, -0.75) and (0.40, -0.75) .. (0.40, -1.50);
+  \draw[line width=4.5, white] (0.40, 0.00) .. controls (0.40, -0.75) and (-0.40, -0.75) .. (-0.40, -1.50);
+  \draw[line width=1.4] (0.40, 0.00) .. controls (0.40, -0.75) and (-0.40, -0.75) .. (-0.40, -1.50);
+
+  \draw[line width=1.4] (-0.40, -1.50) to (-0.40, -3.00);
+  \draw[line width=1.4] (0.40, -1.50) .. controls (0.40, -2.25) and (1.20, -2.25) .. (1.20, -3.00);
+  \draw[line width=4.5, white] (1.20, -1.50) .. controls (1.20, -2.25) and (0.40, -2.25) .. (0.40, -3.00);
+  \draw[line width=1.4] (1.20, -1.50) .. controls (1.20, -2.25) and (0.40, -2.25) .. (0.40, -3.00);
+  \end{scope}
+\end{tikzpicture}
+  \]
 \end{graphicalCalculus}
+
+\begin{example}
+  \begin{enumerate}
+    \item In $\Veck$ this mapping is trivial.
+    \item For representations, there exist transformations on the basis states,
+    for example the theory $\Rep(\SU{2})$ picks up the phase $(-1)^{j_a + j_b +
+    j_c}$\todo{Notation!}. For all categories built from representations of
+    groups, these are symmetric.
+    \item For anyons, these correspond to the phase picked up when exchaning the
+    anyons. For abelian anyons, these braidings are symmetric indeed, however
+    for nonabelians these create non-symmetric categories.
+  \end{enumerate}
+\end{example}
+
+
+If we want to use contractions between matchings legs, and overall want the
+ability to take duals just like in $\FDVec{\C}$, we need both a concept of
+duality and the evaluation maps. This is also the categorification of the
+\emph{creation} and \emph{annihilation} maps from \Cref{sect:Anyons}. Let this
+motivate the following definition:
+\begin{definition}
+  A monoidal category $(\CC, \otimes, 1)$ is \emph{\green{rigid}} if, for every $A \in \CC$, there exists a \emph{\green{dual object}} $A^\ast$ with the following maps:
+  \[
+    \ev_A : A^\ast \otimes A \to 1 \quad \text{ and } \quad \coev_A : 1 \to A \otimes A^\ast
+  \]
+  subject to the diagrammatic constraints
+% MODIFIED
+% https://q.uiver.app/#q=WzAsMTIsWzAsMCwiQSJdLFsyLDAsIjFcXG90IEEiXSxbNCwwLCIoQSBcXG90IEFeXFxhc3QpIFxcb3QgQSJdLFs2LDAsIkFcXG90KEFeXFxhc3QgXFxvdCBBKSJdLFs4LDAsIkEgXFxvdCAxICJdLFsxMCwwLCJBIl0sWzAsMiwiQV5cXGFzdCJdLFsyLDIsIiBBXlxcYXN0IFxcb3QgMSJdLFs0LDIsIkFeXFxhc3QgXFxvdCAoQSBcXG90IEFeXFxhc3QpIl0sWzYsMiwiKEFeXFxhc3QgXFxvdCBBKSBcXG90IEFeXFxhc3QiXSxbOCwyLCIxIFxcb3QgQV5cXGFzdCJdLFsxMCwyLCJBXlxcYXN0Il0sWzQsNSwiXFxyaG9fQSJdLFszLDQsIlxcaWRfQSBcXG90IFxcZXZfQSJdLFsyLDMsIlxcYWxwaGFfe0EsQV5cXGFzdCxBfSJdLFsxLDIsIlxcY29ldl9BIFxcb3QgXFxpZF9BIl0sWzAsMSwiXFxsYW1iZGFfQSJdLFs3LDgsIlxcaWRfe0FeXFxhc3R9IFxcb3QgXFxjb2V2X3tBfSJdLFs4LDksIlxcYWxwaGFfe0FeXFxhc3QsQSxBXlxcYXN0fSJdLFs5LDEwLCJcXGV2X0EgXFxvdCBcXGlkX3tBXlxcYXN0fSJdLFsxMCwxMSwiXFxsYW1iZGFfe0FeXFxhc3R9Il0sWzYsNywiXFxyaG9fe0FeXFxhc3R9Il1d
+\[\begin{tikzcd}[cramped, column sep=scriptsize]
+	A && {1\ot A} && {(A \ot A^\ast) \ot A} && {A\ot(A^\ast \ot A)} && {A \ot 1 } && A \\
+	\\
+	{A^\ast} && { A^\ast \ot 1} && {A^\ast \ot (A \ot A^\ast)} && {(A^\ast \ot A) \ot A^\ast} && {1 \ot A^\ast} && {A^\ast}
+	\arrow["{\lambda_A}", from=1-1, to=1-3]
+	\arrow["{\coev_A \ot \id_A}", from=1-3, to=1-5]
+	\arrow["{\alpha_{A,A^\ast,A}}", from=1-5, to=1-7]
+	\arrow["{\id_A \ot \ev_A}", from=1-7, to=1-9]
+	\arrow["{\rho_A}", from=1-9, to=1-11]
+  \arrow[from=1-1, to=1-11, u path, "\id_A"' {below, distance=2pt}]
+	\arrow["{\rho_{A^\ast}}", from=3-1, to=3-3]
+	\arrow["{\id_{A^\ast} \ot \coev_{A}}", from=3-3, to=3-5]
+	\arrow["{\alpha_{A^\ast,A,A^\ast}}", from=3-5, to=3-7]
+	\arrow["{\ev_A \ot \id_{A^\ast}}", from=3-7, to=3-9]
+	\arrow["{\lambda_{A^\ast}}", from=3-9, to=3-11]
+  \arrow[from=3-1, to=3-11, u path, "\id_{A^\ast}"' {below, distance=2pt}]
+\end{tikzcd}\]
+  % https://q.uiver.app/#q=WzAsOCxbMCwwLCIxIFxcb3RpbWVzIEEiXSxbMiwwLCIoQSBcXG90aW1lcyBBXlxcYXN0KSBcXG90aW1lcyBBIl0sWzAsMiwiQSBcXG90aW1lcyAxIl0sWzIsMiwiQSBcXG90aW1lcyAoQV5cXGFzdCBcXG90aW1lcyBBKSJdLFs0LDIsIjEgXFxvdGltZXMgQV5cXGFzdCJdLFs0LDAsIkFeXFxhc3RcXG90aW1lcyAxIl0sWzYsMiwiKEFeXFxhc3QgXFxvdGltZXMgQSkgXFxvdGltZXMgQV5cXGFzdCJdLFs2LDAsIkFeXFxhc3QgXFxvdGltZXMgKEEgXFxvdGltZXMgQV5cXGFzdCkiXSxbMCwxLCJcXGNvZXZfQSBcXG90aW1lcyBcXGlkX0EiXSxbMCwyLCJcXGxhbWJkYV9BIFxcY2lyYyBcXHJob19BIiwyXSxbMiwzLCJcXGlkXzEgXFxvdGltZXMgXFxldl9BIiwyXSxbMSwzLCJcXGFscGhhX3tBLEFeXFxhc3QsQX0iXSxbNCw2LCJcXGV2X0EgXFxvdGltZXNfe0FeXFxhc3R9IiwyXSxbNSw0LCJcXGxhbWJkYV97QV5cXGFzdH0gXFxjaXJjIFxccmhvX3tBXlxcYXN0fSIsMl0sWzYsNywiXFxhbHBoYV97QV5cXGFzdCxBLEFeXFxhc3R9IiwyXSxbNSw3LCJcXGlkX0EgXFxvdGltZXMgXFxjb2V2X0EiXV0=
+  %\[\begin{tikzcd}
+	%  {1 \otimes A} && {(A \otimes A^\ast) \otimes A} && {A^\ast\otimes 1} && {A^\ast \otimes (A \otimes A^\ast)} \\
+	%  \\
+	%  {A \otimes 1} && {A \otimes (A^\ast \otimes A)} && {1 \otimes A^\ast} && {(A^\ast \otimes A) \otimes A^\ast}
+	%  \arrow["{\coev_A \otimes \id_A}", from=1-1, to=1-3]
+	%  \arrow["{\lambda_A \circ \rho_A}"', from=1-1, to=3-1]
+	%  \arrow["{\alpha_{A,A^\ast,A}}", from=1-3, to=3-3]
+	%  \arrow["{\id_A \otimes \coev_A}", from=1-5, to=1-7]
+	%  \arrow["{\lambda_{A^\ast} \circ \rho_{A^\ast}}"', from=1-5, to=3-5]
+	%  \arrow["{\id_1 \otimes \ev_A}"', from=3-1, to=3-3]
+	%  \arrow["{\ev_A \otimes_{A^\ast}}"', from=3-5, to=3-7]
+	%  \arrow["{\alpha_{A^\ast,A,A^\ast}}"', from=3-7, to=1-7]
+  %\end{tikzcd}\]
+\end{definition}
+
+\begin{example}
+  \begin{enumerate}
+    \item 
+  In $\Veck$, the dual object for every vector space $V$ is given by its \emph{dual-space} $V^\ast \coloneqq \Hom(V, k)$. The evaluation and coevaluation maps here correspond to 
+  \[
+    \ev_V : V \otimes V^\ast \to k, 
+  \]
+  \[
+    \coev_V : k \to V^\ast \otimes V, 
+  \]
+    \item 
+    In Anyon theories we generally want the ability to take antiparticles for
+    each species of anyon, and furthermore, we want to be able to \emph{create}
+    and \emph{annihilate} these anyons. So the dual object corresponds to the
+    antiparticle, and the $\ev$ and $\coev$ maps either produce a
+    particle-antiparticle pair from the vacuum or annihilate them (to a state
+    containing the vacuum).
+  \end{enumerate}
+\end{example}
+
+\newcommand{\Astrand}[2]{
+  \draw[->, #1] (#2) -- ++(0,1);
+}
+\newcommand{\Adualstrand}[2]{
+  \draw[<- , #1] (#2) -- ++(0,1);
+}
+
+\begin{graphicalCalculus}
+  \todo{Do these need to point up or down?} Now we have to introduce this notion
+  of duality on the level of the graphical calculus. We denote an object in the
+  category by an oriented arrow, and denote its dual object by the reverse.
+  \[
+    \begin{tikzpicture}[baseline=-0.5ex]
+      \Astrand{}{0,0}
+      \node[right] at (0.1,0.5) {$A$};
+    \end{tikzpicture}
+    \qquad\qquad
+    \begin{tikzpicture}[baseline=-0.5ex]
+      \Adualstrand{}{0,0}
+      \node[right] at (0.1,0.5) {$A^\ast$};
+    \end{tikzpicture}
+  \]
+  Similarly the $\ev_{A}$ and $\coev_A$ maps induce a graphical menaing:
+  \[
+  \coev_A :
+  \begin{tikzpicture}[baseline=-0.5ex]
+    \draw[->] (-0.4, 0.6) .. controls (-0.4, -0.2) and (0.4, -0.2) .. (0.4, 0.6);
+    \node at (-0.6, 0.5) {\small $A$};
+    \node at (0.6, 0.5) {\small $A^*$};
+  \end{tikzpicture}
+  \qquad\text{and}\qquad
+  \ev_A :
+  \begin{tikzpicture}
+    \draw[->] (-0.4, -0.6) .. controls (-0.4, 0.2) and (0.4, 0.2) .. (0.4, -0.6);
+    \node at (-0.6, -0.5) {\small $A^*$};
+    \node at (0.6, -0.5) {\small $A$};
+  \end{tikzpicture}.
+\]
+
+\end{graphicalCalculus}
+
+Observe that in the graphical calculus, we denoted this as a bent arrow from $A \to A^\ast$. In fact, we gain the following identities:
+\[
+  \Hom_\CC(X \ot A, Y) \cong \Hom_\CC(X, A^\ast \ot Y) : f \mapsto 
+\]
+
+Further the natural observation that $A \cong A^{\ast\ast}$ holds should be
+encoded in these categories.
+\begin{definition}
+  A \emph{\green{pivotal structure}} on a rigid monoidal category is given by a natural isomorphism $\id \to (-)^{\ast\ast}$, i.e. a collection of isomorphisms that identify $\{A \to A^{\ast\ast}\}$.
+\end{definition}
+
+This allows us to define a notion of a traced category.
+\begin{definition}
+  We can define a notion of a \emph{\green{right trace}} on any endomorphism $V
+  \to V$ in such categories:
+    % https://q.uiver.app/#q=WzAsNSxbMSwwLCIxIl0sWzMsMCwiQSBcXG90aW1lcyBBXlxcYXN0Il0sWzUsMCwiQV57XFxhc3RcXGFzdH0gXFxvdCBBXlxcYXN0Il0sWzcsMCwiMSJdLFswLDAsIlxcdHJfUiJdLFswLDEsIlxcY29ldl9BIl0sWzEsMiwiKFxcZGVsdGFfQSBcXGNpcmMgKC0pIFxcb3QgXFxpZF97QV5cXGFzdH0pIl0sWzIsMywiXFxldl97QV5cXGFzdH0iXSxbNCwwLCJcXGNvbG9uZ2VxcSIsMSx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
+  \[\begin{tikzcd}[cramped]\label{cat:eq:Rtrace}
+	  {\tr_R} & 1 && {A \otimes A^\ast} && {A^{\ast\ast} \ot A^\ast} && 1
+	  \arrow["\coloneqq"{description}, draw=none, from=1-1, to=1-2]
+	  \arrow["{\coev_A}", from=1-2, to=1-4]
+	  \arrow["{(\delta_A \circ (-) \ot \id_{A^\ast})}", from=1-4, to=1-6]
+	  \arrow["{\ev_{A^\ast}}", from=1-6, to=1-8]
+    \end{tikzcd}\]
+\end{definition}
+
+\begin{definition}
+  A pivotal rigid braided monoidal category is called \emph{\green{spherical}}
+  if 
+  \[
+    \tr_R = \tr_L
+  \]
+  and we can further define the \emph{\green{quantum dimension}} of an object
+  $A$ as
+  \begin{equation}\label{cat:eq:dim}
+    \dim(A) = \tr(\id_A)
+  \end{equation}
+\end{definition}
+
+\begin{graphicalCalculus}
+  The usage of \emph{spherical} here derives from the fact that we can arbitrarily reorder our string calculus on the surface of a \emph{sphere}. Consider for example the trace:
+
+\end{graphicalCalculus}
+
+\begin{definition}
+  A \emph{\green{ribbon}} category is a braided monoidal rigid category
+  $(\CC,\otimes,1,\alpha,\gamma,\rho,\beta,\ev,\coev)$ with maps $\theta_A : A
+  \to A$ that realizes a \emph{self-braiding} of the object. This is subject to
+  \[
+    \theta_{A \otimes B} = (\theta_A \otimes \theta_B) \circ \beta_{B,A} \circ \beta_{A,B}
+  \]
+\end{definition}
+
 
 \begin{definition}\label{cat:def:directSum}
   Given a linear category $\CC$ with objects $\{A_j\}_{j=1}^N \subseteq \ob(\CC)$, an object $\bigoplus_{i=1}^n A_i \in \CC$ is
@@ -308,11 +653,15 @@ A great resource on semisimple categories \cite{bailieSemisimple2017}.
 \end{definition}
 
 \begin{example}
-  \item In $\Rep(G)$, we know that either the representations are simple
-  (Irreps) or they decompose as some direct sum representation.
-  \item In Anyonic theories, we primarily only consider simple objects $a,b,c
-  \ldots$ and tensor products between them. Then we assign each combination of
-  anyons a fusion outcome $a \otimes b = c \oplus d \oplus \cdots$. 
+  \begin{enumerate}
+    \item In $\Rep(G)$, we know that either the representations are simple
+      (Irreps) or they decompose as some direct sum representation.
+    \item In Anyonic theories, we primarily only consider simple objects $a,b,c
+      \ldots$ and tensor products between them. Then we assign each
+      combinationof anyons a fusion outcome $a \otimes b = c \oplus d \oplus
+      \cdots$. 
+  \end{enumerate}
+  
 \end{example}
 
 \begin{lemma}[Schur's lemma
@@ -390,156 +739,71 @@ We take these maps as above and claim they form a basis of the spaces $\Hom_\CC
 
 If we look at $\Hom$ spaces of a higher order such as $\Hom_\CC(R_d, (R_a \ot
 R_b) \ot R_c)$, we have to choose a bracketing of the tensor products since we
-can only associate $(R_a \ot R_b) \ot R_c \cong R_a \ot (R_b \ot R_c)$. This
-induces a pullback \footnote{We will later see this (or where i put it) that
-this pullback can be assigned a matrix, and through semisimplicity sort of spans
-the entire space. This is an instance of a lifting through the yoneda lemma,
-i.e. we can define what $\alpha$ is doing by evaluating the action on finitely
-many points, and extending this trhough semisimplicity to the full space.}
+can only associate $(R_a \ot R_b) \ot R_c \cong R_a \ot (R_b \ot R_c)$.
+Under the (covariant) functor $\Hom_\CC(-, R_d)$ this introduces a pushforward
 \[
-  \alpha^\ast : \Hom_\CC(R_d, (R_a \otimes R_b \otimes R_c)) \cong \Hom_\CC(R_d, R_a \ot (R_b \ot R_c)).
+  (\alpha_{abc}^d)^\ast : \Hom_\CC((R_a \ot R_b) \ot R_c, R_d) \cong \Hom_\CC(R_a \ot (R_b \ot R_c), R_d)
 \]
-We can also define a basis for these extended spaces. In fact, lets generalize this to the space $\Hom_\CC(R_b, \bigotimes_{i=1}^n R_{a_i})$. Given an ONB $\iota^{}$ for the space $\Hom_\CC(R_b, \bigotimes_{i=1}^{n-1})$ we can extend it to a basis on the larger space by taking
+and a pullback under $\Hom_\CC(R_d, -)$ 
 \[
-  \iota^n = (\iota^{n-1} \ot \id_{R_{a_n}}) \circ \iota_{b,\mu}^{c,a_n}
+  (\alpha^{abc}_d)^\ast : \Hom_\CC(R_d, (R_a \otimes R_b \otimes R_c)) \cong \Hom_\CC(R_d, R_a \ot (R_b \ot R_c)).
+\]
+We can also define a basis for these extended spaces. In fact, lets generalize this to the space $\Hom_\CC(R_b, \bigotimes_{i=1}^n R_{a_i})$ where we assume this is fully left-algined bracketing. 
+
+We define the higher bases recursively: Let $n > 2$ and intermediate labels $e_1, e_2, \ldots, e_{n-2} \in \Irr(\CC)$ and multiplicity indices $\mu_1, \ldots, \mu_{n-1}$. Then we can define
+\[
+  \iota^{a_1 \cdots a_n}_{d,\hat{e},\hat{\mu}} \coloneqq \left(\iota^{a_1 \cdots a_{n-1}}_{e_{n-2},\mu} \otimes \id_{R_{a_n}}\right) \circ \iota^{e_{n-2}a_n}_{d,\mu_{n-1}}.
+\]
+\[
+    \pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu}\circ\iota^{a_1\cdots a_n}_{d';\vec e\,',\vec\mu'}
+    \overeq{\eqref{cat:monoidal:bifunctor}} \pi^{e_{n-2}a_n}_{d,\mu_{n-1}}\circ\Big[\big(\pi^{a_1\cdots a_{n-1}}_{e_{n-2},\vec\mu_{n-1}}
+    \circ \iota^{a_1\cdots a_{n-1}}_{e'_{n-2},\vec\mu'_{n-1}}\big)\otimes\id_{R_{a_n}}\Big]
+    \circ\iota^{e'_{n-2}a_n}_{d',\mu'_{n-1}}.
+  \]
+By the inductive hypothesis the bracket evaluates to
+$\delta_{e_{n-2}e^\prime_{n-2}}\delta_{\vec\mu_{n-1}\vec\mu'_{n-1}}\id_{R_{e_{n-2}}}$,
+and the $n=2$ case finishes orthoonality.
+
+\[
+  \sum_{\vec e_n \vec \mu_n} \iota^{a_1 \cdots a_n}_{d,e,\mu} \pi^{a_1 \ldots a_n}_{d,e,\mu} = \sum (\iota \ot id_{R_{a_n}}) \circ \iota \circ  = \sum_{e,\mu} \iota^{e_{n-1} a_n}_d \circ \pi^{e_{n-1} a_n}_d = \id_{\bigotimes R_{a_n}}
 \]
 
+%\[
+%  \pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu}\circ\iota^{a_1\cdots a_n}_{d';\vec e\,',\vec\mu'}
+%    = \pi^{e_{n-2}a_n}_{d,\mu_{n-1}}\circ\Big[\big(\pi^{a_1\cdots a_{n-1}}_{e_{n-2},\vec\mu_{n-1}}
+%    \circ \iota^{a_1\cdots a_{n-1}}_{e'_{n-2},\vec\mu'_{n-1}}\big)\otimes\id_{R_{a_n}}\Big]
+%    \circ\iota^{e'_{n-2}a_n}_{d',\mu'_{n-1}}.
+%\]
 
 
-If we want to use contractions between matchings legs, and overall want the
-ability to take duals just like in $\FDVec{\C}$, we need both a concept of
-duality and the evaluation maps. This is also the categorification of the
-\emph{creation} and \emph{annihilation} maps from \Cref{sect:Anyons}. Let this
-motivate the following definition:
-\begin{definition}
-  A monoidal category $(\CC, \otimes, 1)$ is \emph{\green{rigid}} if, for every $A \in \CC$, there exists a \emph{\green{dual object}} $A^\ast$ with the following maps:
-  \[
-    \ev_A : A^\ast \otimes A \to 1 \quad \text{ and } \quad \coev_A : 1 \to A \otimes A^\ast
-  \]
-  subject to the diagrammatic constraints
-% MODIFIED
-% https://q.uiver.app/#q=WzAsMTIsWzAsMCwiQSJdLFsyLDAsIjFcXG90IEEiXSxbNCwwLCIoQSBcXG90IEFeXFxhc3QpIFxcb3QgQSJdLFs2LDAsIkFcXG90KEFeXFxhc3QgXFxvdCBBKSJdLFs4LDAsIkEgXFxvdCAxICJdLFsxMCwwLCJBIl0sWzAsMiwiQV5cXGFzdCJdLFsyLDIsIiBBXlxcYXN0IFxcb3QgMSJdLFs0LDIsIkFeXFxhc3QgXFxvdCAoQSBcXG90IEFeXFxhc3QpIl0sWzYsMiwiKEFeXFxhc3QgXFxvdCBBKSBcXG90IEFeXFxhc3QiXSxbOCwyLCIxIFxcb3QgQV5cXGFzdCJdLFsxMCwyLCJBXlxcYXN0Il0sWzQsNSwiXFxyaG9fQSJdLFszLDQsIlxcaWRfQSBcXG90IFxcZXZfQSJdLFsyLDMsIlxcYWxwaGFfe0EsQV5cXGFzdCxBfSJdLFsxLDIsIlxcY29ldl9BIFxcb3QgXFxpZF9BIl0sWzAsMSwiXFxsYW1iZGFfQSJdLFs3LDgsIlxcaWRfe0FeXFxhc3R9IFxcb3QgXFxjb2V2X3tBfSJdLFs4LDksIlxcYWxwaGFfe0FeXFxhc3QsQSxBXlxcYXN0fSJdLFs5LDEwLCJcXGV2X0EgXFxvdCBcXGlkX3tBXlxcYXN0fSJdLFsxMCwxMSwiXFxsYW1iZGFfe0FeXFxhc3R9Il0sWzYsNywiXFxyaG9fe0FeXFxhc3R9Il1d
-\[\begin{tikzcd}[cramped, column sep=scriptsize]
-	A && {1\ot A} && {(A \ot A^\ast) \ot A} && {A\ot(A^\ast \ot A)} && {A \ot 1 } && A \\
-	\\
-	{A^\ast} && { A^\ast \ot 1} && {A^\ast \ot (A \ot A^\ast)} && {(A^\ast \ot A) \ot A^\ast} && {1 \ot A^\ast} && {A^\ast}
-	\arrow["{\lambda_A}", from=1-1, to=1-3]
-	\arrow["{\coev_A \ot \id_A}", from=1-3, to=1-5]
-	\arrow["{\alpha_{A,A^\ast,A}}", from=1-5, to=1-7]
-	\arrow["{\id_A \ot \ev_A}", from=1-7, to=1-9]
-	\arrow["{\rho_A}", from=1-9, to=1-11]
-  \arrow[from=1-1, to=1-11, u path, "\id_A"' {below, distance=2pt}]
-	\arrow["{\rho_{A^\ast}}", from=3-1, to=3-3]
-	\arrow["{\id_{A^\ast} \ot \coev_{A}}", from=3-3, to=3-5]
-	\arrow["{\alpha_{A^\ast,A,A^\ast}}", from=3-5, to=3-7]
-	\arrow["{\ev_A \ot \id_{A^\ast}}", from=3-7, to=3-9]
-	\arrow["{\lambda_{A^\ast}}", from=3-9, to=3-11]
-  \arrow[from=3-1, to=3-11, u path, "\id_A"' {below, distance=2pt}]
-\end{tikzcd}\]
-  % https://q.uiver.app/#q=WzAsOCxbMCwwLCIxIFxcb3RpbWVzIEEiXSxbMiwwLCIoQSBcXG90aW1lcyBBXlxcYXN0KSBcXG90aW1lcyBBIl0sWzAsMiwiQSBcXG90aW1lcyAxIl0sWzIsMiwiQSBcXG90aW1lcyAoQV5cXGFzdCBcXG90aW1lcyBBKSJdLFs0LDIsIjEgXFxvdGltZXMgQV5cXGFzdCJdLFs0LDAsIkFeXFxhc3RcXG90aW1lcyAxIl0sWzYsMiwiKEFeXFxhc3QgXFxvdGltZXMgQSkgXFxvdGltZXMgQV5cXGFzdCJdLFs2LDAsIkFeXFxhc3QgXFxvdGltZXMgKEEgXFxvdGltZXMgQV5cXGFzdCkiXSxbMCwxLCJcXGNvZXZfQSBcXG90aW1lcyBcXGlkX0EiXSxbMCwyLCJcXGxhbWJkYV9BIFxcY2lyYyBcXHJob19BIiwyXSxbMiwzLCJcXGlkXzEgXFxvdGltZXMgXFxldl9BIiwyXSxbMSwzLCJcXGFscGhhX3tBLEFeXFxhc3QsQX0iXSxbNCw2LCJcXGV2X0EgXFxvdGltZXNfe0FeXFxhc3R9IiwyXSxbNSw0LCJcXGxhbWJkYV97QV5cXGFzdH0gXFxjaXJjIFxccmhvX3tBXlxcYXN0fSIsMl0sWzYsNywiXFxhbHBoYV97QV5cXGFzdCxBLEFeXFxhc3R9IiwyXSxbNSw3LCJcXGlkX0EgXFxvdGltZXMgXFxjb2V2X0EiXV0=
-  \[\begin{tikzcd}
-	  {1 \otimes A} && {(A \otimes A^\ast) \otimes A} && {A^\ast\otimes 1} && {A^\ast \otimes (A \otimes A^\ast)} \\
-	  \\
-	  {A \otimes 1} && {A \otimes (A^\ast \otimes A)} && {1 \otimes A^\ast} && {(A^\ast \otimes A) \otimes A^\ast}
-	  \arrow["{\coev_A \otimes \id_A}", from=1-1, to=1-3]
-	  \arrow["{\lambda_A \circ \rho_A}"', from=1-1, to=3-1]
-	  \arrow["{\alpha_{A,A^\ast,A}}", from=1-3, to=3-3]
-	  \arrow["{\id_A \otimes \coev_A}", from=1-5, to=1-7]
-	  \arrow["{\lambda_{A^\ast} \circ \rho_{A^\ast}}"', from=1-5, to=3-5]
-	  \arrow["{\id_1 \otimes \ev_A}"', from=3-1, to=3-3]
-	  \arrow["{\ev_A \otimes_{A^\ast}}"', from=3-5, to=3-7]
-	  \arrow["{\alpha_{A^\ast,A,A^\ast}}"', from=3-7, to=1-7]
-  \end{tikzcd}\]
-\end{definition}
 
-\newcommand{\Astrand}[2]{
-  \draw[->, #1] (#2) -- ++(0,1);
-}
-\newcommand{\Adualstrand}[2]{
-  \draw[<- , #1] (#2) -- ++(0,1);
-}
-
-\begin{graphicalCalculus}
-  \todo{Do these need to point up or down?} Now we have to introduce this notion of duality on the level of the graphical
-  calculus. We denote an object in the category by an oriented arrow, and denote
-  its dual object by the reverse.
-  \[
-    \begin{tikzpicture}[baseline=-0.5ex]
-      \Astrand{}{0,0}
-      \node[right] at (0.1,0.5) {$A$};
-    \end{tikzpicture}
-    \qquad\qquad
-    \begin{tikzpicture}[baseline=-0.5ex]
-      \Adualstrand{}{0,0}
-      \node[right] at (0.1,0.5) {$A^\ast$};
-    \end{tikzpicture}
-  \]
-  Similarly the $\ev_{A}$ and $\coev_A$ maps induce a graphical menaing:
-  \[
-  \coev_A :
-  \begin{tikzpicture}[baseline=-0.5ex]
-    \draw[->] (-0.4, 0.6) .. controls (-0.4, -0.2) and (0.4, -0.2) .. (0.4, 0.6);
-    \node at (-0.6, 0.5) {\small $A$};
-    \node at (0.6, 0.5) {\small $A^*$};
-  \end{tikzpicture}
-  \qquad\text{and}\qquad
-  \ev_A :
-  \begin{tikzpicture}
-    \draw[->] (-0.4, -0.6) .. controls (-0.4, 0.2) and (0.4, 0.2) .. (0.4, -0.6);
-    \node at (-0.6, -0.5) {\small $A^*$};
-    \node at (0.6, -0.5) {\small $A$};
-  \end{tikzpicture}.
-\]
-
-\end{graphicalCalculus}
-
-Further the natural observation that $A \cong A^{\ast\ast}$ holds should be encoded in these categories.
-\begin{definition}
-  A \emph{\green{pivotal structure}} on a rigid monoidal category is given by a natural isomorphism $\id \to (-)^{\ast\ast}$, i.e. a collection of isomorphisms that identify $\{A \to A^{\ast\ast}\}$.
-\end{definition}
-
-This allows us to define a notion of a traced category.
-\begin{definition}
-  We can define a notion of a \emph{\green{right trace}} on any endomorphism $V \to V$
-  in such categories:
-    % https://q.uiver.app/#q=WzAsNSxbMSwwLCIxIl0sWzMsMCwiQSBcXG90aW1lcyBBXlxcYXN0Il0sWzUsMCwiQV57XFxhc3RcXGFzdH0gXFxvdCBBXlxcYXN0Il0sWzcsMCwiMSJdLFswLDAsIlxcdHJfUiJdLFswLDEsIlxcY29ldl9BIl0sWzEsMiwiKFxcZGVsdGFfQSBcXGNpcmMgKC0pIFxcb3QgXFxpZF97QV5cXGFzdH0pIl0sWzIsMywiXFxldl97QV5cXGFzdH0iXSxbNCwwLCJcXGNvbG9uZ2VxcSIsMSx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6Im5vbmUifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
-  \[\begin{tikzcd}[cramped]\label{cat:eq:Rtrace}
-	  {\tr_R} & 1 && {A \otimes A^\ast} && {A^{\ast\ast} \ot A^\ast} && 1
-	  \arrow["\coloneqq"{description}, draw=none, from=1-1, to=1-2]
-	  \arrow["{\coev_A}", from=1-2, to=1-4]
-	  \arrow["{(\delta_A \circ (-) \ot \id_{A^\ast})}", from=1-4, to=1-6]
-	  \arrow["{\ev_{A^\ast}}", from=1-6, to=1-8]
-    \end{tikzcd}\]
-\end{definition}
-
-\begin{definition}
-  A pivotal rigid braided monoidal category is called \emph{\green{spherical}} if 
-  \[
-    \tr_R = \tr_L
-  \]
-  and we can further define the \emph{\green{quantum dimension}} of an object $A$ as
-  \begin{equation}\label{cat:eq:dim}
-    \dim(A) = \tr(\id_A)
-  \end{equation}
-\end{definition}
-
-\begin{definition}
-  A \emph{\green{ribbon}} category is a braided monoidal rigid category $(\CC,\otimes,1,\alpha,\gamma,\rho,\beta,\ev,\coev)$ with maps $\theta_A : A \to A$ that realizes a \emph{self-braiding} of the object. This is subject to
-  \[
-    \theta_{A \otimes B} = (\theta_A \otimes \theta_B) \circ \beta_{B,A} \circ \beta_{A,B}
-  \]
-\end{definition}
+\todo{Bring this paragraph from monodial semisimple on into order}
+\begin{example}
+  Lets look at some examples of semisimple monoidal categories.
+  \begin{enumerate}
+    \item We know that representations admit semisimple theories and are endowed
+    with a tensor product. These can be considered enriches as the morphisms in
+    $\Rep()$ are just linear maps. In the example of $\SU{2}$, the basis maps
+    $\iota^{ab}_{c,\nu}$ are equal to the \emph{Clebsch-Gordan} coefficients, in
+    fact these are multiplicity free and thus we can omit the index $\nu$.
+    \todo{CG-coeffs can be indexed here (they are not symbolic only!)}
+    \item In anyon theories however, these bases are fully symbolic. They denote the fusion and splitting spaces of an anyon.
+    \item The pullback $\alpha^\ast$ is in its basis just a matrix. Formally
+    these are known as the $6j$-symbols (as introduced by wigner) and are
+    denoted by $[F^{abc}_d]$\todo{fix over direct sum and multiplicities.}
+  \end{enumerate}
+\end{example}
 
 
 
 
-\begin{definition}
-  A $k$-enriched category $\CC$ is called semisimple if every object $X$ is ismorphic to a finite sum of simple objects. Let $\{R_a\}_a$ be representatives of the isomorphism classes of simple categories (and assume algebraic closure / absolute simplicity). 
-  Then every $X$ admits as \emph{isotypic} decomposition as
-  \[
-    X \cong \bigoplus_{a \in L} \Hom_\CC (R_a, X) \otimes_k R_a
-  \]
-\end{definition}
+%\begin{definition}
+%  A $k$-enriched category $\CC$ is called semisimple if every object $X$ is ismorphic to a finite sum of simple objects. Let $\{R_a\}_a$ be representatives of the isomorphism classes of simple categories (and assume algebraic closure / absolute simplicity). 
+%  Then every $X$ admits as \emph{isotypic} decomposition as
+%  \[
+%    X \cong \bigoplus_{a \in L} \Hom_\CC (R_a, X) \otimes_k R_a
+%  \]
+%\end{definition}
 
 Now we would like the category that has all of these statements combined: 
 
@@ -548,8 +812,43 @@ Now we would like the category that has all of these statements combined:
 \end{definition}
 
 \begin{remark}
-  While each representation category $\Rep(G)$ forms a fusion category for finite $G$, this is not the case for infinite $G$ such as $\SU{2}$ or $\U{1}$. These violate the condition that there are finitely many simples. We can remedy this by instead considering a deformment of the underlying Lie-algebra as $U_q(\liesl 2)$.
+  While each representation category $\Rep(G)$ forms a fusion category for finite $G$, this is not the case for infinite $G$ such as $\SU{2}$ or $\U{1}$. These violate the condition that there are finitely many simples. We can remedy this by instead considering a deformment of the underlying Lie-algebra as $U_q(\liesl 2)$. This has various reasons, one of them is that we only wish to consider gapped theories for our topological orders
 \end{remark}
+
+From the discussion above we can synthesize an alternative but equivalent
+definition of a fusion category. This is the definition that is provided in the
+physics literaturs such as in \cite{kitaevAnyonsExactlySolved2006} or
+\cite{bondersonNonAbelianAnyonsInterferometry2007,bondersonInterferometryNonAbelianAnyons2008}.
+
+\begin{definition}[\cite{moses25}]
+  A \emph{\green{fusion category}} can be restated in its vector space form as a finite set of labels (sectors?) $L$ and vector spaces $V^{ab}_c \coloneqq \Hom_\CC(a \otimes b, c)$ for all $a,b,c \in L$, as well as the isomorphisms
+  \[
+    F^{abc}_{d} : \bigoplus_e V^{ab}_e \otimes V^{ec}_d \to \bigoplus_e V^{ae}_d \otimes V^{bc}_e
+  \]
+  such that the pentagon holds:
+  \begin{equation}
+  \begin{gathered} % From the seminar paper, adapted after skein paper.
+  \begin{tikzpicture}
+    \node at (0,-0.1) {$\underset{e,f}{\bigoplus} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g $};
+    \draw[->, black] plot coordinates{(0.4,0.5) (2.5,1.5)};
+    \node at (0.9,1.3) {$id_{V_{e}^{ab}} \otimes F^{ecd}_{g}$};
+    \node at (4.0,1.9)  {$\underset{e,l}{\bigoplus} V^{ab}_e \otimes V^{cd}_{f} \otimes V^{el}_g$};
+    \node at (7.6, 1.1) {$F^{abl}_{g} \otimes id_{V^{cd}_{l}}$};
+    \draw[->] plot coordinates{(5.5, 1.5) (7.5,0.5)};
+    \node at (8.0,-0.1) {$\underset{k,l}{\bigoplus} V^{ak}_{g} \otimes V^{bl}_{k} \otimes V^{cd}_{l}$};
+    \node at (-0.4, -1.2) {$F^{abc}_{f} \otimes id_{V^{fd}_{g}}$};
+    \draw[->] plot coordinates{(0.4,-0.5) (1.5,-1.5)};
+    \node at (1.8,-2.1) {$\underset{f,h}{\bigoplus} V^{af}_{h} \otimes V^{bc}_{f}  \otimes V^{hd}_{g}$};
+    \node at (4.3, -2.5) {$F^{afd}_{g} \otimes id_{V^{bc}_{f}}$};
+    \draw[->] plot coordinates {(3.5,-2.0) (4.7, -2.0)};
+    \node at (6.5, -2.1) {$\underset{k,h}{\bigoplus} V^{ak}_{g} \otimes V^{bc}_{h} \otimes V^{hd}_{k} $};
+    \node at (8.2, -1.2) {$F^{bcd}_{k} \otimes id_{V^{ak}_{g}}$};
+    \draw[->] plot coordinates {(6.4, -1.5) (7.5,-0.5) };
+  \end{tikzpicture}
+  \label{cat:pentagon}
+  \end{gathered}
+  \end{equation}
+\end{definition}
 
 \subsection{Categorical Quantum Mechanics}\label{cat:sub:categoricalQuantum}
 
@@ -589,7 +888,7 @@ $U_q(sl_2)$ is not a group.
 %
 %
 %
-%What do we know now? First of all, we take a symmetry group $G$ that is finite and compact (why?)[For compact groups, representations are completely reducible (Maschke) and the irreps are finite aswell. Finite groups are contained in compact groups.]. Then we look for its unitary representation $U(G)$ on a Hilbert space $H$. Furhtermore, if this is a multiparty hilbert space, lets say $n$ sites, we view the unitary representations $U_{n}$ at site $n$. The unitary representation $U_{n} : G \to Hom(V_{n} ,V_{n} )$ is a covariant linear unitary map. A map $V_{i} \to V_{j}$ is symmetric if it is an intertwiner of the representations, i.e. the following diagram commutes:
+%What do we know now? First of all, we take a symmetry group $G$ that is finite and compact (why?)[For compact groups, representations are completely reducible (Maschke) and the irreps are finite aswell. Finite groups are contained in compact groups.]. Then we look for its unitary representation $U(G)$ on a Hilbert space $H$. Furhtermore, if this is a multiparty Hilbert space, lets say $n$ sites, we view the unitary representations $U_{n}$ at site $n$. The unitary representation $U_{n} : G \to Hom(V_{n} ,V_{n} )$ is a covariant linear unitary map. A map $V_{i} \to V_{j}$ is symmetric if it is an intertwiner of the representations, i.e. the following diagram commutes:
 %% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kiXSxbMCwxLCJWX2oiXSxbMSwwLCJWX2kiXSxbMSwxLCJWX2oiXSxbMCwxLCJmIiwyXSxbMCwyLCJVX3tWX2l9KGcpIl0sWzEsMywiVV97Vl9qfShnKSIsMl0sWzIsMywiZiJdXQ==
 %\[\begin{tikzcd}
 %	{V_i} & {V_i} \\

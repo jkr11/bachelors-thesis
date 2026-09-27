@@ -562,7 +562,399 @@ to[out=-45,in=90]
 %\end{array}
 %\]
 
+\usetikzlibrary{arrows.meta, calc, decorations.pathmorphing, positioning, patterns, shapes.geometric}
 
+% ---------- style for a braid strand segment ----------
+\tikzset{
+  strand/.style   = {line width=1.4pt, line cap=round},
+  gap/.style      = {white, line width=6pt, line cap=butt},
+  fiberline/.style= {blue!55!black, line width=0.9pt},
+  basepath/.style = {->, thick, decorate, decoration={snake, amplitude=0.4mm, segment length=2.2mm, post length=1mm}}
+}
+
+% Draws one crossing level between positions p and p+1, from height y0 to y0+1,
+% with strand of color cOver going OVER strand of color cUnder.
+% "dir=lr" means the over-strand goes from left(p) to right(p+1) on top;
+% "dir=rl" means the over-strand goes from right(p+1) to left(p) on top.
+\newcommand{\crossing}[5]{%
+  % #1=p (left x at y0)   #2=y0   #3=cOver  #4=cUnder  #5=dir (lr or rl)
+  \def\p{#1}\def\yz{#2}
+  \pgfmathsetmacro{\pone}{\p+1}
+  \pgfmathsetmacro{\ymid}{\yz+0.5}
+  \pgfmathsetmacro{\xmid}{\p+0.5}
+  \ifx#5lr
+    % under strand: from (p+1,y0) to (p,y0+1)
+    \draw[strand, #4] (\pone,\yz) -- (\p,\yz+1);
+    \draw[gap, rotate around={45:(\xmid,\ymid)}] (\xmid-0.28,\ymid) -- (\xmid+0.28,\ymid);
+    \draw[strand, #3] (\p,\yz) -- (\pone,\yz+1);
+  \else
+    % under strand: from (p,y0) to (p+1,y0+1)
+    \draw[strand, #4] (\p,\yz) -- (\pone,\yz+1);
+    \draw[gap, rotate around={-45:(\xmid,\ymid)}] (\xmid-0.28,\ymid) -- (\xmid+0.28,\ymid);
+    \draw[strand, #3] (\pone,\yz) -- (\p,\yz+1);
+  \fi
+}
+
+\begin{tikzpicture}[>=Stealth]
+
+%=====================================================================
+% PANEL 1 (bottom): explicit braid of n=4 particles in the plane
+%=====================================================================
+\begin{scope}[local bounding box=braidpanel]
+
+  \def\cA{red!70!black}
+  \def\cB{blue!65!black}
+  \def\cC{green!45!black}
+  \def\cD{orange!85!black}
+
+  % level 0->1 : cross positions 1,2  (A over B)
+  \crossing{1}{0}{\cA}{\cB}{lr}
+  \draw[strand,\cC] (3,0)--(3,1);
+  \draw[strand,\cD] (4,0)--(4,1);
+
+  % level 1->2 : cross positions 3,4  (C over D)
+  \draw[strand,\cB] (1,1)--(1,2);
+  \draw[strand,\cA] (2,1)--(2,2);
+  \crossing{3}{1}{\cC}{\cD}{lr}
+
+  % level 2->3 : cross positions 2,3  (A over D)
+  \draw[strand,\cB] (1,2)--(1,3);
+  \crossing{2}{2}{\cA}{\cD}{lr}
+  \draw[strand,\cC] (4,2)--(4,3);
+
+  % level 3->4 : cross positions 1,2  (B over D)
+  \crossing{1}{3}{\cB}{\cD}{lr}
+  \draw[strand,\cA] (3,3)--(3,4);
+  \draw[strand,\cC] (4,3)--(4,4);
+
+  % dots for the two configurations (t=0 bottom, t=1 top)
+  \foreach \x/\c in {1/\cA,2/\cB,3/\cC,4/\cD}{
+    \filldraw[\c] (\x,0) circle (2.6pt);
+  }
+  \foreach \x/\c in {1/\cD,2/\cB,3/\cA,4/\cC}{
+    \filldraw[\c] (\x,4) circle (2.6pt);
+  }
+
+  \node[below] at (2.5,-0.35) {$q_0=\{z_1,\dots,z_4\}$, \; $t=0$};
+  \node[above] at (2.5,4.35) {$q_1 = \beta\cdot q_0$, \; $t=1$};
+  \node[right] at (4.6,2) {$\beta=\sigma_1\sigma_3\sigma_2\sigma_1 \in B_4$};
+
+\end{scope}
+
+%=====================================================================
+% PANEL 2 (middle): the same braid as a loop/path in configuration space
+%=====================================================================
+\begin{scope}[yshift=6.6cm]
+
+  \draw[thick, fill=gray!6] (2.5,0) ellipse (4.6 and 1.3);
+  \node[below] at (2.5,-1.6) {$\mathrm{Conf}_4(\mathbb{R}^2)/S_4$};
+
+  \coordinate (q0) at (0.6,0);
+  \coordinate (q1) at (4.4,0);
+  \filldraw[black] (q0) circle (2pt) node[below left=1pt] {$q_0$};
+  \filldraw[black] (q1) circle (2pt) node[below right=1pt] {$q_1$};
+
+  \draw[basepath] (q0) to[out=70,in=110] node[above]{$\gamma_\beta$} (q1);
+
+  \draw[->, dashed, gray] (2.5,-1.35) -- (2.5,-2.9)
+        node[midway,right,black,align=left]{\footnotesize the braid diagram below\\ \footnotesize \emph{is} a representative path $\gamma_\beta$\\ \footnotesize with $[\gamma_\beta]=\beta\in\pi_1\big(\mathrm{Conf}_4(\mathbb{R}^2)/S_4\big)$};
+
+\end{scope}
+
+%=====================================================================
+% PANEL 3 (top): Hilbert bundle over configuration space
+%=====================================================================
+\begin{scope}[yshift=12.6cm]
+
+  \draw[thick, fill=gray!6] (2.5,0) ellipse (4.6 and 1.3);
+  \node[below] at (2.5,-1.6) {$\mathrm{Conf}_4(\mathbb{R}^2)/S_4$};
+
+  \coordinate (q0) at (0.6,0);
+  \coordinate (q1) at (4.4,0);
+  \filldraw[black] (q0) circle (2pt) node[below] {$q_0$};
+  \filldraw[black] (q1) circle (2pt) node[below] {$q_1$};
+
+  % generic fibers
+  \foreach \x in {-1.5,-0.4,1.6,2.6,3.6,5.6,6.6}{
+    \draw[fiberline] (\x,0) -- (\x,2.1);
+    \draw[fiberline] (\x,2.1) ellipse (0.22 and 0.09);
+  }
+
+  % highlighted fibers over q0, q1
+  \draw[strand, violet!70!black] (0.6,0) -- (0.6,2.6);
+  \draw[violet!70!black, fill=violet!10] (0.6,2.6) ellipse (0.32 and 0.13);
+  \node[left] at (0.35,2.6) {$\mathcal{H}_{q_0}$};
+
+  \draw[strand, teal!70!black] (4.4,0) -- (4.4,2.6);
+  \draw[teal!70!black, fill=teal!10] (4.4,2.6) ellipse (0.32 and 0.13);
+  \node[right] at (4.7,2.6) {$\mathcal{H}_{q_1}$};
+
+  % monodromy / parallel transport arrow along the bundle
+  \draw[->, thick, violet!40!teal] (0.9,2.65) to[out=25,in=155] node[above]{$\rho(\beta)$} (4.05,2.65);
+
+  \node[above] at (2.5,3.25) {Hilbert bundle $\ \mathcal{H} \xrightarrow{\ \pi\ } \mathrm{Conf}_4(\mathbb{R}^2)/S_4$};
+  \node[align=center] at (7.9,1.2) {\footnotesize parallel transport along\\ \footnotesize $\gamma_\beta$ gives the\\ \footnotesize monodromy / braid\\ \footnotesize representation\\ \footnotesize $\rho:B_4\to U(\mathcal{H})$};
+
+  \draw[->,dashed,gray] (2.5,-1.35) -- (2.5,-2.05);
+
+\end{scope}
+
+\end{tikzpicture}
+
+\begin{tikzpicture}[line width=1.2, yscale=.8]
+
+\begin{scope}[shift={(-1,0)}, gray]
+\draw (-.75,-1) to (-.75,1);
+\draw (-.25,-1) to (-.25,1);
+\draw (-.5,-.6) node {\scalebox{.7}{$\cdots$}};
+\end{scope}
+
+
+\begin{scope}[shift={(0,0)}, gray]
+\draw (-.75,-1) to (-.75,1);
+\draw (-.25,-1) to (-.25,1);
+\draw (-.5,-.6) node {\scalebox{.7}{$\cdots$}};
+\end{scope}
+
+\draw[line width=1.4]
+  (0,-1) to (0,1);
+
+\begin{scope}[shift={(+1,0)}, gray]
+\draw (-.75,-1) to (-.75,1);
+\draw (-.25,-1) to (-.25,1);
+\draw (-.5,-.6) node {\scalebox{.7}{$\cdots$}};
+\end{scope}
+
+\draw[line width=4pt, white]
+  (-1, -1)
+    --
+  (-1, -.8)
+    .. controls (-1,-.4) and (0.15, -.4) ..
+  (0.15, 0)
+    .. controls (0.15, +.4) and (-1, +.4) ..
+  (-1,.8)
+    --
+  (-1,1);
+\draw[line width=1.4]
+  (-1, -1)
+    --
+  (-1, -.8)
+    .. controls (-1,-.4) and (0.15, -.4) ..
+  (0.15, 0)
+    .. controls (0.15, +.4) and (-1, +.4) ..
+  (-1,.8)
+    --
+  (-1,1);
+
+\draw[line width=4, white]
+  (0,0) to (0,1);
+\draw[line width=1.4]
+  (0,0) to (0,1);
+
+\node
+  at (-1,-1.3) {
+    \scalebox{.7}{
+      \color{blue}
+      $i$
+    }
+  };
+
+\node
+  at (0,-1.3) {
+    \scalebox{.7}{
+      \color{blue}
+      $j$
+    }
+  };
+
+\end{tikzpicture}
+
+\begin{tikzpicture}[line width=1.2, yscale=.8]
+% -- level 0: 2 over 3 --
+\draw (0,-1) to (0,1);
+\draw (3,-1) to (3,1);
+\draw (4,-1) to (4,1);
+\draw (5,-1) to (5,1);
+\draw (2,-1) to (2,1);
+\draw[line width=4pt, white] (1,-1) .. controls (1,-0.4) and (2.15,-0.4) .. (2.15,0) .. controls (2.15,0.4) and (1,0.4) .. (1,1);
+\draw[line width=1.4] (1,-1) .. controls (1,-0.4) and (2.15,-0.4) .. (2.15,0) .. controls (2.15,0.4) and (1,0.4) .. (1,1);
+\draw[line width=4pt, white] (2,0) to (2,1);
+\draw[line width=1.4] (2,0) to (2,1);
+% -- level 1: 3 over 2 --
+\draw (0,1) to (0,3);
+\draw (3,1) to (3,3);
+\draw (4,1) to (4,3);
+\draw (5,1) to (5,3);
+\draw (1,1) to (1,3);
+\draw[line width=4pt, white] (2,1) .. controls (2,1.6) and (0.85,1.6) .. (0.85,2) .. controls (0.85,2.4) and (2,2.4) .. (2,3);
+\draw[line width=1.4] (2,1) .. controls (2,1.6) and (0.85,1.6) .. (0.85,2) .. controls (0.85,2.4) and (2,2.4) .. (2,3);
+\draw[line width=4pt, white] (1,2) to (1,3);
+\draw[line width=1.4] (1,2) to (1,3);
+% -- level 2: 2 over 4 --
+\draw (0,3) to (0,5);
+\draw (2,3) to (2,5);
+\draw (4,3) to (4,5);
+\draw (5,3) to (5,5);
+\draw (3,3) to (3,5);
+\draw[line width=4pt, white] (1,3) .. controls (1,3.6) and (3.15,3.6) .. (3.15,4) .. controls (3.15,4.4) and (1,4.4) .. (1,5);
+\draw[line width=1.4] (1,3) .. controls (1,3.6) and (3.15,3.6) .. (3.15,4) .. controls (3.15,4.4) and (1,4.4) .. (1,5);
+\draw[line width=4pt, white] (3,4) to (3,5);
+\draw[line width=1.4] (3,4) to (3,5);
+% -- level 3: 4 over 2 --
+\draw (0,5) to (0,7);
+\draw (2,5) to (2,7);
+\draw (4,5) to (4,7);
+\draw (5,5) to (5,7);
+\draw (1,5) to (1,7);
+\draw[line width=4pt, white] (3,5) .. controls (3,5.6) and (0.85,5.6) .. (0.85,6) .. controls (0.85,6.4) and (3,6.4) .. (3,7);
+\draw[line width=1.4] (3,5) .. controls (3,5.6) and (0.85,5.6) .. (0.85,6) .. controls (0.85,6.4) and (3,6.4) .. (3,7);
+\draw[line width=4pt, white] (1,6) to (1,7);
+\draw[line width=1.4] (1,6) to (1,7);
+\node at (0,-1.3) {\scalebox{.7}{\color{blue}$1$}};
+\node at (0,7.3) {\scalebox{.7}{\color{blue}$1$}};
+\node at (1,-1.3) {\scalebox{.7}{\color{blue}$2$}};
+\node at (1,7.3) {\scalebox{.7}{\color{blue}$2$}};
+\node at (2,-1.3) {\scalebox{.7}{\color{blue}$3$}};
+\node at (2,7.3) {\scalebox{.7}{\color{blue}$3$}};
+\node at (3,-1.3) {\scalebox{.7}{\color{blue}$4$}};
+\node at (3,7.3) {\scalebox{.7}{\color{blue}$4$}};
+\node at (4,-1.3) {\scalebox{.7}{\color{blue}$5$}};
+\node at (4,7.3) {\scalebox{.7}{\color{blue}$5$}};
+\node at (5,-1.3) {\scalebox{.7}{\color{blue}$6$}};
+\node at (5,7.3) {\scalebox{.7}{\color{blue}$6$}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[line width=1.2, yscale=.8]
+% -- level 0: 2 over 3 --
+\draw (0,-1) to (0,1);
+\draw (3,-1) to (3,1);
+\draw (4,-1) to (4,1);
+\draw (5,-1) to (5,1);
+\draw (2,-1) to (2,1);
+\draw[line width=4pt, white] (1,-1) .. controls (1,-0.4) and (2.15,-0.4) .. (2.15,0) .. controls (2.15,0.4) and (1,0.4) .. (1,1);
+\draw[line width=1.4] (1,-1) .. controls (1,-0.4) and (2.15,-0.4) .. (2.15,0) .. controls (2.15,0.4) and (1,0.4) .. (1,1);
+\draw[line width=4pt, white] (2,0) to (2,1);
+\draw[line width=1.4] (2,0) to (2,1);
+% -- level 1: 2 over 4 --
+\draw (0,1) to (0,3);
+\draw (2,1) to (2,3);
+\draw (4,1) to (4,3);
+\draw (5,1) to (5,3);
+\draw (3,1) to (3,3);
+\draw[line width=4pt, white] (1,1) .. controls (1,1.6) and (3.15,1.6) .. (3.15,2) .. controls (3.15,2.4) and (1,2.4) .. (1,3);
+\draw[line width=1.4] (1,1) .. controls (1,1.6) and (3.15,1.6) .. (3.15,2) .. controls (3.15,2.4) and (1,2.4) .. (1,3);
+\draw[line width=4pt, white] (3,2) to (3,3);
+\draw[line width=1.4] (3,2) to (3,3);
+% -- level 2: 2 over 5 --
+\draw (0,3) to (0,5);
+\draw (2,3) to (2,5);
+\draw (3,3) to (3,5);
+\draw (5,3) to (5,5);
+\draw (4,3) to (4,5);
+\draw[line width=4pt, white] (1,3) .. controls (1,3.6) and (4.15,3.6) .. (4.15,4) .. controls (4.15,4.4) and (1,4.4) .. (1,5);
+\draw[line width=1.4] (1,3) .. controls (1,3.6) and (4.15,3.6) .. (4.15,4) .. controls (4.15,4.4) and (1,4.4) .. (1,5);
+\draw[line width=4pt, white] (4,4) to (4,5);
+\draw[line width=1.4] (4,4) to (4,5);
+\node at (0,-1.3) {\scalebox{.7}{\color{blue}$1$}};
+\node at (0,5.3) {\scalebox{.7}{\color{blue}$1$}};
+\node at (1,-1.3) {\scalebox{.7}{\color{blue}$2$}};
+\node at (1,5.3) {\scalebox{.7}{\color{blue}$2$}};
+\node at (2,-1.3) {\scalebox{.7}{\color{blue}$3$}};
+\node at (2,5.3) {\scalebox{.7}{\color{blue}$3$}};
+\node at (3,-1.3) {\scalebox{.7}{\color{blue}$4$}};
+\node at (3,5.3) {\scalebox{.7}{\color{blue}$4$}};
+\node at (4,-1.3) {\scalebox{.7}{\color{blue}$5$}};
+\node at (4,5.3) {\scalebox{.7}{\color{blue}$5$}};
+\node at (5,-1.3) {\scalebox{.7}{\color{blue}$6$}};
+\node at (5,5.3) {\scalebox{.7}{\color{blue}$6$}};
+\end{tikzpicture}
+
+\begin{tikzpicture}[line width=1.2, yscale=.8]
+% -- level 0: 4 over 3 --
+\draw (0,-1) to (0,1);
+\draw (1,-1) to (1,1);
+\draw (4,-1) to (4,1);
+\draw (2,-1) to (2,1);
+\draw[line width=4pt, white] (3,-1) .. controls (3,-0.4) and (1.85,-0.4) .. (1.85,0) .. controls (1.85,0.4) and (3,0.4) .. (3,1);
+\draw[line width=1.4] (3,-1) .. controls (3,-0.4) and (1.85,-0.4) .. (1.85,0) .. controls (1.85,0.4) and (3,0.4) .. (3,1);
+\draw[line width=4pt, white] (2,0) to (2,1);
+\draw[line width=1.4] (2,0) to (2,1);
+% -- level 1: 4 over 2 --
+\draw (0,1) to (0,3);
+\draw (2,1) to (2,3);
+\draw (4,1) to (4,3);
+\draw (1,1) to (1,3);
+\draw[line width=4pt, white] (3,1) .. controls (3,1.6) and (0.85,1.6) .. (0.85,2) .. controls (0.85,2.4) and (3,2.4) .. (3,3);
+\draw[line width=1.4] (3,1) .. controls (3,1.6) and (0.85,1.6) .. (0.85,2) .. controls (0.85,2.4) and (3,2.4) .. (3,3);
+\draw[line width=4pt, white] (1,2) to (1,3);
+\draw[line width=1.4] (1,2) to (1,3);
+% -- level 2: 4 over 3 --
+\draw (0,3) to (0,5);
+\draw (1,3) to (1,5);
+\draw (4,3) to (4,5);
+\draw (2,3) to (2,5);
+\draw[line width=4pt, white] (3,3) .. controls (3,3.6) and (1.85,3.6) .. (1.85,4) .. controls (1.85,4.4) and (3,4.4) .. (3,5);
+\draw[line width=1.4] (3,3) .. controls (3,3.6) and (1.85,3.6) .. (1.85,4) .. controls (1.85,4.4) and (3,4.4) .. (3,5);
+\draw[line width=4pt, white] (2,4) to (2,5);
+\draw[line width=1.4] (2,4) to (2,5);
+% -- level 3: 4 over 2 --
+\draw (0,5) to (0,7);
+\draw (2,5) to (2,7);
+\draw (4,5) to (4,7);
+\draw (1,5) to (1,7);
+\draw[line width=4pt, white] (3,5) .. controls (3,5.6) and (0.85,5.6) .. (0.85,6) .. controls (0.85,6.4) and (3,6.4) .. (3,7);
+\draw[line width=1.4] (3,5) .. controls (3,5.6) and (0.85,5.6) .. (0.85,6) .. controls (0.85,6.4) and (3,6.4) .. (3,7);
+\draw[line width=4pt, white] (1,6) to (1,7);
+\draw[line width=1.4] (1,6) to (1,7);
+% -- level 4: 4 over 3 --
+\draw (0,7) to (0,9);
+\draw (1,7) to (1,9);
+\draw (4,7) to (4,9);
+\draw (2,7) to (2,9);
+\draw[line width=4pt, white] (3,7) .. controls (3,7.6) and (1.85,7.6) .. (1.85,8) .. controls (1.85,8.4) and (3,8.4) .. (3,9);
+\draw[line width=1.4] (3,7) .. controls (3,7.6) and (1.85,7.6) .. (1.85,8) .. controls (1.85,8.4) and (3,8.4) .. (3,9);
+\draw[line width=4pt, white] (2,8) to (2,9);
+\draw[line width=1.4] (2,8) to (2,9);
+% -- level 5: 4 over 3 --
+\draw (0,9) to (0,11);
+\draw (1,9) to (1,11);
+\draw (4,9) to (4,11);
+\draw (2,9) to (2,11);
+\draw[line width=4pt, white] (3,9) .. controls (3,9.6) and (1.85,9.6) .. (1.85,10) .. controls (1.85,10.4) and (3,10.4) .. (3,11);
+\draw[line width=1.4] (3,9) .. controls (3,9.6) and (1.85,9.6) .. (1.85,10) .. controls (1.85,10.4) and (3,10.4) .. (3,11);
+\draw[line width=4pt, white] (2,10) to (2,11);
+\draw[line width=1.4] (2,10) to (2,11);
+% -- level 6: 3 over 2 --
+\draw (0,11) to (0,13);
+\draw (3,11) to (3,13);
+\draw (4,11) to (4,13);
+\draw (1,11) to (1,13);
+\draw[line width=4pt, white] (2,11) .. controls (2,11.6) and (0.85,11.6) .. (0.85,12) .. controls (0.85,12.4) and (2,12.4) .. (2,13);
+\draw[line width=1.4] (2,11) .. controls (2,11.6) and (0.85,11.6) .. (0.85,12) .. controls (0.85,12.4) and (2,12.4) .. (2,13);
+\draw[line width=4pt, white] (1,12) to (1,13);
+\draw[line width=1.4] (1,12) to (1,13);
+\node at (0,-1.3) {\scalebox{.7}{\color{blue}$1$}};
+\node at (0,13.3) {\scalebox{.7}{\color{blue}$1$}};
+\node at (1,-1.3) {\scalebox{.7}{\color{blue}$2$}};
+\node at (1,13.3) {\scalebox{.7}{\color{blue}$2$}};
+\node at (2,-1.3) {\scalebox{.7}{\color{blue}$3$}};
+\node at (2,13.3) {\scalebox{.7}{\color{blue}$3$}};
+\node at (3,-1.3) {\scalebox{.7}{\color{blue}$4$}};
+\node at (3,13.3) {\scalebox{.7}{\color{blue}$4$}};
+\node at (4,-1.3) {\scalebox{.7}{\color{blue}$5$}};
+\node at (4,13.3) {\scalebox{.7}{\color{blue}$5$}};
+\end{tikzpicture}
+
+
+% Source - https://tex.stackexchange.com/a/747428
+% Posted by Urs Schreiber
+% Retrieved 2026-09-22, License - CC BY-SA 4.0
+
+\begin{tikzpicture}
+  \node (A) at (0,0) {Start Node};
+  \node (B) at (4,0) {Target Node};
+
+  \draw[->, thick] (A) to[u path] node[below] {label} (B);
+\end{tikzpicture}
 
 \end{document}
-

@@ -1,13 +1,17 @@
-MAIN = main
-BIB  = bachelors.bib
+MAIN 	= main
+DRAFT 	= draft
+BIB  	= bachelors.bib
 
 LATEXMK = latexmk
 FLAGS   = -pdf -lualatex -shell-escape -use-make
 
-all: $(MAIN).pdf
+all: full
 
-$(MAIN).pdf: $(MAIN).tex $(BIB)
-	$(LATEXMK) $(FLAGS) $(MAIN).tex
+draft:
+	$(LATEXMK) -pdf -jobname=$(DRAFT) $(DRAFT).tex
+
+full:
+	$(LATEXMK) -pdf -jobname=$(MAIN) $(MAIN).tex
 
 clean:
 	$(LATEXMK) -c

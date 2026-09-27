@@ -188,5 +188,77 @@ The contraction operator $\mathcal{C}$ is then defined as the linear operator th
   (\id_V \otimes \ev_{W} \otimes \id_{U^\ast})(- \otimes -) : (V \otimes W^\ast, W \otimes U^\ast) \to V \otimes U^\ast
 \]
 
+\newcommand{\mcT}{\mathcal{T}}
 
+The article by \textcite{Penrose1971Applications} "Applications of Negative
+Dimensional Tensors" introduces a \emph{string calculus} onto the theory of
+tensors, however it also provides a formalization of a more general tensor
+calculus over \emph{Abstract Tensor Systems (ATS)} by introducing a hierachy of
+\emph{modules}
+\[
+  (\mcT, \mcT^a, \mcT^b, \ldots, \mcT_a, \mcT_b, \ldots, \mcT_b^a, \ldots, \mcT^{xm}_p, \ldots.)
+\]
+modeling processes in the ground field $\mcT$, the tensors with one incoming leg
+$\mcT^a$, and outgoing leg $\mcT_a$ and combinations thereof.
 
+These modules ought to be closed under certain operations:
+\begin{itemize}
+  \item[]addition : 
+  \[
+    + : \mcT^{x\ldots z}_{u\ldots w} \times \mcT^{x\ldots z}_{u\ldots w} \to \mcT^{x\ldots z}_{u\ldots w} 
+  \]
+  \item[]tensoring: 
+  \[ 
+    \ot : \mcT^{a\ldots d}_{p \ldots r} \times \mcT^{x\ldots z}_{u\ldots w} \to \mcT^{a\ldots d x\ldots z}_{p\ldots r u\ldots w} 
+  \]  
+  \item[] contraction:
+  \[
+    \mathcal{C}^p_q : \mcT^{px\ldots z}_{qu\ldots w} \to \mcT^{x\ldots z}_{u\ldots w}  
+  \]
+\end{itemize}
+
+\begin{enumerate}
+  \item[(A1)] {Addition forms an Abelian group}:
+  \[
+    S + T = T + S, \qquad S,T \in \mcT^{x\ldots z}_{u\ldots w}
+  \]
+
+  \[
+    (S+T)+U = S+(T+U), \qquad S,T,U \in \mcT^{x\ldots z}_{u\ldots w}
+  \]
+
+  \[
+    T + 0 = T, \qquad \forall\, T \in \mcT^{x\ldots z}_{u\ldots w}
+  \]
+
+  \item[(T1)] {Tensoring distributes over addition} (bilinearity of
+  $\otimes$):
+  \[
+    (S+T)\otimes U = S\otimes U + T\otimes U, \qquad
+    U \otimes (S+T) = U\otimes S + U\otimes T
+  \]
+
+  \item[(T2)] {Associativity of tensoring}:
+  \[
+    (S \otimes T) \otimes U = S \otimes (T \otimes U)
+  \]
+
+  \item[(C1)] {Contraction distributes over addition} (linearity of
+  $\mathcal{C}^p_q$):
+  \[
+    \mathcal{C}^p_q(S + T) = \mathcal{C}^p_q(S) + \mathcal{C}^p_q(T)
+  \]
+
+  \item[(C2)] {Contractions are abelian} (independent contractions
+  commute):
+  \[
+    \mathcal{C}^p_q \, \mathcal{C}^r_s = \mathcal{C}^r_s \, \mathcal{C}^p_q,
+    \qquad p,q,r,s \ \text{distinct indices}
+  \]
+
+  \item[(C3)] {Contraction is local under tensoring}: if $p,q$ are
+  indices belonging only to $S$,
+  \[
+    \mathcal{C}^p_q(S \otimes T) = \mathcal{C}^p_q(S) \otimes T
+  \]
+\end{enumerate}
