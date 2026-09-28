@@ -359,16 +359,16 @@ and this again splits into the sectors for $S = 0$ and $S = 1$
   \quad \text{ and } \quad
   c_1 = \frac{J}{2}(2 - 3/2) = \frac{1}{4}J
 \]
-which are exactly the two degrees of freedom we get by the direct sum. So we expect our
-operator to look like
+which are exactly the two degrees of freedom we get by the direct sum. So we
+expect our operator to look like
 \[
   \begin{pmatrix}
-    c_0 &  0 \\
-    0 &  \id_3 \otimes c_1 \\
+    -3/4J &  0 \\
+    0 &  \id_3 \otimes 1/4J \\
   \end{pmatrix}.
 \]
 
-By direct isomorphism, we can write this as
+By direct isomorphism\todo{meaningless phrasing}, we can write this as an element of $\End{V_{1/2}^{\ot 2}}$ \emph{factored} through its fusion result:
 \begin{equation}\label{sym:eq:S1S2}
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
@@ -386,8 +386,6 @@ By direct isomorphism, we can write this as
   \coordinate (bot_a) at (1.1, 1.0);
   \coordinate (bot_b) at (2.1, 1.0);
   
-  \node at (1.6, 0.7) {$\underbrace{\quad\quad}_{\text{dim} 1}$};
-
 
   \coordinate (mid_bot) at (1.6, 1.6);
   \coordinate (mid_top) at (1.6, 2.4);
@@ -403,15 +401,13 @@ By direct isomorphism, we can write this as
   \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
   \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
   
-  \node at (2.5, 2.0) {$\oplus$};
+  \node at (2.5, 2.0) {$+$};
 
 \begin{scope}[shift={(2.2,0.0)}]
   \node at (1.0,2.0) {$\displaystyle\frac{J}{4}\,\otimes$};
   \coordinate (bot_a) at (1.1, 1.0);
   \coordinate (bot_b) at (2.1, 1.0);
   
-  \node at (1.6, 0.7) {$\underbrace{\quad\quad}_{\text{dim} 3}$};
-
   \coordinate (mid_bot) at (1.6, 1.6);
   \coordinate (mid_top) at (1.6, 2.4);
   
@@ -431,10 +427,36 @@ By direct isomorphism, we can write this as
 \end{tikzpicture}
 \end{equation}
 
-Now we can analize a example with multiplicites: Consider the same hamiltonian but acting on the ground state $V_{\frac{1}{2}}^{\otimes 3}$ with the hamiltonina $H_2 \otimes \id_{V_{\frac{1}{2}}}$. First note that there are two ways we can obtain this fusion result, and we choose the left bracketing $(\frac{1}{2} \otimes \frac{1}{2}) \otimes \frac{1}{2} = (V_0 \oplus V_1) \otimes V_\frac{1}{2} = V_\frac{1}{2} \oplus V_\frac{1}{2} \oplus V_{\frac{3}{2}}$. By this decomposition we should expect a operator of the form
+Now we consider the same hamiltonian with $N = 3$, our ground state is
 \[
-  H \in Mat_{2\times 2} \otimes \id_{\frac{1}{2}} \oplus \C \otimes \id_{\frac{3}{2}}
+  V_{1/2}^{\ot 3} = V_{3/2} \op V_{1/2} \op V_{1/2}
 \]
+with a multiplicity $2$ on the $1/2$ state.
+
+In this basis
+\[
+  S_1 \cdot S_2 
+  =
+  \underbrace{\id_{V_{1/2}}}_{\dim 2}
+  \ot
+  \begin{pmatrix}
+    1/4 & 0  \\
+    0 & -3/4
+  \end{pmatrix} 
+  \op
+  \underbrace{\id_{V_{3/2}}}_{\dim 4}
+  \ot
+  (1/4)
+\]
+however by our ordering the operator\todo{transcribe the hand calculated way}
+\[
+  S_2 \cdot S_3 \to \begin{pmatrix}
+    -\frac{1}{2} & \frac{\sqrt{3}}{4} & 0 \\
+    \frac{\sqrt{3}}{4} & 0 & 0 \\
+    0 & 0 & \frac{1}{4}
+  \end{pmatrix}
+\]
+
 
 Lets do the visual analysis here first:
 \begin{equation}
@@ -493,25 +515,25 @@ Lets do the visual analysis here first:
 
   \end{tikzpicture}
 \end{equation}
-which reveals the action to be 
-\[
-  S_1 \cdot S_2 \otimes id_{\frac{V_1}{2}} = \begin{pmatrix}
-    -\frac{3}{4} & 0  \\
-    0 & \frac{1}{4}  \\
-  \end{pmatrix} \otimes \id_{\frac{1}{2}} \oplus \frac{1}{4} \otimes \id_{\frac{3}{2}}
-\]
+
+
+
+
 
 
 \section{Symmetric Tensors}
 
 %Here we want to define tensors that are invariant under a symmetry $G$ (a compact group). We say that a tensor $T \in ()
 
-Let $G$ be a compact group. Consider a tensor $T$ living in the tensor product space of its legs:
+Let $G$ be a compact group. Consider a tensor $T$ living in the tensor product
+space of its legs:
 \[
   T \in V_1 \otimes \cdots \otimes V_n \otimes W_m^\ast \otimes \cdots \otimes W_1^\ast
 \]
 
-Let $\rho_i : G \to \GL{V_i}$ be the linear representation of $G$ on each vector space $V_i$, and let $\sigma_j^\ast : G \to \text{GL}(W_j^\ast)$ be the dual representation on $W_j^\ast$. 
+Let $\rho_i : G \to \GL{V_i}$ be the linear representation of $G$ on each vector
+space $V_i$, and let $\sigma_j^\ast : G \to \text{GL}(W_j^\ast)$ be the dual
+representation on $W_j^\ast$. 
 
 The total action of the group $G$ on the entire tensor product space is given by
 \begin{gather*}
@@ -520,7 +542,9 @@ The total action of the group $G$ on the entire tensor product space is given by
 \end{gather*}
 
 
-A tensor $T$ is defined to be a \textbf{symmetric tensor} (or $G$-invariant tensor) if it is invariant under simultaneous action on all legs for all $g \in G$ \cite{singhTensorNetworkDecompositions2010a}:
+A tensor $T$ is defined to be a \textbf{symmetric tensor} (or $G$-invariant
+tensor) if it is invariant under simultaneous action on all legs for all $g \in
+G$ \cite{singhTensorNetworkDecompositions2010a}:
 \[
   \Pi(g) T = T \quad \forall g \in G
 \]

@@ -1,39 +1,3 @@
-%The goal of this chapter is to provide a viewpoint on the previous chapter from
-%the perspective of categories and in turn generalize the approach, as well as
-%provide proofs for the general method. However this chapter also serves as background for \Cref{sect:Anyons}. In \Cref{cat:sub:introCat} we provide a
-%short introduction to category theory, from the perspective of quantum
-%parallelism, and the structures we have already met in the discussion on
-%representations and anyons. In \Cref{cat:sub:categoricalQuantum} we give a short
-%review of how familiar structures such as the no-cloning theorem arise from the
-%categorification of quantum mechanics. In \Cref{cat:sub:decomp} we provide the
-%core theory in terms of the decomposition, which is crucial to previous
-%chapters. Naturally, this incurs a rigorous explanation of fusion trees. 
-%
-%There are numerous introductions to the theory of tensor and fusion categories,
-%especially in the context of anyon models. Initially proposed by
-%\textcite{kitaevAnyonsExactlySolved2006} based on ideas in
-%\textcite{reshetikhinInvariants3manifoldsLink1991}, and furhter developed in
-%\textcite{bondersonNonAbelianAnyonsInterferometry2007} and \cite{wangTQC}. More
-%detailed and modern reviews are given by \textcite{ValeraThesis}\todo{replace iwth
-%the publication (shared)} \textcite{Bartlett??}.
-%
-%There also appears to be a difference in treatment, fist only in terms of
-%algebras and string algebras \textcite{simonTopologicalQuantum2023}, then in
-%terms of categories as purely categorical objects and then again as categoires
-%of temperly lieb algebras. How do all these differ in concept / what do we gain
-%and lose moving between them?
-
-%What is the goal of this chapter? So far weve seen a general definition of
-%vectors as we know them over $\Veck$ and $\Hilb$, and a restriction of these
-%theories onto $\Rep(-)$ networks in \Cref{sect:symmetricTensorNetworks}. Weve
-%also seen in \cref{sect:background} that there is a formal definitions of more
-%general tensor systems that already operate on top of some label space
-%$\mathcal{L}$. And at last we've developed a theory of quasiparticles with
-%exotic exchange statistics that is well known to have a correspondence from the
-%braid representations to the theory of \emph{modular tensor categories (MTCs)}
-%\cite{kitaevAnyonsExactlySolved2006}. In fact all of these notions can be
-%embedded into a categorical framework of \emph{(fusion) tensor categories}.  
-%
 In the existing literature it is well known that all of the concepts we have seen up to know are modeled by a formalism called \emph{tensor categories}:
 \begin{enumerate}
   \item $\Veck$ and $\Hilb$ tensors are the most trivial and motivating case and
@@ -87,6 +51,15 @@ worldlines\todo{or tqfts?} as well as the correspondence to the ATS systems of
 \textcite{Penrose1971Applications}. We formalize the aforementioned
 decomposition in \cref{cat:sub:decomp} and list the algorithms necessary for
 achieving a tensor network out of these theories.
+
+If we however mention ATSs, it must be said that there is a multitude of
+tensor-like string calculi and correspondences to categories. A great review of
+these string like languages is given by
+\textcite{selingerSurveyGraphicalLanguages2011}. Furthermore, the string
+calculus as defined by penrose for the ATSs does not have an abstract
+formulation that is sound and coherent as defined by
+\cite{joyalGeometryTensorCalculus1991}. The definitions of these terms will be
+given in the boxes labeled Graphical Notation.
 
 \section{Tensor \& Fusion Categories}\label{cat:sub:introCat}
 
@@ -309,21 +282,30 @@ enough.
 \begin{example}
   Some examples of this tensor product here:
   \begin{enumerate}
-    \item In $\Veck$, we denote the tensor product as $\ot_k$, and this is the default kronecker-product on $k$-vector spaces. The monoidal unit in this case is the field $k$. \todo{Does $k$ need to be algebraically closed?}
-    \item The category $\Rep(G)$ is monoidal and has a tensor product by \cref{symm:def:tensor_product_representation}:
+    \item In $\Veck$, we denote the tensor product as $\ot_k$, and this is the
+    default kronecker-product on $k$-vector spaces. The monoidal unit in this
+    case is the field $k$. \todo{Does $k$ need to be algebraically closed?}
+    \item The category $\Rep(G)$ is monoidal and has a tensor product by
+    \cref{symm:def:tensor_product_representation}:
       \[
         (V \otimes_k W, \rho_{V \otimes_k W})
       \]
-      and on morphisms $f \in \Hom_G(V_1, V_2), g \in \Hom_G(W_1,W_2)$ this gives 
+      and on morphisms $f \in \Hom_G(V_1, V_2), g \in \Hom_G(W_1,W_2)$ this
+      gives 
       \[
         (f \otimes g)(v \otimes w) = f(v) \otimes g(w) \in \Hom_G(V_1 \ot_k W_1, V_2 \ot_k W_2)
       \]
-    \item Take for example the $\Fib$ anyon theory. We can take products of anyons $a \otimes b$ and we can also identify the vacuum type $I$ over $a \otimes I = a$ and so on. \todo{rephrase!}
+    \item Take for example the $\Fib$ anyon theory. We can take products of
+    anyons $a \otimes b$ and we can also identify the vacuum type $I$ over $a
+    \otimes I = a$ and so on. \todo{rephrase!} However we also know that these
+    anyons come in pairs, so they ought to be in a fusion channel. For now we do
+    not have a concept of antiparticles or of fusion channels. We can only give
+    the pairings of the anyons by bracketings of the monoidal tensors.
   \end{enumerate}
 \end{example}
 
 \begin{definition}
-  Let $(\CC, \ot_\CC, 1_\CC)$ and $(D,\ot_D, 1_D)$ be monoidal categories. A \emph{\green{monoidal functor}} is a functor $F : \CC \to D$ 
+  Let $(\CC, \ot_\CC, 1_\CC)$ and $(D,\ot_D, 1_D)$ be monoidal categories. A \emph{\green{monoidal functor}} is a functor $F : \CC \to D$ that preserves the monoidal structure 
 \end{definition}
 
 \begin{definition}
@@ -349,9 +331,9 @@ This immedeately gives us another defintion:
 \]
 
 
-\begin{definition}\label{cat:def:braidedMonoidalCat} A \emph{\green{braided
-monoidal category}} is a monoidal category $(\mathcal{C}, \otimes, I, \alpha,
-\lambda, \rho)$ equipped with an additional isomorphism, the
+\begin{definition}[\cite{joyalGeometryTensorCalculus1991}]\label{cat:def:braidedMonoidalCat}
+A \emph{\green{braided monoidal category}} is a monoidal category $(\mathcal{C},
+\otimes, I, \alpha, \lambda, \rho)$ equipped with an additional isomorphism, the
 \emph{\green{braiding}}
 \[
   \beta_{A,B} : A \otimes B \; \cong \; B \otimes A,
@@ -581,7 +563,7 @@ This allows us to define a notion of a traced category.
 	  {\tr_R} & 1 && {A \otimes A^\ast} && {A^{\ast\ast} \ot A^\ast} && 1
 	  \arrow["\coloneqq"{description}, draw=none, from=1-1, to=1-2]
 	  \arrow["{\coev_A}", from=1-2, to=1-4]
-	  \arrow["{(\delta_A \circ (-) \ot \id_{A^\ast})}", from=1-4, to=1-6]
+	  \arrow["{(\delta_A \circ (-)) \ot \id_{A^\ast}}", from=1-4, to=1-6]
 	  \arrow["{\ev_{A^\ast}}", from=1-6, to=1-8]
     \end{tikzcd}\]
 \end{definition}
@@ -600,8 +582,15 @@ This allows us to define a notion of a traced category.
 \end{definition}
 
 \begin{graphicalCalculus}
-  The usage of \emph{spherical} here derives from the fact that we can arbitrarily reorder our string calculus on the surface of a \emph{sphere}. Consider for example the trace:
-
+  The usage of \emph{spherical} here derives from the fact that we can
+  arbitrarily reorder our string calculus on the surface of the $2$-sphere:
+  \todo{Does this lead naturally into the ribbon being the only obstacle to
+  planarity?}Consider for example the trace where the connecting strand is
+  swapped around the back of the sphere.
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/sphericalcat.png}
+  \end{figure}
 \end{graphicalCalculus}
 
 \begin{definition}
@@ -693,15 +682,31 @@ can extend projection and injection maps in dependence of the tensor product by
 the following diagram:
 \begin{equation}\label{cat:eq:fusionprop}
 % https://q.uiver.app/#q=WzAsNSxbMCwwLCJcXGJpZ29wbHVzX2MgUl9jIl0sWzIsMCwiUl9hIFxcb3RpbWVzIFJfYiJdLFswLDEsIlJfYyJdLFs0LDAsIlxcYmlnb3BsdXNfYyBSX2MiXSxbNCwxLCJSX2MiXSxbMCwxLCJcXFBoaSJdLFsyLDAsIlxcaW90YV9jIl0sWzIsMSwiXFxleGlzdHMgXFxpb3RhX3tjLFxcbXV9XnthYn0iLDJdLFsxLDMsIlxcUGhpXnstMX0iXSxbMyw0LCJcXHBpX2MiXSxbMSw0LCJcXGV4aXN0c1xccGlfe2FifV57YyxcXG11fSIsMl1d
-\begin{tikzcd}
-	{\bigoplus_c R_c} && {R_a \otimes R_b} && {\bigoplus_c R_c} \\
-	{R_c} &&&& {R_c}
-	\arrow["\Phi", from=1-1, to=1-3]
-	\arrow["{\Phi^{-1}}", from=1-3, to=1-5]
-	\arrow["{\exists\pi_{ab}^{c,\mu}}"', from=1-3, to=2-5]
-	\arrow["{\pi_c}", from=1-5, to=2-5]
-	\arrow["{\iota_c}", from=2-1, to=1-1]
-	\arrow["{\exists \iota_{c,\mu}^{ab}}"', from=2-1, to=1-3]
+%\begin{tikzcd}
+%	{\bigoplus_c R_c} && {R_a \otimes R_b} && {\bigoplus_c R_c} \\
+%	{R_c} &&&& {R_c}
+%	\arrow["\Phi", from=1-1, to=1-3]
+%	\arrow["{\Phi^{-1}}", from=1-3, to=1-5]
+%	\arrow["{\exists\pi_{ab}^{c,\mu}}"', from=1-3, to=2-5]
+%	\arrow["{\pi_c}", from=1-5, to=2-5]
+%	\arrow["{\iota_c}", from=2-1, to=1-1]
+%	\arrow["{\exists \iota_{c,\mu}^{ab}}"', from=2-1, to=1-3]
+%\end{tikzcd}
+% https://q.uiver.app/#q=WzAsNyxbMCwwLCJcXGJpZ29wbHVzX2MgUl9jIl0sWzMsMCwiUl9hIFxcb3RpbWVzIFJfYiJdLFswLDIsIlJfYyJdLFs2LDAsIlxcYmlnb3BsdXNfYyBSX2MiXSxbNiwyLCJSX2MiXSxbMSwwLCJcXGJpZ29wbHVzX3tcXG11LGN9Ul9jIl0sWzUsMCwiXFxiaWdvcGx1c197XFxtdSxjfVJfYyJdLFsyLDAsIlxcaW90YV9jIl0sWzIsMSwiXFxleGlzdHMgXFxpb3RhX3tjLFxcbXV9XnthYn0iLDJdLFszLDQsIlxccGlfYyJdLFsxLDQsIlxcZXhpc3RzXFxwaV97YWJ9XntjLFxcbXV9IiwyXSxbNSwxLCJcXFBoaSJdLFswLDUsIlxcaW90YV9cXG11Il0sWzIsNSwiXFxpb3RhX3tjLFxcbXV9IiwxXSxbMSw2LCJcXFBoaV57LTF9Il0sWzYsMywiXFxwaV9cXG11Il0sWzYsNCwiXFxwaV97XFxtdSxjfSIsMV1d
+\begin{tikzcd}[cramped]
+	{\bigoplus_c R_c} & {\bigoplus_{\mu,c}R_c} && {R_a \otimes R_b} && {\bigoplus_{\mu,c}R_c} & {\bigoplus_c R_c} \\
+	\\
+	{R_c} &&&&&& {R_c}
+	\arrow["{\iota_\mu}", from=1-1, to=1-2]
+	\arrow["\Phi", from=1-2, to=1-4]
+	\arrow["{\Phi^{-1}}", from=1-4, to=1-6]
+	\arrow["{\exists\pi_{ab}^{c,\mu}}"', from=1-4, to=3-7]
+	\arrow["{\pi_\mu}", from=1-6, to=1-7]
+	\arrow["{\pi_{\mu,c}}"{description}, from=1-6, to=3-7]
+	\arrow["{\pi_c}", from=1-7, to=3-7]
+	\arrow["{\iota_c}", from=3-1, to=1-1]
+	\arrow["{\iota_{c,\mu}}"{description}, from=3-1, to=1-2]
+	\arrow["{\exists \iota_{c,\mu}^{ab}}"', from=3-1, to=1-4]
 \end{tikzcd}
 \end{equation}
 
@@ -737,6 +742,11 @@ We take these maps as above and claim they form a basis of the spaces $\Hom_\CC
   and the statement follows dually for $\Hom_\CC(R_a \otimes R_b, R_c)$.
 \end{proof}
 
+%\begin{graphicalCalculus}
+%  We carry over the graphical calculus for the monoidal categories (and all the
+%  extra structure defined thus far) and introduce new notation for the nodes 
+%\end{graphicalCalculus}
+
 If we look at $\Hom$ spaces of a higher order such as $\Hom_\CC(R_d, (R_a \ot
 R_b) \ot R_c)$, we have to choose a bracketing of the tensor products since we
 can only associate $(R_a \ot R_b) \ot R_c \cong R_a \ot (R_b \ot R_c)$.
@@ -750,22 +760,46 @@ and a pullback under $\Hom_\CC(R_d, -)$
 \]
 We can also define a basis for these extended spaces. In fact, lets generalize this to the space $\Hom_\CC(R_b, \bigotimes_{i=1}^n R_{a_i})$ where we assume this is fully left-algined bracketing. 
 
-We define the higher bases recursively: Let $n > 2$ and intermediate labels $e_1, e_2, \ldots, e_{n-2} \in \Irr(\CC)$ and multiplicity indices $\mu_1, \ldots, \mu_{n-1}$. Then we can define
+We define the higher bases recursively: Let $n > 2$ and intermediate labels
+$e_1, e_2, \ldots, e_{n-2} \in \Irr(\CC)$ and multiplicity indices $\mu_1,
+\ldots, \mu_{n-1}$. We fix some notation to let $\vec \mu_{k-1}$ to denote the
+tuple of all labels up to $\mu_{k-1}$. Then we can define
 \[
-  \iota^{a_1 \cdots a_n}_{d,\hat{e},\hat{\mu}} \coloneqq \left(\iota^{a_1 \cdots a_{n-1}}_{e_{n-2},\mu} \otimes \id_{R_{a_n}}\right) \circ \iota^{e_{n-2}a_n}_{d,\mu_{n-1}}.
+  \iota^{a_1 \cdots a_n}_{d,\hat e_{n-2},\hat\mu_{n-1}} \coloneqq \left(\iota^{a_1 \cdots a_{n-1}}_{e_{n-2},\vec e_{n-3},\vec\mu_{n-2}} \otimes \id_{R_{a_n}}\right) \circ \iota^{e_{n-2}a_n}_{d,\mu_{n-1}}.
+\]
+We can assume this holds by induction for $(n-1)$:
+\[
+  \pi^{a_1\cdots a_{n-1}}_{e;\vec e,\vec\mu}\circ
+  \iota^{a_1\cdots a_{n-1}}_{e';\vec e\,',\vec\mu'}
+  = \delta_{ee'}\,\delta_{\vec e\vec e\,'}\,\delta_{\vec\mu\vec\mu'}\;\id_{R_e}.
 \]
 \[
-    \pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu}\circ\iota^{a_1\cdots a_n}_{d';\vec e\,',\vec\mu'}
-    \overeq{\eqref{cat:monoidal:bifunctor}} \pi^{e_{n-2}a_n}_{d,\mu_{n-1}}\circ\Big[\big(\pi^{a_1\cdots a_{n-1}}_{e_{n-2},\vec\mu_{n-1}}
-    \circ \iota^{a_1\cdots a_{n-1}}_{e'_{n-2},\vec\mu'_{n-1}}\big)\otimes\id_{R_{a_n}}\Big]
-    \circ\iota^{e'_{n-2}a_n}_{d',\mu'_{n-1}}.
+  \sum_{e,\vec e,\vec\mu}
+  \iota^{a_1\cdots a_{n-1}}_{e;\vec e,\vec\mu}\circ
+  \pi^{a_1\cdots a_{n-1}}_{e;\vec e,\vec\mu}
+  = \id_{\bigotimes_{i<n}R_{a_i}}.
+\]
+\[
+    \pi^{a_1\cdots a_n}_{c;\vec e,\vec\mu} \circ \iota^{a_1\cdots a_n}_{d;\vec f,\vec\nu}
+    \overeq{\eqref{cat:monoidal:bifunctor}} \pi^{e_{n-2}a_n}_{c,\mu_{n-1}}\circ\Big[\big(\pi^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-1}}
+    \circ \iota^{a_1\cdots a_{n-1}}_{f_{n-2}; \vec f_{n-3}, \vec\nu_{n-1}}\big)\otimes\id_{R_{a_n}}\Big]
+    \circ\iota^{f_{n-2}a_n}_{d,\nu_{n-1}}.
   \]
 By the inductive hypothesis the bracket evaluates to
-$\delta_{e_{n-2}e^\prime_{n-2}}\delta_{\vec\mu_{n-1}\vec\mu'_{n-1}}\id_{R_{e_{n-2}}}$,
+$\delta_{e_{n-2}f_{n-2}}\,\delta_{\vec e_{n-3}\vec f_{n-3}}\,
+\delta_{\vec\mu_{n-2}\vec\nu_{n-2}}\,\id_{R_{e_{n-2}}}$,
 and the $n=2$ case finishes orthoonality.
 
+Let $e:=e_{n-2}$, $\iota'=\iota^{a_1\cdots a_{n-1}}_{e;\vec e_{n-3},\vec\mu_{n-2}}$,
+and $\pi'$ likewise. Then
 \[
-  \sum_{\vec e_n \vec \mu_n} \iota^{a_1 \cdots a_n}_{d,e,\mu} \pi^{a_1 \ldots a_n}_{d,e,\mu} = \sum (\iota \ot id_{R_{a_n}}) \circ \iota \circ  = \sum_{e,\mu} \iota^{e_{n-1} a_n}_d \circ \pi^{e_{n-1} a_n}_d = \id_{\bigotimes R_{a_n}}
+  \sum_{d,\vec e,\vec\mu}
+  \iota^{a_1\cdots a_n}_{d;\vec e,\vec\mu}\circ\pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu}
+  = \sum_{e,\vec e_{n-3},\vec\mu_{n-2}}
+  (\iota'\ot\id_{R_{a_n}})\circ
+  \Big[\sum_{d,\mu_{n-1}}
+  \iota^{e a_n}_{d,\mu_{n-1}}\circ\pi^{e a_n}_{d,\mu_{n-1}}\Big]
+  \circ(\pi'\ot\id_{R_{a_n}}).
 \]
 
 %\[
@@ -775,9 +809,124 @@ and the $n=2$ case finishes orthoonality.
 %    \circ\iota^{e'_{n-2}a_n}_{d',\mu'_{n-1}}.
 %\]
 
+In fact, we can also form a "canoncial" basis for the spaces $\Hom_\CC(X^{\ot
+n}, X^{\ot n})$\todo{this needs a lot of conventions?} as given in
+\cite{ValeraThesis}
+\begin{equation}
+\text{Hom}\left( \bigotimes_{k=1}^m X_{i_k}, \bigotimes_{l=1}^n X_{j_l} \right) = \text{span}_{\mathbb{C}} \left\{
+\begin{gathered}
+\begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.2,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+]
+    \node (xi1) at (-3.4, 3.2) [above] {$X_{i_1}$}; % I dont get why it is assym with -3.2
+    \node (xi2) at (-2.5, 3.2) [above] {$X_{i_2}$};
+    \node (xi3) at (-1.8, 3.2) [above] {$X_{i_3}$};
+    \node at (-0.5, 3.2) {$\cdots$};
+    \node (xim1) at (0.8, 3.2) [above] {$X_{i_{m-1}}$};
+    \node (xim) at (1.6, 3.2) [above] {$X_{i_m}$};
+
+    % Internal Vertices
+    \coordinate (Ve1) at (-2.7, 2.5);
+    \coordinate (Ve2) at (-2.2, 1.9);
+    \coordinate (Vem3) at (-1.0, 0.9);
+    \coordinate (Vem2) at (-0.5, 0.4);
+    \coordinate (Btop) at (0, 0.05);
+
+    \draw[string arrow] (xi1) -- (Ve1);
+    \draw[string arrow] (xi2) -- (Ve1);
+    \draw[string arrow] (xi3) -- (Ve2);
+    \draw[string arrow] (xim1) -- (Vem2);
+    \draw[string arrow] (xim) -- (Btop);
+
+    \draw[string arrow] (Ve1) -- (Ve2) node[below left, pos=0.4] {$e_1$};
+    \draw[string arrow] (Ve2) -- (-1.9, 1.55) node[below left, pos=0.4] {$e_2$};
+    
+    \fill (-1.65, 1.35) circle (0.8pt);
+    \fill (-1.50, 1.20) circle (0.8pt);
+    \fill (-1.35, 1.05) circle (0.8pt);
+    
+    %\draw[string arrow] (-1.2, 0.9) -- (Vem3); 
+    \draw[string arrow] (Vem3) -- (Vem2) node[below left, pos=0.4] {$e_{m-3}$};
+    \draw[string arrow] (Vem2) -- (Btop) node[below left, pos=0.4] {$e_{m-2}$};
 
 
-\todo{Bring this paragraph from monodial semisimple on into order}
+    \coordinate (Bbot) at (0, -0.65);
+    \draw[string arrow] (Btop) -- (Bbot) node[right, pos=0.5] {$b$};
+
+
+    \coordinate (Vfn2) at (-0.5, -1.0);
+    \coordinate (Vfn3) at (-1.0, -1.5);
+    \coordinate (Vf2) at (-2.2, -2.5);
+    \coordinate (Vf1) at (-2.7, -3.1);
+
+    \draw[string arrow] (Bbot) -- (Vfn2) node[left, pos=0.6] {$f_{n-2}$};
+    \draw[string arrow] (Vfn2) -- (Vfn3) node[left, pos=0.6] {$f_{n-3}$};
+    
+    \fill (-1.35, -1.65) circle (0.8pt);
+    \fill (-1.50, -1.80) circle (0.8pt);
+    \fill (-1.65, -1.95) circle (0.8pt);
+    
+    \draw[string arrow] (-1.9, -2.15) -- (Vf2);
+    \draw[string arrow] (Vf2) -- (Vf1) node[left, pos=0.4] {$f_1$};
+    \path (Vf2) -- (Vf1) node[left, pos=1.2] {$f_2$}; % Label position adjustment
+
+    \draw[string arrow] (Vf1) -- (-3.2, -3.8);
+    \draw[string arrow] (Vf1) -- (-2.5, -3.8);
+    \draw[string arrow] (Vf2) -- (-1.8, -3.8);
+    \draw[string arrow] (Vfn2) -- (0.8, -3.8);
+    \draw[string arrow] (Bbot) -- (1.6, -3.8);
+
+    \node (xj1) at (-3.2, -3.8) [below] {$X_{j_1}$};
+    \node (xj2) at (-2.5, -3.8) [below] {$X_{j_2}$};
+    \node (xj3) at (-1.8, -3.8) [below] {$X_{j_3}$};
+    \node at (-0.5, -3.8) {$\cdots$};
+    \node (xjn1) at (0.8, -3.8) [below] {$X_{j_{n-1}}$};
+    \node (xjn) at (1.6, -3.8) [below] {$X_{j_n}$};
+
+\end{tikzpicture}
+\end{gathered}
+\right\}_{ \substack{b, \, e_1, \dots,  e_{m-2}, \, f_1, \, \dots, \, f_{n-2} \\ \mu_1, \, \dots, \, \mu_{m-2}, \, \nu_1, \, \dots, \, \nu_{n-2}} }
+\end{equation}
+
+Now, what this construction allows us to do is as follows: Consider the decompositions
+\begin{align*}
+  \Hom_\CC((A \ot B) \ot C, D) &\cong \bop_{e \in \Irr(\CC)} \Hom_\CC(A \ot B, e) \ot_k \Hom_\CC(e \ot C, D) \\
+  \Hom_\CC(A \ot (B \ot C)) &\cong \bop_{f \in \Irr(\CC)} \Hom_\CC(A \ot f, D) \ot_k \Hom_\CC(B \ot C, f)
+\end{align*}
+Which is induced by inverse of the isomorphism\todo{refer to basis}
+\[
+  \mu \ot_k \nu \mapsto (\mu \ot \id_c) \circ \nu.
+\]
+
+Using this we can coordinatize the pushforward as a matrix
+\[
+  F^{ABC}_D : \bop_{e \in \Irr(\CC)} \Hom_\CC(A \ot B, e) \ot_k \Hom_\CC(e \ot C, D) 
+  \to \bop_{f \in \Irr(\CC)} \Hom_\CC(A \ot f, D) \ot_k \Hom_\CC(B \ot C, f)
+\]
+where the entries of this matrix are called the $6j$-symbols after Wigner.
+However to actually get an element we need to specify 10
+parameters\footnote{Wigner (on $\SU{2}$) considered theories that were
+\emph{multiplicity-free}, so 6 symbols were sufficient.}, they are determined on
+the basis vectors as such:
+\begin{equation}
+  \iota^{ab}_{e,\mu} \ot_k \iota^{ec}_{f,\nu} = \sum_{f,\alpha,\beta} [F^{abc}_d]_{(e\mu\nu)}^{(f\alpha\beta)}  \iota^{af}_{d,\beta} \ot_k \iota^{bc}_{f,\alpha} 
+\end{equation}
+and one should realize that this is really just a change of base matrix.
+
+Graphically, we can represent this as
+$$
+F^{abc}_d : \C^{\mu_0 + \nu_0} \left[\FusionTreeThreeLabel{a}{b}{c}{d}{e_0}\right] \oplus \C^{\mu_1 + \nu_1} \left[\FusionTreeThreeLabel{a}{b}{c}{d}{e_1}\right] \oplus \cdots \overset{\cong}{\rightarrow}\C \left[\FusionTreeThreeLabelRight{a}{b}{c}{d}{f_0}\right] \oplus \C \left[\FusionTreeThreeLabelRight{a}{b}{c}{d}{f_1}\right] \oplus \cdots
+$$
+
+
 \begin{example}
   Lets look at some examples of semisimple monoidal categories.
   \begin{enumerate}
@@ -787,10 +936,8 @@ and the $n=2$ case finishes orthoonality.
     $\iota^{ab}_{c,\nu}$ are equal to the \emph{Clebsch-Gordan} coefficients, in
     fact these are multiplicity free and thus we can omit the index $\nu$.
     \todo{CG-coeffs can be indexed here (they are not symbolic only!)}
-    \item In anyon theories however, these bases are fully symbolic. They denote the fusion and splitting spaces of an anyon.
-    \item The pullback $\alpha^\ast$ is in its basis just a matrix. Formally
-    these are known as the $6j$-symbols (as introduced by wigner) and are
-    denoted by $[F^{abc}_d]$\todo{fix over direct sum and multiplicities.}
+    \item In anyon theories however, these bases are fully symbolic. They denote
+    the fusion and splitting spaces of an anyon.
   \end{enumerate}
 \end{example}
 
@@ -881,116 +1028,6 @@ take the deformation $U_q(sl_2)$ we get finiteness (and fusion cats?), unfortuna
 $U_q(sl_2)$ is not a group.
 
 
-
-
-
-%\section{Symmetries}
-%
-%
-%
-%What do we know now? First of all, we take a symmetry group $G$ that is finite and compact (why?)[For compact groups, representations are completely reducible (Maschke) and the irreps are finite aswell. Finite groups are contained in compact groups.]. Then we look for its unitary representation $U(G)$ on a Hilbert space $H$. Furhtermore, if this is a multiparty Hilbert space, lets say $n$ sites, we view the unitary representations $U_{n}$ at site $n$. The unitary representation $U_{n} : G \to Hom(V_{n} ,V_{n} )$ is a covariant linear unitary map. A map $V_{i} \to V_{j}$ is symmetric if it is an intertwiner of the representations, i.e. the following diagram commutes:
-%% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kiXSxbMCwxLCJWX2oiXSxbMSwwLCJWX2kiXSxbMSwxLCJWX2oiXSxbMCwxLCJmIiwyXSxbMCwyLCJVX3tWX2l9KGcpIl0sWzEsMywiVV97Vl9qfShnKSIsMl0sWzIsMywiZiJdXQ==
-%\[\begin{tikzcd}
-%	{V_i} & {V_i} \\
-%	{V_j} & {V_j}
-%	\arrow["{U_{V_i}(g)}", from=1-1, to=1-2]
-%	\arrow["f"', from=1-1, to=2-1]
-%	\arrow["f", from=1-2, to=2-2]
-%	\arrow["{U_{V_j}(g)}"', from=2-1, to=2-2]
-%\end{tikzcd}\]
-%Note that here $V_{i}$ is called a \emph{symmetry space}.
-%
-%Some examples of these groups include $\U{1}, \SU 2, \mathbb{Z}_{n}$
-%
-%Now where the intutitionAdiabatic nature of topological quantum gate is more shaky: Consider a symmetry space $V_i$ on a single site (why single). Then we get that it decomposes into a direct sum of irreps $V_{i}^a$,
-%\[
-%  V_{i}  = \bigoplus_a \bigoplus_{i = 1}^{d_{a} } V_{i}^a
-%\]
-%and we can easily construct an isomporphism (but this depends on choosing a basis for $D_{a}$.)
-%\[
-%  V_{i}  = \bigoplus_a \bigoplus_{i = 1}^{d_{a} } V_{i}^a = \bigoplus_{a} (D_{a} \otimes V_{i}^a ).
-%\]
-%
-%Well, the isom we can construct here would look like $\bigoplus_1^{d_{a} } V_{i}^a \to D_{a} \otimes V_{i}^a$.
-%
-%Consider a single site of $3$ spin $1 / 2$ particles. Under $\SU 2$ this decomposes as 
-%\[
-%  2 \otimes 2 \otimes 2 = 4 \oplus 2 \oplus 2
-%\]
-%Now consider that $C^2$ is just the fundamental representation of $\SU 2$.
-%
-%
-%Note here, an invariant subspace $W \subseteq V$ is a subset of vectors s.t. for all $U \in \SU 2$, $Uw \in W$.
-%
-%symmetry obviously implies pullthrough properties, do Intertwiners as well?
-%
-%Yes, because $U_(V \otimes W) : g \to U_V(g) \otimes U_W(g)$ and the following diagram commutes:
-%
-%% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWX2kgXFxvdGltZXMgVl9qIl0sWzAsMSwiVl9rIl0sWzIsMSwiVl9rIl0sWzIsMCwiVl9pIFxcb3RpbWVzIFZfaiJdLFswLDEsIlQiLDJdLFsxLDIsIlVfe1Zfa30oZykiLDJdLFswLDMsIlVfe1ZfaSBcXG90aW1lcyBWX2p9KGcpIl0sWzMsMiwiVCJdXQ==
-%\[\begin{tikzcd}
-%	{V_i \otimes V_j} && {V_i \otimes V_j} \\
-%	{V_k} && {V_k}
-%	\arrow["{U_{V_i \otimes V_j}(g)}", from=1-1, to=1-3]
-%	\arrow["T"', from=1-1, to=2-1]
-%	\arrow["T", from=1-3, to=2-3]
-%	\arrow["{U_{V_k}(g)}"', from=2-1, to=2-3]
-%\end{tikzcd}\]
-%
-%\subsection{Some Symmetry Groups}
-%
-%\subsubsection{$\mathbb{Z}_n$ }
-%
-%This group is given by integers $0, \ldots n-1$ with addition mod $n$. Since this happens to be abelian, all the irreps are $1$ dimensional, i.e. 
-%$U_a(g) : g \to Hom(\mathbb{C},\mathbb{C})$ with representatives $U_a(g) = z \mapsto e^{2\pi i a g / N} z$. What isthe fusion rule here?
-%\[
-%  a \otimes b \equiv (c : = a + b \mod n)
-%\]
-%This also does not have fusion multiplicities.
-%
-%\subsubsection{The group $\SU{2}$}
-%
-%Summarize the results from the paper here.
-%
-%\subsubsection{The group $\SU{2}_3$}
-%
-%Technically this is a fusion category, the thesis \cite{dissertation} handles this distinction. But if we think of this in terms of the programming guide, this seems to be doable using a group.
-%
-%Now, since we can argue that Products of symmetry groups again form a symmetry group (proof?), we would also need another type for sector.
-%
-%We could use $class Sector(NamedTuple)$ holding an array charges.
-%
-%\subsection{Notes on structural tensors and fusion trees}
-%
-%What do the CG tensors look like? As they are three index and have no intermediates, these are simply $Q_{j_1,j_2,j_3} = (C^{fuse})_{(j_1,m_{j_1}), (j_2, m_{j_2})}^{(j_3,m_{j_3})}$.
-%
-%\subsection{Notes on the papers}
-%
-%Lets assume we only look at incoming legs, i.e. we look at $T_{j_{a} ,j_{b} , j_{c} }$ in a composite vectors space $V^a \otimes V^b \otimes V^c$. By the decomposition
-%\[
-%  V^a \otimes V^b \otimes V^c = \left(\bigoplus_{j_a} D_{j_{a} } \otimes V_{j_{a} } \right) \otimes \left(\bigoplus_{j_b} D_{j_{b} } \otimes V_{j_{b} } \right) \otimes\left(\bigoplus_{j_c} D_{j_{c} } \otimes V_{j_{c} } \right)
-%\]
-%and we can represent a single index inside the block space 
-%\[
-%  T_{j_{a} ,j_{b} , j_{c} } \in (D_{j_{a} j_{b} j_{c}} \otimes V_{j_{a} j_{b} j_{c} })
-%\]
-%Choosning a basis $t = (t_{j_{a} }, t_{j_{b} }, t_{j_{c} })$ and $m = (m_{j_{a} }, m_{j_{b} }, m_{j_{c} })$ we can write
-%\[
-%  T_{j_a, j_b,j_c} = \sum_{t,n}^{} (T_{j_{a} ,j_{b} ,j_{c} })_{t,m} (\ket{t} \otimes \ket m)
-%\]
-%Now we can use Wigner-Eckart to obtain
-%\[
-%  T_{j_a, j_b,j_c} = \sum_{t,n}^{} ((P_{j_{a} j_{b} j_{c} })_t \cdot (Q_{j_{a} j_{b} j_{c} })_m)_{t,m} (\ket{t} \otimes \ket m)
-%\]
-%\[
-%  = \left(\sum_{t}^{} (P_{j_{a} j_{b} j_{c} })_t \ket t\right) \otimes \left(\sum_{m}^{} (Q_{j_{a} j_{b} j_{c} })_m \ket m \right) = P_{j_{a} j_{b} j_{c} } \otimes Q_{j_{a} j_{b} j_{c} }
-%\]
-%
-%If we generalize this with the decomposition for $k$ indices $i = (i_1, i_2, \ldots, i_k)$ and let $j_e = (j_{e_1}, j_{e_2}, \ldots, j_{e_{k-3} })$ be the internals
-%\[
-%  T_{i} = \sum_{j_e} (P_j^{j_e})_t \cdot (Q_j^{j_e})_m 
-%\]
-
-
 \begin{lemma}[Isotypic Decomposition]
 \label{lem:IsotypicDecomposition}
 Let $\CC$ be a $k$-enriched semisimple category and $V \in \Veck$. We now give the concept of a \emph{\green{degeneracy space}}, where we give a ??? notion of the n-fold direct sum:
@@ -1078,33 +1115,6 @@ How do we make this canonical? by choosing $V = \Hom_{\CC}(R_a, V)$.
     \bigoplus_{a \in L} Hom_C(R_b, R_a)^{\oplus m_a} = k^{\oplus m_b}
   \]
 
-  %Since $C$ is additive,
-  %\[
-  %  \Hom_C(R_b,V)
-  %  \cong
-  %  \bigoplus_{a\in L} \Hom_C(R_b,R_a)^{\oplus m_a}.
-  %\]
-%
-%  Since $C$ is semisimple, every object decomposes as
-%  \[
-%    V \equiv \bigoplus_a m_a R_a
-%  \]
-%  for the degeneracies $m_a \in N$ (this is techinically abuse of notation, if we define the direct sum.)
-%
-%  Applying $Hom(R_a, -)$ (this is a linear functor?) yields
-%  \[
-%    Hom(R_b, V) \cong \bigoplus_a Hom(R_b, m_a R_a) \cong Hom_C(R_b, R_a)^{\oplus m_a}
-%  \]
-%  and then by Schur's lemma
-%  \[
-%    Hom_C(R_a,R_b) = \begin{dcases}
-%      \mathbb{C}, &\text{ if } a \equiv b ;\\
-%      0 &\text{ otherwise } 
-%    \end{dcases}
-%  \]
-%  and therefore $dim Hom_C(R_a, V) = dim \mathbb{C}^{m_{a}} = m_a$.
-%
-%  An issue here might be that $Hom_C(R_a, V)$ is not an object or a morphism of $Rep(G)$. Its elements are, but not itself, it is in $Vect$.
 \end{proof}
 
 So we actualy need this: Maybe this is simpler if we always let the degeneracy be $C$?
@@ -1340,218 +1350,10 @@ thm header.
   which is just a block matrix with indexing $(1_1, 1_2, \tau_1, \tau_2, \tau_3)$.
 \end{example}
 
-\begin{example}[$U(1)$ Symmetry]
-  Technically we would want to show here that this is simpler in general. TOOD. Make a theorem? Or a corollary?
-\end{example}
-
-
-\begin{equation}
-  \label{ExternalTensorProductAsCoproductOfFiberwiseTensor}
-  \begin{aligned}
-    \mathscr{V}_X \boxtimes \mathscr{V}'_{X'}
-    &\simeq \Bigl(\, \coprod_{x \in X} \mathscr{V}_{\{x\}} \Big) \boxtimes \Big(\, \coprod_{x' \in X'} \mathscr{V}'_{\{x'\}} \Big)
-    && \text{by \eqref{VectorBundleOverSetIsCoproductOfItsRestrictionToSingletons}} \\[1ex]
-    &\simeq \coprod_{x \in X} \bigg(\!\! \mathscr{V}_{\{x\}} \boxtimes \Big(\, \coprod_{x' \in X'} \mathscr{V}'_{\{x'\}} \Big) \!\! \bigg)
-    && \text{by assumption (i) in first variable} \\[1ex]
-    &\simeq \coprod_{x \in X} \; \coprod_{x' \in X'} \Big( \mathscr{V}_{\{x\}} \boxtimes \mathscr{V}'_{\{x'\}} \Big)
-    && \text{by assumption (i) in second variable} \\[1ex]
-    &\simeq \coprod_{x \in X} \; \coprod_{x' \in X'} \Big( \iota \big( \mathscr{V}_x \otimes \mathscr{V}_{x'} \big) \Big)
-    && \text{by assumption (ii)} \\[1ex]
-    &\simeq \coprod_{(x,x') \,\in\, X \times X'} \Big( \iota \big( \mathscr{V}_x \otimes \mathscr{V}_{x'} \big) \!\Big)
-    && \text{just to make the base space manifest}
-  \end{aligned}
-\end{equation}
-
 \subsection{The Deligne Tensor Product \& Product Theories}
 \label{subsect:deligne}
 
-\subsection{Algorithms for contracting dual networks}
 
-\section{Tensor and Fusion Categories}
-
-
-Let $C$ and $D$ be linear abelian categories. Then the \emph{Deligne Tensor Product} $C \boxtimes D$ is a linear abelian category with a bifunctor
-\[
-  \boxtimes : C \times D \to C \boxtimes D
-\]
-with morphisms given by
-\[
-  Hom_{C \boxtimes D}(X \boxtimes Y, W \boxtimes V) = Hom_C(X,W) \otimes Hom_D(Y,V)
-\]
-
-\begin{definition}[The Deligne Tensor Product of Categories]
-Let $k$ be a field, and let $\mathcal{C}$ and $\mathcal{D}$ be two $k$-linear, finite abelian categories. The \textbf{Deligne tensor product}, denoted by $\mathcal{C} \boxtimes \mathcal{D}$, is a $k$-linear finite abelian category equipped with a $k$-bilinear functor
-\[ \boxtimes: \mathcal{C} \times \mathcal{D} \longrightarrow \mathcal{C} \boxtimes \mathcal{D}, \quad (X, Y) \mapsto X \boxtimes Y \]
-TODOTOD!!
-\end{definition}
-
-
-\begin{definition}[The Category $\Rep_k(G)$]
-  Let $G$ be a group and $k$ a field. The \emph{category of linear representations of $G$ over $k$} consists of the following data:
-
-  \begin{itemize}
-    \item \textbf{Objects:} The objects $\Rep_k(G)$ are pairs $(V, \rho_V)$, where $V$ is a $k$-vector space and $\rho_V : G  \to \mathrm{GL}(V)$.  
-    \item \textbf{Morphisms:} For any two objects $(V, \rho_V)$ and $(W, \rho_W)$ in $\Rep_k(G)$, a morphism from $V$ to $W$ is a $k$-linear transformation $f: V \to W$ that is $G$-invariant (also called an \textit{intertwiner}). That is, for every element $g \in G$, the following diagram commutes:
-    \[
-    \begin{tikzcd}
-    V \arrow[r, "\rho_V(g)"] \arrow[d, "f"'] & V \arrow[d, "f"] \\
-    W \arrow[r, "\rho_W(g)"']               & W
-    \end{tikzcd}
-    \]
-    In algebraic terms, $f$ must satisfy the condition:
-    \[ f \circ \rho_V(g) = \rho_W(g) \circ f \quad \forall g \in G \]
-    The set of all such morphisms is denoted by $\mathrm{Hom}_G(V, W)$.
-  \end{itemize}
-  We can further endow $Rep_k(G)$ with a monoidal structure: For any two objects $(V,\rho_V), (W,\rho_W)$, their tensor product is in $\Rep_k(G)$ by the diagonal action
-  \[
-    \rho_{(V \otimes W)} (g) (v \otimes w) = \rho_V(g)v \otimes \rho_W(g)w
-  \]
-\end{definition}
-
-
-
-\begin{theorem}[Fusion Representation Category of finite groups]
-  \label{thm:finiteGroupFusionCat}
-  Let $G$ be a finite group. Then $\Rep(G)$ is a fusion category.
-\end{theorem}
-
-\begin{theorem}
-  Let $G_1$ and $G_2$ be finite groups and let $\Rep(G_1), \Rep(G_2)$ be their respective symmetry categories. Then there is an equivalence of categories
-  \[
-    \Rep(G_1 \times G_2) \simeq \Rep(G_1) \boxtimes \Rep(G_2)
-  \]
-\end{theorem}
-
-
-
-
-
-Lets give a coordinatized approach to fusion categories:
-
-\begin{definition}[Fusion Category in Vector Form]
-  A \emph{fusion category} is a finite set of labels (sectors?) $L$ and vector spaces $V^{ab}_c$ for all $a,b,c \in L$, as well as the isomorphisms
-  \[
-    F^{abc}_{d} : \bigoplus_e V^{ab}_e \otimes V^{ec}_d \to \bigoplus_e V^{ae}_d \otimes V^{bc}_e
-  \]
-  such that the pentagon holds.
-\end{definition}
-
-
-\begin{equation}
-\text{Hom}\left( \bigotimes_{k=1}^m X_{i_k}, \bigotimes_{l=1}^n X_{j_l} \right) = \text{span}_{\mathbb{C}} \left\{
-\begin{gathered}
-\begin{tikzpicture}[
-    baseline=(current bounding box.center),
-    scale=1.2,
-    string arrow/.style={
-        postaction={decorate},
-        decoration={
-            markings,
-            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
-        }
-    }
-]
-    % Boundary Input Nodes
-    \node (xi1) at (-3.4, 3.2) [above] {$X_{i_1}$}; % I dont get why it is assym with -3.2
-    \node (xi2) at (-2.5, 3.2) [above] {$X_{i_2}$};
-    \node (xi3) at (-1.8, 3.2) [above] {$X_{i_3}$};
-    \node at (-0.5, 3.2) {$\cdots$};
-    \node (xim1) at (0.8, 3.2) [above] {$X_{i_{m-1}}$};
-    \node (xim) at (1.6, 3.2) [above] {$X_{i_m}$};
-
-    % Internal Vertices
-    \coordinate (Ve1) at (-2.7, 2.5);
-    \coordinate (Ve2) at (-2.2, 1.9);
-    \coordinate (Vem3) at (-1.0, 0.9);
-    \coordinate (Vem2) at (-0.5, 0.4);
-    \coordinate (Btop) at (0, 0.05);
-
-    % Incoming Leaves to Vertices
-    \draw[string arrow] (xi1) -- (Ve1);
-    \draw[string arrow] (xi2) -- (Ve1);
-    \draw[string arrow] (xi3) -- (Ve2);
-    \draw[string arrow] (xim1) -- (Vem2);
-    \draw[string arrow] (xim) -- (Btop);
-
-    % Main Trunk Segments (Top)
-    \draw[string arrow] (Ve1) -- (Ve2) node[below left, pos=0.4] {$e_1$};
-    \draw[string arrow] (Ve2) -- (-1.9, 1.55) node[below left, pos=0.4] {$e_2$};
-    
-    % Diagonal Dots (Top Trunk)
-    \fill (-1.65, 1.35) circle (0.8pt);
-    \fill (-1.50, 1.20) circle (0.8pt);
-    \fill (-1.35, 1.05) circle (0.8pt);
-    
-    %\draw[string arrow] (-1.2, 0.9) -- (Vem3); 
-    \draw[string arrow] (Vem3) -- (Vem2) node[below left, pos=0.4] {$e_{m-3}$};
-    \draw[string arrow] (Vem2) -- (Btop) node[below left, pos=0.4] {$e_{m-2}$};
-
-
-    \coordinate (Bbot) at (0, -0.65);
-    \draw[string arrow] (Btop) -- (Bbot) node[right, pos=0.5] {$b$};
-
-
-    % Internal Vertices
-    \coordinate (Vfn2) at (-0.5, -1.0);
-    \coordinate (Vfn3) at (-1.0, -1.5);
-    \coordinate (Vf2) at (-2.2, -2.5);
-    \coordinate (Vf1) at (-2.7, -3.1);
-
-    % Main Trunk Segments (Bottom)
-    \draw[string arrow] (Bbot) -- (Vfn2) node[left, pos=0.6] {$f_{n-2}$};
-    \draw[string arrow] (Vfn2) -- (Vfn3) node[left, pos=0.6] {$f_{n-3}$};
-    
-    % Diagonal Dots (Bottom Trunk)
-    \fill (-1.35, -1.65) circle (0.8pt);
-    \fill (-1.50, -1.80) circle (0.8pt);
-    \fill (-1.65, -1.95) circle (0.8pt);
-    
-    \draw[string arrow] (-1.9, -2.15) -- (Vf2);
-    \draw[string arrow] (Vf2) -- (Vf1) node[left, pos=0.4] {$f_1$};
-    \path (Vf2) -- (Vf1) node[left, pos=1.2] {$f_2$}; % Label position adjustment
-
-    % Outgoing Leaves to Boundary
-    \draw[string arrow] (Vf1) -- (-3.2, -3.8);
-    \draw[string arrow] (Vf1) -- (-2.5, -3.8);
-    \draw[string arrow] (Vf2) -- (-1.8, -3.8);
-    \draw[string arrow] (Vfn2) -- (0.8, -3.8);
-    \draw[string arrow] (Bbot) -- (1.6, -3.8);
-
-    % Boundary Output Nodes
-    \node (xj1) at (-3.2, -3.8) [below] {$X_{j_1}$};
-    \node (xj2) at (-2.5, -3.8) [below] {$X_{j_2}$};
-    \node (xj3) at (-1.8, -3.8) [below] {$X_{j_3}$};
-    \node at (-0.5, -3.8) {$\cdots$};
-    \node (xjn1) at (0.8, -3.8) [below] {$X_{j_{n-1}}$};
-    \node (xjn) at (1.6, -3.8) [below] {$X_{j_n}$};
-
-\end{tikzpicture}
-\end{gathered}
-\right\}_{ \substack{b, \, e_1, \dots,  e_{m-2}, \, f_1, \, \dots, \, f_{n-2} \\ \mu_1, \, \dots, \, \mu_{m-2}, \, \nu_1, \, \dots, \, \nu_{n-2}} }
-\end{equation}
-
-\begin{equation}
-\begin{gathered} % From the seminar paper and
-\begin{tikzpicture}
-  \node at (0,-0.1) {$\underset{e,f}{\bigoplus} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g $};
-  \draw[->, black] plot coordinates{(0.4,0.5) (2.5,1.5)};
-  \node at (0.9,1.3) {$id_{V_{e}^{ab}} \otimes F^{ecd}_{g}$};
-  \node at (4.0,1.9)  {$\underset{e,l}{\bigoplus} V^{ab}_e \otimes V^{cd}_{f} \otimes V^{el}_g$};
-  \node at (7.6, 1.1) {$F^{abl}_{g} \otimes id_{V^{cd}_{l}}$};
-  \draw[->] plot coordinates{(5.5, 1.5) (7.5,0.5)};
-  \node at (8.0,-0.1) {$\underset{k,l}{\bigoplus} V^{ak}_{g} \otimes V^{bl}_{k} \otimes V^{cd}_{l}$};
-  \node at (-0.4, -1.2) {$F^{abc}_{f} \otimes id_{V^{fd}_{g}}$};
-  \draw[->] plot coordinates{(0.4,-0.5) (1.5,-1.5)};
-  \node at (1.8,-2.1) {$\underset{f,h}{\bigoplus} V^{af}_{h} \otimes V^{bc}_{f}  \otimes V^{hd}_{g}$};
-  \node at (4.3, -2.5) {$F^{afd}_{g} \otimes id_{V^{bc}_{f}}$};
-  \draw[->] plot coordinates {(3.5,-2.0) (4.7, -2.0)};
-  \node at (6.5, -2.1) {$\underset{k,h}{\bigoplus} V^{ak}_{g} \otimes V^{bc}_{h} \otimes V^{hd}_{k} $};
-  \node at (8.2, -1.2) {$F^{bcd}_{k} \otimes id_{V^{ak}_{g}}$};
-  \draw[->] plot coordinates {(6.4, -1.5) (7.5,-0.5) };
-\end{tikzpicture}
-\label{cat:pentagon}
-\end{gathered}
-\end{equation}
 
 % https://q.uiver.app/#q=WzAsNSxbMCwyLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2UsZn0gVl57YWJ9X2UgXFxvdGltZXMgVl57ZWN9X2YgXFxvdGltZXMgVl57ZmR9X2cgIl0sWzAsNCwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFsyLDQsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c197ayxofSBWXntha31fZyBcXG90aW1lcyBWXntiY31faCBcXG90aW1lcyBWXntoZH1fayAiXSxbMSwwLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2YsaH0gVl57YWZ9X2ggXFxvdGltZXMgVl57YmN9X2YgXFxvdGltZXMgVl57aGR9X2cgIl0sWzIsMiwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFswLDEsIkZee2FiY31fZiBcXG90aW1lcyBpZF97Vl97Z31ee2ZkfX0iLDIseyJsYWJlbF9wb3NpdGlvbiI6NDB9XSxbMSwyLCJGXnthYmN9X2YgXFxvdGltZXMgaWRfe1Zfe2d9XntmZH19IiwyXSxbMCwzXSxbMyw0XSxbMiw0XV0=
 \begin{tikzcd}
@@ -1566,12 +1368,3 @@ Lets give a coordinatized approach to fusion categories:
 	\arrow["{F^{abc}_f \otimes id_{V_{g}^{fd}}}"', from=5-1, to=5-3]
 	\arrow[from=5-3, to=3-3]
 \end{tikzcd}
-
-
-
-\begin{equation}
-\begin{tikzcd}[row sep=large, column sep=large]
-V \times W \arrow[r, "\phi"] \arrow[rd, "f" swap] & V \otimes W \arrow[d, "\exists! \, \tilde{f}", dashed] \\
-                                                   & U
-\end{tikzcd}
-\end{equation}
