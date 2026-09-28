@@ -184,7 +184,10 @@ This should motivate the following definition:
   \[
       \rho_A : A \otimes I \cong A \qquad \lambda_B : I \otimes B \cong B \qquad \alpha_{ABC} : (A \otimes B) \otimes C \cong A \otimes (B \otimes C)
   \]
-  such that the following diagrams commute:
+  such that the following \emph{triangle} and \emph{pentagon}\footnote{Medieval
+  mathematicians used to include the diagonal composite morphisms in this
+  diagram, however, after a few stake burning incidents, this practice was
+  abandoned.} diagrams commute:
   \begin{center} % Is there really no way ro make this work as a tikzcd?
 \begin{tikzpicture}[baseline=(current bounding box.center)]\label{cat:def:monoidalCat:pentagon}
   \node (AIB)  at (0,1.2)   {$(A \otimes I) \otimes B$};
@@ -547,6 +550,18 @@ Observe that in the graphical calculus, we denoted this as a bent arrow from $A 
 \[
   \Hom_\CC(X \ot A, Y) \cong \Hom_\CC(X, A^\ast \ot Y) : f \mapsto 
 \]
+We can also build dualities for morphisms here: Let $f : A \to B$ be arbitrary and define
+\[
+  f^\ast : B^\ast \to A^\ast = (\ev_B \ot \id_{A^\ast})(\id_{B^\ast} \ot f \ot \id_{A^\ast})(\id_{B^\ast} \ot \coev_A)
+\]
+This gives us a few additional theorems:
+\begin{enumerate}
+  \item $\id^\ast_A = \id_{A^\ast}$
+  \item $(g \circ f)^\ast = f^\ast \circ g^\ast$ 
+  \item $(f \ot g)^\ast = g^\ast \ot f^\ast$
+  \item $f \mapsto f^\ast$ is linear
+\end{enumerate}
+Also notice by this that $(-)^\ast$ is a contravariant functor.
 
 Further the natural observation that $A \cong A^{\ast\ast}$ holds should be
 encoded in these categories.
@@ -593,6 +608,27 @@ This allows us to define a notion of a traced category.
   \end{figure}
 \end{graphicalCalculus}
 
+\begin{lemma}
+  State without proof, in any spherical category $\CC$ we can make the following
+  statements about the trace. Let $A\in\CC$ and $f,g\in\End(A)$ arbitrary, let 
+  \[
+    \tr : \End_\CC(A) \to \End_\CC(\mathrm{I})
+  \]
+  \begin{enumerate}
+    \item $\tr(f^\ast) = \tr(f)$
+    \item $\tr(f \otimes g) = \tr(f) \cdot \tr(g)$
+    \item $\tr(h \circ k) = \tr(k \circ h)$
+    \item \todo{Likely more, but which ones do we actually need?}
+  \end{enumerate}
+\end{lemma}
+
+So there is two reasons that we need this morphism here. One is to resolve the
+third Reidemeister move (which we havent introduced yet!) and another is that we
+can consider anyons to have an intrinsic rotation, however, this would
+contradict that we considered them equivalent particles with no degrees of
+freedom. I think \cite{burtonShortGuideAnyons2016} uses a deformed braid group
+for this, but I would need to double check this.
+
 \begin{definition}
   A \emph{\green{ribbon}} category is a braided monoidal rigid category
   $(\CC,\otimes,1,\alpha,\gamma,\rho,\beta,\ev,\coev)$ with maps $\theta_A : A
@@ -600,7 +636,15 @@ This allows us to define a notion of a traced category.
   \[
     \theta_{A \otimes B} = (\theta_A \otimes \theta_B) \circ \beta_{B,A} \circ \beta_{A,B}
   \]
+  as well as
+  \[  
+    \theta_{A^\ast} = (\theta_A)^\ast
+  \]
 \end{definition}
+
+\begin{example}
+  Since this is an endomorphism, physically this acts by a phase.
+\end{example}
 
 
 \begin{definition}\label{cat:def:directSum}
@@ -955,7 +999,7 @@ $$
 Now we would like the category that has all of these statements combined: 
 
 \begin{definition}
-  A \green{\emph{fusion-category}} is a semisimple, $\Veck$-enriched rigid braided monoidal category, where each simple object has only \emph{finitely many} isomorphism classes. 
+  A \green{\emph{fusion-category}} is a semisimple, $\Veck$-enriched rigid braided monoidal category, where each simple object has only \emph{finitely many} isomorphism classes. Furthermore, we required that $I$ (the monoidal unit) is simple, equivalently $\End_\CC(I) \cong k$.
 \end{definition}
 
 \begin{remark}
@@ -997,24 +1041,68 @@ physics literaturs such as in \cite{kitaevAnyonsExactlySolved2006} or
   \end{equation}
 \end{definition}
 
-\subsection{Categorical Quantum Mechanics}\label{cat:sub:categoricalQuantum}
+So far we have arrived at the structure of a fusion category. While we do not
+have quantum systems based upon the objects of these categories, we can model
+some processes through the hom-spaces, and we have $\C$-enrichment for them as
+well. To model quantum systems, we need them to be Hilbert spaces as well.
+Clasically this is done by defining a \emph{unitary structure} on the fusion
+category. \todo{So why can we not jst do a Hilber-Enrichment?}
 
-By a result of \textcite{abramskyNoCloningCategoricalQuantum2012}, building on the theory
-of coecke et al., we can state the no-cloning theorem in categorical form: This asserts
-that there is no diagonal $\delta : V \to  V \otimes V$ such that the following diagram
-commutes: 
+\todo{We could give this as a functor, but this has a weird target.}
 
-% https://q.uiver.app/#q=WzAsNCxbMCwwLCJWIl0sWzAsMSwiViBcXG90aW1lcyBWIl0sWzIsMCwiVyJdLFsyLDEsIlcgXFxvdGltZXMgVyJdLFswLDIsImYiXSxbMSwzLCJmIFxcb3RpbWVzIGYiXSxbMCwxLCJcXGRlbHRhIiwyXSxbMiwzLCJcXGRlbHRhIl1d
-\begin{tikzcd}
-  V && W \\
-	{V \otimes V} && {W \otimes W}
-	\arrow["f", from=1-1, to=1-3]
-	\arrow["\delta"', from=1-1, to=2-1]
-	\arrow["\delta", from=1-3, to=2-3]
-	\arrow["{f \otimes f}", from=2-1, to=2-3]
-\end{tikzcd}
 
-\subsection{Tensor \& Fusion Categories}
+\begin{definition}\label{cat:def:unitary}
+  Let $\CC$ be a fusion category over $\C$. A \emph{\green{unitary structure}} on
+  $\CC$ is a family of maps
+  \[
+    (-)^\dagger : \Hom_\CC(A,B) \to \Hom_\CC(B,A)
+  \]
+  which is the identity on objects and satisfies
+  \begin{enumerate}
+    \item \emph{(involution)} $(\lambda f + \mu g)^\dagger = \bar\lambda f^\dagger + \bar\mu g^\dagger$ and $f^{\dagger\dagger} = f$.
+    \item \emph{(Contravariance)} $(f\circ g)^\dagger = g^\dagger \circ f^\dagger$ and $\id_A^\dagger = \id_A$.
+    \item \emph{(Positivity)} $f^\dagger \circ f = 0 \implies f = 0$.
+    \item \emph{(Monoidality)} $(f\ot g)^\dagger = f^\dagger \ot g^\dagger$, and the
+      associator and unitors are unitary, e.g.\ $\alpha_{A,B,C}^\dagger = \alpha_{A,B,C}^{-1}$.
+    \item \emph{(Duality)} the pivotal isomorphism $j_A : A \to A^{**}$ is
+      unitary, equivalently $(f^\dagger)^* = (f^*)^\dagger$ for all $f$.
+  \end{enumerate}
+  A fusion category together with this structure is called a \emph{\green{unitary fusion category}}.
+\end{definition}
+
+\begin{proposition}
+  In a unitary fusion category:
+  \begin{enumerate}
+    \item $\Hom_\CC(A,B)$ is a finite-dimensional Hilbert space for all $A,B$.
+    \item The bases can be chosen with $\pi^{c,\mu}_{ab} =
+      (\iota^{ab}_{c,\mu})^\dagger$, so each $\iota$ is an isometry, $\Phi$ is
+      unitary, and $\iota\iota^\dagger$ is an orthogonal projection. The higher
+      fusion-tree bases are orthonormal.
+    \item The F-symbols $F^{abc}_d$ are unitary matrices.
+    \item We can dfine an inner product on $\CC$ by
+      \[
+        \left\langle f, f\right\rangle = \tr(f^\dagger \circ f)
+      \]
+    \item Reciprocity $\Hom(R_c,R_a\ot R_b)\cong\Hom(R_a^*\ot R_c,R_b)$ is
+      unitary up to the factor ???.
+    \item If $\CC$ is braided with braiding $\beta$, then $\beta_{A,B}^\dagger =
+      \beta_{A,B}^{-1}$ , so the R-symbols are unitary. In the ribbon case the
+      twist satisfies $\theta_A^\dagger=\theta_A^{-1}$.
+  \end{enumerate}
+\end{proposition}
+
+Now there is only one last structure missing before we can model anyons, and
+this is perhaps the least intuitive of all of these structures. While
+foundational for the physical interpretations of these theories, it is of little
+interest to our tensor formalisms and we will not go into depth on this. 
+\begin{definition}
+  In a braided fusion category $\CC$ with $A,B \in \CC$ define the
+  \emph{\green{S-matrix}}
+  \[
+    S_{AB} \coloneqq \tr(\beta_{B,A} \circ \beta{A,B}).
+  \]
+  If $S$ is invertible, we call the category \emph{\green{modular}}.
+\end{definition}
 
 \section{Decompositions for Categorical Networks}\label{cat:sub:decomp}
 
@@ -1025,112 +1113,40 @@ Representation categories of compact groups. Note that in
 representations of finite groups, which does not include $SU(2)$. However I do not yet
 know if we should do so, since I not yet sure how to argue the F moves here. If we instead
 take the deformation $U_q(sl_2)$ we get finiteness (and fusion cats?), unfortunately
-$U_q(sl_2)$ is not a group.
+$U_q(sl_2)$ is not a group
 
-
-\begin{lemma}[Isotypic Decomposition]
-\label{lem:IsotypicDecomposition}
-Let $\CC$ be a $k$-enriched semisimple category and $V \in \Veck$. We now give the concept of a \emph{\green{degeneracy space}}, where we give a ??? notion of the n-fold direct sum:
-\[
-  V \kot R_a \cong R_a^{\op \dim{V}}
-\]
-How do we make this canonical? by choosing $V = \Hom_{\CC}(R_a, V)$.
-\end{lemma}
-
-
-
-\begin{lemma}
-  \label{lem:IsotopyHelper}
-  For a vector space $W$, there is an isomorphism
+\begin{definition}
+  Recall that in a semisimple category $\CC$ we can express every object $S$ as a finite direct sum over isomorphism classes
   \[
-    \bigoplus^m W \simeq \mathbb{C}^m \otimes W.
+    S \cong \bop_i S_i^{\op n_i}
   \]
-\end{lemma}
-\begin{proof}
-  Let ${e_i}_{i \in [m]}$ be the standard basis on $\mathbb{C}^m$. Let
+  and we also work purely over $\C$ here. We now wish to mirror \emph{isotypic
+  decomposition}\cref{sym:def:isotypic} within categories, i.e. we wish to
+  categorify this construction. Let $V$ be a vector space of dimension $n$, i.e.
+  choose a basis ${v_1, \ldots, v_n}$ and define
   \[
-    \Phi : \mathbb{C}^m \otimes W \to \oplus^m W
+    V \iot C \coloneqq \bop_{i=1}^n C
   \]
-  be defined by
-  \[
-    \phi(e_i \otimes w) = (0, \ldots , w, \ldots 0  )
-  \]
-  and linear, thus
-  \[
-    \Phi\left(\sum_{i}^{} c_{i} e_{i} \otimes w_{i} \right) = (c_1 w_1, \ldots , c_m w_m ).
-  \]
-  is clearly bijective, and we have our desired isomorphism.
-\end{proof}
+  and we call $V$ the \emph{\green{multiplicity space}} of the object $C \in
+  \CC$.
+\end{definition}
 
-\begin{lemma}
-  Let $D$ be a finite dimensional $k$-vector space and let $V$ be an object of a
-  $k$-linear category $C$. Then
-  \[
-    D \otimes V
-    \cong
-    V^{\oplus \dim D}
-  \]
-\end{lemma}
-\begin{proof}
-  Let $n = \dim D$. Take a basis $\{e_i\}$ for D. This yields an isomorphism
-  \[
-    D \cong \bigoplus_{i=1}^n k \cdot e_{i} \cong k^n
-  \]
-  Since in a $k$-linear category the tensor product is additive (should we prove this?),
-  we can distribute
-  \[
-    D \otimes W \cong \bigoplus_1^n (k \cdot e_{i} \otimes W) \cong \bigoplus W = W^{\oplus n}
-  \]
-\end{proof}
+Furthremore, we can assert that $- \iot - : \Veck \times \CC \to \CC$ is a
+functor. 
 
-\begin{lemma}[Isotopic Decomposition]
-  \label{IsotopicDecomposition}
-  Let $C$ be a semisimple $k$-linear category with simple objects $\{R_a\}$. Then every
-  object $V \in C$ admits a canonical decomposition
-  \begin{equation}
-    V \cong \bigoplus_a D_a \otimes R_{a}.
-  \end{equation}
-  where we refer to $D_a \coloneqq \Hom_C(R_a, V)$ as the \emph{degeneracy} of the space.
-\end{lemma}
-
-\begin{proof}
-  Since $C$ is semisimple, there exist integers $m_a\ge 0$ such that
-  \[
-    V
-    \cong
-    \bigoplus_{a \in L} \bigoplus_{\_ = 1}^{D_a^V} a
-    \cong
-    \bigoplus_{a\in L} R_a^{\oplus m_a}.
-  \]
-
-  Applying the additive functor $\Hom_C(R_b,-)$ yields
-  \[
-    \Hom_C(R_b,V)
-    \cong
-    \bigoplus_{a\in L} \Hom_C(R_b,R_a^{\oplus m_a}) \cong \bigoplus_{a\in L} \Hom_C(R_b,R_a)^{\oplus m_a}.
-  \]
-
-  Then, by Schurs lemma
-  \[
-    \bigoplus_{a \in L} Hom_C(R_b, R_a)^{\oplus m_a} = k^{\oplus m_b}
-  \]
-
-\end{proof}
-
-So we actualy need this: Maybe this is simpler if we always let the degeneracy be $C$?
 \begin{lemma}\label{HomTensorFactorization}
-Let $C$ be a $k$-linear category and let $D,E$ be finite-dimensional
-$k$-vector spaces. For any objects $R,S\in C$, there is a natural
+Let $\CC$ be a $k$-linear category and let $D,E$ be finite-dimensional
+$k$-vector spaces. For any objects $R,S\in \CC$, there is a natural
 isomorphism
 \[
-\Hom_C(D\otimes R,E\otimes S)
+\Hom_\CC(D \iot R,E \iot S)
 \cong
-\Hom_k(D,E)\otimes \Hom_C(R,S).
+\Hom_k(D,E)\otimes \Hom_\CC(R,S).
 \]
 \end{lemma}
 
 \begin{proof}
-Let $m=\dim_k D$ and $n=\dim_k E$. Proof by isomorphism chains:
+Let $m=\dim_k D$ and $n=\dim_k E$. Proof by isomorphism chains: \todo{Redo this over a universal property, this is not natural.}
 $$
   \begin{aligned}
     \Hom_C(D\otimes R,E\otimes S)
@@ -1146,13 +1162,6 @@ $$
 $$
 (The last as s)
 \end{proof}
-
-\begin{definition}[Copower]
-  For a $\Veck$-enriched (and tensored?) category $\mathrm{C} $, and $E \in \Veck, X \in C$ the power $X^E$ is the object of $C$ representing the natural isomorphism
-  \[
-    \Hom_C(Y,X^E) \cong \Hom_k(E, \Hom_C(Y,X))
-  \]
-\end{definition}
 
 \begin{theorem}[Decomposition of Semisimple Categories]
   \label{DecompositionOfSemisimpleCategories}
@@ -1290,6 +1299,14 @@ thm header.
     = \bigoplus_{a,b, c} Hom(C^2, C) \otimes Hom_{\Rep(SU(2))} (V_a \otimes V_b, V_c)
   \]
 \end{example}
+
+\begin{example}[XXZ-Hamiltonian]
+  Consider a 4 leg tensor in $\End(V_{1/2} \ot V_{1/2})$, this decomposes as
+  \[
+A
+  \]
+\end{example}
+
 
 
 \begin{example}
