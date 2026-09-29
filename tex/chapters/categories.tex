@@ -375,6 +375,13 @@ A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ
 \beta_{A,B} = \mathrm{id}_{A \otimes B}$ for all $A, B$.
 \end{definition}
 
+\begin{lemma}
+  The \emph{Yang-Baxter equation}\todo{define this somewhere} holds for the braiding:
+  \[
+    (\beta_{A,B} \ot \id_textC)(\id_A \ot \beta_{A,C})(\beta_{B,C} \ot \id_A) = 
+  \]
+\end{lemma}
+
 \begin{graphicalCalculus}
   Now the graphical calculus changes, as we need to consider whether the
   braidings defined by $\beta$ are over or under. We denote the simple braidings
@@ -970,6 +977,14 @@ $$
 F^{abc}_d : \C^{\mu_0 + \nu_0} \left[\FusionTreeThreeLabel{a}{b}{c}{d}{e_0}\right] \oplus \C^{\mu_1 + \nu_1} \left[\FusionTreeThreeLabel{a}{b}{c}{d}{e_1}\right] \oplus \cdots \overset{\cong}{\rightarrow}\C \left[\FusionTreeThreeLabelRight{a}{b}{c}{d}{f_0}\right] \oplus \C \left[\FusionTreeThreeLabelRight{a}{b}{c}{d}{f_1}\right] \oplus \cdots
 $$
 
+We can do the same construction for the braiding:
+\[
+  R^{ab}_c : \Hom(R_a \otimes R_b, R_c) \to \Hom(R_b \ot R_a, R_c)
+\]
+\[
+  \iota^{ba}_{c,\mu} = \sum_{\nu} [R^{ab}_c]_{\mu}^{\nu} \iota^{ab}_{c,\nu}
+\]
+
 
 \begin{example}
   Lets look at some examples of semisimple monoidal categories.
@@ -1039,6 +1054,7 @@ physics literaturs such as in \cite{kitaevAnyonsExactlySolved2006} or
   \label{cat:pentagon}
   \end{gathered}
   \end{equation}
+  The unit objects are given by 
 \end{definition}
 
 So far we have arrived at the structure of a fusion category. While we do not

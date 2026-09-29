@@ -1,13 +1,12 @@
-This section develops the theory underlying \emph{symmetric tensor networks}, specifically
-for nonabelian groups. We give an informal overview on the necessary representation
-theoretic concepts in \Cref{sym:sub:rep}. We employ the example of the $XXZ$-Hamiltonain
-for both abelian and anabelian symmetries and give an exact calculation of its conserved
-values. Here we are mostly interested in the \emph{speedup} obtained by exploiting the
-emergend block-structure of symmetric operators. Most of the proofs and formal definitions
-required for this formalism are delegated to \Cref{sect:Categories}, however there will
-still be repetitions of some of the theory.
-
-
+This section develops the theory underlying \emph{symmetric tensor networks},
+specifically for non-abelian groups. We give an informal overview on the
+necessary representation theoretic concepts in \Cref{sym:sub:rep}. We employ the
+example of the $XXZ$-Hamiltonian for both abelian and non-abelian symmetries and
+give an exact calculation of its conserved values. Here we are mostly interested
+in the \emph{speedup} obtained by exploiting the emergent block-structure of
+symmetric operators. Most of the proofs and formal definitions required for this
+formalism are delegated to \Cref{sect:Categories}, however there will still be
+repetitions of some of the theory.
 
 \section{Representation theory}\label{sym:sub:rep}
 
@@ -107,12 +106,8 @@ with $N_{ab}^c$ called \emph{fusion-multiplicities}. If
 the decomposition is said to be \emph{multiplicity-free}.
 
 Note as well that the appearance of the \emph{direct sum} here (as discussed in
-\cref{cat:eq:fusionprop}) is fully characterized (carefull how i phrase this) by its
-injection and projection maps, for which we provide a graphical calculus.
-\[
-  \iota^{ab}_{c,\mu} : R_c \to R_a \otimes R_b \quad \text{ and } \quad \pi^{c,\mu}_{ab} : R_a \otimes R_b \to R_c \quad \text{ for } \mu \in 1,\ldots,N_{ab}^c  
-\]
-or alternatively
+\cref{cat:eq:fusionprop}) is fully characterized (carefull how i phrase this) by
+its injection and projection maps, for which we provide a graphical calculus.
 \[
   \ket{a,b;c,\mu} : R_c \to R_a \otimes R_b \quad \text{ and } \quad \bra{c,\mu; a,b} :R_a \otimes R_b \to R_c   
 \]
@@ -168,8 +163,8 @@ or alternatively
 \end{tikzpicture}
 \end{equation}
 
-These maps are more commonly known as \emph{clebsch-gordan coefficients}. Note that the
-equations 
+These maps are more commonly known as \emph{Clebsch-Gordan tensors}. Note that
+the equations 
 \begin{equation}
   \bra{\nu, d; a,b} \ket{a,b ; c,\mu} = \delta_{\mu \nu} \delta_{c d} \id_{R_c} 
 \end{equation}
@@ -177,10 +172,11 @@ and
 \begin{equation}
   \sum_{c,\mu}^{} \ket{a,b;c,\mu}\bra{\mu,c; a,b} = \id_{R_a \otimes R_b}.
 \end{equation}
-As a consequence of this relation, the CG-tensors span the space $End(R_a \otimes R_b)$.
+hold. As a consequence of this relation, the outer product of two clebsch-gordan
+spans the space $\End_G(R_a \otimes R_b)$.
 
-On the operators between tensor products, i.e. $T \in \End(R_a \otimes R_b)$ this yields a
-formula
+On the operators between tensor products, i.e. $T \in \End_G(R_a \otimes R_b)$
+this yields a formula
 \[
   T \cong \bigoplus_c \id_{R_c} \otimes \; \C^{N_{ab}^c} 
 \]
@@ -195,9 +191,9 @@ formula
     V \cong \bigoplus_{n \in \Z} \chi_n^{\oplus m_n}. 
   \]
   It's fusion rule is given by
-  \[
+  \begin{equation}\label{symm:eq:U1FusionRule}
     \chi_n \otimes \chi_m = \chi_{n + m}
-  \]
+  \end{equation}
 \end{example}
 
 \begin{example}
@@ -216,45 +212,34 @@ formula
   \[
     \frac{1}{2} \otimes \frac{1}{2} = 0 \oplus 1 
   \]
-  with its accosiated basis $\{\ket{1,1},\ket{1,0},\ket{1,-1},\ket{0,0}\}$. The change of
-  base tensors acting between these bases are precisely the Clebsch-Gordan tensors as
-  defined in ???
+  with its associated basis $\{\ket{1,1},\ket{1,0},\ket{1,-1},\ket{0,0}\}$.
 \end{example}
 
 
 % Just remove htis heading no? 
-\section{Examples in symmetric hamiltonians.}
+\section{Application: The XXZ Hamiltonian}
 
-The motivation for constructing symmetric tensor networks is as follows: Assume we have a
-(unitary) representation of a group $G$ denoted $U(g)$.  Furthermore assume we have a
-hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$. Then there are different
-presentations of $H$ with respect to a certain basis by \emph{simulateneous
-diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as shown in
-\Cref{fig:diagonal_hamiltonians}. Notably these presentation induce a \emph{block-sparse}
-structure on the respective operators. 
-
-%If the ground state is unique,
-%we can obtain 
-%\[
-%  U(g)^{\otimes L} H \ket{\psi_0} = H (U(g)^{\otimes L}) \ket{\psi_0} = E_0 U(g)^{\otimes L} \ket{\psi_0}
-%\]
-%and thus $U(g)\ket{\psi_{0} }$ is a ground state as well. By uniqueness
-%\[
-%  U(g) \ket{\psi_0} = e^{i\theta(g)} \ket{\psi_0}
-%\]
+The motivation for constructing symmetric tensor networks is as follows: Assume
+we have a (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore
+assume we have a Hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$.
+Then there are different presentations of $H$ with respect to a certain basis by
+\emph{simultaneous diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as
+shown in \Cref{fig:diagonal_hamiltonians}. Notably these presentation induce a
+\emph{block-sparse} structure on the respective operators. 
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{../experiments/plots/su2_block_structure.pdf}
-  \caption{ Three different presentations of the XXZ Hamiltonian for $N = 6$. (i): In the default
-    computational basis of spin vectors. (ii) In a reordering of the computational basis
-    into equal spin up (down) classes, i.e. no spin up, one spin up etc..., here $U$ is
-    simply a permutation matrix. (iii) After changing the basis into the $(S^2,S_Z)$
-    basis. }
+  \caption{ Three different presentations of the XXZ Hamiltonian for $N = 6$.
+    (i): In the default computational basis of spin vectors. (ii) In a
+    reordering of the computational basis into equal spin up (down) classes,
+    i.e. no spin up, one spin up etc..., here $U$ is simply a permutation
+    matrix. (iii) After changing the basis into the $(S^2,S_Z)$ basis. }
   \label{fig:diagonal_hamiltonians}
 \end{figure}
 
-We now show how to obtain this block-sparse structure and more by example of the $XXZ$ hamiltonian:
+We now show how to obtain this block-sparse structure and more by example of the
+$XXZ$ hamiltonian:
 
 \begin{definition}\label{def:xxzHamiltonian}
   The \emph{\green{XXZ Hamiltonian}} on $N$ sites is
@@ -263,28 +248,30 @@ We now show how to obtain this block-sparse structure and more by example of the
     = 
     J \cdot 
     \sum_{i = 1}^{N-1}
-      (\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_i^z  ),
+      (\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_{i+1}^z),
   \end{equation}
-  acting on the basis $\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow, \downarrow\}$.
+  acting on the basis $\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow,
+  \downarrow\}$.
 \end{definition}
 
-This operator admits both a $\U{1}$ symmetry, and a $\SU{2}$ symmetry for $\Delta = 1$.
-We elaborate on the (simpler) abelian case first:
-
-The representations of $\U{1}$ here are induced by the operator
+This operator admits both a $\U{1}$ symmetry, and a $\SU{2}$ symmetry for
+$\Delta = 1$. We will handle the (simpler) abelian case first. The
+representations of $\U{1}$ here are induced by the operator
 \[
-  S^z_{\mathrm{tot}} = \frac12 \sum_{i = 1}^{N - 1} \sigma_i^z \quad \text{ with action } \quad U(\theta) : \theta \in \U 1 \mapsto e^{-i\theta S^z_{\mathrm{tot}}}
+  S^z_{\mathrm{tot}} = \frac12 \sum_{i = 1}^{N} \sigma_i^z \quad \text{ with action } \quad U(\theta) : \theta \in \U 1 \mapsto e^{-i\theta S^z_{\mathrm{tot}}}
 \]
-
-
-It can be shown that $H$ is invariant under $U(\theta)$:
+It can be shown that $H$ is invariant under $U(\theta)$, and it suffices to show
+this invariance for the generators $S_{tot}^z$:
 \begin{equation}\label{sym:eq:u1_commutes}
-  U(\theta)HU(\theta)^\dagger \quad \underset{\text{suffices by \ref{app:proof:u1_commutes}}}{\iff} \quad  [H,S^z_{\mathrm{tot}}]=0.
+  U(\theta)HU(\theta)^\dagger = H \quad \underset{\text{suffices by \ref{app:proof:u1_commutes}}}{\iff} \quad  [H,S^z_{\mathrm{tot}}]=0.
 \end{equation} % Something is weird with the reference here.
 
-Diagonalizing both operators yields a block structure as in \Cref{fig:diagonal_hamiltonians}(ii). Note that change of base matrix in this case is given by a permutation matrix.
-
-If we want to state this in terms of irreps, we have to realize that $\C^2 \cong \chi_{-1} \oplus \chi_1$. Then we can state the full space as
+Diagonalizing both operators yields a block structure as in
+\Cref{fig:diagonal_hamiltonians}(ii). Note however that the diagonalization here
+essentially produced a permutation matrix, and we just reordered the basis to
+group by total spins. If we want to state this in terms of irreps, we have to
+realize that $\C^2 \cong \chi_{-1} \oplus \chi_1$. By
+\cref{symm:eq:U1FusionRule} we can state this space as the direct sum
 \[
   (\C^2)^{\otimes 6} \cong \chi_{-3} \oplus \chi_{-2}^6 \oplus \chi_{-1}^{\oplus 15} \oplus \chi_{0}^{\oplus 20} \oplus \chi_{1}^{\oplus 15} \oplus \chi_2^{\oplus 6} \oplus \chi_3 
 \] 
@@ -292,13 +279,13 @@ and so we should expect $7$ blocks in total, just as given in \Cref{fig:diagonal
 
 %% Fine up until here.
 
-
-In the $\SU 2$ case, we have the generators
+Now lets consider the $\SU 2$ case, setting $\Delta = 1$. Here, the generators
+of $\SU{2}$ are given by
 \[
-  S_{tot}^\alpha = \frac{1}{2} \sum_{i = 1}^{N} \sigma_i^\alpha, \quad \alpha \in \{x,y,z\} 
+  S_{tot}^\alpha = \frac{1}{2} \sum_{i = 1}^{N} \sigma_i^\alpha, \quad \alpha \in \{x,y,z\},
 \]
-
-The representation here is  $U(R) = e^{i\theta n \cdot S_{tot} }$ and the Hamiltonian is invariant under
+and its representation is  $U(R) = e^{i\theta n \cdot S_{tot}}$. The Hamiltonian
+is invariant under
 \[
   U(R) H U(R)^\dagger = H, \quad R \in \SU 2
 \]
@@ -309,7 +296,7 @@ Since
 \]
 we need a new operator for the simulatenous diagonalization
 \[ 
-  S_{tot} = \sum_{a \in \{x,y,z\}}^{} (S_{tot}^{a})^2
+  S_{tot}^2 = \sum_{a \in \{x,y,z\}}^{} (S_{tot}^{a})^2
 \]
 and we need to verify this is indeed the correct operator TODO.
 
@@ -318,34 +305,59 @@ The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
 Again, we can solve this by diagonalizing all 3 operators? Do this calculation as in the .ipynb and put it in the appendix.
 
 %%%
-Or we can do the representation theoritical approach. Let $V_j$ denote the spin-$j$ irrep
-of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by \cref{sym:eq:cqseries} that
+Or we can do the representation theoretical approach. Let $V_j$ denote the
+spin-$j$ irrep of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by
+\cref{cqseries} that
 \[
-  (\mathbb{C}^2)^{\otimes6} \cong V_{\frac{1}{2}}^{\otimes 6} \cong 5 V_0 \oplus 9V_1 \oplus 5V_2 \oplus V_3 \cong \C^5 \otimes V_{\frac{1}{2}} \oplus \C^9 \otimes V_0 \oplus \C^5 \otimes V_2 \oplus V_3
+  (\C^2)^{\ot 6} 
+  \cong 
+  V_{\frac{1}{2}}^{\ot 6} 
+  \cong 
+  5 V_0 \op 9V_1 \op 5V_2 \op V_3 
+  \cong
+  (\C^5 \ot V_{0}) \op (\C^9 \ot V_1) \op (\C^5 \ot V_2) \op (\C \ot V_3)
 \]
 
-Now our operator is a morphism in $End(V_{\frac{1}{2}}^{\otimes 6})$ and thus by Schurs
-lemma\footnote{These are related by a permutation matrix. Proof? Is this the X from
-\cite{devosTensorKitjlJuliaPackage2025}? We prefer the second presentation as this realizes more blocks.   }
+Now our operator is a morphism in $\End_G(V_{\frac{1}{2}}^{\otimes 6})$ and thus
+by Schur's lemma
 \begin{equation}\label{sym:eq:blockdiag}
-  H \in \bigoplus_{S \in 0,1,2,3} Mat_{m_S \times m_S} \otimes I_{2S+1} (\mathbb{C}) \cong \bigoplus_{S \in 0,1,2,3} I_{2S+1} \otimes Mat_{m_S \times m_S}(\mathbb{C}) 
+  H 
+  \in 
+  \bigoplus_{S \in 0,1,2,3} 
+  \Mat{m_S}{m_S}\C 
+  \otimes I_{2S+1}
+  \cong 
+  \bigoplus_{S \in 0,1,2,3} 
+  I_{2S+1} \otimes \Mat{m_S}{m_S}\C .
 \end{equation}
+So while we only have to store the matrix elements as blocks, i.e. here we have
+to store only four of them, in our picture we get 16 blocks because of the
+multiplicities. If we were to store this Hamiltonian as its initial matrix, we
+would have to store $64 \times 64 = 4096$ floats. If we only store the $4$
+blocks, this is reduced to $5^2 + 9^2 + 5^2 + 1^2 = 132$ floats\footnote{As we
+will see when discussing the actual algorithms behind these symmetric tensors,
+there is still more structure to be store. However, this still beats storing the
+full numerical Hamiltonian. We do exact calculations in
+\cref{sect:Categories}.}. If we take the case that $N$ is even larger, i.e. the
+case $N = 10$, the full operator requires $1\,048\,576$ floats while the symmetric
+operator only needs $16\,796$. Generally we have about two orders of magnitude
+less.\todo{Do exact asymptotics here!}
 
-So we expect 20 blocks? 
-$5$ have dimension $1$, $9$ have dimension $3$, $5$ have dimension $5$ and $1$ has $7$.
-
-To get an interpretation of the matrix coefficients in $\eqref{sym:eq:cgseries}$, consider
-a tiny Hamiltonian on $N = 2$ spins
+While this big picture overview conveys the general idea, we should do some of the
+calculations by hand. In order to get an interpretation of the matrix
+coefficients in $\eqref{sym:eq:blockdiag}$, we restrict ourselves to the case of
+the XXZ-Hamiltonian for $N = 2$ spins:
 \[
   H = \frac{J}{2} (\sigma_1^x \sigma_2^x + \sigma_1^y \sigma_2^y + \sigma_1^z \sigma_2^z)
-  = J \cdot S_1 \cdot S_2
+  = J \cdot S_1 \cdot S_2.
 \]
 
-This acts on the space $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ and thus on the basis
-$\{\ket{\uparrow},\ket{\downarrow}\}^{\otimes 2}$ This has two distinct fusion outcomes,
-$V_0$ and $V_1$. The basis on the rhs is given by
-$\ket{1,1},\ket{1,0},\ket{1,-1}$ and $\ket{0,0}$, and we want to reformulate $S_1 \cdot S_2$ in
-the total spin basis. Lets unfold this definition by 
+This acts on the space $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ and thus on the
+basis $\{\ket{\uparrow},\ket{\downarrow}\}^{\otimes 2}$ This has two distinct
+fusion outcomes, $V_0$ and $V_1$. The basis on the rhs is given by
+$\ket{1,1},\ket{1,0},\ket{1,-1}$ and $\ket{0,0}$, and we want to reformulate
+$S_1 \cdot S_2$ in the total spin basis. We can do this purely algebraically by
+rearranging
 \[
   S^2 = S_1^2 + S_2^2 + 2(S_1 \cdot S_2) \implies S_1 \cdot S_2 = \frac{1}{2}(S^2 - S_1^2 - S_2^2).
 \]
@@ -427,14 +439,18 @@ By direct isomorphism\todo{meaningless phrasing}, we can write this as an elemen
 \end{tikzpicture}
 \end{equation}
 
-Now we consider the same hamiltonian with $N = 3$, our ground state is
-\[
+Now we consider the same Hamiltonian with $N = 3$, our state space is
+$
   V_{1/2}^{\ot 3} = V_{3/2} \op V_{1/2} \op V_{1/2}
-\]
+$
 with a multiplicity $2$ on the $1/2$ state and the Operator is
 \[
   H = \frac{1}{2} (S_1 \cdot S_2 + S_2 \cdot S_3)
 \]
+and consider that we chose the left bracketing when combining the spins. Note
+that this means that the $S_1 \cdot S_2$ operator is fully diagonal, but the
+$S_2 \cdot S_3$ operator has off diagonal interactions. The diagonalized
+Hamiltonian is given on the right.
 
 \noindent
 \begin{minipage}{0.65\textwidth}
@@ -768,10 +784,10 @@ it follows directly from the definition of global invariance that the tensor mus
 \]
 
 \begin{corollary}[Networks of symmetric tensors are symmetric]
-  Since a tensor network is built by composition and application of the $(co)ev$ maps,
-  both of which are intertwiners, the full network is also an intertwiner. Important there
-  is that this entire discussion is only about FdVect or FdHilb for now, but i think the
-  same applies to any braided category.    
+  Since a tensor network is built by composition and application of the $(co)ev$
+  maps, both of which are intertwiners, the full network is also an intertwiner.
+  Important there is that this entire discussion is only about FdVect or FdHilb
+  for now, but i think the same applies to any braided category.    
 \end{corollary}
 
 
@@ -790,21 +806,25 @@ it follows directly from the definition of global invariance that the tensor mus
     \right)
     \ket{i_1i_2\cdots i_n},
   \]
-  where $A^{[i]}_{i_{k}} \in \mathbb{C}^{D_i \times D_{i+1} }$. The elements of the
-  collection $\{D_i\}_{i \in [n]}$ is referred to as the \emph{\green{bond-dimensions}}.
+  where $A^{[i]}_{i_{k}} \in \C^{D_i \times D_{i+1} }$. The elements of the
+  collection $\{D_i\}_{i \in [n]}$ is referred to as the
+  \emph{\green{bond-dimensions}}.
 \end{definition}
-Note that this is a state with closed boundaries. If we want open boundaries we have to
-replace the trace with appropriate end vectors (nice source?).
+Note that this is a state with closed boundaries. If we want open boundaries we
+have to replace the trace with appropriate end vectors (nice source?).
 
 \begin{example}
-  We can represent each product state $\ket{\varPsi} = \ket{\psi}^{\otimes n}$ as a MPS with bond dimension $1$.
+  We can represent each product state $\ket{\varPsi} = \ket{\psi}^{\otimes n}$
+  as a MPS with bond dimension $1$.
 \end{example}
 
 \begin{theorem}[Fundamental Theorem of MPS]
-  If two MPS states generated by $A$ and $B$ respectively.
-  Figure out what we can do with this. 
+  If two MPS states generated by $A$ and $B$ respectively. Figure out what we
+  can do with this. 
   
-  Proof \cite{ciracMatrixProductDensity2017},\cite{vercleyenMathematicalStructureTensor2018}, \cite{perez-garciaStringOrderSymmetries2008a}.
+  Proof
+  \cite{ciracMatrixProductDensity2017},\cite{vercleyenMathematicalStructureTensor2018},
+  \cite{perez-garciaStringOrderSymmetries2008a}.
 \end{theorem}
 
 \subsection{Algorithms for block-sparse

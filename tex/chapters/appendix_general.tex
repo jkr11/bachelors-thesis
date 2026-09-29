@@ -6,9 +6,20 @@
     \begin{enumerate}
         \item $(a \cdot b) \cdot c = a \cdot (b \cdot c)$
         \item There exists an $\id_G \in G$ s.t. $\id_G \cdot\;a = a \cdot \id_G = a$
-        \item Each $a \in G$ is invertibel with $a \cdot a^{-1} = a^{-1} a = \id_G$
+        \item Each $a \in G$ is invertible with $a \cdot a^{-1} = a^{-1} a =
+        \id_G$
     \end{enumerate}
 \end{definition}
+
+\begin{definition}
+    A group $(G,\cdot)$ is called \emph{\green{abelian}}, if for all $a,b \in G$
+    it holds that $a \cdot b = b \cdot a$, its contrapose is called a
+    \emph{\green{non-abelian}} group.
+\end{definition}
+
+Recall that we say a group is \emph{generated} by a set of elements if we can
+write any other element as the concatenation of the generating set. Here by
+example:
 
 \begin{definition}
     The \emph{\green{symmetric group}} of $n$ points $S_n$ is given by
@@ -32,6 +43,12 @@
     one-dimensional representations, the \emph{trivial representation} where
     every generator is equal to the identity, and the \emph{sign representation}
     which equips each generator with its relative permutation parity.
+\end{definition}
+
+\begin{definition}
+    The \emph{\green{General Linear Group}} $\GL{n}$ of degree $n$ is the set of
+    $n\times n$ matrices that are invertible, and its operation $\cdot$ is that
+    of matrix multiplication. 
 \end{definition}
 
 \section{Some Algebraic Topology}
