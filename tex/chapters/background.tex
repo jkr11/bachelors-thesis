@@ -30,7 +30,7 @@ While we introduce this concept classically and endow it with symmetry as a star
   \[
     \mathrm{Conf}_N(M) = \{(x_1,\ldots,x_N) \in M^N : x_i \neq x_j \} \setminus S_N.
   \]
-  The statistics of the particle exchange is given by the representation of $\pi_1(\mathrm{Conf}_N(M))$ (the fundamental (homology?) group). If $M = \R^2$, this corresponds to the \emph{braid group} on $N$ strands $B_N$. If the dimension of $M \geq 3$ this corresponds to the symmetric group $S_N$. If these representations are unitary and the (ground state?) is degenerate, this allows for \emph{topological quantum computation} (c.f. \Cref{lit:tqc}).
+  The statistics of the particle exchange is given by the representation of $\pi_1(\mathrm{Conf}_N(M))$ (the fundamental (homology?) group). If $M = \R^2$, this corresponds to the \emph{braid group} on $N$ strands $B_N$. If the dimension of $M \geq 3$ this corresponds to the symmetric group $S_N$. If these representations are unitary and the (ground state?) is degenerate, this allows for \emph{topological quantum computation} (cf. \Cref{lit:tqc}).
 \end{literature}
 
 
@@ -96,24 +96,37 @@ While we introduce this concept classically and endow it with symmetry as a star
 
 \section{On Tensors}
 
-Generally, we want to regard a tensor as a multilinear map equipped with legs, where each leg holds a vector space. But we also want to be able to regard tensors as operators from a \emph{domain} vector space to a \emph{codomain} vector space, such as Hamiltonians. So we develop the theory after \textcite{Penrose1971Applications}.
+Generally, we want to regard a tensor as a multilinear map equipped with legs,
+where each leg holds a vector space. But we also want to be able to regard
+tensors as operators from a \emph{domain} vector space to a \emph{codomain}
+vector space, such as Hamiltonians. So we develop the theory after
+\textcite{Penrose1971Applications}.
 
-Lets list some definitions of Tensor. A Tensor $T$ can be regarded as an element of a tensor product space
+First, define a tensor to be an element of a tensor product space of finite
+dimensional vector spaces. Let
 \[
   T \in \bigotimes_{j \in J} V_j
 \]
-where each $V_j$ is a finite-dimensional vector space and we say $T$ is a $\left\vert J \right\vert$-legged tensor.
+where each $V_j$ is a finite-dimensional vector space and we say $T$ is a
+$\left\vert J \right\vert$-legged tensor.
 
-Given \emph{finite} dimensional vector spaces $V$ and $W$, we have the identity that $V \otimes W^\ast \equiv Hom(W,V)$. This is called the \emph{hom-tensor duality}. (TODO: is this canonical? What about the other way around?)
+Recall that for finite dimensional vector spaces (these do not necessarily have
+to be over $\C$ but we consider them over any algebraically closed field $k$) we
+can define the notion of a \emph{dual vector space} $V^\ast$, which is a map
+from the vector space into its field. We can equivalently define this dual space
+to be the space $\Hom(V,k)$ (read as "maps from $V$ to $k$"). An element $f \in V^\ast$ acts as such
+\[
+  f : V \to k, x \mapsto f(x)
+\]
+In Dirac notation, we can also use a "ket" $\ket{v} \in V$ for vectors and a
+"bra" for operators $\bra{v} \in V^\ast$.
 
-In a basis expansion, this would relate the expansion of $V \otimes W^\ast$ as
-\[
-  T = \sum_{i}^{} v_i \otimes f_i
-\]
-where $f_i \in W^{\ast}   : W \to k$ with the map $T \in \Hom(W,V)$ as
-\[
-  T = (w \mapsto \sum_{i}^{} f_i(w) v_i).
-\]
+Given that these spaces are finite, we can identify the product $V^\ast \ot W
+\cong \Hom(V,W)$ by the map $f \ot v \mapsto (w \mapsto f(v)w)$. Furthermore we
+gain the identities $(V \ot W)^\ast \cong V^\ast \ot W^\ast$ as well as
+$V^{\ast\ast} \cong V$.
+
+
 
 
 Now, if we have a Tensor $T \in V_1 \otimes \cdots \otimes V_n$, and since for any Vector space $V$, $(V^\ast)^\ast = V$, we can peel off any number of $V_{i}$s, take their duals and represent $T$ as a map
@@ -262,3 +275,5 @@ These modules ought to be closed under certain operations:
     \mathcal{C}^p_q(S \otimes T) = \mathcal{C}^p_q(S) \otimes T
   \]
 \end{enumerate}
+
+\section{Some notation}

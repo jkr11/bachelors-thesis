@@ -10,8 +10,11 @@ repetitions of some of the theory.
 
 \section{Representation theory}\label{sym:sub:rep}
 
-In the following and the entire section, let $G$ be a compact group and $V,W$ be finite
-dimensional vector spaces. We mainly follow the textbook by \textcite{woit2016}.
+This section gives a quick review of representation theory. We consider all
+vector spaces and their representations here to be finite, the groups may only
+be compact. For some of the more basic definitions as those of a group and some
+of the matrix groups we are using here, see \Cref{app:gen:groups}. \todo{cite
+rep theory textbook.}
 
 \begin{definition}[Representation]
   A \green{\emph{representation}} of a compact group $G$ over a vector space $V$ is a
@@ -31,17 +34,20 @@ action on $V$, given as a map
   \end{equation}
 such that this is linear, todo. I think we get the equality to the hom def if we set $g \cdot v = \rho(g)v$
 
-\begin{definition}[Intertwiner]
-  A linear map $A : V \to W$ is an \emph{intertwiner}, if under representations $\rho_V :
-  G \to \GL V$ and $\rho_W : G \to \GL W$ it holds that
+\begin{definition}
+  A linear map $A : V \to W$ is an \emph{\green{intertwiner}}, if under
+  representations $\rho_V : G \to \GL V$ and $\rho_W : G \to \GL W$ it holds
+  that
   \[
     A \circ \rho_V(g) = \rho_W (g) \circ A \quad \forall g \in G.
   \]
-  Denote the space of all intertwiners as $\Hom_G(V,W)$.
+  Denote the space of all intertwiners between $V$ and $W$ of the group $G$ as
+  $\Hom_G(V,W)$, similarly denote its endomorphisms as $\End_G(V) \coloneqq
+  \Hom_G(V,V)$.
 \end{definition}
 
-\begin{definition}[Unitary representation]
-  If our vector space $V$ is equipped  with a (Hermitian?) inner product 
+\begin{definition}[Unitary representation]\todo{This is quite important.} If our
+  vector space $V$ is equipped  with a (Hermitian?) inner product 
 \end{definition}
 
 \begin{definition}[Irreducible representation (Woit 16)]
@@ -49,18 +55,18 @@ such that this is linear, todo. I think we get the equality to the hom def if we
   $(\rho_{\vert W}, W)$ is a representation. 
 \end{definition}
 
-\begin{definition}[Tensor product representation]
+\begin{definition}
   \label{symm:def:tensor_product_representation}
-  Given reps $(\rho_V, V)$ and $(\rho_W, W)$, the \emph{tensor product
-  representation} $(\rho_{V\otimes W}, V \otimes W)$ is defined by its action on
-  the elements
+  Given reps $(\rho_V, V)$ and $(\rho_W, W)$, the \emph{\green{tensor product
+  representation}} $(\rho_{V\otimes W}, V \otimes W)$ is defined by its action
+  on the elements
   \[
     \rho_{V \otimes W}(g) (v \otimes w) = \rho_V(g) v \otimes \rho_W(g) w
   \]
 \end{definition}
 
-\begin{definition}[Direct sum representation]
-  As above, the \emph{direct sum representation} $(\rho_{V \oplus W}, V \oplus W)$ 
+\begin{definition}
+  As above, the \emph{\green{direct sum representation}} $(\rho_{V \oplus W}, V \oplus W)$ 
   \[
     \rho_{V \oplus W}(g) = \begin{pmatrix}
       \rho_V(g) &   \\
@@ -105,13 +111,13 @@ with $N_{ab}^c$ called \emph{fusion-multiplicities}. If
 \]
 the decomposition is said to be \emph{multiplicity-free}.
 
-Note as well that the appearance of the \emph{direct sum} here (as discussed in
-\cref{cat:eq:fusionprop}) is fully characterized (carefull how i phrase this) by
+Note as well that the appearance of the \emph{direct sum} here (cf. 
+\Cref{cat:eq:fusionprop}) is fully characterized by
 its injection and projection maps, for which we provide a graphical calculus.
 \[
   \ket{a,b;c,\mu} : R_c \to R_a \otimes R_b \quad \text{ and } \quad \bra{c,\mu; a,b} :R_a \otimes R_b \to R_c   
 \]
-\begin{equation}
+\begin{equation}\label{sym:eq:CGgraphical}
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
     scale=1.0,
@@ -172,7 +178,7 @@ and
 \begin{equation}
   \sum_{c,\mu}^{} \ket{a,b;c,\mu}\bra{\mu,c; a,b} = \id_{R_a \otimes R_b}.
 \end{equation}
-hold. As a consequence of this relation, the outer product of two clebsch-gordan
+hold. As a consequence of this relation, the outer product of two Clebsch-Gordan
 spans the space $\End_G(R_a \otimes R_b)$.
 
 On the operators between tensor products, i.e. $T \in \End_G(R_a \otimes R_b)$
@@ -190,9 +196,9 @@ this yields a formula
   \[
     V \cong \bigoplus_{n \in \Z} \chi_n^{\oplus m_n}. 
   \]
-  It's fusion rule is given by
+  Its fusion rule is given by
   \begin{equation}\label{symm:eq:U1FusionRule}
-    \chi_n \otimes \chi_m = \chi_{n + m}
+    \chi_n \otimes \chi_m = \chi_{n + m}.
   \end{equation}
 \end{example}
 
@@ -204,15 +210,25 @@ this yields a formula
   in what is referred to as the \emph{Clebsch-Gordan-series}.
 \end{example}
 
-\begin{example}[$\SU{2}$-CG tensors]
-  Lets look at an example of spin irreps in the $\SU{2}$ theory. The combined basis of two
-  spin-$\frac{1}{2}$ spaces is given by the collection $\{\ket{\uparrow},
-  \ket{\downarrow}\}^{\otimes 2}$. By the fusion rule \cref{sym:eq:cgseries}, this
-  decomposes as
+\begin{example}
+  Lets look at an example of spin irreps in the $\SU{2}$ theory. The combined
+  basis of two spin-$\frac{1}{2}$ spaces is given by the collection
+  $\{\ket{\uparrow}, \ket{\downarrow}\}^{\otimes 2}$. By the fusion rule
+  \cref{sym:eq:cgseries}, the spins combine as
   \[
     \frac{1}{2} \otimes \frac{1}{2} = 0 \oplus 1 
   \]
-  with its associated basis $\{\ket{1,1},\ket{1,0},\ket{1,-1},\ket{0,0}\}$.
+  with its associated basis $\{\ket{1,1},\ket{1,0},\ket{1,-1},\ket{0,0}\}$. We
+  call this basis the \emph{coupled basis}, indexed as $\ket{j,j_z}$ where $j$
+  is the total spin and $j_z$ is the magnetization? \todo{Read up on this here.}
+  However we can also give a formal notation for this. Denote a state in the
+  spin basis as $\ket{j,m}$ where $j$ is the spin and $m$ is its magnetization?
+  In the case that we have singular spin $1/2$ states, the second labels is
+  redundant since
+  \[
+    \ket{\uparrow} = \ket{\frac{1}{2}, \frac{1}{2}} \quad \ket{\downarrow} = \ket{\frac{1}{2}, -\frac{1}{2}}.
+  \]
+  \todo{Hmm i dont like this being an example. Should we even use the Lie theory here? I dont think we can get around it so put the intro in the appendix?}
 \end{example}
 
 
@@ -259,7 +275,7 @@ This operator admits both a $\U{1}$ symmetry, and a $\SU{2}$ symmetry for
 $\Delta = 1$. We will handle the (simpler) abelian case first. The
 representations of $\U{1}$ here are induced by the operator
 \[
-  S^z_{\mathrm{tot}} = \sum_{i = 1}^{N} S_i^z \quad \text{ with action } \quad U(\theta) : \theta \in \U 1 \mapsto e^{-i\theta S^z_{\mathrm{tot}}}
+  S^z_{\mathrm{tot}} = \sum_{i = 1}^{N} S_i^z \quad \text{ with action } \quad U(\theta) : \theta \in \U 1 \mapsto e^{-i\theta 2 S^z_{\mathrm{tot}}}
 \]
 It can be shown that $H$ is invariant under $U(\theta)$, and it suffices to show
 this invariance for the generators $S_{tot}^z$:
@@ -271,16 +287,34 @@ Diagonalizing both operators yields a block structure as in
 \Cref{fig:diagonal_hamiltonians}(ii). Note however that the diagonalization here
 essentially produced a permutation matrix, and we just reordered the basis to
 group by total spins. If we want to state this in terms of irreps, we have to
-realize that $\C^2 \cong \chi_{-\frac{1}{2}} \oplus \chi_{\frac{1}{2}}$\todo{Hmm
-something is wrong with either this or the defnition. Maybe we can restrict this
-to half integers as well?}. By \cref{symm:eq:U1FusionRule} we can state this
-space as the direct sum
-\[
-  (\C^2)^{\otimes 6} \cong \chi_{-3} \oplus \chi_{-2}^6 \oplus \chi_{-1}^{\oplus 15} \oplus \chi_{0}^{\oplus 20} \oplus \chi_{1}^{\oplus 15} \oplus \chi_2^{\oplus 6} \oplus \chi_3 
-\] 
-and so we should expect $7$ blocks in total, just as given in \Cref{fig:diagonal_hamiltonians}.
+realize that \todo{So this is quite strange, i have to use 2$\S^z_{tot}$ here,
+otherwise we get noninterger weights which makes no sense.}$\C^2 \cong \chi_{-1}
+\op \chi_{1}$. By \cref{symm:eq:U1FusionRule} we can state this space as the
+direct sum
+\begin{align*}
+  (\C^2)^{\ot 6} 
+  &\cong
+  \chi_{-6} \op \chi_{-4}^{\op 6} \op \chi_{-2}^{\op 15} \op \chi_{0}^{\op 20} \op \chi_{2}^{\op 15} \op \chi_4^{\op 6} \op \chi_6 \\
+  &\cong
+  (\C^1 \ot \chi_{-6}) \op (\C^6 \ot \chi_{-4}) \op (\C^{15} \ot \chi_{-2}) \op (\C^{20} \ot \chi_{0}) \op (\C^{15} \ot \chi_2) \op (\C^6 \ot \chi_4) \op (\C^1 \ot \chi_6).
+\end{align*}
+  
 
+Recall that for $\U{1}$, all representations are $1$-dimensional, then by
+Schur's lemma, we can write $H$ as its operator in $\End_{\U{1}}((\C^2)^{\ot
+6})$ as
+\[
+  H \cong \bop_{S \in \{\substack{-6,-4,-2 \\ 0,2,4,6}\}} \Mat{m_S}{m_S}{\R}  \ot \id_{\chi_S} \quad \text{ where } m_S \in \{1, 6, 15, 20, 15, 6, 1\}
+\]
+% asymmetric sum symbol how do i fix? 
+and so we should expect $7$ blocks in total, just as given in
+\Cref{fig:diagonal_hamiltonians}. To store these blocks, we need to store an
+effective $1^2 + 6^2 + 15^2 + 20^2 + 15^2 + 6^2 + 1^1 = 934$ floating point
+numbers.
+% 1 + 36 + 225 + 400 + 225 + 36 + 1 = 2 + 72 + 850 = 934?
 %% Fine up until here.
+
+
 
 Now lets consider the $\SU 2$ case, setting $\Delta = 1$. Here, the generators
 of $\SU{2}$ are given by
@@ -308,7 +342,7 @@ The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
 Again, we can solve this by diagonalizing all 3 operators? Do this calculation as in the .ipynb and put it in the appendix.
 
 %%%
-Or we can do the representation theoretical approach. Let $V_j$ denote the
+Or we can again do the representation theoretical approach. Let $V_j$ denote the
 spin-$j$ irrep of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by
 \cref{cqseries} that
 \[
@@ -339,12 +373,12 @@ multiplicities. If we were to store this Hamiltonian as its initial matrix, we
 would have to store $64 \times 64 = 4096$ floats. If we only store the $4$
 blocks, this is reduced to $5^2 + 9^2 + 5^2 + 1^2 = 132$ floats\footnote{As we
 will see when discussing the actual algorithms behind these symmetric tensors,
-there is still more structure to be stored. However, this still beats storing
-the full numerical Hamiltonian. We do exact calculations in
-\cref{sect:Categories}.}. If we take the case that $N$ is even larger, i.e. the
-case $N = 10$, the full operator requires $1\,048\,576$ floats while the
-symmetric operator only needs $16\,796$. Generally we have about two orders of
-magnitude less.\todo{Do exact asymptotics here!}
+there is still more structure to be stored. However, these methods will still be
+more efficient than storing the full numerical Hamiltonian. We do exact
+calculations in \cref{sect:Categories}.}. If we take the case that $N$ is even
+larger, i.e. the case $N = 10$, the full operator requires $1\,048\,576$ floats
+while the symmetric operator only needs $16\,796$. Generally we have about two
+orders of magnitude less.\todo{Do exact asymptotics here!}
 
 While this big picture overview conveys the general idea, we should do some of
 the calculations by hand. In order to get an interpretation of the matrix
@@ -360,10 +394,10 @@ the XXZ-Hamiltonian for $N = 2$ spins:
 
 This acts on the space $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ and thus on the
 basis $\{\ket{\uparrow},\ket{\downarrow}\}^{\otimes 2}$ This has two distinct
-fusion outcomes, $V_0$ and $V_1$. The basis on the rhs is given by
-$\ket{1,1},\ket{1,0},\ket{1,-1}$ and $\ket{0,0}$, and we want to reformulate
-$S_1 \cdot S_2$ in the total spin basis. We can do this purely algebraically by
-rearranging
+fusion outcomes, $V_0$ and $V_1$. The basis of the coupled states is given by
+$\ket{1,1},\ket{1,0},\ket{1,-1}$ (the triplet state) and $\ket{0,0}$ (the
+singlet state), and we want to reformulate $S_1 \cdot S_2$ in the coupled spin
+basis. We can do this purely algebraically by rearranging
 \[
   S^2 = S_1^2 + S_2^2 + 2(S_1 \cdot S_2) \implies S_1 \cdot S_2 = \frac{1}{2}(S^2 - S_1^2 - S_2^2).
 \]
@@ -378,17 +412,24 @@ and this again splits into the sectors for $S = 0$ and $S = 1$
   c_1 = \frac{J}{2}(2 - 3/2) = \frac{1}{4}J
 \]
 which are exactly the two degrees of freedom we get by the direct sum. So we
-expect our operator to look like
+expect our operator, now in $\bop\limits_{S \in \{0,1\}} \End_G(V_S)$ to look like
 \[
-  \begin{pmatrix}
-    -\frac{3}{4}J &  0 & 0 & 0 \\
+  \left(\begin{array}{c|ccc}
+    -\frac{3}{4}J &  0 & 0 & 0 \\ 
+    \hline
     0 & \frac{1}{4}J & 0 & 0  \\
     0 & 0 & \frac{1}{4}J & 0 \\
     0 & 0 & 0 & \frac{1}{4}J
-  \end{pmatrix}.
+  \end{array}\right).
 \]
+However we can also still represent this as an element of $\End_G(V_{1/2}^{\ot
+ 2})$ \emph{factored} through its fusion result. This notation might for now
+ come out of nowhere, but remember how we characterized the graphical calculus
+ for the Clebsch-Gordan tensors in \cref{sym:eq:CGgraphical}. The graphical
+ calculus here reads: Change base into the coupled basis, apply the two degrees
+ of freedom that we just calculated, and change the base back into the uncoupled
+ basis.
 
-By direct isomorphism\todo{meaningless phrasing}, we can write this as an element of $\End_G(V_{1/2}^{\ot 2})$ \emph{factored} through its fusion result:
 \begin{equation}\label{sym:eq:S1S2}
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
@@ -402,7 +443,7 @@ By direct isomorphism\todo{meaningless phrasing}, we can write this as an elemen
     }
   ]
   
-  \node at (0.8,2.0) {$\displaystyle -J\frac{3}{4}\,\otimes$};
+  \node at (0.8,2.0) {$\displaystyle -J\frac{3}{4}\,\cdot$};
   \coordinate (bot_a) at (1.1, 1.0);
   \coordinate (bot_b) at (2.1, 1.0);
   
@@ -413,18 +454,22 @@ By direct isomorphism\todo{meaningless phrasing}, we can write this as an elemen
   \coordinate (top_a) at (1.1, 3.0);
   \coordinate (top_b) at (2.1, 3.0);
 
-  \draw[string arrow] (bot_a) -- (mid_bot);
-  \draw[string arrow] (bot_b) -- (mid_bot);
+
+  \node at (2.1, 3.3) {$\frac{1}{2}$};
+  \node at (1.1, 3.3) {$\frac{1}{2}$};
+
+  \draw[string arrow] (mid_bot) -- (bot_a) node[below] {$\frac{1}{2}$};;
+  \draw[string arrow] (mid_bot) -- (bot_b) node[below] {$\frac{1}{2}$};;
   
-  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$0$};
+  \draw[string arrow] (mid_top) -- (mid_bot) node[right, pos=0.5] {$0$};
   
-  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
-  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
+  \draw[string arrow] (top_a) -- (mid_top) ; %node[above ] {$\frac{1}{2}$};;
+  \draw[string arrow] (top_b) -- (mid_top) ; %node[above ] {$\frac{1}{2}$};;
   
   \node at (2.5, 2.0) {$+$};
 
-\begin{scope}[shift={(2.2,0.0)}]
-  \node at (1.0,2.0) {$\displaystyle\frac{J}{4}\,\otimes$};
+  \begin{scope}[shift={(2.2,0.0)}]
+  \node at (1.0,2.0) {$\displaystyle\frac{J}{4}\,\cdot$};
   \coordinate (bot_a) at (1.1, 1.0);
   \coordinate (bot_b) at (2.1, 1.0);
   
@@ -434,15 +479,18 @@ By direct isomorphism\todo{meaningless phrasing}, we can write this as an elemen
   \coordinate (top_a) at (1.1, 3.0);
   \coordinate (top_b) at (2.1, 3.0);
 
+  \node at (2.1, 3.3) {$\frac{1}{2}$};
+  \node at (1.1, 3.3) {$\frac{1}{2}$};
 
-  \draw[string arrow] (bot_a) -- (mid_bot);
-  \draw[string arrow] (bot_b) -- (mid_bot);
+
+  \draw[string arrow] (mid_bot) -- (bot_a)  node[below] {$\frac{1}{2}$};
+  \draw[string arrow] (mid_bot) -- (bot_b)  node[below] {$\frac{1}{2}$};
   
-  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$1$};
+  \draw[string arrow] (mid_top) -- (mid_bot) node[right, pos=0.5] {$1$};
   
-  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
-  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
-\end{scope}
+  \draw[string arrow] (top_a) -- (mid_top);
+  \draw[string arrow] (top_b) -- (mid_top);
+  \end{scope}
 
 \end{tikzpicture}
 \end{equation}
@@ -648,7 +696,9 @@ tree-like fashion:
 
 So far we have applied the symmetric formalism to Hamiltonians, which are
 endomorphisms $\End_G()$ between some finite vector spaces. This section will
-develop the theory for general morphisms, i.e. tensors.
+develop the theory for general morphisms, i.e. tensors. Note that we can express
+the XXZ-Hamiltonian as a tensor with $N$ legs in both the domain and
+codomain\todo{is this even true?}.
 
 Let $G$ be a group, and all representations thereof are
 finite-dimensional.\footnote{Compactness of $G$ is not needed here; but we
