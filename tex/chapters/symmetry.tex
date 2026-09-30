@@ -216,15 +216,16 @@ this yields a formula
 \end{example}
 
 
-% Just remove htis heading no? 
 \section{Application: The XXZ Hamiltonian}
 
 The motivation for constructing symmetric tensor networks is as follows: Assume
 we have a (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore
-assume we have a Hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$.
-Then there are different presentations of $H$ with respect to a certain basis by
-\emph{simultaneous diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as
-shown in \Cref{fig:diagonal_hamiltonians}. Notably these presentation induce a
+assume we have a Hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$,
+equivalently, $H$ omits a \emph{global symmetry} $U(g)^{\otimes L} H
+(U(g)^{\otimes L})^\dagger$. Then there are different presentations of $H$ with
+respect to a certain basis by \emph{simultaneous
+diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as shown in
+\Cref{fig:diagonal_hamiltonians}. Notably these presentation induce a
 \emph{block-sparse} structure on the respective operators. 
 
 \begin{figure}[h]
@@ -248,7 +249,7 @@ $XXZ$ hamiltonian:
     = 
     J \cdot 
     \sum_{i = 1}^{N-1}
-      (\sigma_i^x \sigma_{i+1}^x + \sigma_i^y \sigma_{i+1}^y + \Delta \sigma_i^z \sigma_{i+1}^z),
+      (S_i^x S_{i+1}^x + S_i^y S_{i+1}^y + \Delta S_i^z S_{i+1}^z),
   \end{equation}
   acting on the basis $\ket{s_1 s_2 \ldots s_n}$ where $s_i \in \{\uparrow,
   \downarrow\}$.
@@ -258,7 +259,7 @@ This operator admits both a $\U{1}$ symmetry, and a $\SU{2}$ symmetry for
 $\Delta = 1$. We will handle the (simpler) abelian case first. The
 representations of $\U{1}$ here are induced by the operator
 \[
-  S^z_{\mathrm{tot}} = \frac12 \sum_{i = 1}^{N} \sigma_i^z \quad \text{ with action } \quad U(\theta) : \theta \in \U 1 \mapsto e^{-i\theta S^z_{\mathrm{tot}}}
+  S^z_{\mathrm{tot}} = \sum_{i = 1}^{N} S_i^z \quad \text{ with action } \quad U(\theta) : \theta \in \U 1 \mapsto e^{-i\theta S^z_{\mathrm{tot}}}
 \]
 It can be shown that $H$ is invariant under $U(\theta)$, and it suffices to show
 this invariance for the generators $S_{tot}^z$:
@@ -270,8 +271,10 @@ Diagonalizing both operators yields a block structure as in
 \Cref{fig:diagonal_hamiltonians}(ii). Note however that the diagonalization here
 essentially produced a permutation matrix, and we just reordered the basis to
 group by total spins. If we want to state this in terms of irreps, we have to
-realize that $\C^2 \cong \chi_{-1} \oplus \chi_1$. By
-\cref{symm:eq:U1FusionRule} we can state this space as the direct sum
+realize that $\C^2 \cong \chi_{-\frac{1}{2}} \oplus \chi_{\frac{1}{2}}$\todo{Hmm
+something is wrong with either this or the defnition. Maybe we can restrict this
+to half integers as well?}. By \cref{symm:eq:U1FusionRule} we can state this
+space as the direct sum
 \[
   (\C^2)^{\otimes 6} \cong \chi_{-3} \oplus \chi_{-2}^6 \oplus \chi_{-1}^{\oplus 15} \oplus \chi_{0}^{\oplus 20} \oplus \chi_{1}^{\oplus 15} \oplus \chi_2^{\oplus 6} \oplus \chi_3 
 \] 
@@ -282,7 +285,7 @@ and so we should expect $7$ blocks in total, just as given in \Cref{fig:diagonal
 Now lets consider the $\SU 2$ case, setting $\Delta = 1$. Here, the generators
 of $\SU{2}$ are given by
 \[
-  S_{tot}^\alpha = \frac{1}{2} \sum_{i = 1}^{N} \sigma_i^\alpha, \quad \alpha \in \{x,y,z\},
+  S_{tot}^\alpha = \sum_{i = 1}^{N} S_i^\alpha, \quad \alpha \in \{x,y,z\},
 \]
 and its representation is  $U(R) = e^{i\theta n \cdot S_{tot}}$. The Hamiltonian
 is invariant under
@@ -322,12 +325,12 @@ Now our operator is a morphism in $\End_G(V_{\frac{1}{2}}^{\otimes 6})$ and thus
 by Schur's lemma
 \begin{equation}\label{sym:eq:blockdiag}
   H 
-  \in 
-  \bigoplus_{S \in 0,1,2,3} 
+  \cong
+  \bigoplus_{S \in \{0,1,2,3\}} 
   \Mat{m_S}{m_S}\C 
   \otimes I_{2S+1}
   \cong 
-  \bigoplus_{S \in 0,1,2,3} 
+  \bigoplus_{S \in \{0,1,2,3\}} 
   I_{2S+1} \otimes \Mat{m_S}{m_S}\C .
 \end{equation}
 So while we only have to store the matrix elements as blocks, i.e. here we have
@@ -336,20 +339,23 @@ multiplicities. If we were to store this Hamiltonian as its initial matrix, we
 would have to store $64 \times 64 = 4096$ floats. If we only store the $4$
 blocks, this is reduced to $5^2 + 9^2 + 5^2 + 1^2 = 132$ floats\footnote{As we
 will see when discussing the actual algorithms behind these symmetric tensors,
-there is still more structure to be store. However, this still beats storing the
-full numerical Hamiltonian. We do exact calculations in
+there is still more structure to be stored. However, this still beats storing
+the full numerical Hamiltonian. We do exact calculations in
 \cref{sect:Categories}.}. If we take the case that $N$ is even larger, i.e. the
-case $N = 10$, the full operator requires $1\,048\,576$ floats while the symmetric
-operator only needs $16\,796$. Generally we have about two orders of magnitude
-less.\todo{Do exact asymptotics here!}
+case $N = 10$, the full operator requires $1\,048\,576$ floats while the
+symmetric operator only needs $16\,796$. Generally we have about two orders of
+magnitude less.\todo{Do exact asymptotics here!}
 
-While this big picture overview conveys the general idea, we should do some of the
-calculations by hand. In order to get an interpretation of the matrix
-coefficients in $\eqref{sym:eq:blockdiag}$, we restrict ourselves to the case of
+While this big picture overview conveys the general idea, we should do some of
+the calculations by hand. In order to get an interpretation of the matrix
+coefficients in $\cref{sym:eq:blockdiag}$, we restrict ourselves to the case of
 the XXZ-Hamiltonian for $N = 2$ spins:
+%\[
+%  H = \frac{J}{2} (\sigma_1^x \sigma_2^x + \sigma_1^y \sigma_2^y + \sigma_1^z \sigma_2^z)
+%  = J \cdot S_1 \cdot S_2.
+%\]
 \[
-  H = \frac{J}{2} (\sigma_1^x \sigma_2^x + \sigma_1^y \sigma_2^y + \sigma_1^z \sigma_2^z)
-  = J \cdot S_1 \cdot S_2.
+  H = J \cdot (S_1^x S_2^x + S_1^y S_2^y + S_1^z S_2^z) = J \cdot S_1 \cdot S_2
 \]
 
 This acts on the space $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ and thus on the
@@ -375,12 +381,14 @@ which are exactly the two degrees of freedom we get by the direct sum. So we
 expect our operator to look like
 \[
   \begin{pmatrix}
-    -3/4J &  0 \\
-    0 &  \id_3 \otimes 1/4J \\
+    -\frac{3}{4}J &  0 & 0 & 0 \\
+    0 & \frac{1}{4}J & 0 & 0  \\
+    0 & 0 & \frac{1}{4}J & 0 \\
+    0 & 0 & 0 & \frac{1}{4}J
   \end{pmatrix}.
 \]
 
-By direct isomorphism\todo{meaningless phrasing}, we can write this as an element of $\End{V_{1/2}^{\ot 2}}$ \emph{factored} through its fusion result:
+By direct isomorphism\todo{meaningless phrasing}, we can write this as an element of $\End_G(V_{1/2}^{\ot 2})$ \emph{factored} through its fusion result:
 \begin{equation}\label{sym:eq:S1S2}
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
@@ -636,66 +644,74 @@ tree-like fashion:
 
 
 
-
 \section{Symmetric Tensors}
 
-%Here we want to define tensors that are invariant under a symmetry $G$ (a compact group). We say that a tensor $T \in ()
+So far we have applied the symmetric formalism to Hamiltonians, which are
+endomorphisms $\End_G()$ between some finite vector spaces. This section will
+develop the theory for general morphisms, i.e. tensors.
 
-Let $G$ be a compact group. Consider a tensor $T$ living in the tensor product
-space of its legs:
+Let $G$ be a group, and all representations thereof are
+finite-dimensional.\footnote{Compactness of $G$ is not needed here; but we
+require it later for Schur's lemma. Or where?} Fix representations $\rho_i\colon
+G\to\GL{V_i}$ for $i=1,\dots,n$ and $\sigma_j\colon G\to\GL{W_j}$ for
+$j=1,\dots,m$, and set
+\begin{align*}
+  V &= V_1\otimes\cdots\otimes V_n, &
+  \rho_V(g) &= \rho_1(g)\otimes\cdots\otimes\rho_n(g),\\
+  W &= W_1\otimes\cdots\otimes W_m, &
+  \rho_W(g) &= \sigma_1(g)\otimes\cdots\otimes\sigma_m(g).
+\end{align*}
+The dual representation on $W_j^\ast$ is $\sigma_j^\ast(g)f =
+f\circ\sigma_j(g)^{-1}$. A tensor with $n$ outgoing and $m$ incoming legs is an
+element
 \[
-  T \in V_1 \otimes \cdots \otimes V_n \otimes W_m^\ast \otimes \cdots \otimes W_1^\ast
+  T\in V_1\otimes\cdots\otimes V_n\otimes W_m^\ast\otimes\cdots\otimes W_1^\ast
+  \;\cong\; V\otimes W^\ast,
 \]
-
-Let $\rho_i : G \to \GL{V_i}$ be the linear representation of $G$ on each vector
-space $V_i$, and let $\sigma_j^\ast : G \to \text{GL}(W_j^\ast)$ be the dual
-representation on $W_j^\ast$. 
-
-The total action of the group $G$ on the entire tensor product space is given by
-\begin{gather*}
-  \Pi: G \to \text{GL}\left(\bigotimes_i V_i \otimes \bigotimes_j W_j^\ast\right) \\
-  \Pi(g) = \rho_1(g) \otimes \cdots \otimes \rho_n(g) \otimes \sigma_m^\ast(g) \otimes \cdots \otimes \sigma_1^\ast(g)
-\end{gather*}
-
-
-A tensor $T$ is defined to be a \textbf{symmetric tensor} (or $G$-invariant
-tensor) if it is invariant under simultaneous action on all legs for all $g \in
-G$ \cite{singhTensorNetworkDecompositions2010a}:
-\[
-  \Pi(g) T = T \quad \forall g \in G
-\]
-
-Recall that by the isomorphism $\Hom(V,W) \cong W \otimes V^\ast$ as
-\[
-  w \otimes f \mapsto (v \mapsto f(v)w).
-\]
-We can push the product representation through this isomorphism as
-\begin{equation}\label{sym:eq:pushThrough}
-   \pi(g)(w \otimes f) = \rho_W(g)w \otimes \rho_{V^\ast}(g)f = \rho_W(g)w \otimes (\rho_V(g)^{-1})^T  f = \rho_W(g)w \otimes f(\rho_V(g)^{-1} )
+on which $G$ acts by
+\begin{equation}\label{sym:eq:Pi}
+  \Pi(g)=\rho_1(g)\otimes\cdots\otimes\rho_n(g)\otimes
+         \sigma_m^\ast(g)\otimes\cdots\otimes\sigma_1^\ast(g).
 \end{equation}
- 
+(The reversed order on the dual legs is the nested convention for
+$(W_1\otimes\cdots\otimes W_m)^\ast$; since the factors act on different legs,
+it only permutes tensor factors.)
 
-\[
-  \cong v \mapsto f(\rho_V(g)^{-1}v ) \rho_W(g)w
-\]
 
-By interpreting $T$ as a map
-\[
-  T : W_1 \otimes \cdots \otimes W_m \to V_1 \otimes \cdots \otimes V_n
-\]
-it follows directly from the definition of global invariance that the tensor must commute with the group action and we get the following definition of a symmetric tensor:
 
-\begin{definition}
-  \label{def:symmetricTensor}
-  A \green{\emph{symmetric tensor}} is an intertwiner of the representations of the group $G$:
-  \[
-    \bigotimes_{j=1}^m \sigma_j(g) \circ T = T \circ  \bigotimes_{i=1}^n \rho_i(g) \quad \forall g \in G,
-  \]
-  which we denote by
-  \[
-    T \in Hom_G(W,V).
-  \]
+\begin{definition}\label{def:symmetricTensor} A tensor $T\in V\otimes W^\ast$ is
+  \emph{\green{symmetric}} (or $G$-invariant) if $\Pi(g)T=T$ for all $g\in G$
+  \cite{singhTensorNetworkDecompositions2010a}.
 \end{definition}
+
+Let $\Phi\colon V\otimes W^\ast\to\Hom(W,V)$ be the linear isomorphism
+$\Phi(v\otimes f)=\bigl(w\mapsto f(w)\,v\bigr)$.
+
+\begin{lemma}\label{sym:lem:invariant_iff_intertwiner}
+  For all $g\in G$ and $T\in V\otimes W^\ast$,
+  \[
+    \Phi\bigl(\Pi(g)T\bigr)=\rho_V(g)\circ\Phi(T)\circ\rho_W(g)^{-1}.
+  \]
+  Consequently $T$ is symmetric if and only if $\Phi(T)\in\Hom_G(W,V)$, i.e.
+  \[
+    \rho_V(g)\circ\Phi(T)=\Phi(T)\circ\rho_W(g)\qquad\forall g\in G.
+  \]
+\end{lemma}
+\begin{proof}
+  Both sides are linear in $T$, so take $T=v\otimes f$. Then
+  $\Pi(g)T=\rho_V(g)v\otimes\bigl(f\circ\rho_W(g)^{-1}\bigr)$, and
+  \[
+    \Phi(\Pi(g)T)(w)=f\bigl(\rho_W(g)^{-1}w\bigr)\,\rho_V(g)v
+    =\rho_V(g)\,\Phi(T)\bigl(\rho_W(g)^{-1}w\bigr),
+  \]
+  which is the first claim. Since $\Phi$ is injective, $\Pi(g)T=T$ holds iff
+  $\rho_V(g)\Phi(T)\rho_W(g)^{-1}=\Phi(T)$, and multiplying on the right by the
+  invertible $\rho_W(g)$ gives the second claim.
+\end{proof}
+
+Hence $(V\otimes W^\ast)^G\cong\Hom_G(W,V)$, and we identify $T$ with $\Phi(T)$.
+For $W=V$ this is the familiar statement $U(g)HU(g)^{-1}=H\iff[H,U(g)]=0$.
+
 
 \[
 \begin{array}{c}
@@ -747,7 +763,7 @@ it follows directly from the definition of global invariance that the tensor mus
     \draw[leg] (T2.east) -- (1,0) node[right, yshift=2pt] {\tiny $C$};        
   \end{scope}
 
-  \node at (4.8,0) {$\overset{\eqref{sym:eq:pushThrough}}{\Longleftrightarrow}$};
+  \node at (4.8,0) {$\overset{\cref{sym:eq:pushThrough}}{\Longleftrightarrow}$};
 
 
   \begin{scope}[xshift=6.8cm]
