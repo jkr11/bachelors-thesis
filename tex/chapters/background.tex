@@ -1,8 +1,26 @@
 \section{Literature \& Related Work}
 
+\newacronym{mps}{MPS}{matrix product state}
+\newacronym{mpo}{MPO}{matrix product operator}
+\newacronym{peps}{PEPS}{projected entangled-pair state}
+\newacronym{dmrg}{DMRG}{density matrix renormalization ansatz}
+\newacronym{mera}{MERA}{multiscale entanglement renormalization ansatz}
+\newacronym{tn}{TN}{tensor network}
+\newacronym{svd}{SVD}{singular value decomposition}
+
 \begin{literature}[\bf Tensor Networks]
-  The modern theory of \emph{tensor networks} shaped out of the study of \emph{renormalization}
-  and quantum many-body systems, initially with the \emph{density-matrix-renormalization-group} of \textcite{whiteDensityMatrixFormulation1992,whiteDensitymatrixAlgorithmsQuantum1993} and later extended by \textcite{ostlundThermodynamicLimitDensity1995} as a variational method (ansatz?) in the form of \emph{matrix product states} (MPS) (Maybe this is actually due to \cite{fannesFinitelyCorrelatedStates1992}). This was further generalized to 2 dimensions with the introduction of \emph{projected entangled-pair states} (PEPS) \cite{verstraeteRenormalizationAlgorithmsQuantumMany2004}. \emph{Multiscale-entanglement renormalization ansatz} (MERA) \cite{vidalClassQuantumManybody2008} can be considered as an extension of MPS allowing for long-range entanglement (this is probably wrong). Whats missing? Holography \cite{singhHolographicSpinNetworks2018} but there are earlier ones.
+  The modern theory of \emph{tensor networks} shaped out of the study of
+  \emph{renormalization} and quantum many-body systems, initially with the
+  \emph{\gls{dmrg}} of
+  \textcite{whiteDensityMatrixFormulation1992,whiteDensitymatrixAlgorithmsQuantum1993}
+  and later extended by \textcite{ostlundThermodynamicLimitDensity1995} as a
+  variational method (ansatz?) in the form of \emph{\glspl{mps}} (Maybe this is
+  actually due to \cite{fannesFinitelyCorrelatedStates1992}). This was further
+  generalized to 2 dimensions with the introduction of \emph{\gls{peps}}
+  \cite{verstraeteRenormalizationAlgorithmsQuantumMany2004}. \emph{\gls{mera}}
+  \cite{vidalClassQuantumManybody2008} can be considered as an extension of MPS
+  allowing for long-range entanglement (this is probably wrong). Whats missing?
+  Holography \cite{singhHolographicSpinNetworks2018} but there are earlier ones.
 
   In the purely mathematical view as a network of tensor contractions however, both concept and the notation we use today were introduced by \cite{Penrose1971Applications} under the name of \emph{tensor-systems}.
 \end{literature}
@@ -96,184 +114,403 @@ While we introduce this concept classically and endow it with symmetry as a star
 
 \section{On Tensors}
 
-Generally, we want to regard a tensor as a multilinear map equipped with legs,
-where each leg holds a vector space. But we also want to be able to regard
-tensors as operators from a \emph{domain} vector space to a \emph{codomain}
-vector space, such as Hamiltonians. So we develop the theory after
-\textcite{Penrose1971Applications}.
+Throughout, $k$ denotes a field and all vector spaces are finite-dimensional
+over $k$.
 
-First, define a tensor to be an element of a tensor product space of finite
-dimensional vector spaces. Let
+
+A \emph{tensor} is an element of a tensor product of finite-dimensional vector
+spaces,
 \[
-  T \in \bigotimes_{j \in J} V_j
+  T \in \bigotimes_{j \in J} V_j ,
 \]
-where each $V_j$ is a finite-dimensional vector space and we say $T$ is a
-$\left\vert J \right\vert$-legged tensor.
+and we call $T$ a rank $\left\vert J \right\vert$ tensor. The \emph{dimension}
+of the tensor is then $\dim(T) = \prod_{j \in J} \dim(V_j)$.
 
-Recall that for finite dimensional vector spaces (these do not necessarily have
-to be over $\C$ but we consider them over any algebraically closed field $k$) we
-can define the notion of a \emph{dual vector space} $V^\ast$, which is a map
-from the vector space into its field. We can equivalently define this dual space
-to be the space $\Hom(V,k)$ (read as "maps from $V$ to $k$"). An element $f \in V^\ast$ acts as such
+The \emph{dual space} of a vector space $V$ is $V^* = \operatorname{Hom}(V,k)$,
+the space of linear functionals $f \colon V \to k$, $x \mapsto f(x)$. In Dirac
+notation we write $\ket{v} \in V$ for vectors (kets) and $\bra{f} \in V^*$ for
+linear functionals (bras), so that $\braket{f}{v} = f(v)$.
+
+Since all spaces are finite-dimensional, we have the canonical isomorphisms
 \[
-  f : V \to k, x \mapsto f(x)
+  V^{**} \cong V, \qquad
+  (V \otimes W)^* \cong V^* \otimes W^*, \qquad
+  W \otimes V^* \cong \operatorname{Hom}(V,W),
 \]
-In Dirac notation, we can also use a "ket" $\ket{v} \in V$ for vectors and a
-"bra" for operators $\bra{v} \in V^\ast$.
-
-Given that these spaces are finite, we can identify the product $V^\ast \ot W
-\cong \Hom(V,W)$ by the map $f \ot v \mapsto (w \mapsto f(v)w)$. Furthermore we
-gain the identities $(V \ot W)^\ast \cong V^\ast \ot W^\ast$ as well as
-$V^{\ast\ast} \cong V$.
-
-
-
-
-Now, if we have a Tensor $T \in V_1 \otimes \cdots \otimes V_n$, and since for any Vector space $V$, $(V^\ast)^\ast = V$, we can peel off any number of $V_{i}$s, take their duals and represent $T$ as a map
+where the last is given on simple tensors by
 \[
-  T : V_{n}^\ast \otimes \cdots \otimes V_{k+1} ^\ast \to V_1 \otimes \cdots \otimes V_k 
+  \ket{w} \otimes \bra{f} \;\longmapsto\; \bigl(v \mapsto \braket f  v\,\ket w\bigr),
 \]
-Note that we present the domain here in a contravariant fashion due to the contravariance of the dual.
+i.e.\ $\ket{w}\!\bra{f}$ is the outer product.
 
-Lets look at an example, let $t \in V_1 \otimes V_2 \otimes W_{2}^\ast \otimes W_1^\ast$. We can represent as an operator in dirac notation:
+Because $V^{**} \cong V$, any tensor $T \in V_1 \otimes \cdots \otimes V_n$ can
+be regarded as a linear map after choosing a split of its legs at some $0 \le m
+\le n$:
 \[
-  t = \sum_{i_1,i_2,j_1,j_2}^{} T^{i_1 i_2}_{j_1 j_2}  \ket{v^1_{i_1}} \ket{v^2_{i_2}} \bra{w^1_{j_1}} \bra{w^2_{j_2}}
-\] 
-where $\ket{v_i}$ 
-
-Graphically, we represent a general tensor
-\[
-  T : (W_{n}^{\ast} \otimes \cdots \otimes W_1) \to (V_1 \otimes V_2 \otimes \cdots \otimes V_n)
+  T : V_1^\ast \ot \cdots \ot V_{m}^\ast \longrightarrow V_{m+1} \ot \cdots \ot V_{n}.
 \]
-as follows, where we choose incoming arrows for duals in the domain and outgoings for normal spaces, and on the bottom we choose incoming for duals and outgoing for normals.
 
+\begin{example}
+  
+ Let $t \in V_1 \otimes V_2 \otimes W_2^* \otimes W_1^*$.
+Choosing the split after $V_2$, $t$ is an operator $W_1 \otimes W_2 \to V_1
+\otimes V_2$, which in Dirac notation reads
+\[
+  t = \sum_{i_1,i_2,j_1,j_2} T^{i_1 i_2}_{j_1 j_2}\,
+      \ket{v^1_{i_1}}\ket{v^2_{i_2}}\bra{w^2_{j_2}}\bra{w^1_{j_1}},
+\]
+where $\{\ket{v^a_i}\}$ is a basis of $V_a$ and $\{\bra{w^b_j}\}$ is a basis of
+$W_b^*$ (the dual basis of a basis of $W_b$).
+\end{example}
+
+\begin{graphicalCalculus}
+  
+Graphically, a tensor $T \colon W_n \otimes \cdots \otimes W_1 \to V_1 \otimes
+\cdots \otimes V_m$ is a coupon with a leg for each factor of its spaces: legs
+for the codomain are outgoing from the top of the coupon, legs for the domain point inwards towards the bottom of the diagram.
+Arrows are oriented so that a leg carrying $V$ points up and a leg carrying
+$V^*$ points down.
 \begin{tikzpicture}[
-    baseline=(current bounding box.center),
-    leg2/.style={
-      line width=1.1pt,
-      postaction={
-        decorate,
-        decoration={
-          markings,
-          mark=at position 0.7 with {\arrow{Stealth[scale=1.0, fill=black]}}
-        }
-      }
-    },
-    leg/.style={
-        postaction={decorate},
-        decoration={
-            markings,
-            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
-        }
-    },
-    tensor/.style={
-      draw=black,
-      fill=white,
-      line width=1.1pt,
-      minimum size=18pt,
-      inner sep=2pt,
-      rectangle
-    }
-  ]
-    
-
-  \begin{scope}
-    \node[tensor] (T1) at (0,0) {\scriptsize $T$};
-
-    \draw[leg] (0,-1) -- (T1.south) node[right] {$W_n$};
-    
-    \draw[leg] (T1.east) -- (1,0) node[right, yshift=2pt] {\tiny $C$} node[midway, above=2pt] {\scriptsize $U$};        
-  \end{scope}
-
+  box/.style={draw, thick, fill=white, rounded corners=2pt,
+              minimum height=4mm, inner sep=0pt, font=\small},
+  wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
+]
+  \node[box, minimum width=14mm] (T) {$T$};
+  \draw[wire] (-0.4, 0.4) -- (-0.4, 1.3) node[above] {\scriptsize $V_1$};
+  \draw[wire] ( 0.4, 0.4) -- ( 0.4, 1.3) node[above] {\scriptsize $V_2$};
+  \draw[wire] (-0.4,-1.3) node[below] {\scriptsize $W_2$} -- (-0.4,-0.4);
+  \draw[wire] ( 0.4,-1.3) node[below] {\scriptsize $W_1$} -- ( 0.4,-0.4);
 \end{tikzpicture}
+\end{graphicalCalculus}
 
-If we have two tensors with matching legs, we can contract them by repeated application of the \emph{evaluation map}
+Two tensors with matching legs are contracted using the \emph{evaluation}
+and \emph{coevaluation} maps
+\begin{align*}
+  \mathrm{ev}_V &\colon V^* \otimes V \to k, & f \otimes v &\mapsto f(v),\\
+  \mathrm{coev}_V &\colon k \to V \otimes V^*, & \lambda &\mapsto
+    \lambda \sum_i v_i \otimes f_i ,
+\end{align*}
+where $\{v_i\}$ is a basis of $V$ and $\{f_i\}$ its dual basis. A
+\emph{contraction} is a composite of identities and evaluation maps that
+removes the paired legs from the tensor product. For example, for operators
+$A \in U \otimes V^*$ (a map $V \to U$) and $B \in V \otimes W^*$ (a map
+$W \to V$), the product $AB \in U \otimes W^*$ is
 \[
-  V \otimes V^\ast \to k, \quad v \otimes f \mapsto f(v).
+  AB = (\mathrm{id}_U \otimes \mathrm{ev}_V \otimes \mathrm{id}_{W^*})(A \otimes B).
 \]
-and \emph{coevaluation} map
+Equip $U,V,W$ with bases $\{u_a\}, \{v_i\}$ and ${w_b}$ respectively. We can now
+write
 \[
-  k \to V^\ast \otimes V, \quad \lambda \mapsto \sum_{i}^{} \lambda v_i \otimes f_i .
+  A \ot B = \sum_{a,i,j,b} A_{ai} B_{jb} \ket{u_a} \ot \bra{v_i} \ot \ket{v_i} \ot \bra{w_b}
 \]
-
-The contraction operator $\mathcal{C}$ is then defined as the linear operator that \" removes \" the specified spaces from the product. As an example, the matmul between operators $A : U \otimes V^\ast$ and $B : V \otimes U^\ast$ is defined as
+and by evaluation $\ev_V(\bra{v_j} \ot \ket{v_i}) = \braket{v_j}{v_i} =
+\delta^i_j$ we can obtain
 \[
-  (\id_V \otimes \ev_{W} \otimes \id_{U^\ast})(- \otimes -) : (V \otimes W^\ast, W \otimes U^\ast) \to V \otimes U^\ast
+  AB = \sum_{a,i,b} A_{ai} B_{jb} \ket{u_a} \ot \bra{w_b}
 \]
+with coordinates $(AB)^a_b = \sum_i A^a_i B^i_b$ which is precisely the well
+known matrix-multiplication formula.
 
-\newcommand{\mcT}{\mathcal{T}}
+\begin{remark}
+  Here we have chosen the vector spaces $V_j$ to be abstract vector spaces, i.e.
+  they need not be of the form $k^d$, and all the statements like duality and
+  contraction are generally basis-independent. Making a choice of basis
+  identifies $V \cong k^{\dim V}$ and turns $T$ into a coordinatized array as in
+  the example above.
 
-The article by \textcite{Penrose1971Applications} "Applications of Negative
-Dimensional Tensors" introduces a \emph{string calculus} onto the theory of
-tensors, however it also provides a formalization of a more general tensor
-calculus over \emph{Abstract Tensor Systems (ATS)} by introducing a hierachy of
-\emph{modules}
+  Traditionally, for tensor networks we care about local Hilbert space
+  \todo{rephrase!}, so our factors are just $V_j = \C^{d_j}$. Tensors are thus
+  multidimensional arrays and contractions are summations over a shared index. 
+
+  Later on, we will see version of tensor networks that do not have a basis of
+  coordinatized vectors, but rather a abstract indexable basis of formal
+  symbols. \todo{Link, rephrase.} 
+
+  It should also be mentioned \todo{Here? or whree? } that on the implementation
+  level, we also have to consider how we store these tensors. If we have real
+  tensors we may use datatypes such as $\texttt{float64}$, if we have complex
+  tensors we can use $\texttt{complex128}$. \todo{Is this coorect for the storage?} Generally, we store these tensors as arrays (vectors?) in contiguous memory. 
+\end{remark}
+
+If we take the definition of a tensor over a field such as $\C$, we can store
+this on a computer in contiguous memory. Furthermore, if we have a vector in
+$\C^{d^2}$, we can equivalently choose to view this as a matrix in $\C^{d \times
+d}$. This however is not a basis independent process. If we view this vector
+instead as a member of the hom space $\Hom(\C, \C^{d^2})$. \todo{Technically
+this is all redundant, as the indeces are themseleves specified by $n$ other
+indeces.}
+
+\subsection{Tensor Networks \& Matrix Product States}
+
+Often times we will consider quantum state on a lattice. For $1$-dimensional
+systems, we can consider a lattice of $n$ \emph{sites} where each holds a
+\emph{local site} $\ket{i}$. We can give an arbitrary state on this lattice as
 \[
-  (\mcT, \mcT^a, \mcT^b, \ldots, \mcT_a, \mcT_b, \ldots, \mcT_b^a, \ldots, \mcT^{xm}_p, \ldots.)
+  \ket{\Psi} = \sum_{i_1 \ldots i_n} c_{i_1 \cdots i_n} \ket{i_1 i_2 \cdots i_n}.
 \]
-modeling processes in the ground field $\mcT$, the tensors with one incoming leg
-$\mcT^a$, and outgoing leg $\mcT_a$ and combinations thereof.
+Storing this state requires representing the exponentially many coefficient
+$c_{i_1 \cdots i_n}$. As an example, we may have two sites of spin $1/2$, so we
+have a total state space of dimension $4$ spanned by $\ket{i_1 i_2} \cong \C^4$
+with $i_1,i_2 \in \{\uparrow, \downarrow\}$. Then, we can give the coefficients
+to obtain the state
+\[
+  \Psi^+ = \frac{1}{\sqrt{2}}\left(\ket{\uparrow\uparrow} + \ket{\downarrow\downarrow}\right)
+\]
+and we can store this state as a $4\times1$ matrix (a statevector of dimension
+4). If we keep the spin basis on the lattice sites, a matrix on $n$ sites is
+thus representable by a statevector $\ket{\Psi} \in \C^{2^n}$.
 
-These modules ought to be closed under certain operations:
-\begin{itemize}
-  \item[]addition : 
-  \[
-    + : \mcT^{x\ldots z}_{u\ldots w} \times \mcT^{x\ldots z}_{u\ldots w} \to \mcT^{x\ldots z}_{u\ldots w} 
-  \]
-  \item[]tensoring: 
-  \[ 
-    \ot : \mcT^{a\ldots d}_{p \ldots r} \times \mcT^{x\ldots z}_{u\ldots w} \to \mcT^{a\ldots d x\ldots z}_{p\ldots r u\ldots w} 
-  \]  
-  \item[] contraction:
-  \[
-    \mathcal{C}^p_q : \mcT^{px\ldots z}_{qu\ldots w} \to \mcT^{x\ldots z}_{u\ldots w}  
-  \]
-\end{itemize}
+Now, we are allowed to apply a reshape operation and change $\C^{2^n}$ into
+$\C^{2 \times 2^{n-1}}$ which corresponds to a tensor of order $2$, i.e. a
+matrix with $2$ columns and $2^{n-1}$ rows. Now that we have a matrix, we can apply the \gls{svd} yielding a decomposition 
+\[
+  c_{i_1, (i_2 \ldots i_n)} = \sum_{j_1} U_{i1,j1} S_{j_1,j_1} (V^\dagger)_{j1, (i_2 \ldots i_n)}
+\]
 
-\begin{enumerate}
-  \item[(A1)] {Addition forms an Abelian group}:
-  \[
-    S + T = T + S, \qquad S,T \in \mcT^{x\ldots z}_{u\ldots w}
-  \]
 
+\begin{definition}\label{def:MPS}
+  A \emph{\green{Matrix Product State}} is a quantum state $\ket{\psi}$ with $n$ legs written as
+  the contraction of $n$ trivalent tensors $\{A^{[i]}\}_{i \in [n]}$. Formally this reads
   \[
-    (S+T)+U = S+(T+U), \qquad S,T,U \in \mcT^{x\ldots z}_{u\ldots w}
+    \ket{\psi[A]}
+    =
+    \sum_{i_1,\ldots,i_n}
+    \operatorname{Tr}\!\left(
+    A^{i_1}
+    A^{i_2}
+    \cdots
+    A^{i_n}
+    \right)
+    \ket{i_1i_2\cdots i_n},
   \]
-
+  where each $A$ is of the form
   \[
-    T + 0 = T, \qquad \forall\, T \in \mcT^{x\ldots z}_{u\ldots w}
+    A^{[i]} = \sum_{i \delta_i \delta_{i+1}} A^{i}_{\delta_i \delta_{i+1}} \ket{i} \ot \bra{\delta_i} \ot \bra{\delta_{i+1}}
   \]
+  where $A^{[i]}_{i_{k}} \in \C^{D_i \times D_{i+1} }$. The elements of the
+  collection $\{D_i\}_{i \in [n]}$ is referred to as the
+  \emph{\green{bond-dimensions}}.
+\end{definition}
+Note that this is a state with closed boundaries. If we want open boundaries we
+have to replace the trace with appropriate end vectors (nice source?).
 
-  \item[(T1)] {Tensoring distributes over addition} (bilinearity of
-  $\otimes$):
+\begin{example}
+  We can represent each product state $\ket{\varPsi} = \ket{\psi}^{\otimes n}$
+  as a MPS with bond dimension $1$.
+\end{example}
+
+\begin{graphicalCalculus}
+  We represent a MPS tensor to the left and a full MPS with $N = 4$ to the
+  right. 
+  $$
+  \begin{tikzpicture}[
+  box/.style={draw, thick, fill=lightgray, rounded corners=2pt,
+              minimum height=4mm, inner sep=0pt, font=\small},
+  wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
+]
+  \node at (-2,0) {$A_{\alpha\beta}^i$}; % TODO: fix a notation
+  \node[box, minimum width=4mm] (A) at (0,0) {$A$};
+  \draw[wire] (T.north) -- ++ (0, 0.8) node[above] {$i$};
+  \draw[wire] (T.east) -- ++ (0.8, 0) node[right] {$D_{i+1}$};
+  \draw[wire] (T.west) -- ++ (-0.8, 0) node[left] {$D_i$};
+
+  \begin{scope}[xshift=4.0cm]
+    \foreach \i in {1,2,3,4}{
+      \node[box, minimum width=4mm] (A\i) at ({1.8*(\i-1)}, 0) {$A_\i$};
+      \draw[wire] (A\i.north) -- ++ (0,0.8) node[above] {$\i$};
+    }
+    \foreach \i/\j in {1/2,2/3,3/4}{
+      \draw[wire] (A\i.east) -- node[above, font=\scriptsize] {$B_{\i}$} (A\j.west);
+    }
+  
+  \end{scope}
+\end{tikzpicture}
+$$
+\end{graphicalCalculus}
+
+Note that we can easily define an inner product on an MPS (as it represents a state) and we can view this as
+\[
+  \braket{\Psi[A]}{\Psi[A]} = 
+  \begin{tikzpicture}[
+    box/.style={draw, thick, fill=lightgray, rounded corners=2pt,
+              minimum height=4mm, inner sep=0pt, font=\small},
+    wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
+    baseline=(current bounding box.center)
+  ] % TODO: make global setting
+    \foreach \i in {1,2,3,4}{
+      \node[box, minimum width=4mm] (ketA\i) at ({1.8*(\i-1)}, 0) {$A_\i$};
+      \node[box, minimum width=4mm] (braA\i) at ({1.8*(\i-1)}, 2) {$A^\ast_\i$};
+      \draw[wire] (ketA\i.north) -- (braA\i.south);
+    }
+    \foreach \i/\j in {1/2,2/3,3/4}{
+      \draw[wire] (ketA\i.east) -- node[above, font=\scriptsize] {$B_{\i}$} (ketA\j.west);
+      \draw[wire] (braA\i.east) -- node[above, font=\scriptsize] {$B_{\i}^\ast$} (braA\j.west);
+    }
+  \end{tikzpicture}
+\]
+
+\begin{definition}
+  A \green{\emph{\gls{mpo}}} is an operator on a state with $n$ legs
+  on each side written as the contraction of $4$ legged tensors $W^[i]$.... 
   \[
-    (S+T)\otimes U = S\otimes U + T\otimes U, \qquad
-    U \otimes (S+T) = U\otimes S + U\otimes T
+    \sum_{i_1, .., i_n j_1, ..., j_n} \tr(M^{i_1 j_1} M^{i_2 j_2} \cdots M^{i_n j_n}) \ket{i_1 \cdots i_n} \bra{j_1 \cdots j_n}
   \]
-
-  \item[(T2)] {Associativity of tensoring}:
+  We again use the convention of denoting the bonds by $D$, and we can regard each mps tensor as a mapping
   \[
-    (S \otimes T) \otimes U = S \otimes (T \otimes U)
+    \Hom(P_i \otimes D_i, P_j \otimes D_{i+1})
   \]
+\end{definition}
 
-  \item[(C1)] {Contraction distributes over addition} (linearity of
-  $\mathcal{C}^p_q$):
-  \[
-    \mathcal{C}^p_q(S + T) = \mathcal{C}^p_q(S) + \mathcal{C}^p_q(T)
-  \]
+\begin{graphicalCalculus}
+  We represent a MPO tensor to the left and a full MPO with $N = 4$ to the
+  right. 
+  $$
+  \begin{tikzpicture}[
+  box/.style={draw, thick, fill=lightgray, rounded corners=2pt,
+              minimum height=4mm, inner sep=0pt, font=\small},
+  wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
+]
+  \node at (-2,0) {$A_{\alpha\beta}^i$}; % TODO: fix a notation
+  \node[box, minimum width=4mm] (A) at (0,0) {$A$};
+  \draw[wire] (T.north) -- ++ (0, 0.8) node[above] {$i$};
+  \draw[wire] (T.east) -- ++ (0.8, 0) node[right] {$D_{i+1}$};
+  \draw[wire] (T.west) -- ++ (-0.8, 0) node[left] {$D_i$};
+  \draw[wire] (T.south) -- ++ (0,-0.8) node[below] {$j$};
 
-  \item[(C2)] {Contractions are abelian} (independent contractions
-  commute):
-  \[
-    \mathcal{C}^p_q \, \mathcal{C}^r_s = \mathcal{C}^r_s \, \mathcal{C}^p_q,
-    \qquad p,q,r,s \ \text{distinct indices}
-  \]
+  \begin{scope}[xshift=4.0cm]
+    \foreach \i in {1,2,3,4}{
+      \node[box, minimum width=4mm] (A\i) at ({1.8*(\i-1)}, 0) {$A_\i$};
+      \draw[wire] (A\i.north) -- ++ (0,0.8) node[above] {$\i$};
+      \draw[wire] (A\i.south) -- ++ (0,-0.8) node[below] {$j_{\i}$};
+    }
+    \foreach \i/\j in {1/2,2/3,3/4}{
+      \draw[wire] (A\i.east) -- node[above, font=\scriptsize] {$B_{\i}$} (A\j.west);
+    }
+  % TODO: wire correctly
+  % TODO: trace
+  \end{scope}
+\end{tikzpicture}
+$$
+\end{graphicalCalculus}
 
-  \item[(C3)] {Contraction is local under tensoring}: if $p,q$ are
-  indices belonging only to $S$,
-  \[
-    \mathcal{C}^p_q(S \otimes T) = \mathcal{C}^p_q(S) \otimes T
-  \]
-\end{enumerate}
+Constructing these operators can be done by the use of a \emph{finite state machine} \cite{crosswhiteFiniteAutomataCaching2008}. As an example, the XXZ-Hamiltonian is represented by the MPO tensors 
+\begin{equation}
+  W_{ij} = \begin{pmatrix}
+    1 & 0 & 0 & 0 & 0 \\
+    S^x & 0 & 0 & 0 & 0 \\
+    S^y & 0 & 0 & 0 & 0 \\
+    S^z & 0 & 0 & 0 & 0 \\
+    0 & S^x & S^y & S^z & 1
+  \end{pmatrix}_{ij}
+\end{equation}
+with bond dimension $5$, note that this acts on the physical states as such. 
 
-\section{Some notation}
+As an application, we can immediately represent the expectation value of a state $\bra{\Psi} H \ket{\Psi}$ by using MPSs and MPOs:
+\[
+   \begin{tikzpicture}[
+  box/.style={draw, thick, fill=lightgray, rounded corners=2pt,
+              minimum height=4mm, inner sep=0pt, font=\small},
+  wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
+]
+
+  \begin{scope}[xshift=0.0cm]
+    \foreach \i in {1,2,3,4}{
+      \node[box, minimum width=4mm] (B\i) at ({1.8*(\i-1)}, 1) {$A^\ast_\i$};
+      \node[box, minimum width=4mm] (W\i) at ({1.8*(\i-1)}, 0) {$W_\i$};
+      \node[box, minimum width=4mm] (A\i) at ({1.8*(\i-1)}, -1) {$A_\i$};
+
+      \draw[wire] (W\i.north) -- (B\i.south);
+      \draw[wire] (A\i.north) -- (W\i.south);
+    }
+    \foreach \i/\j in {1/2,2/3,3/4}{
+      \draw[wire] (W\i.east) -- (W\j.west);
+      \draw[wire] (A\i.east) -- (A\j.west);
+      \draw[wire] (B\i.east) -- (B\j.west);
+    }
+  % TODO: wire correctly
+  % TODO: trace
+  \end{scope}
+\end{tikzpicture}
+\]
+
+%\newcommand{\mcT}{\mathcal{T}}
+%
+%The article by \textcite{Penrose1971Applications} "Applications of Negative
+%Dimensional Tensors" introduces a \emph{string calculus} onto the theory of
+%tensors, however it also provides a formalization of a more general tensor
+%calculus over \emph{Abstract Tensor Systems (ATS)} by introducing a hierachy of
+%\emph{modules}
+%\[
+%  (\mcT, \mcT^a, \mcT^b, \ldots, \mcT_a, \mcT_b, \ldots, \mcT_b^a, \ldots, \mcT^{xm}_p, \ldots.)
+%\]
+%modeling processes in the ground field $\mcT$, the tensors with one incoming leg
+%$\mcT^a$, and outgoing leg $\mcT_a$ and combinations thereof.
+%
+%These modules ought to be closed under certain operations:
+%\begin{itemize}
+%  \item[]addition : 
+%  \[
+%    + : \mcT^{x\ldots z}_{u\ldots w} \times \mcT^{x\ldots z}_{u\ldots w} \to \mcT^{x\ldots z}_{u\ldots w} 
+%  \]
+%  \item[]tensoring: 
+%  \[ 
+%    \ot : \mcT^{a\ldots d}_{p \ldots r} \times \mcT^{x\ldots z}_{u\ldots w} \to \mcT^{a\ldots d x\ldots z}_{p\ldots r u\ldots w} 
+%  \]  
+%  \item[] contraction:
+%  \[
+%    \mathcal{C}^p_q : \mcT^{px\ldots z}_{qu\ldots w} \to \mcT^{x\ldots z}_{u\ldots w}  
+%  \]
+%\end{itemize}
+%
+%\begin{enumerate}
+%  \item[(A1)] {Addition forms an Abelian group}:
+%  \[
+%    S + T = T + S, \qquad S,T \in \mcT^{x\ldots z}_{u\ldots w}
+%  \]
+%
+%  \[
+%    (S+T)+U = S+(T+U), \qquad S,T,U \in \mcT^{x\ldots z}_{u\ldots w}
+%  \]
+%
+%  \[
+%    T + 0 = T, \qquad \forall\, T \in \mcT^{x\ldots z}_{u\ldots w}
+%  \]
+%
+%  \item[(T1)] {Tensoring distributes over addition} (bilinearity of
+%  $\otimes$):
+%  \[
+%    (S+T)\otimes U = S\otimes U + T\otimes U, \qquad
+%    U \otimes (S+T) = U\otimes S + U\otimes T
+%  \]
+%
+%  \item[(T2)] {Associativity of tensoring}:
+%  \[
+%    (S \otimes T) \otimes U = S \otimes (T \otimes U)
+%  \]
+%
+%  \item[(C1)] {Contraction distributes over addition} (linearity of
+%  $\mathcal{C}^p_q$):
+%  \[
+%    \mathcal{C}^p_q(S + T) = \mathcal{C}^p_q(S) + \mathcal{C}^p_q(T)
+%  \]
+%
+%  \item[(C2)] {Contractions are abelian} (independent contractions
+%  commute):
+%  \[
+%    \mathcal{C}^p_q \, \mathcal{C}^r_s = \mathcal{C}^r_s \, \mathcal{C}^p_q,
+%    \qquad p,q,r,s \ \text{distinct indices}
+%  \]
+%
+%  \item[(C3)] {Contraction is local under tensoring}: if $p,q$ are
+%  indices belonging only to $S$,
+%  \[
+%    \mathcal{C}^p_q(S \otimes T) = \mathcal{C}^p_q(S) \otimes T
+%  \]
+%\end{enumerate}
+%
+%\section{Some notation}
