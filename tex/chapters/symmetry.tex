@@ -271,6 +271,11 @@ $XXZ$ hamiltonian:
   \downarrow\}$.
 \end{definition}
 
+Note that by definition, the $XXZ$-Hamiltonian is a local hamiltonian of the form
+\[
+  H = \sum_i h_{i,i+1}
+\]
+
 This operator admits both a $\U{1}$ symmetry, and a $\SU{2}$ symmetry for
 $\Delta = 1$. We will handle the (simpler) abelian case first. The
 representations of $\U{1}$ here are induced by the operator
@@ -303,10 +308,12 @@ direct sum
 Recall that for $\U{1}$, all representations are $1$-dimensional, then by
 Schur's lemma, we can write $H$ as its operator in $\End_{\U{1}}((\C^2)^{\ot
 6})$ as
+%\[
+ % H \cong \bop_{S \in \left\{\substack{-6,-4,-2 \\ 0,2,4,6}\right\}} \Mat{m_S}{m_S}{\R}  \ot \id_{\chi_S} \quad \text{ where } m_S \in \{1, 6, 15, 20, 15, 6, 1\}%
+%\]
 \[
-  H \cong \bop_{S \in \{\substack{-6,-4,-2 \\ 0,2,4,6}\}} \Mat{m_S}{m_S}{\R}  \ot \id_{\chi_S} \quad \text{ where } m_S \in \{1, 6, 15, 20, 15, 6, 1\}
+  H \quad\cong\quad \bop_{\mathclap{S \in \{-6,-4,-2,\;0,\;2,\;4,\;6\}}} \Mat{m_S}{m_S}{\R}  \ot \id_{\chi_S} \quad\cong\quad \bop_{\mathclap{S \in \{-6,-4,-2,\;0,\;2,\;4,\;6\}}} \Mat{m_S}{m_S}{\R}  \quad \text{ where } m_S \in \{1, 6, 15, 20, 15, 6, 1\}
 \]
-% asymmetric sum symbol how do i fix? 
 and so we should expect $7$ blocks in total, just as given in
 \Cref{fig:diagonal_hamiltonians}. To store these blocks, we need to store an
 effective $1^2 + 6^2 + 15^2 + 20^2 + 15^2 + 6^2 + 1^1 = 934$ floating point
@@ -695,10 +702,10 @@ tree-like fashion:
 \section{Symmetric Tensors}
 
 So far we have applied the symmetric formalism to Hamiltonians, which are
-endomorphisms $\End_G()$ between some finite vector spaces. This section will
-develop the theory for general morphisms, i.e. tensors. Note that we can express
-the XXZ-Hamiltonian as a tensor with $N$ legs in both the domain and
-codomain\todo{is this even true?}.
+endomorphisms $\End_G()$ between some finite vector spaces, and we have an
+interpretation of local Hamiltonians acting between sites. This section will
+show how to express arbitrary symmetric tensors as intertwinders, and thus also
+constructing symmetric MPSs, MPOs and MERAs.
 
 Let $G$ be a group, and all representations thereof are
 finite-dimensional.\footnote{Compactness of $G$ is not needed here; but we
@@ -855,35 +862,86 @@ For $W=V$ this is the familiar statement $U(g)HU(g)^{-1}=H\iff[H,U(g)]=0$.
   Important there is that this entire discussion is only about FdVect or FdHilb
   for now, but i think the same applies to any braided category.    
 \end{corollary}
+As an application of this more general tensor formalism, we can contstruct a
+symmetric MPS. If we stay with our current example, our ground state is of the
+form $\ket{i_1 i_2 \cdots i_n} \in (\C^2)^{n}$. If we represent this as a
+\gls{mps}, we know by default that this needs a physical dimension of $2$, i.e.
+the space corresponding to the $\frac{1}{2}$ irrep at every site. 
+
+We can also use the presentations of the clebsch-gordan operators and realize that these can be considered tensors of order $3$. If we chain these together naively we will get a state that can be represented symbolically as
+\[
+  \begin{tikzpicture}[
+    box/.style={
+      draw,
+      thick,
+      fill=lightgray,
+      rounded corners=2pt,
+      minimum height=4mm,
+      inner sep=0pt,
+      font=\small
+    },
+    wire/.style={
+      thick,
+      postaction={
+        decorate,
+        decoration={
+          markings,
+          mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}
+        }
+      }
+    },
+  ]
+
+    \foreach \i in {1,2,3,4,5,6}{
+      \node[box, minimum width=4mm] (A\i)
+        at ({1.8*(\i-1)}, 0) {$CG$};
+
+      \draw[wire]
+        (A\i.north) -- ++(0,0.8)
+        node[above] {$\frac{1}{2}$};
+    }
+
+    \foreach \i/\j/\bond in {
+      1/2/$\frac{1}{2}$,
+      2/3/$0\op1$,
+      3/4/$\frac{1}{2}\oplus\frac{3}{2}$,
+      4/5/$0\op1\op2$,
+      5/6/$\frac{1}{2}\oplus\frac{3}{2}\oplus\frac{5}{2}$
+    }{
+      \draw[wire]
+        (A\i.east) --
+        node[above, font=\scriptsize] {\bond}
+        (A\j.west);
+    }
+    \draw[wire] (-0.8,0) -- node[above] {$0$} (A1.west); 
+  \end{tikzpicture}
+\]
+and we can immediately observe an increasing bond dimension to the right.
 
 
-\begin{definition}\label{def:MPS}
-  A \emph{\green{Matrix Product State}} is a quantum state $\ket{\psi}$ with $n$ legs written as
-  the contraction of $n$ trivalent tensors $\{A^{[i]}\}_{i \in [n]}$. Formally this reads
-  \[
-    \ket{\psi[A]}
-    =
-    \sum_{i_1,\ldots,i_n}
-    \operatorname{Tr}\!\left(
-    A^{[1]}_{i_1}
-    A^{[2]}_{i_2}
-    \cdots
-    A^{[n]}_{i_n}
-    \right)
-    \ket{i_1i_2\cdots i_n},
-  \]
-  where $A^{[i]}_{i_{k}} \in \C^{D_i \times D_{i+1} }$. The elements of the
-  collection $\{D_i\}_{i \in [n]}$ is referred to as the
-  \emph{\green{bond-dimensions}}.
-\end{definition}
-Note that this is a state with closed boundaries. If we want open boundaries we
-have to replace the trace with appropriate end vectors (nice source?).
+Recall that a single mps tensor that is also symmetric is of the form $\Hom_G(D_i, P_i \ot D_{i+1})$. Note that we did not assume that $P$ or $D$ are irreps, therefore we can decompose such an MPS as
+\[ \Hom_G\left( \bigoplus_i \mathbb{C}^{Ni^D}\otimes D_i,, \left(\bigoplus_j \mathbb{C}^{Nj^P}\otimes P_j\right) \otimes \left(\bigoplus_k \mathbb{C}^{Nk^E}\otimes E_k\right) \right). \]
+Rearranging this equation yields
+\[
+  \bigoplus_{ijk} \underbrace{\Hom(\C^{N_i^D}, \C^{N_j^P} \ot \C^{N_k^E})}_{3 legged tensor} \ot \underbrace{\Hom_G(D_i, P_j \ot E_k)}_{Clebsch-Gordan tensor}
+\]
+Again, we know the physical space to be $\frac{1}{2}$, so we may simplify this expression to
+\[
+TODO
+\]
 
-\begin{example}
-  We can represent each product state $\ket{\varPsi} = \ket{\psi}^{\otimes n}$
-  as a MPS with bond dimension $1$.
-\end{example}
+We can do some analysis on the individual tensors here. If we choose the third
+tensor, of the form $\Hom_G(0 \op 1, \frac{1}{2} \ot (\frac{1}{2} \op
+\frac{3}{2}))$, we can do some analysis over the CG-rule for $\SU{2}$.
 
+There are $3$ possible combination in the basis of this space, these are the spaces
+\[
+  (0,\frac{1}{2},\frac{1}{2}); \quad (1, \frac{1}{2}, \frac{1}{2}); \quad (1, \frac{1}{2}, \frac{3}{2})
+\]
+and all spaces have degenracy $1$, and so do their associated degeneracy
+tensors. This means that we have $3$ degrees of freedom on the first tensor. 
+
+If we look at the fourth tensor
 \begin{theorem}[Fundamental Theorem of MPS]
   If two MPS states generated by $A$ and $B$ respectively. Figure out what we
   can do with this. 
