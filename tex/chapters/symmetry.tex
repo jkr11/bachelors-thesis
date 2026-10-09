@@ -75,6 +75,21 @@ such that this is linear, todo. I think we get the equality to the hom def if we
   \]
 \end{definition}
 
+\begin{lemma}[Schur's lemma
+    \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}
+  ]
+  \label{sym:lemma:schur}
+  If $A$ and $B$ are irreducible representations for some group $G$, then it
+  holds that
+  \[
+    \Hom(A,B) = \begin{dcases}
+      \C \cdot \id_S, &\text{ if } A \cong B ;\\
+      0 , &\text{ if } A \ncong B .
+    \end{dcases}
+  \]
+  Proof \cite[Theorem~7.5]{ibortIntroductionGroupsGroupoids2019}.
+\end{lemma}
+
 \begin{definition}[Isotypic / Semisimple decomposition]\label{sym:def:isotypic}
   Each semisimple representation $V$ decomposes as
   \[
@@ -110,6 +125,25 @@ with $N_{ab}^c$ called \emph{fusion-multiplicities}. If
   N_{ab}^c \leq 1 \quad \forall a,b,c 
 \]
 the decomposition is said to be \emph{multiplicity-free}.
+
+If we view operators in $\End_G(R_a \otimes R_b)$, we can obtain a closed form on them by Schurs lemma.
+\begin{align*}
+  \End_G(R_a \ot R_b) &\cong \End_G(\bop_c R_c^{N_{ab}^c}, \bop_c R_c^{N_{ab}^c}) \\
+  &\cong \bigoplus_c \End_G(R_c)^{N_{ab}^c} \\
+  &\overeq{\cref{sym:lemma:schur}}
+\end{align*}
+
+On the operators between tensor products, i.e. $T \in \End_G(R_a \otimes R_b)$
+this yields a formula
+\[
+  T \cong \bigoplus_c \id_{R_c} \otimes \; \C^{N_{ab}^c}. 
+\]
+This holds because, if we apply a rep of $g$, it acts only on where? what?
+
+Anyhow, this decomposition is essentially fixed by the representation, the
+degrees of freedom are captured in the vector space that relates the
+multiplicity spaces.
+
 
 Note as well that the appearance of the \emph{direct sum} here (cf. 
 \Cref{cat:eq:fusionprop}) is fully characterized by
@@ -181,11 +215,6 @@ and
 hold. As a consequence of this relation, the outer product of two Clebsch-Gordan
 spans the space $\End_G(R_a \otimes R_b)$.
 
-On the operators between tensor products, i.e. $T \in \End_G(R_a \otimes R_b)$
-this yields a formula
-\[
-  T \cong \bigoplus_c \id_{R_c} \otimes \; \C^{N_{ab}^c} 
-\]
 
 \begin{example}
   The simple objects of $G = \U{1}$ are given by the one-dimensional representations
@@ -242,7 +271,7 @@ equivalently, $H$ omits a \emph{global symmetry} $U(g)^{\otimes L} H
 respect to a certain basis by \emph{simultaneous
 diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as shown in
 \Cref{fig:diagonal_hamiltonians}. Notably these presentation induce a
-\emph{block-sparse} structure on the respective operators. 
+\emph{block-sparse} structure on the respective operators
 
 \begin{figure}[h]
   \centering
@@ -256,7 +285,9 @@ diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as shown in
 \end{figure}
 
 We now show how to obtain this block-sparse structure and more by example of the
-$XXZ$ hamiltonian:
+$XXZ$ hamiltonian. Much of this material is covered by
+\cite{alvarezImplementationSU2Hamiltonian2012,caoGlobalSymmetriesQuantum2025,singhTensorNetworkStates2012a,mccullochNonAbelianDensityMatrix2002}
+and others\todo{References seem out of place here.}.
 
 \begin{definition}\label{def:xxzHamiltonian}
   The \emph{\green{XXZ Hamiltonian}} on $N$ sites is
@@ -312,7 +343,16 @@ Schur's lemma, we can write $H$ as its operator in $\End_{\U{1}}((\C^2)^{\ot
  % H \cong \bop_{S \in \left\{\substack{-6,-4,-2 \\ 0,2,4,6}\right\}} \Mat{m_S}{m_S}{\R}  \ot \id_{\chi_S} \quad \text{ where } m_S \in \{1, 6, 15, 20, 15, 6, 1\}%
 %\]
 \[
-  H \quad\cong\quad \bop_{\mathclap{S \in \{-6,-4,-2,\;0,\;2,\;4,\;6\}}} \Mat{m_S}{m_S}{\R}  \ot \id_{\chi_S} \quad\cong\quad \bop_{\mathclap{S \in \{-6,-4,-2,\;0,\;2,\;4,\;6\}}} \Mat{m_S}{m_S}{\R}  \quad \text{ where } m_S \in \{1, 6, 15, 20, 15, 6, 1\}
+  H 
+  \quad\cong\quad 
+  \bop_{\mathclap{S \in \{-6,-4,-2,\;0,\;2,\;4,\;6\}}}\,\, 
+  \Mat{m_S}{m_S}{\R}  \ot \id_{\chi_S} 
+  \quad\cong\quad 
+  \bop_{\mathclap{S \in \{-6,-4,-2,\;0,\;2,\;4,\;6\}}}\,\, 
+  \Mat{m_S}{m_S}{\R}  
+  \quad 
+  \text{ where } 
+  m_S \in \{1, 6, 15, 20, 15, 6, 1\}
 \]
 and so we should expect $7$ blocks in total, just as given in
 \Cref{fig:diagonal_hamiltonians}. To store these blocks, we need to store an
@@ -322,27 +362,33 @@ numbers.
 %% Fine up until here.
 
 
-
-Now lets consider the $\SU 2$ case, setting $\Delta = 1$. Here, the generators
-of $\SU{2}$ are given by
+\medskip
+If we consider the XXZ model with $\Delta=1$ (so the XXX model), a nonabelian
+$\SU{2}$ symmetry emerges. Here, the generators of $\SU{2}$ are given by
 \[
   S_{tot}^\alpha = \sum_{i = 1}^{N} S_i^\alpha, \quad \alpha \in \{x,y,z\},
 \]
-and its representation is  $U(R) = e^{i\theta n \cdot S_{tot}}$. The Hamiltonian
+and its representation is  $U(g_{\vec{n}}) = e^{i\theta \vec{n} \cdot S_{tot}}$. The Hamiltonian
 is invariant under
 \[
-  U(R) H U(R)^\dagger = H, \quad R \in \SU 2
+  U(g) H U(g)^\dagger = H, \quad g \in \SU 2
 \]
-
-Since
+which is equivalent to $[H, S_{tot}^\alpha] = 0$ for all $\alpha$. Since
 \[
   [S_{tot}^x, S_{tot}^y ] = i S_{tot}^z 
-\]
-we need a new operator for the simulatenous diagonalization
+\] (and all its permutations)
+we cannot diagonalize these operators simultaneously and we need to consider a new operator. The \emph{Casimir operator}
 \[ 
   S_{tot}^2 = \sum_{a \in \{x,y,z\}}^{} (S_{tot}^{a})^2
 \]
-and we need to verify this is indeed the correct operator TODO.
+commutes with all the generators since\todo{appendix?}
+\[
+  [S_{tot}^2, S_{tot}^b]
+  = \sum_{a} \big( S^a_{tot}[S^a_{tot}, S^b_{tot}] + [S^a_{tot}, S^b_{tot}] S^a_{tot} \big)
+  = i \sum_{a,c} \varepsilon_{abc} \big( S^a_{tot} S^c_{tot} + S^c_{tot} S^a_{tot} \big)
+  = 0,
+\]
+
 
 The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
 
@@ -510,9 +556,78 @@ with a multiplicity $2$ on the $1/2$ state and the Operator is
 \[
   H = \frac{1}{2} (S_1 \cdot S_2 + S_2 \cdot S_3)
 \]
-and consider that we chose the left bracketing when combining the spins. Note
-that this means that the $S_1 \cdot S_2$ operator is fully diagonal, but the
-$S_2 \cdot S_3$ operator has off diagonal interactions. The diagonalized
+and consider that we chose the left bracketing when combining the spins. We have
+the basis
+\[
+  \ket{\frac{3}{2}, 1}, \quad \ket{\frac{1}{2}, 0}, \quad \ket{\frac{1}{2}, 1}.
+\] 
+We can represent this in terms of the graphical calculus in \cref{sym:eq:CGgraphical} as
+\[
+  \begin{tikzpicture}[
+    baseline=(current bounding box.center),
+    scale=1.0,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
+  ]
+
+  \coordinate (top_a) at (1.0, 1.0);
+  \coordinate (top_b) at (2.0, 1.0);
+  \coordinate (top_c) at (3.0, 1.0);
+  
+  \coordinate (mid_1) at (1.5, 0.5);
+  \coordinate (mid_2) at (2.1, -0.1);
+
+  \coordinate (bot_d) at (2.1, -0.75);
+
+  \draw [string arrow] (bot_d) -- (mid_2) node[below=20pt] {$\frac{3}{2}$};
+  \draw [string arrow] (mid_2) -- (top_c) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (mid_2) -- (mid_1) node[below left] {$1$};
+  \draw [string arrow] (mid_1) -- (top_b) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (mid_1) -- (top_a) node[above] {$\frac{1}{2}$};
+
+  \begin{scope}[xshift=4cm]
+     \coordinate (top_a) at (1.0, 1.0);
+  \coordinate (top_b) at (2.0, 1.0);
+  \coordinate (top_c) at (3.0, 1.0);
+  
+  \coordinate (mid_1) at (1.5, 0.5);
+  \coordinate (mid_2) at (2.1, -0.1);
+
+  \coordinate (bot_d) at (2.1, -0.75);
+
+  \draw [string arrow] (bot_d) -- (mid_2) node[below=20pt] {$\frac{1}{2}$};
+  \draw [string arrow] (mid_2) -- (top_c) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (mid_2) -- (mid_1) node[below left] {$0$};
+  \draw [string arrow] (mid_1) -- (top_b) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (mid_1) -- (top_a) node[above] {$\frac{1}{2}$};
+
+  \end{scope}
+  \begin{scope}[xshift=8.0cm]
+    
+   \coordinate (top_a) at (1.0, 1.0);
+  \coordinate (top_b) at (2.0, 1.0);
+  \coordinate (top_c) at (3.0, 1.0);
+  
+  \coordinate (mid_1) at (1.5, 0.5);
+  \coordinate (mid_2) at (2.1, -0.1);
+
+  \coordinate (bot_d) at (2.1, -0.75);
+
+  \draw [string arrow] (bot_d) -- (mid_2) node[below=20pt ] {$\frac{1}{2}$};
+  \draw [string arrow] (mid_2) -- (top_c) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (mid_2) -- (mid_1) node[below left] {$1$};
+  \draw [string arrow] (mid_1) -- (top_b) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (mid_1) -- (top_a) node[above] {$\frac{1}{2}$};
+  \end{scope}
+  \end{tikzpicture}
+\]
+Note that this means that the $S_1 \cdot S_2$ operator is fully diagonal, but
+the $S_2 \cdot S_3$ operator has off diagonal interactions. The diagonalized
 Hamiltonian is given on the right.
 
 \noindent
@@ -695,6 +810,17 @@ tree-like fashion:
 \end{scope}
 \end{tikzpicture}
 
+There is a third symmetry with $\Z_2$ under the operator 
+\[
+  R = \exp(i\pi \sum_j S^x_j)
+\]
+which can be interpreted as a \emph{spin-flip}. Both $\Z_2$ and $\U{1}$ commute
+with $H$, so both are in the symmetry group. We can combine both of these
+symmetries by their semidirect product, because the do no commute
+$RU(\theta)R^{-1} = U(-\theta)$ \cite{caoGlobalSymmetriesQuantum2025}. So we get a new symmetry group
+\[
+  \U{1} \rtimes \Z_2 = O(2) \subseteq \SU{2}.
+\]
 
 
 
@@ -942,6 +1068,27 @@ and all spaces have degenracy $1$, and so do their associated degeneracy
 tensors. This means that we have $3$ degrees of freedom on the first tensor. 
 
 If we look at the fourth tensor
+
+Alternatively, we can also decompose the state over the svd as we have done. Recall that if our tensor is an operator, it decomposes as a direct sum of blocks. Furthermore, we can immediately apply the SVD to each block:
+\[
+  \bigoplus_c D_c \otimes \id_{V_c}, \quad \quad T_c = U_c \Sigma_C V^\ast_c
+\]
+and we can rewrite
+\[
+  T = \bigoplus_c (U_c \ot \id_{V_c})(\Sigma_c \ot \id_{V_c})(V_c^\ast \ot \id_{V_c}).
+\]
+We can also truncate the operators obtained by SVD. The representation parts
+$\id_{V_c}$ are fixed, so we can only operatore withing the degeneracy matrices.
+Effectively we can reduce an operators bond dimension by reducing its
+multiplicity
+\[
+  V = \bigoplus_c V_c^{n_c} \mapsto \bigoplus_c V_c^{\chi_c}.
+\]
+The new operators are of shape $\chi_c \times \chi_c$, but its effective bond
+dimension in the dense operator is $\sum_c \chi_c \dim(V_c)$. In our $3$-spin
+example, the $1/2$ block has multiplicity two. This could be truncated to a
+$1x1$ matrix. \todo{Actually do this.}
+
 \begin{theorem}[Fundamental Theorem of MPS]
   If two MPS states generated by $A$ and $B$ respectively. Figure out what we
   can do with this. 
@@ -950,6 +1097,3 @@ If we look at the fourth tensor
   \cite{ciracMatrixProductDensity2017},\cite{vercleyenMathematicalStructureTensor2018},
   \cite{perez-garciaStringOrderSymmetries2008a}.
 \end{theorem}
-
-\subsection{Algorithms for block-sparse
-tensors}\label{sym:sec:algorithms_for_block_sparse_tensors}

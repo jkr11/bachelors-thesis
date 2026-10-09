@@ -163,6 +163,15 @@ where $\{\ket{v^a_i}\}$ is a basis of $V_a$ and $\{\bra{w^b_j}\}$ is a basis of
 $W_b^*$ (the dual basis of a basis of $W_b$).
 \end{example}
 
+\begin{example}
+  Note that while we gave a definition of a vector as $\ket{v} \in V$, we can alternatively define a vector as a linear map
+  \[
+    v : \C \to V, \lambda \mapsto \lambda \ket{v}.
+  \]
+  This means we can effectively let the space of vectors be the space
+  $\Hom(\C,V)$.
+\end{example}
+
 \begin{graphicalCalculus}
   
 Graphically, a tensor $T \colon W_n \otimes \cdots \otimes W_1 \to V_1 \otimes
@@ -181,6 +190,10 @@ $V^*$ points down.
   \draw[wire] ( 0.4, 0.4) -- ( 0.4, 1.3) node[above] {\scriptsize $V_2$};
   \draw[wire] (-0.4,-1.3) node[below] {\scriptsize $W_2$} -- (-0.4,-0.4);
   \draw[wire] ( 0.4,-1.3) node[below] {\scriptsize $W_1$} -- ( 0.4,-0.4);
+  \begin{scope}[xshift=2cm]
+    \node[box, minimum width=4mm] (v) {$v$};
+    \draw[wire] (0.0, 1.3) -- (v.north);
+  \end{scope}
 \end{tikzpicture}
 \end{graphicalCalculus}
 
@@ -267,6 +280,25 @@ matrix with $2$ columns and $2^{n-1}$ rows. Now that we have a matrix, we can ap
 \[
   c_{i_1, (i_2 \ldots i_n)} = \sum_{j_1} U_{i1,j1} S_{j_1,j_1} (V^\dagger)_{j1, (i_2 \ldots i_n)}
 \]
+Recall that we can choose the rank of the SVD, so that the matrix $U$ that is
+produced is of dimension $r \leq i_1$\todo{NOTATION!}. We can absorb the factors $S$ and $V$ into the remaining state and again reshape to a state, and we get the expression
+\[
+  c_{i_1,(i_2 \ldots i_n)} = \sum_{j_1} U_{i_1,j_1} c_{j_1, i_2 \ldots i_n}
+\]
+We now reshape the new c again to a tensor of shape $[(j_1i_2, i_3 \ldots i_n)]$.
+\[
+  c_{i_1, i_2, \ldots} = \sum_{j_1, j_2} U^{i_1,j_1} U_{(j_1 i_2),j_2} c_{j_2, (i_3, \ldots, i_n)}
+\]
+and we can reshape the expression $U_{(j_1i_1),j_2}$ to a trivalent tensor having an extra leg for the physical dimension, i.e. we want ot build the tensor
+\[
+  c_{i_1, i_2, \ldots} = \sum_{j_1, j_2} U_{j_1}^{i_1} U_{j_1,j_2}^{i_2} c_{j_2, (i_3, \ldots, i_n)}
+\]
+We can apply this procedure recursively to the new coefficient, and in the end
+we will get an expression for our state
+\[
+  c_{i_1, \ldots, i_n} = \sum_{j_1, \ldots, j_{n-1}} U_{i_1, j_1}
+\]
+
 
 
 \begin{definition}\label{def:MPS}
