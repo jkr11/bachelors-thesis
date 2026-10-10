@@ -149,6 +149,12 @@ be regarded as a linear map after choosing a split of its legs at some $0 \le m
 \[
   T : V_1^\ast \ot \cdots \ot V_{m}^\ast \longrightarrow V_{m+1} \ot \cdots \ot V_{n}.
 \]
+We can also make the default definition a linear map if we do not want to have a split into domain and codomain by equating it to the map
+\[
+  \C \to V_1 \ot \cdots \ot V_n \cong V_1 \ot \cdots \ot V_n, \quad f \mapsto f(1).
+\]
+Note that this does not depend on the tensor product structure, we could also
+have defined $X = V_1 \otimes \cdots \ot V_n$ as its own vector space.
 
 \begin{example}
   
@@ -197,13 +203,152 @@ $V^*$ points down.
 \end{tikzpicture}
 \end{graphicalCalculus}
 
-Two tensors with matching legs are contracted using the \emph{evaluation}
-and \emph{coevaluation} maps
+Now we want to introduce the common methods of \emph{reshapes} and
+\emph{contractions} onto a tensor. Reshapes come in ?|?? flavors:
+\begin{enumerate}
+  \item Grouping and splitting indices: $X \cong V \ot W$ 
+  \item Transpositions: $\Hom(V \ot W, X) \to \Hom(V, X \ot W^\ast)$
+  \item Permutations: $\Hom(V \ot W, X \ot Y) \to \Hom(W \ot V, Y \ot X)$
+\end{enumerate}
+
+For grouping legs, we can act as above and consider the isomorphic vector space $X$. Equivalently we can also consider a bracketing of the vector spaces
+% https://q.uiver.app/#q=WzAsMTAsWzAsMCwiICAoVl8xIFxcb3QgXFxjZG90cyBcXG90IFZfbSkgIl0sWzAsMSwiWCJdLFsxLDAsIlxcb3RpbWVzIl0sWzIsMCwiIChWX3ttKzF9IFxcb3QgXFxjZG90cyBcXG90IFZfbikgIl0sWzMsMCwiXFxvdCJdLFs0LDAsIlxcY2RvdHMiXSxbMSwxLCJcXG90aW1lcyJdLFsyLDEsIlkiXSxbMywxLCJcXG90Il0sWzQsMSwiXFxjZG90cyJdLFszLDcsIlxcdGV4dHtncm91cGluZ30iLDAseyJvZmZzZXQiOi0yfV0sWzUsOSwiXFx0ZXh0e2xlZnQgYXMgaXN9IiwwLHsic3R5bGUiOnsidGFpbCI6eyJuYW1lIjoiYXJyb3doZWFkIn19fV0sWzEsMCwiXFx0ZXh0e3NwbGl0dGluZ30iLDAseyJvZmZzZXQiOi0yfV0sWzAsMSwiXFx0ZXh0e2dyb3VwaW5nfSIsMCx7Im9mZnNldCI6LTJ9XSxbNywzLCJcXHRleHR7c3BsaXR0aW5nfSIsMCx7Im9mZnNldCI6LTJ9XV0=
+\[\begin{tikzcd}
+	{  (V_1 \ot \cdots \ot V_m) } & \otimes & { (V_{m+1} \ot \cdots \ot V_n) } & \ot & \cdots \\
+	X & \otimes & Y & \ot & \cdots
+	\arrow["{\text{grouping}}", shift left=2, from=1-1, to=2-1]
+	\arrow["{\text{grouping}}", shift left=2, from=1-3, to=2-3]
+	\arrow["{\text{left as is}}", from=1-5, to=2-5]
+	\arrow["{\text{splitting}}", shift left=2, from=2-1, to=1-1]
+	\arrow["{\text{splitting}}", shift left=2, from=2-3, to=1-3]
+\end{tikzcd}\]
+
+\[
+\begin{tikzpicture}[
+  box/.style={draw, thick, fill=white, rounded corners=2pt,
+              minimum height=6mm, inner sep=0pt, font=\small},
+  wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
+]
+\begin{scope}
+  \node[box, minimum width=14mm] at (0,0) {$f$};
+  \draw[wire] (-0.4,-1.8) node[below] {$V$} -- (-0.4,-0.3);
+  \draw[wire] ( 0.4,-1.8) node[below] {$W$} -- ( 0.4,-0.3);
+  \draw[wire] ( 0.0, 0.3) -- (0,1.8) node[above] {$X$};
+  \node[font=\small] at (0,-2.7) {$f \in \Hom(V \ot W, X)$};
+\end{scope}
+\end{tikzpicture}
+\]
+
+For the other operations, we need a relation between a vector space and its dual
+space. For this we use the notion of \emph{evaluation} and \emph{coevaluation}
+maps.
 \begin{align*}
   \mathrm{ev}_V &\colon V^* \otimes V \to k, & f \otimes v &\mapsto f(v),\\
   \mathrm{coev}_V &\colon k \to V \otimes V^*, & \lambda &\mapsto
-    \lambda \sum_i v_i \otimes f_i ,
+    \lambda \sum_i v_i \otimes f_i.
 \end{align*}
+Take a arbitrary tensor $\Hom(V \ot W, X)$. Now we can do a reshape by composing these maps. The transposition here would then be the isomorphism
+\[
+  \Hom(V \ot W, X) \to \Hom(V, X \ot W^\ast), \quad f \mapsto (f \ot id_{W^\ast}) \circ (\id_V \ot \coev_W).
+\] 
+\[
+\begin{tikzpicture}[
+  box/.style={draw, thick, fill=white, rounded corners=2pt,
+              minimum height=6mm, inner sep=0pt, font=\small},
+  wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
+]
+  \begin{scope}
+  \node[box, minimum width=14mm] at (0,0) {$f$};
+  \draw[wire] (-0.4,-1.8) node[below] {$V$} -- (-0.4,-0.3);
+  \draw[wire] ( 0.4,-1.8) node[below] {$W$} -- ( 0.4,-0.3);
+  \draw[wire] ( 0.0, 0.3) -- (0,1.8) node[above] {$X$};
+  \node[font=\small] at (0,-2.7) {$f \in \Hom(V \ot W, X)$};
+\end{scope}
+
+\begin{scope}[xshift=2cm]
+  \node[box, minimum width=14mm] at (0,0) {$f$};
+  \draw[wire] (-0.4,-1.8) node[below] {$V$} -- (-0.4,-0.3);
+  \draw[wire] ( 0.4, -0.6) node[below] {$W$} -- ( 0.4,-0.3);
+  \node[box, minimum width=14mm] at (0.8, -0.9) {$\coev_W$};
+  \draw[wire] (1.2, -0.6) -- (1.2, 1.8) node[above] {$W^\ast$};
+  \draw[wire] ( 0.0, 0.3) -- (0,1.8) node[above] {$X$};
+  \draw[dashed, gray] (0.9, -1.8) node[below] {$\C$} -- (0.9, -1.2);
+\end{scope}
+
+\begin{scope}[xshift=5cm]
+  \node[box] at (0,0) {$f$};
+\end{scope}
+
+\end{tikzpicture}
+\]
+where we have omitted the extra leg carrying $\C$ as this is a trivial leg of
+dimension one.
+
+If we have a matrix operator $A : V \to W$ we can execute a transpose by application of $\ev$ and $\coev$:
+\[
+\begin{tikzpicture}[
+  box/.style={draw, thick, fill=white, rounded corners=2pt,
+              minimum height=6mm, inner sep=0pt, font=\small},
+  wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
+]
+ 
+\begin{scope}
+  \node[box, minimum width=6mm] at (0,0) {$A$};
+  \draw[wire] (0,-1.8) node[below] {$V$} -- (0,-0.3);
+  \draw[wire] (0, 0.3) -- (0, 1.8) node[above] {$W$};
+  \node[font=\small, anchor=north] at (0,-2.5) {$A \in \Hom(V, W)$};
+\end{scope}
+ 
+\node at (1.9,0) {$\longmapsto$};
+ 
+\begin{scope}[xshift=3.9cm]
+  \node[box, minimum width=6mm] at (0,0) {$A$};
+ 
+  \node[box, minimum width=12mm] at (-0.3, 1.2) {$\ev_W$};
+  \node[box, minimum width=12mm] at ( 0.3,-1.2) {$\coev_V$};
+ 
+  \draw[wire] (0,-0.9) -- (0,-0.3);
+  \draw[wire] (0, 0.3) -- (0, 0.9);
+  \draw[wire] (0.6, 1.8) node[above] {$V^\ast$} -- (0.6,-0.9);
+  \draw[wire] (-0.6, 0.9) -- (-0.6,-1.8) node[below] {$W^\ast$};
+ 
+  \draw[dashed, gray] (-1.1,-0.6) -- (1.0,-0.6);
+  \draw[dashed, gray] (-1.1, 0.6) -- (1.0, 0.6);
+  \node[font=\scriptsize, anchor=west] at (1.2, 1.2)
+    {$\ev_W \ot \id_{V^\ast}$};
+  \node[font=\scriptsize, anchor=west] at (1.2, 0.0)
+    {$\id_{W^\ast} \ot A \ot \id_{V^\ast}$};
+  \node[font=\scriptsize, anchor=west] at (1.2,-1.2)
+    {$\id_{W^\ast} \ot \coev_V$};
+ 
+  \node[font=\scriptsize, align=center, anchor=north] at (1.3,-2.5)
+    {$(\ev_W \ot \id_{V^\ast}) \circ (\id_{W^\ast} \ot A \ot \id_{V^\ast})$\\[1pt]
+     $\circ\; (\id_{W^\ast} \ot \coev_V)$};
+\end{scope}
+ 
+\node at (8.6,0) {$=:$};
+ 
+\begin{scope}[xshift=10.0cm]
+  \node[box, minimum width=6mm] at (0,0) {$A^{T}$};
+  \draw[wire] (0, 1.8) node[above] {$V^\ast$} -- (0, 0.3);
+  \draw[wire] (0,-0.3) -- (0,-1.8) node[below] {$W^\ast$};
+  \node[font=\small, anchor=north] at (0,-2.5) {$A^{T} \in \Hom(W^\ast, V^\ast)$};
+\end{scope}
+ 
+\end{tikzpicture}
+\]
+
+Next, we want to realize \emph{permutations}. Recall that a permutation is a
+rearrangement on a set of labels $(a_1, a_2, \ldots, a_n) \mapsto (s_1(a_1),
+s_2(a_n), \ldots, s_n(a_n)$. It is known that an arbitrary permutation can be
+realized by swapping repeatedly applying \emph{swap operations} between two
+adjacent symbols, these operators $s_i : (a,b) \to (b,a)$ are the generators of
+the symmetric group of order $n$, $S_n$ (cf. \cref{app:gen:groups}). So it is
+enough for us to implement these simple swaps.
+
 where $\{v_i\}$ is a basis of $V$ and $\{f_i\}$ its dual basis. A
 \emph{contraction} is a composite of identities and evaluation maps that
 removes the paired legs from the tensor product. For example, for operators
