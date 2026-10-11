@@ -378,7 +378,7 @@ A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ
 \begin{lemma}
   The \emph{Yang-Baxter equation}\todo{define this somewhere} holds for the braiding:
   \[
-    (\beta_{A,B} \ot \id_textC)(\id_A \ot \beta_{A,C})(\beta_{B,C} \ot \id_A) = 
+    (\beta_{A,B} \ot \id_C)(\id_A \ot \beta_{A,C})(\beta_{B,C} \ot \id_A) = 
   \]
 \end{lemma}
 
@@ -493,17 +493,19 @@ motivate the following definition:
 \end{definition}
 
 \begin{example}
+  These maps appear both for traditional vector space but also have an anyonic
+  interpretation:
   \begin{enumerate}
     \item 
   In $\Veck$, the dual object for every vector space $V$ is given by its \emph{dual-space} $V^\ast \coloneqq \Hom(V, k)$. The evaluation and coevaluation maps here correspond to 
   \[
-    \ev_V : V \otimes V^\ast \to k, 
+    \ev_V : V \otimes V^\ast \to k,\quad \bra{f} \ot \ket{v} \mapsto \braket{f}{v} \in k 
   \]
   \[
     \coev_V : k \to V^\ast \otimes V, 
   \]
     \item 
-    In Anyon theories we generally want the ability to take antiparticles for
+    In anyon theories we generally want the ability to take antiparticles for
     each species of anyon, and furthermore, we want to be able to \emph{create}
     and \emph{annihilate} these anyons. So the dual object corresponds to the
     antiparticle, and the $\ev$ and $\coev$ maps either produce a
@@ -549,6 +551,52 @@ motivate the following definition:
     \node at (-0.6, -0.5) {\small $A^*$};
     \node at (0.6, -0.5) {\small $A$};
   \end{tikzpicture}.
+\]
+We can give the two constraint (aptly named the \emph{snake equations}) as a "tightening" of a string:
+\[
+\begin{tikzpicture}[baseline=(current bounding box.center),
+  wire/.style={thick, postaction={decorate, decoration={markings,
+    mark=at position 0.12 with {\arrow{Stealth[length=4pt]}},
+    mark=at position 0.50 with {\arrow{Stealth[length=4pt]}},
+    mark=at position 0.88 with {\arrow{Stealth[length=4pt]}}}}}]
+  \draw[wire] (2,0) -- (2,1)
+      .. controls (2,1.8) and (1,1.8) .. (1,1)
+      .. controls (1,0.2) and (0,0.2) .. (0,1)
+      -- (0,2);
+  \node[below] at (2,0) {\small $A$};
+  \node[above] at (0,2) {\small $A$};
+  \node at (0.5,0.1) {\small $\mathrm{coev}_A$};
+  \node at (1.5,1.9) {\small $\mathrm{ev}_A$};
+  \node at (1.25,1.0) {\small $A^*$};
+\end{tikzpicture}
+\;=\;
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+  \draw[thick, -{Stealth[length=4pt]}] (0,0) -- (0,2);
+  \node[below] at (0,0) {\small $A$};
+  \node[above] at (0,2) {\small $A$};
+\end{tikzpicture}
+\quad\quad\quad
+\begin{tikzpicture}[baseline=(current bounding box.center),
+  wire/.style={thick, postaction={decorate, decoration={markings,
+    mark=at position 0.12 with {\arrow{Stealth[length=4pt]}},
+    mark=at position 0.50 with {\arrow{Stealth[length=4pt]}},
+    mark=at position 0.88 with {\arrow{Stealth[length=4pt]}}}}}]
+  \draw[wire] (2,2) -- (2,1)
+      .. controls (2,0.2) and (1,0.2) .. (1,1)
+      .. controls (1,1.8) and (0,1.8) .. (0,1)
+      -- (0,0);
+  \node[below] at (0,0) {\small $A^*$};
+  \node[above] at (2,2) {\small $A^*$};
+  \node at (1.5,0.1) {\small $\mathrm{coev}_A$};
+  \node at (0.5,1.9) {\small $\mathrm{ev}_A$};
+  \node at (0.75,1.0) {\small $A$};
+\end{tikzpicture}
+\;=\;
+\begin{tikzpicture}[baseline=(current bounding box.center)]
+  \draw[thick, -{Stealth[length=4pt]}] (0,2) -- (0,0);
+  \node[below] at (0,0) {\small $A^*$};
+  \node[above] at (0,2) {\small $A^*$};
+\end{tikzpicture}
 \]
 
 \end{graphicalCalculus}
@@ -1263,6 +1311,67 @@ In a basis expansion this then looks like
 \]
 \end{proof}
 
+\newcommand{\legs}[7]{%
+  \draw[wire] ({#1-1.05},-1.2) node[below] {#2} -- ({#1-1.05},-0.3);
+  \draw[wire] ({#1-0.35},-1.2) node[below] {#3} -- ({#1-0.35},-0.3);
+  \node at ({#1+0.35},-0.8) {$\cdots$};
+  \draw[wire] ({#1+1.05},-1.2) node[below] {#4} -- ({#1+1.05},-0.3);
+  \draw[wire] ({#1-1.05},0.3) -- ({#1-1.05},1.2) node[above] {#5};
+  \draw[wire] ({#1-0.35},0.3) -- ({#1-0.35},1.2) node[above] {#6};
+  \node at ({#1+0.35},0.8) {$\cdots$};
+  \draw[wire] ({#1+1.05},0.3) -- ({#1+1.05},1.2) node[above] {#7};
+}
+ 
+\begin{tikzpicture}[
+    box/.style={
+      draw,
+      thick,
+      fill=lightgray,
+      rounded corners=2pt,
+      minimum height=6mm,
+      inner sep=0pt,
+      font=\small
+    },
+    wire/.style={
+      thick,
+      postaction={
+        decorate,
+        decoration={
+          markings,
+          mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}
+        }
+      }
+    },
+    placeholder/.style={
+      draw=gray,
+      dashed,
+      thick,
+      rounded corners=2pt,
+      inner sep=0pt,
+      font=\small,
+      text=gray
+    },
+  ]
+ 
+\node[box, minimum width=30mm] at (0,0) {$T$};
+\legs{0}{$V_1$}{$V_2$}{$V_n$}{$W_1$}{$W_2$}{$W_m$}
+\node[font=\scriptsize, gray] at (0,-2.1) {$T \in \Hom_{\CC}\bigl(\bigot_i V_i,\ \bigot_j W_j\bigr)$};
+ 
+\node at (3.0,0) {$=\;\bop_{\hat a,\hat b}$};
+ 
+\node[box, minimum width=30mm] at (6.5,0) {$t_{\hat a,\hat b}$};
+\legs{6.5}{$D_{1,a_1}$}{$D_{2,a_2}$}{$D_{n,a_n}$}{$E_{1,b_1}$}{$E_{2,b_2}$}{$E_{m,b_m}$}
+\node[font=\scriptsize, gray] at (6.5,-2.1) {degeneracy tensor $\in \Hom_k(D_{\hat a}, E_{\hat b})$};
+ 
+\node at (9.1,0) {$\ot$};
+ 
+\node[placeholder, minimum width=30mm, minimum height=6mm] at (11.7,0) {fusion tree};
+\legs{11.7}{$R_{a_1}$}{$R_{a_2}$}{$R_{a_n}$}{$R_{b_1}$}{$R_{b_2}$}{$R_{b_m}$}
+\node[font=\scriptsize, gray] at (11.7,-2.1) {fusion tree $\in \Hom_{\CC}(R_{\hat a}, R_{\hat b})$};
+ 
+\end{tikzpicture}
+
+
 \begin{corollary}[Operators are block matrices
 \cite{kongInvitationTopologicalOrders2022b}] % TODO figure out why i cant cie theorems in
 thm header.
@@ -1352,23 +1461,25 @@ A
 \end{example}
 
 \begin{example}[Anyonic matrix operator]
-  Finally, consider a $4 \to 4$ anyon operator with one leg on each side, representing the
-  space $\mathrm{Hom}((\tau \otimes \tau \otimes \tau \otimes \tau), (\tau \otimes \tau
-  \otimes \tau \otimes \tau))$. THe full decomposition is $2 + 3\tau$. Hence we obtain
+  Finally, consider a $4 \to 4$ anyon operator with one leg on each side,
+  representing the space $\mathrm{Hom}_\Fib((\tau \otimes \tau \otimes \tau
+  \otimes \tau), (\tau \otimes \tau \otimes \tau \otimes \tau))$. Here we
+  consider it as an operator. The full decomposition is $2 + 3\tau$. Hence we
+  obtain
   \[
-    \Hom_C\!\left(
-      (k^2 \otimes 1)\oplus(k^3\otimes\tau),
-      (k^2 \otimes 1)\oplus(k^3\otimes\tau)
+    \Hom_{\Fib}\!\left(
+      (\C^2 \otimes 1)\oplus(\C^3\otimes\tau),
+      (\C^2 \otimes 1)\oplus(\C^3\otimes\tau)
     \right).
   \]
   \[
     =
     \bigoplus_{a,b\in(1,\tau)}
-    \Hom_C(k^{m_a}\otimes a,\,
-    k^{m_b}\otimes b)
+    \Hom_C(\C^{m_a}\otimes a,\,
+    \C^{m_b}\otimes b)
     =
     \bigoplus_{a,b\in(1,\tau)}
-    \Hom(k^{m_a}, k^{m_b}) \otimes Hom_C(a,b)
+    \Hom(\C^{m_a}, \C^{m_b}) \otimes Hom_C(a,b)
   \]
   where
   \[
@@ -1383,21 +1494,145 @@ A
   which is just a block matrix with indexing $(1_1, 1_2, \tau_1, \tau_2, \tau_3)$.
 \end{example}
 
-\subsection{The Deligne Tensor Product \& Product Theories}
-\label{subsect:deligne}
+\subsection{Implementing Fusion Trees}
+
+Before we begin to build categorical tensors, we will show how to implement a
+fusion-tree. Primarily, since a tensors is just an arbitrary morphisms in
+$\Hom_\CC(a \ot b \ot c \cdots, x \ot y \ot \cdots)$ we will store its domain
+and its codomain as two lists of charges $a,b,c : \texttt{charge}$. Specifics
+here would allow $\texttt{int}$ for $\Z_2$ and $\texttt{float}$ for $\SU{2}$.
+
+For the fusion trees, the most basic building blocks are the trivalent verteces
+$\iota^{ab}_{c,\mu}$ and $\pi_{ab}^{c,\mu}$. A larger tree is then stored as an array of these vertices, so we have a correspondence
+\[
+  [\iota^{ab}_{c,\mu}, \iota^{cd}_{e,\nu}, \iota^{ef}_{g,\omega}, \ldots, \pi_{xy}^{z,\delta}]
+  \equiv
+  \pi_{xy}^{z,\delta} \circ \cdots \circ
+  (\iota^{ef}_{g,\omega} \ot \cdots \ot \id_w) \circ
+  (\iota^{cd}_{e,\nu} \ot \id_f \ot \cdots \ot \id_w) \circ
+  (\iota^{ab}_{c,\mu} \ot \id_d \ot \id_f \ot \cdots \ot \id_w)
+\]
+Here $w$ is the last input leg, and $z$ is the output of the last fusion. We
+also represent morphisms in $\Hom_\CC(a, b)$ (so single lines) as trivalent
+vertices by its unitors, so as $\Hom_\CC(a \ot I, b) \cong \Hom_\CC(a, b \ot I)$
+and this extra vertex is not captured by the shape unless $I$ is the only object
+in the codomain. \todo{Keep this in mind for the implementation.} Also note that
+the ordering of these nodes does not matter in general. \todo{example}
+
+However we only save this entire array once, and we leave in the labels as
+variables. An actual tensor will have charges associated to the labels in its
+domain, so for example $a$ will carry and associated $\SU{2}$ charge of
+$\frac{1}{2} \oplus \frac{3}{2}$. Furthermore, we are not given the charges for
+the intermediate indeces that appear in the fusion tree, and these need to be
+deteremined from the domain and codomain, thus we implement the procedure
+\verb|tree.charge_sectors()|. A charge sector here is simply a mapping
+between each label and one of its possible charges. All the charge sectors are
+then a list of these mappings. Consider the trees (multiplicity free)
+\[
+  (\pi^{ab}_c \ot \id_d) \circ (\pi^{cd}_e)
+\]
+where the domain is $[a,b,c] \cong [\tau,\tau,\tau]$ and the codomain is $[e]
+\cong [\tau]$. It is now only left to determine the factor $c$, and we can show
+there are two valid paths, one with $c = \tau$ and one with $c = I$. Thus the
+determined charge sectors are
+\[
+  \bigl[
+    [\tau,\tau,\tau,I,\tau],
+    [\tau,\tau,\tau,\tau,\tau]
+  \bigr].
+\]
+If we had instead chosen $[a,b,c] \cong [\tau \op I, \tau \op I, \tau \op I]$
+and $[e] \cong [I \op \tau]$, we get charge sectors
+\[
+  \bigl[
+    [I,I,I,I,I],
+    [I, I, \tau, I, \tau],
+    [I, \tau, I, \tau, \tau],
+    [\tau, I, I, \tau, \tau],
+    [I,I,\tau, I, \tau],
+    [\tau,\tau,I,\tau,\tau],
+    [\tau,\tau,I,I,I],
+    [\tau,\tau,\tau,I, \tau],
+    [\tau,\tau,\tau,\tau,\tau]
+  \bigr]
+\]
+so it suffices to only save the \emph{geometry} of the tree, and all of its
+charge sectors.
+
+Now we wish to apply all the reshape operations to these trees. We know that
+$F$-moves create a superposition of trees when applied, but we only care about
+the geometry for now. Also recall that $F$-moves act locally on a tree, for the
+geometry this entails that a local rearrangement is enough. Recall that an fmove
+acts on the local space $\Hom(a \ot b \ot c, d)$ and thus in the array
+representation on spaces such as $[\iota^{ab}_c, \iota_{cd}^e]$. There are also
+$F$-moves defined on non-simple trees that are of the form $[\iota^{a,\mu}_{bc},
+\pi^{cd}_{e,\nu}]$ also admit an $F$-move, in this case to the target $[]$. This
+convention is sometimes also chosen as the default definition of the $F$-move,
+and is denotes as $[F^{ab}_{cd}]_{e}^{f}$ \todo{nicer!}, especially in the
+context of spin chains \cite{bondersonNonAbelianAnyonsInterferometry2007}
+\todo{check the sources im referring to.}
+
+Applying permutations to the trees is also only possible whenever therere is a
+clear target to apply this to, so the two charges need to be a adjacent (i.e.
+they are a part of the same trivalent vertex).
+
+Now, if we actually want to do this on the level of tensors, we need to consider
+their coefficients in the matrix parts. 
+
+For each pair $(\hat a,\hat b)$, the space $\Hom_C(R_{\hat a},R_{\hat b})$ is
+spanned by tree arrays: a fusion tree $R_{\hat a}\to R_c$ followed by a
+splitting tree $R_c\to R_{\hat b}$,
+\[
+  \mathbb T_s=[\iota\ldots\iota,\ \pi\ldots\pi],
+\]
+where $s$ collects the coupled charge $c$, all internal charges and all vertex
+multiplicities. By \Cref{DecompositionOfSemisimpleCategories} every tensor is
+then
+\[
+  T=\sum_s t_s\ot\mathbb T_s,\qquad t_s\in\Hom_k(D_{\hat a},E_{\hat b}),
+\]
+so it is stored as one degeneracy tensor $t_s$ per charge sector. These are the
+matrix parts: one axis per
+open leg, of length $\dim D_{i,a_i}$ or $\dim E_{j,b_j}$.
+
+Since $\ot$ is $k$-linear, $(D\ot R)\ot(D'\ot R')\cong(D\ot_kD')\ot(R\ot R')$.
+The associator and braiding are natural, so on these components they split as
+\[
+  \alpha_{D\ot R,\,D'\ot R',\,D''\ot R''}=\alpha^{\mathrm{Vect}}\ot\alpha_{R,R',R''},
+  \qquad
+  \sigma_{D\ot R,\,D'\ot R'}=\tau_{D,D'}\ot\sigma_{R,R'},
+\]
+with $\tau$ the flip of vector spaces. Hence a move acts on the tree factor
+only, and never touches the matrix part
+except for permuting its axes under a braiding.
+
+Lets give the braiding tensor explicitely. It is an element in $\Hom_\CC(a \ot
+b, b \ot a)$
+\[
+  \sum_{c, \mu} [R^{ab}_c]^{\nu}_{\mu} \ot (\pi^{ba}_{c,\nu} \circ \iota_{ab}^{c,\mu})
+\]
+Assume we are working over $\Fib$. This is multiplicity free, and we can write the braiding as
+\[
+  c_{\tau,\tau}
+  = e^{-4\pi i / 5}(\pi_1^{\tau\tau} \circ \iota_{\tau\tau}^1) + e^{3\pi i / 5} (\pi^{\tau\tau}_1 \circ \iota_{\tau\tau}^1)
+\]
+Should we consider the domain and the codomain as fused, we can also write it as
+\[
+  \bigoplus_{c \in 1,\tau} R_c^{\tau\tau} \ot \id_c
+\]
 
 
 
 % https://q.uiver.app/#q=WzAsNSxbMCwyLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2UsZn0gVl57YWJ9X2UgXFxvdGltZXMgVl57ZWN9X2YgXFxvdGltZXMgVl57ZmR9X2cgIl0sWzAsNCwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFsyLDQsIlxcZGlzcGxheXN0eWxlXFxiaWdvcGx1c197ayxofSBWXntha31fZyBcXG90aW1lcyBWXntiY31faCBcXG90aW1lcyBWXntoZH1fayAiXSxbMSwwLCJcXGRpc3BsYXlzdHlsZVxcYmlnb3BsdXNfe2YsaH0gVl57YWZ9X2ggXFxvdGltZXMgVl57YmN9X2YgXFxvdGltZXMgVl57aGR9X2cgIl0sWzIsMiwiXFxkaXNwbGF5c3R5bGVcXGJpZ29wbHVzX3tmLGh9IFZee2FmfV9oIFxcb3RpbWVzIFZee2JjfV9mIFxcb3RpbWVzIFZee2hkfV9nICJdLFswLDEsIkZee2FiY31fZiBcXG90aW1lcyBpZF97Vl97Z31ee2ZkfX0iLDIseyJsYWJlbF9wb3NpdGlvbiI6NDB9XSxbMSwyLCJGXnthYmN9X2YgXFxvdGltZXMgaWRfe1Zfe2d9XntmZH19IiwyXSxbMCwzXSxbMyw0XSxbMiw0XV0=
-\begin{tikzcd}
-	& {\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } & \\
-	\\
-	{\displaystyle\bigoplus_{e,f} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g } && {\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } \\
-	\\
-	{\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } && {\displaystyle\bigoplus_{k,h} V^{ak}_g \otimes V^{bc}_h \otimes V^{hd}_k }
-	\arrow[from=1-2, to=3-3]
-	\arrow[from=3-1, to=1-2]
-	\arrow["{F^{abc}_f \otimes id_{V_{g}^{fd}}}"'{pos=0.4}, from=3-1, to=5-1]
-	\arrow["{F^{abc}_f \otimes id_{V_{g}^{fd}}}"', from=5-1, to=5-3]
-	\arrow[from=5-3, to=3-3]
-\end{tikzcd}
+%\begin{tikzcd}
+%	& {\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } & \\
+%	\\
+%	{\displaystyle\bigoplus_{e,f} V^{ab}_e \otimes V^{ec}_f \otimes V^{fd}_g } && {\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } \\
+%	\\
+%	{\displaystyle\bigoplus_{f,h} V^{af}_h \otimes V^{bc}_f \otimes V^{hd}_g } && {\displaystyle\bigoplus_{k,h} V^{ak}_g \otimes V^{bc}_h \otimes V^{hd}_k }
+%	\arrow[from=1-2, to=3-3]
+%	\arrow[from=3-1, to=1-2]
+%	\arrow["{F^{abc}_f \otimes id_{V_{g}^{fd}}}"'{pos=0.4}, from=3-1, to=5-1]
+%	\arrow["{F^{abc}_f \otimes id_{V_{g}^{fd}}}"', from=5-1, to=5-3]
+%	\arrow[from=5-3, to=3-3]
+%\end{tikzcd}
