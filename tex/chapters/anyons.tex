@@ -668,8 +668,8 @@ based on number theoretic methods (which are already mentioned in
 \cite{freedmanLargeFourierTransforms2007}).\todo{Rewrite this.}
 
 Specifically, there is a decomposition of an arbitrary gate in $(\C^{2})^{\ot
-n}$ into a universal set of $CNOT$ and $\C^2$ unitaries. All that remains to do
-is to reexpress a traditional working gate set in the $Fib$ basis of sets.
+n}$ into a universal set of $\texttt{CNOT}$ and $\C^2$ unitaries. All that remains to do
+is to reexpress a traditional working gate set in the $\Fib$ basis of sets.
 
 However we must also ensure that the decomposition in into CNOT does not produce
 nonadjacent control-target pairs, as we can not freely cross the braids over
@@ -683,7 +683,7 @@ Qiskit}\footnote{{\tt Qiskit} documentation:
 %%%%%% This actually does not seem to be correct
 
 \begin{figure}[h]
-  
+\centering
 \vspace{.1cm}
 \hspace{-1cm}
 \begin{tikzpicture}[xscale={1.1}]
@@ -797,11 +797,26 @@ Qiskit}\footnote{{\tt Qiskit} documentation:
     \draw[line width=4.5, white] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
     \draw[line width=1.4] (2.00, -7.50) .. controls (2.00, -8.25) and (1.20, -8.25) .. (1.20, -9.00);
 
+  \begin{scope}[yshift=-9cm, y=-1cm]
+    \draw[line width=1.4] (-1.20, 1.90) -- (-1.20, 0.0); 
+    \draw[line width=1.4] (-2.0, 1.90) -- (-2.0, 0.0);
+    \draw[line width=1.4] (-0.40, 1.90) -- (-0.40, 0.0);
+
+    \draw (2.1,1) node {
+      \scalebox{.7}{\color{purple}\bf\def\arraystretch{.8}\begin{tabular}{c}quantum measurement\end{tabular}}
+    };
+
+    \draw[line width=1.4] (1.20, 1.90) to (1.20, 1.50); 
+    \draw[line width=1.4] (1.20, 1.50) .. controls (1.20, 1.10) and (0.80, 1.10) .. (0.80, 0.80); 
+    \draw[line width=1.4] (1.20, 1.50) .. controls (1.20, 1.10) and (2.00, 1.10) .. (2.00, 0.00); 
+    \draw[line width=1.4] (0.80, 0.80) .. controls (0.80, 0.40) and (0.40, 0.40) .. (0.40, 0.00); 
+    \draw[line width=1.4] (0.80, 0.80) .. controls (0.80, 0.40) and (1.20, 0.40) .. (1.20, 0.00); 
+  \end{scope}
+
   \end{scope}
 
 \end{tikzpicture}
-\caption{ A standard $2$-qubit quantum circuit and its lowering to a braid-circuit with
-  inection weaves (missing yet).}
+\caption{ A standard $2$-qubit quantum circuit and a $2$-qubit Fibonacci anyon circuit.}
 \end{figure}
 
 \subsection{Application: Evaluating the Jones Polynomial}
