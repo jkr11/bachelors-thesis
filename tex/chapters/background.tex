@@ -178,6 +178,13 @@ $W_b^*$ (the dual basis of a basis of $W_b$).
   $\Hom(\C,V)$.
 \end{example}
 
+\begin{example}
+  Since we have given tensors as linear maps, we can define some trivial
+  contractions as \emph{compositions} by $ circ$. We can compose two maps $f,g$
+  if the domain of $f$ agrees with the codomain of $g$. So we can define a
+  matmul between $f : V \to W, g : X \to V \longrightarrow (fg) : X \to W$.
+\end{example}
+
 \begin{graphicalCalculus}
   
 Graphically, a tensor $T \colon W_n \otimes \cdots \otimes W_1 \to V_1 \otimes
@@ -185,6 +192,7 @@ Graphically, a tensor $T \colon W_n \otimes \cdots \otimes W_1 \to V_1 \otimes
 for the codomain are outgoing from the top of the coupon, legs for the domain point inwards towards the bottom of the diagram.
 Arrows are oriented so that a leg carrying $V$ points up and a leg carrying
 $V^*$ points down.
+\[
 \begin{tikzpicture}[
   box/.style={draw, thick, fill=white, rounded corners=2pt,
               minimum height=4mm, inner sep=0pt, font=\small},
@@ -201,6 +209,7 @@ $V^*$ points down.
     \draw[wire] (0.0, 1.3) -- (v.north);
   \end{scope}
 \end{tikzpicture}
+\]
 \end{graphicalCalculus}
 
 Now we want to introduce the common methods of \emph{reshapes} and
@@ -370,36 +379,69 @@ and by evaluation $\ev_V(\bra{v_j} \ot \ket{v_i}) = \braket{v_j}{v_i} =
 with coordinates $(AB)^a_b = \sum_i A^a_i B^i_b$ which is precisely the well
 known matrix-multiplication formula.
 
+If we have considered them both maps, we can still do the contraction, however
+now under application of both evaluation maps. \todo{SHow this. But there should
+be a deepere reasoning, i.e this is probably just the fact that ev itself is the
+isomorphisms tbetween the presentations.}
+
+\[
+  \begin{tikzpicture}[
+  box/.style={draw, thick, fill=white, rounded corners=2pt,
+              minimum height=6mm, inner sep=0pt, font=\small},
+  wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
+  ]
+  \begin{scope}
+    \node[box, minimum width=12mm] at (0,0) {$A$};
+    \node[box, minimum width=12mm] at (2,0) {$B$};
+
+    \draw[wire] (-0.3, 0.3) -- (-0.3, 1.8) node[above] {$U$};
+    \draw[wire] (0.3, 0.3) -- (0.3, 1.0) node[above] {$V^\ast$};
+    \node[font=\small, anchor=north] at (0,-2.5) {$A \in \Hom(V, W)$};
+
+    \node[box, minimum width=18mm] at (1,1.3) {$\ev_V$};
+    \draw[wire] (1.7, 0.3) -- (1.7, 1.0) node[above] {$V$}; 
+    \draw[wire] (2.3, 0.3) -- (2.3, 1.8) node[above] {$W^\ast$};
+  \end{scope}
+
+  
+  \end{tikzpicture}
+\]
+
 \begin{remark}
-  Here we have chosen the vector spaces $V_j$ to be abstract vector spaces, i.e.
-  they need not be of the form $k^d$, and all the statements like duality and
-  contraction are generally basis-independent. Making a choice of basis
-  identifies $V \cong k^{\dim V}$ and turns $T$ into a coordinatized array as in
-  the example above.
+  In this formulation, we hvae generally defined our tensors to work without
+  choosing a basis. Even if we do, our bases do not need to be coordinatized. We
+  will later see the use of categories (cf. \Cref{sect:Categories}) where we
+  have vector spaces that only admit a formal basis of symbols.
 
-  Traditionally, for tensor networks we care about local Hilbert space
-  \todo{rephrase!}, so our factors are just $V_j = \C^{d_j}$. Tensors are thus
-  multidimensional arrays and contractions are summations over a shared index. 
+  Traditionally however, we are developing tensors at least over the field $\C$. Furthermore, all our vector spaces are indexable by $\C^n$ \todo{rephrase!}.
 
-  Later on, we will see version of tensor networks that do not have a basis of
-  coordinatized vectors, but rather a abstract indexable basis of formal
-  symbols. \todo{Link, rephrase.} 
-
-  It should also be mentioned \todo{Here? or whree? } that on the implementation
+  It should also be mentioned that on the implementation
   level, we also have to consider how we store these tensors. If we have real
   tensors we may use datatypes such as $\texttt{float64}$, if we have complex
-  tensors we can use $\texttt{complex128}$. \todo{Is this coorect for the storage?} Generally, we store these tensors as arrays (vectors?) in contiguous memory. 
+  tensors we can use $\texttt{complex128}$. Generally, we store these tensors as arrays (vectors?) in contiguous memory. 
+
+  In such a memory-layouted representation of a tensor, the underlying data is
+  never changed, but the layout of its storage is. For example, if we index
+  vector space $V$ by index $i : \texttt{int}$ and $W$ by $j : \texttt{int}$, we
+  can choose to index $V \ot W$ as $(i,j) : \texttt{int} \times \texttt{int}$.
+  We can however due to the layouting designate another index $k = i + n\cdot j
+  : \texttt{int}$ (column-major) or $k = j + m\cdot i : \texttt{int}$
+  (row-major). where $n = \dim(V)$.
 \end{remark}
 
-If we take the definition of a tensor over a field such as $\C$, we can store
-this on a computer in contiguous memory. Furthermore, if we have a vector in
-$\C^{d^2}$, we can equivalently choose to view this as a matrix in $\C^{d \times
-d}$. This however is not a basis independent process. If we view this vector
-instead as a member of the hom space $\Hom(\C, \C^{d^2})$. \todo{Technically
-this is all redundant, as the indeces are themseleves specified by $n$ other
-indeces.}
+The semantics of the reshape operations are captured \todo{how much?
+consistently?} by operations called \emph{einsums}\footnote{Einsum landing page: \url{https://einsum.org}} (Einstein-sums)
+\cite{wenigSyntaxSemanticsEinsum2025}.
+\newcommand{\einsum}{\mathop{einsum}}
+The matrix-matrix product $A \cdot B$ is here written as
+\[
+  \einsum(ij,jk \to ik, A, B)
+\]
 
-\subsection{Tensor Networks \& Matrix Product States}
+
+
+\section{Tensor Networks \& Lattice Models}
 
 Often times we will consider quantum state on a lattice. For $1$-dimensional
 systems, we can consider a lattice of $n$ \emph{sites} where each holds a
