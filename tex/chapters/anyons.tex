@@ -472,20 +472,26 @@ qubits as the following:
 \end{tikzpicture}
 }
 \end{equation*}
-and we say that $\C^2$ is \emph{embedded} in $V^{\tau \tau \tau}$. We could choose a different presentations, where each anyon is drawn from the vacuum as
+and we say that $\C^2$ is \emph{embedded} in $V^{\tau \tau \tau}$. We could
+choose a different presentations, where each anyon is drawn from the vacuum as
 \[
   TODO!
 \]
 
-Then we can build multi-qubit circuits by simply stacking these diagrams (inside their own fusion channel). This is what is called a \emph{sparse-encoding}. A dense encoding would correspond to just choosing the smallest space of appropriate dimension that includes one of the $(\C^2)^{\otimes d}$.
+Then we can build multi-qubit circuits by simply stacking these diagrams (inside
+their own fusion channel). This is what is called a \emph{sparse-encoding}. A
+dense encoding would correspond to just choosing the smallest space of
+appropriate dimension that includes one of the $(\C^2)^{\otimes d}$.
 
-The solovay-kitaev theorem guarantees a polylog time and space algorithm for approximating
-any gate in $\SU d$ to a desired accuracy. This, and similar procedures are realized by
-the functor $\texttt{compile}$. A \emph{topological quantum compiler} essentially only
-translates the qubits to their $\Hom$ space equivalences and translates the qudit-gates to
-their braid group representations. There are of course special compilation methods, the
-one we cover here takes first a decomposition of normal gates into CNOTs and then applies
-injection weaving, so we only need to lower single qubit gates to braids.
+The solovay-kitaev theorem guarantees a polylog time and space algorithm for
+approximating any gate in $\SU d$ to a desired accuracy. This, and similar
+procedures are realized by the functor $\texttt{compile}$. A \emph{topological
+quantum compiler} essentially only translates the qubits to their $\Hom$ space
+equivalences and translates the qudit-gates to their braid group
+representations. There are of course special compilation methods, the one we
+cover here takes first a decomposition of normal gates into CNOTs and then
+applies injection weaving, so we only need to lower single qubit gates to
+braids.
 
 % https://q.uiver.app/#q=WzAsNSxbMCwwLCIoXFxDXjIpXntcXG90aW1lcyBufSJdLFswLDIsIihcXENeMilee1xcb3RpbWVzIG59Il0sWzIsMiwiXFxIb20oXFx0YXVeezJuKzJ9LCBhKSJdLFsyLDAsIlxcSG9tKFxcdGF1XnsybiArIDJ9LCBhKSJdLFsxLDEsIlxcdGV4dHtDb21tdXRlcyB1cCB0b30gXFxcXCBcXHRleHR7Z2l2ZW4gfSBcXGVwc2lsb24gPSBcXHZlcnQgVSAtIFxccmhvKGIpIFxcdmVydCJdLFswLDMsIlxcdGV4dHR0e2NvbXBpbGV9Il0sWzEsMiwiXFx0ZXh0dHR7Y29tcGlsZX0iXSxbMywyLCJcXHJobyhiKSJdLFswLDEsIlUiLDJdXQ==
 \[
@@ -499,7 +505,8 @@ injection weaving, so we only need to lower single qubit gates to braids.
 	\arrow["{\texttt{compile}}", hook, from=3-1, to=3-3]
 \end{tikzcd}
 \]
-Because this square commutes and $\texttt{compile}$ runs in polynomial time, we can in fact assert that the $QFC$ can simulate $BQP$.
+Because this square commutes and $\texttt{compile}$ runs in polynomial time, we
+can in fact assert that the $QFC$ can simulate $BQP$.
 
 However, compiling qudits for braids is a \emph{hard} (computationally
 expensive) and slow process, as the dimension of the embedding is usually a
@@ -510,7 +517,8 @@ indivuual gates are given in \cite{hadjiivanovBraidingFibonacciAnyons2024},
 \cite{georgievDiagonalCosetApproach2024}.
 
 The work of \textcite{simonTopologicalQuantumComputing2006a} provides a
-alternative using the pure braid group. Remember that although we can represent any weave generator as 
+alternative using the pure braid group. Remember that although we can represent
+any weave generator as 
 \[
   T_{ij} = \sigma_i \sigma_{i+1} \cdots \sigma_{j-1} \sigma_{j}^2 \sigma_{j-1} \cdots \sigma_{i+1} \sigma_i
 \]
@@ -549,9 +557,7 @@ based on number theoretic methods (which are already mentioned in
 \cite{freedmanLargeFourierTransforms2007}).\todo{Rewrite this.}
 
 Specifically, there is a decomposition of an arbitrary gate in $(\C^{2})^{\ot
-n}$ into a universal set of $\texttt{CNOT}$ and $\C^2$ unitaries. All that remains to do
-is to reexpress a traditional working gate set in the $\Fib$ basis of sets.
-
+n}$ into a universal set of $\texttt{CNOT}$ and $\C^2$ unitaries. 
 However we must also ensure that the decomposition in into CNOT does not produce
 nonadjacent control-target pairs, as we can not freely cross the braids over
 another qubit. This can however also be a problem for standard qubit
@@ -561,6 +567,11 @@ architectures, which is why we can decompose every unitary circuit into its
 decompositions are already implemented in languages such as {\tt
 Qiskit}\footnote{{\tt Qiskit} documentation:
 \url{https://quantum.cloud.ibm.com/docs/en/api/qiskit}}\cite{javadiabhari2024quantum}.
+
+Now all that remains to do is to reexpress a traditional working gate set in the
+$\Fib$ basis of sets.
+
+
 %%%%%% This actually does not seem to be correct
 
 \begin{figure}[h]
@@ -699,5 +710,3 @@ Qiskit}\footnote{{\tt Qiskit} documentation:
 \end{tikzpicture}
 \caption{ A standard $2$-qubit quantum circuit and a $2$-qubit Fibonacci anyon circuit.}
 \end{figure}
-
-\subsection{Application: Evaluating the Jones Polynomial}
