@@ -1,4 +1,4 @@
-### [Current PDF](tex/main.pdf)
+### Download: [main.pdf](releases/latest/download/main.pdf)
 
 Maybe important for tex:
 https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-tikz
