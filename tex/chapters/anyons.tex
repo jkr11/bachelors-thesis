@@ -1,207 +1,24 @@
-This chapter the diagrammatic methods that yield tensor networks on physical
-systems that constitute \emph{anyons}. We introduce the fundamental theory of
-anyons algebraically (\Cref{anyon:sec:algebraic_theory_of_anyons}), and make use
-of the algebraic rules as the building blocks for our theory.
-\Cref{anyon:sec:topology} gives examples of how the statistical properties of
-anyons change with respect to it's ground state. Then, in
-\Cref{anyon:sec:lattice_spin_chains}, we provide a worked examples of how anyons
-are treated on \emph{spin-chains}, which motivates some aspect of the tensor
-networks approach. TODO tensor network chapter. One of the primary motivations
-for the study of anyons are their universality for quantum computation. In
-\Cref{anyon:sec:tqc} we provide an interpretation of how both normal braiding
-circuits and a variation in terms of \emph{weaves} can be simulated by the
-tensor network theory.
+In this chapter, we give the applications of the categorical formalism to
+anyonic tensor networks. We also quickly review the simpler \emph{spin-chain
+formalism} in \Cref{anyon:sec:lattice_spin_chains}.
 
-\section{Algebraic Theory of Anyons}\label{anyon:sec:algebraic_theory_of_anyons}
+One of the primary motivations for the study of anyons are their universality
+for quantum computation. In \Cref{anyon:sec:tqc} we provide an interpretation of
+how both normal braiding circuits and a variation in terms of \emph{weaves} can
+be simulated by the tensor network theory.
 
-Anyons are proposed as a \emph{defect} in a $2$ dimensional space (manifold? compact?)
-with exotic exchange statistics. These exchange statistics differ from fermions in that we
-allow particles to pick up a arbitrary phase $e^{i\theta}$ on exchange in the abelian
-case, and a phase in a matrix element in the nonabelian case.
-
-Generally when speaking about anyons, we group them into \emph{theories}. A anyon theory
-is equipped with a (finite) set of charges $a,b,c,\ldots$ including a \emph{vacuum} charge
-$I$. Additionally we are provided with a \emph{fusion rule} $a \times b = \sum_{c}^{}
-N_{ab}^c c$ where $N_{ab}^c$ denotes the multiplicity. Since it can be shown (should I?)
-that we cannot classify the vector space of two anyons $a,b$ by itself, we need to
-parametrize this space over its \emph{fusion sectors}, i.e. the outcomes $c$ of the fusion
-rule.
-
-Consider an anyon to be a point-like defect on the plane carrying a charge out of the set
-of labels. Since we need to reason about the properties of a pair of anyons using their
-fusion-outcome, we draw this as follows:
-%\[
-%  \begin{tikzpicture}[scale=1.5]
-%    \fill[gray!30] (3,0) ellipse (1 and 0.5);
-%    \draw[->, thick] (3,0) ellipse (1 and 0.5);
-%    \fill[white] (3.6,0) circle (0.1);
-%    \draw[->, thick] (2.7,0) ellipse (0.6 and 0.3);
-%    \node at (3.35,-0.2) {$1$};
-%    \node[scale=2.5] at (2.4, 0) {$\cdot$};
-%    \node at (2.5,0.1) {$\tau$};
-%    \node[scale=2.5] at (3.0, 0) {$\cdot$};
-%    \node at (3.1,0.1) {$\tau$};
-%    \node[scale=2.5] at (3.6, 0) {$\cdot$};
-%    \node at (3.7,0.1) {$\tau$};
-%    \node at (4.0,-0.3) {$\tau$};
-%\end{tikzpicture}
-%\]
-\[
-  \begin{tikzpicture}[scale=1,
-    ->-/.style={decoration={
-      markings,
-      mark=at position #1 with {\arrow[scale=1.5]{>}}},postaction={decorate}}
-    ]
-
-    \fill[gray!15] (1.5, 0) ellipse (2.4 and 1.2);
-    \draw[thick, ->-=0.55] (1.5, 0) ellipse (2.4 and 1.2);
-    \node at (2.4, -0.8) {$\tau$};
-
-    \fill[gray!30] (0.75, 0) ellipse (1.2 and 0.6);
-    \draw[thick, ->-=0.55] (0.75, 0) ellipse (1.2 and 0.6);
-    \node at (0.75, -0.35) {$1$};
-
-    \fill[black] (0, 0) circle (1.5pt);
-    \node at (0, 0.25) {$\tau$};
-
-    \fill[black] (1.5, 0) circle (1.5pt);
-    \node at (1.5, 0.25) {$\tau$};
-
-    \fill[black] (3.0, 0) circle (1.5pt);
-    \node at (3.0, 0.25) {$\tau$};
-
-\end{tikzpicture}
-\]
-The thick dark ellipses here denote the fusion outcome of two charges. Note that the line
-here has an additional physical property in such that it is an \emph{observable}. This has
-a nice interpretation in terms of bordisms: 
-
-\begin{tikzpicture}
-  \draw[thick] (3.25,0) ellipse (1.7 and 0.4);
-  \draw[thick] (2.5,1) ellipse (0.6 and 0.2);
-  \draw[thick] (4,1) ellipse (0.6 and 0.2);
-
-  \draw[line width=1.4] (4.95, 0) .. controls (4.7, 0.33) and (4.6, 0.66) .. (4.6, 1);
-  \draw[line width=1.4] (3.25, 0.25) .. controls (3.3, 0.33) and (3.4, 0.66) .. (3.4, 1);
-
-\end{tikzpicture}
-
-\[
-\begin{tikzpicture}[scale=1.2, thick]
-    
-    \fill[gray!15]
-        (-2.5,0)
-        .. controls (-2.5,1.5) and (-2,2) .. (-2,4)
-        arc (180:360:0.5 and 0.2)
-        .. controls (-1,2.5) and (0,2.5) .. (0,4) 
-        arc (180:360:0.5 and 0.2)
-        .. controls (1,1.5) and (2,1.5) .. (2,4)
-        arc (180:360:0.5 and 0.2) 
-        .. controls (3,2) and (3.5,1.5) .. (3.5,0) 
-        arc (360:180:3.0 and 0.5);
-
-    \draw (-2.5,0) .. controls (-2.5,1.5) and (-2,2) .. (-2,4);
-    \draw (3.5,0)  .. controls (3.5,1.5) and (3,2) .. (3,4);
-    
-    \draw (-1,4) .. controls (-1,2.5) and (0,2.5) .. (0,4);
-    \draw (1,4)  .. controls (1,1.5) and (2,1.5) .. (2,4);
-
-    \draw[dashed, blue!70!black, thick] (-2.15, 1.9) arc (180:0:1.9 and 0.25);
-    \draw[blue!70!black, thick] (-1.7, 1.8) arc (180:360:2.0 and 0.25
-);
-    \node[blue!70!black] at (-0.5, 1.35) {$1$};
+\begin{literature}
+  \cite{pfeiferFiniteDensityMatrix2015,pfeiferSimulationAnyonsTensor2010,pfeiferSimulationAnyonsUsing2012,pfeiferMeasuresEntanglementNonAbelian2014,singhMatrixProductStates2014}
+\end{literature}
 
 
-    \fill[white] (-1.5,4) ellipse (0.5 and 0.2);
-    \draw (-1.5,4) ellipse (0.5 and 0.2);
-    \node at (-1.5, 4.4) {$\tau$};
+\section{1D Lattice Models \& The Golden
+Chain}\label{anyon:sec:lattice_spin_chains}
 
-    \fill[white] (0.5,4) ellipse (0.5 and 0.2);
-    \draw (0.5,4) ellipse (0.5 and 0.2);
-    \node at (0.5, 4.4) {$\tau$};
-
-    \fill[white] (2.5,4) ellipse (0.5 and 0.2);
-    \draw (2.5,4) ellipse (0.5 and 0.2);
-    \node at (2.5, 4.4) {$\tau$};
-
-    \draw[dashed] (-2.5,0) arc (180:0:3.0 and 0.5);
-    \draw (-2.5,0) arc (180:360:3.0 and 0.5);
-    \node at (0.5, -0.9) {$\tau$};
-
-\end{tikzpicture}
-\]
-
-
-
-Let $V^{ab}_c$ be the space of 2 anyons of charges $a,b$ fusing to $c$. Then the
-
-whole space $V^{ab}$ splits accordingly:
-\[
-  V^{ab} = \bigoplus_{c \in I} V^{ab}_c . 
-\]
-Since we wanted to assign meaning to the \emph{exchange} of particles, we define the exchange operator $R^{ab}$ componentwise:
-\[
-  R^{ab} : V^{ab} \to V^{ba}, \quad \bigoplus_c V^{ab}_c \cong \bigoplus_c V^{ba}_c.   
-\]
-as well as an isomorphism on combinations of more than $3$ particles
-\[
-  F^{abc} : V^{(ab)c} \cong V^{a(bc)}
-\]
-
-\subsection{Anyons on different topologies}\label{anyon:sec:topology}
-
-
-
-
-
-Also we should do or have done isotopy before. Technically the discussion here
-also requires the completeness relations.
-
-\begin{equation}\label{anyon:eq:complete}
-\begin{tikzpicture}[
-    baseline=(current bounding box.center),
-    scale=1.0,
-    string arrow/.style={
-        postaction={decorate},
-        decoration={
-            markings,
-            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
-        }
-    }
-  ]
-  
-  \draw[string arrow] (-2.5, 1.0) -- (-2.5, 3.0) node[above] {$a$};
-  \draw[string arrow] (-1.9, 1.0) -- (-1.9, 3.0) node[above] {$b$};
-
-  \node at (-1.1, 2.0) {$=$};
-  \node at (-0.1, 2.0) {$\displaystyle\sum_{c,\mu} \sqrt{\frac{d_c}{d_a d_b}} $};
-
-  \coordinate (bot_a) at (1.1, 1.0);
-  \coordinate (bot_b) at (2.1, 1.0);
-  
-  \coordinate (mid_bot) at (1.6, 1.6);
-  \coordinate (mid_top) at (1.6, 2.4);
-  
-  \coordinate (top_a) at (1.1, 3.0);
-  \coordinate (top_b) at (2.1, 3.0);
-
-  \draw[string arrow] (bot_a) -- (mid_bot);
-  \draw[string arrow] (bot_b) -- (mid_bot);
-  
-  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$c$};
-  
-  \draw[string arrow] (mid_top) -- (top_a) node[above] {$a$};
-  \draw[string arrow] (mid_top) -- (top_b) node[above] {$b$};
-
-\end{tikzpicture}
-\end{equation}
-
-\section{1D Lattice Models \& The Golden Chain}\label{anyon:sec:lattice_spin_chains}
-
-%So from what i can read here (also the nlab or wikipedia) a spin chain specifically only
-%refers to a per site construction with a tensor product hilbert space. An anyon chain is,
-%well, an anyonic chain. These do not admit such a decomposition. So we should call these
-%simply 1D lattice models.
+%So from what i can read here (also the nlab or wikipedia) a spin chain
+%specifically only refers to a per site construction with a tensor product
+%hilbert space. An anyon chain is, well, an anyonic chain. These do not admit
+%such a decomposition. So we should call these simply 1D lattice models.
 
 What is a $2+1$D critical point? This is relevant for the distinction between
 $1$D and $2$D models. Is a 2D model the same as a fusion surface model?
@@ -211,9 +28,9 @@ TODO: Write an outlook section here on work like
 \cite{eckQuantumLatticeModels2025} etc. This seems like a direct generalization
 of our approach.
 
-In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically in the
-$\Fib$ model, are introduced as a $1$D lattice of $n$ $\tau$ anyons, defined as the fusion
-space thereof.
+In \cite{feiguinInteractingAnyonsTopological2007}, anyonic chains, specifically
+in the $\Fib$ model, are introduced as a $1$D lattice of $n$ $\tau$ anyons,
+defined as the fusion space thereof.
 
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
@@ -249,15 +66,16 @@ space thereof.
 
 \end{tikzpicture}
 
-Here, the state is fully characterized by its intermediate indeces $x_1 \ldots x_{n-1}$,
-so we can choose a basis $\ket{x_1 x_2 \cdots x_{n-1} }$.
+Here, the state is fully characterized by its intermediate indeces $x_1 \ldots
+x_{n-1}$, so we can choose a basis $\ket{x_1 x_2 \cdots x_{n-1} }$.
 
-Similar to the Heisenberg-chain\footnote{Note that $\frac{1}{2} \otimes \frac{1}{2} = 0
-\oplus 1$ in the Heisenberg $\SU 2$ model.}, the golden chain introduces a Hamiltonian
-that assigns $-1$ to the interaction $\tau \otimes \tau = 1$ and $0$ to the interaction
-$\tau \otimes \tau = \tau$.
+Similar to the Heisenberg-chain\footnote{Note that $\frac{1}{2} \otimes
+\frac{1}{2} = 0 \oplus 1$ in the Heisenberg $\SU 2$ model.}, the golden chain
+introduces a Hamiltonian that assigns $-1$ to the interaction $\tau \otimes \tau
+= 1$ and $0$ to the interaction $\tau \otimes \tau = \tau$.
 
-We can decompose the whole space $\Hom(\tau^{\otimes n+1}, \tau)$ into the local states
+We can decompose the whole space $\Hom(\tau^{\otimes n+1}, \tau)$ into the local
+states
 \begin{equation}
   \Hom(\tau^{\otimes n+1}, \tau)
   =
@@ -265,11 +83,12 @@ We can decompose the whole space $\Hom(\tau^{\otimes n+1}, \tau)$ into the local
   \Hom(\tau \otimes \tau, x_1) \otimes \Hom(x_1 \otimes \tau, x_2)
   \otimes \cdots \otimes Hom(x_{n-1} \otimes \tau, \tau) 
 \end{equation}
-with the admissability condition that there are not adjacents $1$ in the sequence of
-$x_i$s.
+with the admissability condition that there are not adjacents $1$ in the
+sequence of $x_i$s.
 
-This is evaluated as a $3$ local hamiltonian, as we can decompose the spin chain into
-local parts where two $\tau$ anyons are adjacent (check how they call it in the paper.).
+This is evaluated as a $3$ local hamiltonian, as we can decompose the spin chain
+into local parts where two $\tau$ anyons are adjacent (check how they call it in
+the paper.).
 
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
@@ -336,9 +155,9 @@ local parts where two $\tau$ anyons are adjacent (check how they call it in the 
 
 \end{tikzpicture}
 
-Now we can apply the interaction based on the intermediate state\footnote{Technically we
-need a projector here read up again.} $x_i^\prime$ and apply another $F$-move back to the
-chain basis:
+Now we can apply the interaction based on the intermediate
+state\footnote{Technically we need a projector here read up again.} $x_i^\prime$
+and apply another $F$-move back to the chain basis:
 $$
   H_{[i,i+1]} : 
   \ket{x_{i-1} x_i x_{i+1}  } \to \ket{x_{i-1} x_i^{\prime\prime} x_{i+1} } 
@@ -365,23 +184,27 @@ and we can write this three local hamiltonian as a matrix
 \]
 
 
-This method is reviewed and extended in \cite{trebstShortIntroductionFibonacci2008a}, with
-longer ranger interaction. It will become apparent that the construction given in these
-papers is a manualization of the tensor network constructions we will build here.
-Generalizations to arbitrary models are given in \cite{gilsAnyonicQuantumSpin2013} as well
-as \cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities using
-module categories are given in \cite{eckQuantumLatticeModels2025}.
+This method is reviewed and extended in
+\cite{trebstShortIntroductionFibonacci2008a}, with longer ranger interaction. It
+will become apparent that the construction given in these papers is a
+manualization of the tensor network constructions we will build here.
+Generalizations to arbitrary models are given in
+\cite{gilsAnyonicQuantumSpin2013} as well as
+\cite{buicanAnyonicChainsTopological2017}. Generalized spin chains and dualities
+using module categories are given in \cite{eckQuantumLatticeModels2025}.
 
-The tensor network formalism is handled in \cite{pfeiferSimulationAnyonsTensor2010},
-\cite{pfeiferSimulationAnyonsUsing2012} and \cite{ayeniStudiesBraidedNonAbelian2017}, and
-in terms of categories this is done in \cite{dissertation} and
-\cite{devosTensorKitjlJuliaPackage2025}.
+The tensor network formalism is handled in
+\cite{pfeiferSimulationAnyonsTensor2010},
+\cite{pfeiferSimulationAnyonsUsing2012} and
+\cite{ayeniStudiesBraidedNonAbelian2017}, and in terms of categories this is
+done in \cite{dissertation} and \cite{devosTensorKitjlJuliaPackage2025}.
 
 
 If we want to write this as a tensor contraction, we first define a hamiltonian
 in a similar fashion to chapter 1. 
 
-This takes the form of an operator in $Hom(\tau \otimes \tau, \tau \otimes \tau)$ as
+This takes the form of an operator in $Hom(\tau \otimes \tau, \tau \otimes
+\tau)$ as
 \[
   \begin{tikzpicture}[scale=1.2,
     every node/.style={font=\small},
@@ -462,60 +285,115 @@ as
 \end{array}
 \]
 
-
-\subsection{Topological Entanglement Entropy}
-
-For simple lattice states, \cite{singhMatrixProductStates2014} defines a bipartition of
-the lattice into anyons $A$ and $B$. Then we consider the whole space under charge
-$a_{tot}$ as
-\[
-  V_{a_{tot}} = \bigoplus_{N_{ab}^{a_{tot} } = 1} (V^{A}_a \otimes V^{B}_b)
-\] 
-What i dont get here is why we are allowed to tensor both these sectors together without
-the space $V_{ab}^{a_{tot} }$ explicitely.
-
-TODO delete all of this and introduce this over the Hom category.
-
-Anyhow, the fundamental building blocks we are using are the vector spaces $V^{ab}_c$
-(where we refer to this as the fusion space from types $a$ and $b$ to $c$). This allows us
-to build the vector space of two anyonic types $a,b$ as the sum over the fusion outcome:
-\[
-  V^{ab} = \bigoplus_{c \in Irr(C)} V^{ab}_c  
-\]
-
-We can directly introduce the $R$ move (a braiding of the initial anyons) to obtain the
-isomorphic space $V^{ba}$ as
-\[
-  R : \bigoplus_{c \in Irr(C)} V^{ab}_c  \cong \bigoplus_{c \in Irr(C)} V^{ba}_c  
-\] 
-
-We can also write the space $V^{ab}_c = Hom(a \otimes b, c)$ in the categorical language.
-Here we also need to realize that there is a difference between the isomorphism $\beta$
-and the action of $R$, which is really on the hom space $\Hom(-, c)$. So this would be a
-yoneda perspective? Since we know $R$ for all $a,b,c \in C$, we also know the action of
-$R$ as an isomorphism. Well technically i believe that this allows us to determine for all
-simples $c$, and then semisimplicity extends this to all subjects (this would be nice to
-write down) and then the yoneda embedding is enough to know the whole space. Similarly, in
-our Rep(G) categories (which i actually belive to be symmetric? Find this in etingof) 
-
-The algebra-category correspondence in the theory of anyons was first noted by
-\cite[App~E]{kitaevAnyonsExactlySolved2006}
-
 \section{Topological Quantum Computation}\label{sect:anyon:tqc}
 
-We want to build a quantum computer that acts purely on the topological data provided by the anyon theories, or as named by \textcite{freedmanNPQuantumField1998}, a \emph{Quantum Field Computer}. To do this we need 3 things:
+Recall the basis theory of quantum computing. Here the basic computational unit
+is the \emph{qubit}, spanned by unit vectors $\ket{0} = (1,0)^T$ and $\ket{1} =
+(0,1)^T$, these may be realized by a spin as in
+\Cref{sect:symmetricTensorNetworks}. We can also combine these by their tensor
+product $(\C^2)^{\ot n}$ to form a $n$-qubit \emph{register}. The computations
+themselves are linear function from $\C^{2^n} \to \C^{2^n}$ that are also
+unitary.
+
+Some important single=qubit maps are the $X,Y$ and $Z$ gates. The
+\emph{Hadamard-gate} $\mathop{H}$ produces bell states. We can apply these gates
+sequentially by composition and in parallel by the tensor product. There are
+also gates on two qubits that are not realized as tensor products, these are
+called \emph{multi-qubit} gates. A special class of those is called
+\emph{controlled gates}, which act on the composite $\ket{0x}$ by identity and
+on the ket $\ket{1x}$ by a single qubit gate in the second register. One of the
+important gates is the $\mathop{CNOT}$ gate, or controlled $X$ gate which maps
+$\ket{00} \to \ket{00}$ and $\ket{10}$ to $\ket{11}$.
+
+The last operation on quantum circuits are \emph{measurements}. A measurement
+operator is a mapping from $\C^2 \to \{0,1\}$. Measurements occur with respect
+to a certain basis, here as a represetative choose $\{\ket{v_1}, \ket{v_2}\}$.
+If we take an arbitrary superposition of a state $\ket{\Phi} = \alpha \ket{v_1}
++ \beta \ket{v_2}$ we get the result $0$ with probability $\alpha^2$ and the
+result $1$ with probability $\beta^2$. Note that $\alpha,\beta \in \C$. Finally,
+it is possible for states to differ by a global scalar $e^{i\theta} \in \U{1}$.
+These global phases do not affect the probabilities, therefore we choose to
+measure distances by the \emph{trace norm}
+\[
+  |U - V| = \sqrt{1 - \frac{|\mathop{Tr}(U^\dagger V)|}{2}}
+\]
+which ignores the phase.
+
+A collection of these gates is called a \emph{quantum circuit}. While quantum
+circuits are a subset of tensor networks (over $\Veck$)
+\cite{markovSimulatingQuantumComputation2008}, they admit their own string
+calculus, originally introduced by
+\textcite{deutschQuantumComputationalNetworks1989}. 
+\[
+\begin{tikzpicture}[xscale={1.1}, scale=0.8]
+
+  \definecolor{purple}{rgb}{0.6, 0.1, 0.6}
+  \definecolor{darkgreen}{rgb}{0.1, 0.5, 0.1}
+  \definecolor{darkblue}{rgb}{0.1, 0.2, 0.7}
+
+  \draw (-2.8, 0) node { \scalebox{1.1}{$\vert 0 \rangle$} };
+  \draw (-2.8, -1) node { \scalebox{1.1}{$\vert 0 \rangle$} };
+
+  \draw[line width=1.5pt] (-2.5,-1) to (+8,-1);
+  \draw[line width=1.5pt] (-2.5,0) to (+5.5,0);
+
+  \draw[line width=.6pt] (5.5,+.04) to (8,+.04);
+  \draw[line width=.6pt] (5.5,-.04) to (8,-.04);
+
+  \node[draw, fill=white, line width=1pt, minimum width=0.7cm, minimum height=0.7cm] (Hgate) at (-0.9, 0) {$H$};
+
+  \draw[line width=1pt] (0.6, 0) -- (0.6, -1);
+  \filldraw[black] (0.6, 0) circle (2.5pt);
+  \draw[line width=1pt, fill=white] (0.6, -1) circle (4pt);
+  \draw[line width=1pt] (0.6-4pt, -1) -- (0.6+4pt, -1);
+  \draw[line width=1pt] (0.6, -1-4pt) -- (0.6, -1+4pt);
+
+  \node[draw, fill=white, line width=1pt, minimum width=0.8cm, minimum height=0.6cm] (MeasBox) at (5.6, 0) {};
+  \draw[line width=0.8pt] (5.6-0.25, 0-0.1) arc (180:0:0.25);
+  \draw[line width=0.8pt, ->] (5.6, 0-0.1) -- (5.6+0.2, 0+0.2);
+
+  %\draw (-3.56, -.3) node[rotate=-30] {
+  %  \scalebox{.7}{\color{purple}\bf\def\arraystretch{.8}\begin{tabular}{c}quantum state\\preparation\end{tabular}}
+  %};
+  %\draw (6.9, +.5) node {
+  %  \scalebox{.7}{\color{purple}\bf\def\arraystretch{.8}\begin{tabular}{c}quantum\\measurement\end{tabular}}
+  %};
+  %\draw (1-.4, +.5) node[rotate=-6] {
+  %  \scalebox{.7}{\color{darkgreen}\bf\def\arraystretch{.8}\begin{tabular}{c}plain\\quantum gates\end{tabular}}
+  %};
+\end{tikzpicture}
+\]
+
+This string calculus is a presentation of the \emph{theoritical} semantics of a
+quantum computer, and it is hardware-agnostic. Realizing quantum computation is
+another problem and has its own architectures, which can be compiled from the
+circuit diagrams. Furthermore, physical computers may not be able to accomodate
+arbitrary gates in $\SU{2}$ but instead support only a finite and perhaps
+limited set of gates. If we can take an arbitrary but finite combination of
+these gates, and we can approximate any unitary $U \in \SU{2}$ \todo{Projective
+Space!} up to precision epsilon, we call such a gate set
+\emph{universal}\footnote{We cannot achieve exact universality by a finite set
+as $\SU{2}$ is uncountable.}.
+
+
+We want to build a quantum computer that acts purely on the topological data
+provided by the anyon theories, or as named by
+\textcite{freedmanNPQuantumField1998}, a \emph{Quantum Field Computer}. To do
+this we need 3 things:
 
 \begin{enumerate}
-  \item[] A ground state that has high enough dimension to represent a quantum bit, i.e. is $\cong \C^2$.
+  \item[] A ground state that has high enough dimension to represent a quantum
+  bit, i.e. is $\cong \C^2$.
   \item[] A option to time evolve the system by application of unitaries.
-  \item[] An option to read out the information of the evolved state (\emph{measurement}).
+  \item[] An option to read out the information of the evolved state
+  (\emph{measurement}).
 \end{enumerate}
 
 
 
 
-Computing with nonabelian anyons requires a universal gate set built from representations
-of the \emph{braid-group}:
+Computing with nonabelian anyons requires a universal gate set built from
+representations of the \emph{braid-group}:
 \begin{definition}[Braid Group (algebraic)]
   \[
     Br(\R^2) 
@@ -531,7 +409,10 @@ of the \emph{braid-group}:
 
 and also the \emph{pure-braid-group}:
 
-By the construction of anyon chains in \Cref{anyon:sec:algebraic_theory_of_anyons}, we know that the space of $3$ anyons fusing to $\tau$ is in fact $2$-dimensional. This motivates a choice of qubits as the following:
+By the construction of anyon chains in
+\Cref{anyon:sec:algebraic_theory_of_anyons}, we know that the space of $3$
+anyons fusing to $\tau$ is in fact $2$-dimensional. This motivates a choice of
+qubits as the following:
 
 \begin{equation*}
   \vert 0 \rangle =
