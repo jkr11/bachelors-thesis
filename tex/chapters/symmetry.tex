@@ -34,7 +34,7 @@ action on $V$, given as a map
   \end{equation}
 such that this is linear, todo. I think we get the equality to the hom def if we set $g \cdot v = \rho(g)v$
 
-\begin{definition}
+\begin{definition}\label{sym:def:intertwiner}
   A linear map $A : V \to W$ is an \emph{\green{intertwiner}}, if under
   representations $\rho_V : G \to \GL V$ and $\rho_W : G \to \GL W$ it holds
   that
@@ -99,7 +99,9 @@ such that this is linear, todo. I think we get the equality to the hom def if we
     \cong
     \bigoplus_{i \in I} V_i \otimes \C^{n_i}
   \]
-  by grouping isomorphic simples. Is $n_i$ unique?
+  by grouping isomorphic simples. Here we call $n_i$ the multiplicity of its
+  corresponding irrep and $\C^{n_i}$ the \emph{multiplicity-space}. Canonically,
+  we can define the multiplicity space as the vector space $\Hom_G(V_i, V)$.
 \end{definition}
 
 Due to a theorem by Peter \& Weyl \cite{}, the unitary representations of any compact $G$ are
@@ -118,20 +120,15 @@ completely reducible with the decomposition
 \[
   R_a \otimes R_b 
   \cong
-  \bigoplus_{c \in I} R_c^{\oplus N_{ab}^c},
+  \bigoplus_{c \in I} R_c^{\oplus N_{ab}^c}
+  \cong
+  \bigoplus_{c \in I} R_c \ot \C^{N_{an}^c}
 \]
 with $N_{ab}^c$ called \emph{fusion-multiplicities}. If
 \[
   N_{ab}^c \leq 1 \quad \forall a,b,c 
 \]
 the decomposition is said to be \emph{multiplicity-free}.
-
-If we view operators in $\End_G(R_a \otimes R_b)$, we can obtain a closed form on them by Schurs lemma.
-\begin{align*}
-  \End_G(R_a \ot R_b) &\cong \End_G(\bop_c R_c^{N_{ab}^c}, \bop_c R_c^{N_{ab}^c}) \\
-  &\cong \bigoplus_c \End_G(R_c)^{N_{ab}^c} \\
-  &\overeq{\cref{sym:lemma:schur}}
-\end{align*}
 
 On the operators between tensor products, i.e. $T \in \End_G(R_a \otimes R_b)$
 this yields a formula
@@ -216,6 +213,8 @@ hold. As a consequence of this relation, the outer product of two Clebsch-Gordan
 spans the space $\End_G(R_a \otimes R_b)$.
 
 
+
+
 \begin{example}
   The simple objects of $G = \U{1}$ are given by the one-dimensional representations
   \[
@@ -260,13 +259,71 @@ spans the space $\End_G(R_a \otimes R_b)$.
   \todo{Hmm i dont like this being an example. Should we even use the Lie theory here? I dont think we can get around it so put the intro in the appendix?}
 \end{example}
 
+If we are given more than two representations, lets say we are given $R_a, R_b$
+and $R_c$ we will noteice that the spaces $(R_a \ot R_b) \ot R_c$ and $R_a \ot
+(R_b \ot R_c)$ are only related by an isomorphism. 
+Applying \cref{sym:eq:CGgraphical} twice gives
+\begin{align*}
+  (R_a \ot R_b) \ot R_c &\cong \bigoplus_{d} R_d \ot
+    \Big( \bigoplus_{e} \C^{N_{ab}^e} \ot \C^{N_{ec}^d} \Big),\\
+  R_a \ot (R_b \ot R_c) &\cong \bigoplus_{d} R_d \ot
+    \Big( \bigoplus_{f} \C^{N_{bc}^f} \ot \C^{N_{af}^d} \Big).
+\end{align*}
+and we can give the relating map
+\begin{equation}
+  F^{abc}_d : \bigoplus_{e} \C^{N_{ab}^e} \ot \C^{N_{ec}^d}
+    \to \bigoplus_{f} \C^{N_{bc}^f} \ot \C^{N_{af}^d}.
+\end{equation}
+
+\begin{example}
+For $G = \SU{2}$ the fusion rules \cref{sym:eq:cgseries} are
+multiplicity-free,\todo{introduce $j_1$ as a spin notation like in the singh et
+al papers.} so $F^{j_1 j_2 j_3}_{j}$ is a matrix with rows $j_{12} \in j_1
+\otimes j_2$ (such that $j \in j_{12} \otimes j_3$) and columns $j_{23} \in j_2
+\otimes j_3$ (such that $j \in j_1 \otimes j_{23}$). In the physics literature
+this is written in terms of Wigner's \emph{$6j$-symbols}
+\[
+  \begin{Bmatrix} j_1 & j_2 & j_{12} \\ j_3 & j & j_{23} \end{Bmatrix},
+\]
+via the \emph{Racah recoupling formula} \todo{cyten \cite{TenpyCyten2026} uses
+these racah formulas instead of tradtional 6j? Not sure about the difference.}
+\cite{mironov$6j$symbolsSymmetricRepresentations2017}
+\begin{equation}\label{sym:eq:6j}
+  \big[F^{j_1 j_2 j_3}_{j}\big]_{j_{12},\,j_{23}}
+  = (-1)^{j_1 + j_2 + j_3 + j}\,\sqrt{(2j_{12}+1)(2j_{23}+1)}\;
+  \begin{Bmatrix} j_1 & j_2 & j_{12} \\ j_3 & j & j_{23} \end{Bmatrix}.
+\end{equation}
+On states, this can be give like
+\[
+  \ket{(j_1 j_2)j_{12},\, j_3;\, j, m}
+  = \sum_{j_{23}} \big[F^{j_1 j_2 j_3}_{j}\big]_{j_{12},\,j_{23}}\,
+    \ket{j_1,\, (j_2 j_3)j_{23};\, j, m}.
+\]
+
+Now we wish to do an actual example for $3$ $\SU{2}$ spins.
+
+For $j = \frac12$ both $j_{12}, j_{23} \in \{0, 1\}$ are allowed, so $F$ is a
+  $2 \times 2$ matrix. The sign factor in \cref{sym:eq:6j} is $(-1)^2 = 1$, and
+  the $6j$-symbols give\todo{matrix notation as for anyons!}
+  \[
+    F^{\frac12 \frac12 \frac12}_{\frac12}
+    = \begin{pmatrix}
+        -\tfrac12 & \tfrac{\sqrt3}{2} \\[2pt]
+        \tfrac{\sqrt3}{2} & \tfrac12
+      \end{pmatrix}
+    \qquad
+    \text{(rows $j_{12} = 0, 1$; columns $j_{23} = 0, 1$)}.
+  \]
+
+\end{example}
+
 
 \section{Application: The XXZ Hamiltonian}
 
 The motivation for constructing symmetric tensor networks is as follows: Assume
 we have a (unitary) representation of a group $G$ denoted $U(g)$.  Furthermore
 assume we have a Hamiltonian that commutes with $[U(g)^{\otimes L}, H] = 0$,
-equivalently, $H$ omits a \emph{global symmetry} $U(g)^{\otimes L} H
+equivalently, $H$ admits a \emph{global symmetry} $U(g)^{\otimes L} H
 (U(g)^{\otimes L})^\dagger$. Then there are different presentations of $H$ with
 respect to a certain basis by \emph{simultaneous
 diagonalization}\cite[Thm~1.3.12]{Horn_Johnson_2012}, as shown in
@@ -324,7 +381,7 @@ Diagonalizing both operators yields a block structure as in
 essentially produced a permutation matrix, and we just reordered the basis to
 group by total spins. If we want to state this in terms of irreps, we have to
 realize that \todo{So this is quite strange, i have to use 2$\S^z_{tot}$ here,
-otherwise we get noninterger weights which makes no sense.}$\C^2 \cong \chi_{-1}
+otherwise we get non-integer weights which makes no sense.}$\C^2 \cong \chi_{-1}
 \op \chi_{1}$. By \cref{symm:eq:U1FusionRule} we can state this space as the
 direct sum
 \begin{align*}
@@ -388,11 +445,13 @@ commutes with all the generators since\todo{appendix?}
   = i \sum_{a,c} \varepsilon_{abc} \big( S^a_{tot} S^c_{tot} + S^c_{tot} S^a_{tot} \big)
   = 0,
 \]
+\todo{Justify why we choose Sz and Stot2}
+We take the Casimir operator and the $S^z_{tot}$ operator to diagonalize with.
+The eigenvalue $S(S+1)$ of $S^2_{tot}$ labels the irrep $V_S$. \todo{Sx Sz sy
+are not constant on the irrep?} $S^z_{tot}$ then labels the states inside of the
+irrep, within $V_S$ its eigenvalues $M \in \{-S, \ldots, S\}$ distinguish the
+$2S + 1$ basis vectors. However since the irreps also occur with a multiplicity, we need yet another label to differentiate these blocks. This is done just like for the CG-tensors with another label $\alpha$. Then the states look like $\ket{S,m,\alpha}$.
 
-
-The eigenvalues of $S_{tot}^2$ are  $S(S + 1)$ where  $S$ are the half integers.
-
-Again, we can solve this by diagonalizing all 3 operators? Do this calculation as in the .ipynb and put it in the appendix.
 
 %%%
 Or we can again do the representation theoretical approach. Let $V_j$ denote the
@@ -550,7 +609,7 @@ However we can also still represent this as an element of $\End_G(V_{1/2}^{\ot
 
 Now we consider the same Hamiltonian with $N = 3$, our state space is
 $
-  V_{1/2}^{\ot 3} = V_{3/2} \op V_{1/2} \op V_{1/2}
+  (V_{1/2} \otimes V_{1/2}) \ot V_{1/2} = V_{3/2} \op V_{1/2} \op V_{1/2}
 $
 with a multiplicity $2$ on the $1/2$ state and the Operator is
 \[
@@ -626,11 +685,37 @@ We can represent this in terms of the graphical calculus in \cref{sym:eq:CGgraph
   \end{scope}
   \end{tikzpicture}
 \]
-Note that this means that the $S_1 \cdot S_2$ operator is fully diagonal, but
-the $S_2 \cdot S_3$ operator has off diagonal interactions. The diagonalized
-Hamiltonian is given on the right.
 
-\noindent
+Recall that the XXX-Hamiltonian is a \emph{local} hamiltonian, and we can write it as 
+\[
+  H = \sum_{i = 1}^{n} h_{i,i+1}.
+\]
+In this case, the part of each sitewise operator $h_{i,i+1} = S_i \cdot S_{i+1}$
+that carries the \emph{interaction} of the Hamiltonian is the same. 
+
+The derivation for $S_1 \cdot S_2$ is the same as above, we simply need to
+include the the action on the new $\frac{3}{2}$ sector. For total spin
+$\frac{1}{2}$ we have the intermediate couplings $\{0,1\}$, which incurs
+$\operatorname{diag}(1/4, -3/4)$, and for the total spin $\frac{3}{2}$ we only
+have the coupling with $1$ and we incur a factor of $\frac{1}{4}$.
+
+Now, for the second part $\id \ot (S_2 \cdot S_3)$, where $S_2 \cdot S_3 \in
+\End_G(V_{1/2} \ot V_{1/2})$. This means we cannot directly apply it to the
+left-aligned basis and we need to perform the recoupling move $F$ from
+\cref{sym:eq:6j} first. This leaves us with the expression\todo{I swapped the
+columns here, but i should follow the convention from the 6j definition.}
+\[
+  S_2 \cdot S_3 = F^{1/2,1/2,1/2}_{1/2} \operatorname{diag}(1/4, -3/4) (F^{1/2,1/2,1/2}_{1/2})^T = \begin{pmatrix}
+    -\frac{1}{2} & \frac{\sqrt{3}}{4} \\
+    \frac{\sqrt{3}}{4} & 0
+  \end{pmatrix}.
+\] 
+on the spin-$\frac{1}{2}$ sector and $\frac{1}{4}$ on the spin-$\frac{3}{2}$
+sector. To summarize, the full presentation of these operators look like this
+with the sum (the full $H$) given to the right (by exact diagonalization):
+
+
+\vspace*{1cm}
 \begin{minipage}{0.65\textwidth}
 \begin{align*}
 S_1 \cdot S_2 
@@ -644,7 +729,7 @@ S_1 \cdot S_2
 \oplus
 \underbrace{\id_{V_{3/2}}}_{\dim 4}
 \otimes
-(1/4) \\[0.8em]
+\;(1/4) \\[0.8em]
 S_2 \cdot S_3
 &=
 \underbrace{\id_{V_{1/2}}}_{\dim 2}
@@ -656,7 +741,7 @@ S_2 \cdot S_3
 \oplus
 \underbrace{\id_{V_{3/2}}}_{\dim 4}
 \otimes
-(1/4)
+\;(1/4)
 \end{align*}
 \end{minipage}%
 \begin{minipage}{0.35\textwidth}
@@ -665,11 +750,11 @@ S_2 \cdot S_3
 \end{minipage}
 
 
-
-Visually we can define the operators before and include the groung state in a
-tree-like fashion:
+\vspace{1cm}
+Visually we explain this by defining the operators as before and including the
+ground state trees:
 \begin{equation}
-  \begin{tikzpicture}[
+\begin{tikzpicture}[
     baseline=(current bounding box.center),
     scale=1.0,
     string arrow/.style={
@@ -680,136 +765,200 @@ tree-like fashion:
         }
     }
   ]
-  
-  \coordinate (top_a) at (1.0, 1.0);
-  \coordinate (top_b) at (2.0, 1.0);
-  \coordinate (top_c) at (3.0, 1.0);
-  
-  \coordinate (mid_1) at (1.5, 0.5);
-  \coordinate (mid_2) at (2.1, -0.1);
+\coordinate (top_a) at (1.0, 1.0);
+\coordinate (top_b) at (2.0, 1.0);
+\coordinate (top_c) at (3.0, 1.0);
+\coordinate (mid_1) at (1.5, 0.5);
+\coordinate (mid_2) at (2.1, -0.1);
+\coordinate (bot_d) at (2.1, -0.75);
 
-  \coordinate (bot_d) at (2.1, -0.75);
+\draw [string arrow] (bot_d) -- (mid_2);
+\draw [string arrow] (mid_2) -- (top_c);
+\draw [string arrow] (mid_2) -- (mid_1) node[left] {$0$};
+\draw [string arrow] (mid_1) -- (top_b) node[above] {$\frac{1}{2}$};
+\draw [string arrow] (mid_1) -- (top_a) node[above] {$\frac{1}{2}$};
 
-  \draw [string arrow] (bot_d) -- (mid_2);
-  \draw [string arrow] (mid_2) -- (top_c);
-  \draw [string arrow] (mid_2) -- (mid_1) node[left] {$0$};
-  \draw [string arrow] (mid_1) -- (top_b) node[above] {$\frac{1}{2}$};
-  \draw [string arrow] (mid_1) -- (top_a) node[above] {$\frac{1}{2}$};
+\begin{scope}[yshift=0.75cm]
+\node at (0.8,2.0) {$\displaystyle -J\frac{3}{4}\,\otimes$};
+\coordinate (bot_a) at (1.0, 1.0);
+\coordinate (bot_b) at (2.0, 1.0);
+\coordinate (mid_bot) at (1.5, 1.6);
+\coordinate (mid_top) at (1.5, 2.4);
+\coordinate (top_a) at (1, 3.0);
+\coordinate (top_b) at (2, 3.0);
 
+\draw[string arrow] (bot_a) -- (mid_bot);
+\draw[string arrow] (bot_b) -- (mid_bot);
+\draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$0$};
+\draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
+\draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
+\node at (2.5, 2.0) {$+$};
+\end{scope}
 
+\begin{scope}[xshift = 3.0cm, yshift=0.75cm]
+\node at (0.8,2.0) {$\displaystyle -\frac{J}{4}\,\otimes$};
+\coordinate (bot_a) at (1.0, 1.0);
+\coordinate (bot_b) at (2.0, 1.0);
+\coordinate (mid_bot) at (1.5, 1.6);
+\coordinate (mid_top) at (1.5, 2.4);
+\coordinate (top_a) at (1, 3.0);
+\coordinate (top_b) at (2, 3.0);
 
-  \begin{scope}[yshift=0.75cm]
-    
-  \node at (0.8,2.0) {$\displaystyle -J\frac{3}{4}\,\otimes$};
-  \coordinate (bot_a) at (1.0, 1.0);
-  \coordinate (bot_b) at (2.0, 1.0);
-  
+\draw[string arrow] (bot_a) -- (mid_bot);
+\draw[string arrow] (bot_b) -- (mid_bot);
+\draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$1$};
+\draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
+\draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
+\node at (2.5, 2.0) {$+$};
 
-  \coordinate (mid_bot) at (1.5, 1.6);
-  \coordinate (mid_top) at (1.5, 2.4);
-  
-  \coordinate (top_a) at (1, 3.0);
-  \coordinate (top_b) at (2, 3.0);
+\coordinate (top_a) at (1.0, 0.25);
+\coordinate (top_b) at (2.0, 0.25);
+\coordinate (top_c) at (3.0, 0.25);
+\coordinate (mid_1) at (1.5, -0.25);
+\coordinate (mid_2) at (2.1, -0.85);
+\coordinate (bot_d) at (2.1, -1.5);
 
-  \draw[string arrow] (bot_a) -- (mid_bot);
-  \draw[string arrow] (bot_b) -- (mid_bot);
-  
-  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$0$};
-  
-  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
-  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
-  
-  \node at (2.5, 2.0) {$+$};
-  \end{scope}
+\draw [string arrow] (bot_d) -- (mid_2) node[below=20pt ] {$\frac{1}{2}$};
+\draw [string arrow] (mid_2) -- (top_c) node[above] {$\frac{1}{2}$};
+\draw [string arrow] (mid_2) -- (mid_1) node[below left] {$1$};
+\draw [string arrow] (mid_1) -- (top_b) node[above] {$\frac{1}{2}$};
+\draw [string arrow] (mid_1) -- (top_a) node[above] {$\frac{1}{2}$};
+\end{scope}
 
-  \begin{scope}[xshift = 2.5cm, yshift=0.75cm]
-    
-  \node at (0.8,2.0) {$\displaystyle -J\frac{3}{4}\,\otimes$};
-  \coordinate (bot_a) at (1.0, 1.0);
-  \coordinate (bot_b) at (2.0, 1.0);
-  
+\begin{scope}[xshift = 6.0cm, yshift=0.75cm]
+\node at (0.8,2.0) {$\displaystyle -\frac{J}{4}\,\otimes$};
+\coordinate (bot_a) at (1.0, 1.0);
+\coordinate (bot_b) at (2.0, 1.0);
+\coordinate (mid_bot) at (1.5, 1.6);
+\coordinate (mid_top) at (1.5, 2.4);
+\coordinate (top_a) at (1, 3.0);
+\coordinate (top_b) at (2, 3.0);
 
-  \coordinate (mid_bot) at (1.5, 1.6);
-  \coordinate (mid_top) at (1.5, 2.4);
-  
-  \coordinate (top_a) at (1, 3.0);
-  \coordinate (top_b) at (2, 3.0);
+\draw[string arrow] (bot_a) -- (mid_bot);
+\draw[string arrow] (bot_b) -- (mid_bot);
+\draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$1$};
+\draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
+\draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
 
-  \draw[string arrow] (bot_a) -- (mid_bot);
-  \draw[string arrow] (bot_b) -- (mid_bot);
-  
-  \draw[string arrow] (mid_bot) -- (mid_top) node[right, pos=0.5] {$1$};
-  
-  \draw[string arrow] (mid_top) -- (top_a) node[above] {$\frac{1}{2}$};
-  \draw[string arrow] (mid_top) -- (top_b) node[above] {$\frac{1}{2}$};
-  
-  \node at (2.5, 2.0) {$+$};
+\coordinate (top_a) at (1.0, 0.25);
+\coordinate (top_b) at (2.0, 0.25);
+\coordinate (top_c) at (3.0, 0.25);
+\coordinate (mid_1) at (1.5, -0.25);
+\coordinate (mid_2) at (2.1, -0.85);
+\coordinate (bot_d) at (2.1, -1.5);
 
-  \coordinate (top_a) at (1.0, 0.25);
-  \coordinate (top_b) at (2.0, 0.25);
-  \coordinate (top_c) at (3.0, 0.25);
-  
-  \coordinate (mid_1) at (1.5, -0.25);
-  \coordinate (mid_2) at (2.1, -0.85);
+\draw [string arrow] (bot_d) -- (mid_2) node[below=20pt ] {$\frac{3}{2}$};
+\draw [string arrow] (mid_2) -- (top_c) node[above] {$\frac{1}{2}$};
+\draw [string arrow] (mid_2) -- (mid_1) node[below left] {$1$};
+\draw [string arrow] (mid_1) -- (top_b) node[above] {$\frac{1}{2}$};
+\draw [string arrow] (mid_1) -- (top_a) node[above] {$\frac{1}{2}$};
+\end{scope}
 
-  \coordinate (bot_d) at (2.1, -1.5);
-
-  \draw [string arrow] (bot_d) -- (mid_2);
-  \draw [string arrow] (mid_2) -- (top_c);
-  \draw [string arrow] (mid_2) -- (mid_1) node[left] {$0$};
-  \draw [string arrow] (mid_1) -- (top_b) node[above] {$\frac{1}{2}$};
-  \draw [string arrow] (mid_1) -- (top_a) node[above] {$\frac{1}{2}$};
-
-  \end{scope}
-
-
-  \end{tikzpicture}
+\end{tikzpicture}
 \end{equation}
 
+\begin{equation}
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
-    string arrow/.style={postaction={decorate},
-      decoration={markings, mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}}}
+    scale=1.0,
+    string arrow/.style={
+        postaction={decorate},
+        decoration={
+            markings,
+            mark=at position 0.55 with {\arrow[scale=1.0]{Stealth}}
+        }
+    }
   ]
-\node at (-1.1,2.0) {$\displaystyle\frac{\sqrt3}{4}\,\otimes$};
-\coordinate (b1) at (0,0); \coordinate (b2) at (1,0); \coordinate (b3) at (2.4,0);
-\coordinate (v1) at (0.5,0.7); \coordinate (v2) at (1.4,1.4); \coordinate (mid) at (1.4,2.0);
-\draw[string arrow] (b1) -- (v1); \draw[string arrow] (b2) -- (v1);
-\draw[string arrow] (v1) -- (v2) node[left,pos=0.5]{\small$0$};
-\draw[string arrow] (b3) -- (v2);
-\draw[string arrow] (v2) -- (mid) node[right,pos=0.5]{\small$\frac12$};
 
-\coordinate (v2t) at (1.4,2.6); \coordinate (v1t) at (0.5,3.3);
-\coordinate (t1) at (0,4.0); \coordinate (t2) at (1,4.0); \coordinate (t3) at (2.4,4.0);
-\draw[string arrow] (mid) -- (v2t);
-\draw[string arrow] (v2t) -- (v1t) node[left,pos=0.5]{\small$1$};
-\draw[string arrow] (v2t) -- (t3);
-\draw[string arrow] (v1t) -- (t1); \draw[string arrow] (v1t) -- (t2);
-
-\node[below] at (b1) {\small 1}; \node[below] at (b2) {\small 2}; \node[below] at (b3) {\small 3};
-\node[above] at (t1) {\small 1}; \node[above] at (t2) {\small 2}; \node[above] at (t3) {\small 3};
-
-\begin{scope}[xshift=5.0cm]
-  \node at (-1.1,2.0) {$\displaystyle\frac{\sqrt3}{4}\,\otimes$};
-\coordinate (b1) at (0,0); \coordinate (b2) at (1,0); \coordinate (b3) at (2.4,0);
-\coordinate (v1) at (0.5,0.7); \coordinate (v2) at (1.4,1.4); \coordinate (mid) at (1.4,2.0);
-\draw[string arrow] (b1) -- (v1); \draw[string arrow] (b2) -- (v1);
-\draw[string arrow] (v1) -- (v2) node[left,pos=0.5]{\small$0$};
-\draw[string arrow] (b3) -- (v2);
-\draw[string arrow] (v2) -- (mid) node[right,pos=0.5]{\small$\frac12$};
-
-\coordinate (v2t) at (1.4,2.6); \coordinate (v1t) at (0.5,3.3);
-\coordinate (t1) at (0,4.0); \coordinate (t2) at (1,4.0); \coordinate (t3) at (2.4,4.0);
-\draw[string arrow] (mid) -- (v2t);
-\draw[string arrow] (v2t) -- (v1t) node[left,pos=0.5]{\small$1$};
-\draw[string arrow] (v2t) -- (t3);
-\draw[string arrow] (v1t) -- (t1); \draw[string arrow] (v1t) -- (t2);
-
-\node[below] at (b1) {\small 1}; \node[below] at (b2) {\small 2}; \node[below] at (b3) {\small 3};
-\node[above] at (t1) {\small 1}; \node[above] at (t2) {\small 2}; \node[above] at (t3) {\small 3};
+\begin{scope}[xshift=0cm]
+  % operator on sites 2,3
+  \node at (0.8,2.75) {$\displaystyle -J\frac{3}{4}\,\otimes$};
+  \coordinate (obot_a) at (2.0, 1.75);
+  \coordinate (obot_b) at (3.0, 1.75);
+  \coordinate (omid_bot) at (2.5, 2.35);
+  \coordinate (omid_top) at (2.5, 3.15);
+  \coordinate (otop_a) at (2.0, 3.75);
+  \coordinate (otop_b) at (3.0, 3.75);
+  \draw[string arrow] (obot_a) -- (omid_bot);
+  \draw[string arrow] (obot_b) -- (omid_bot);
+  \draw[string arrow] (omid_bot) -- (omid_top) node[right, pos=0.5] {$0$};
+  \draw[string arrow] (omid_top) -- (otop_a) node[above] {$\frac{1}{2}$};
+  \draw[string arrow] (omid_top) -- (otop_b) node[above] {$\frac{1}{2}$};
+  \node at (3.3, 2.75) {$+$};
+  \coordinate (k_a) at (1.0, 1.0);
+  \coordinate (k_b) at (2.0, 1.0);
+  \coordinate (k_c) at (3.0, 1.0);
+  \coordinate (k_1) at (2.5, 0.5);
+  \coordinate (k_2) at (1.9, -0.1);
+  \coordinate (k_d) at (1.9, -0.75);
+  \draw [string arrow] (k_d) -- (k_2);
+  \draw [string arrow] (k_2) -- (k_a) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (k_2) -- (k_1) node[right] {$0$};
+  \draw [string arrow] (k_1) -- (k_b) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (k_1) -- (k_c) node[above] {$\frac{1}{2}$};
 \end{scope}
-\end{tikzpicture}
 
+\begin{scope}[xshift=3.6cm]
+  \node at (0.8,2.75) {$\displaystyle -\frac{J}{4}\,\otimes$};
+  \coordinate (obot_a) at (2.0, 1.75);
+  \coordinate (obot_b) at (3.0, 1.75);
+  \coordinate (omid_bot) at (2.5, 2.35);
+  \coordinate (omid_top) at (2.5, 3.15);
+  \coordinate (otop_a) at (2.0, 3.75);
+  \coordinate (otop_b) at (3.0, 3.75);
+  \draw[string arrow] (obot_a) -- (omid_bot);
+  \draw[string arrow] (obot_b) -- (omid_bot);
+  \draw[string arrow] (omid_bot) -- (omid_top) node[right, pos=0.5] {$1$};
+  \draw[string arrow] (omid_top) -- (otop_a) node[above] {$\frac{1}{2}$};
+  \draw[string arrow] (omid_top) -- (otop_b) node[above] {$\frac{1}{2}$};
+  \node at (3.3, 2.75) {$+$};
+  \coordinate (k_a) at (1.0, 1.0);
+  \coordinate (k_b) at (2.0, 1.0);
+  \coordinate (k_c) at (3.0, 1.0);
+  \coordinate (k_1) at (2.5, 0.5);
+  \coordinate (k_2) at (1.9, -0.1);
+  \coordinate (k_d) at (1.9, -0.75);
+  \draw [string arrow] (k_d) -- (k_2) node[below=6pt] {$\frac{1}{2}$};
+  \draw [string arrow] (k_2) -- (k_a) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (k_2) -- (k_1) node[right] {$1$};
+  \draw [string arrow] (k_1) -- (k_b) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (k_1) -- (k_c) node[above] {$\frac{1}{2}$};
+\end{scope}
+
+\begin{scope}[xshift=7.2cm]
+  \node at (0.8,2.75) {$\displaystyle -\frac{J}{4}\,\otimes$};
+  \coordinate (obot_a) at (2.0, 1.75);
+  \coordinate (obot_b) at (3.0, 1.75);
+  \coordinate (omid_bot) at (2.5, 2.35);
+  \coordinate (omid_top) at (2.5, 3.15);
+  \coordinate (otop_a) at (2.0, 3.75);
+  \coordinate (otop_b) at (3.0, 3.75);
+  \draw[string arrow] (obot_a) -- (omid_bot);
+  \draw[string arrow] (obot_b) -- (omid_bot);
+  \draw[string arrow] (omid_bot) -- (omid_top) node[right, pos=0.5] {$1$};
+  \draw[string arrow] (omid_top) -- (otop_a) node[above] {$\frac{1}{2}$};
+  \draw[string arrow] (omid_top) -- (otop_b) node[above] {$\frac{1}{2}$};
+  \coordinate (k_a) at (1.0, 1.0);
+  \coordinate (k_b) at (2.0, 1.0);
+  \coordinate (k_c) at (3.0, 1.0);
+  \coordinate (k_1) at (2.5, 0.5);
+  \coordinate (k_2) at (1.9, -0.1);
+  \coordinate (k_d) at (1.9, -0.75);
+  \draw [string arrow] (k_d) -- (k_2) node[below=6pt] {$\frac{3}{2}$};
+  \draw [string arrow] (k_2) -- (k_a) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (k_2) -- (k_1) node[right] {$1$};
+  \draw [string arrow] (k_1) -- (k_b) node[above] {$\frac{1}{2}$};
+  \draw [string arrow] (k_1) -- (k_c) node[above] {$\frac{1}{2}$};
+\end{scope}
+
+
+
+\end{tikzpicture}
+\end{equation}
+where we have to apply a recoupling before we can apply $S_2 \cdot S_3$ and we
+have to apply another one to move back.
+
+\color{red}
 There is a third symmetry with $\Z_2$ under the operator 
 \[
   R = \exp(i\pi \sum_j S^x_j)
@@ -817,10 +966,15 @@ There is a third symmetry with $\Z_2$ under the operator
 which can be interpreted as a \emph{spin-flip}. Both $\Z_2$ and $\U{1}$ commute
 with $H$, so both are in the symmetry group. We can combine both of these
 symmetries by their semidirect product, because the do no commute
-$RU(\theta)R^{-1} = U(-\theta)$ \cite{caoGlobalSymmetriesQuantum2025}. So we get a new symmetry group
+$RU(\theta)R^{-1} = U(-\theta)$ \cite{caoGlobalSymmetriesQuantum2025}. So we get
+a new symmetry group
 \[
   \U{1} \rtimes \Z_2 = O(2) \subseteq \SU{2}.
 \]
+unfortunately i missed this possiblity, but i think this is not as nice to use
+as $\U{1}$. And we still want our abelian example. But im not sure how to
+include this as of yet.
+\color{black}
 
 
 
@@ -830,7 +984,7 @@ $RU(\theta)R^{-1} = U(-\theta)$ \cite{caoGlobalSymmetriesQuantum2025}. So we get
 So far we have applied the symmetric formalism to Hamiltonians, which are
 endomorphisms $\End_G()$ between some finite vector spaces, and we have an
 interpretation of local Hamiltonians acting between sites. This section will
-show how to express arbitrary symmetric tensors as intertwinders, and thus also
+show how to express arbitrary symmetric tensors as intertwiners, and thus also
 constructing symmetric MPSs, MPOs and MERAs.
 
 Let $G$ be a group, and all representations thereof are
@@ -856,10 +1010,11 @@ on which $G$ acts by
   \Pi(g)=\rho_1(g)\otimes\cdots\otimes\rho_n(g)\otimes
          \sigma_m^\ast(g)\otimes\cdots\otimes\sigma_1^\ast(g).
 \end{equation}
-(The reversed order on the dual legs is the nested convention for
-$(W_1\otimes\cdots\otimes W_m)^\ast$; since the factors act on different legs,
-it only permutes tensor factors.)
 
+Recall the definition of an intertwiner \cref{sym:def:intertwiner} as an element
+of $\Hom_G(-,-)$. For standard tensors, we had the equivalence between an object
+of $V \ot W^\ast$ and the maps in $\Hom(V,W)$. Here we wish to show the same for
+symmetric tensors.
 
 
 \begin{definition}\label{def:symmetricTensor} A tensor $T\in V\otimes W^\ast$ is
@@ -868,14 +1023,15 @@ it only permutes tensor factors.)
 \end{definition}
 
 Let $\Phi\colon V\otimes W^\ast\to\Hom(W,V)$ be the linear isomorphism
-$\Phi(v\otimes f)=\bigl(w\mapsto f(w)\,v\bigr)$.
+$\Phi(v\otimes f)=\bigl(w\mapsto f(w)\,v\bigr)$ as we have defined in
+\cref{sect:background}.\todo{Dirac notation, correct label.}
 
-\begin{lemma}\label{sym:lem:invariant_iff_intertwiner}
-  For all $g\in G$ and $T\in V\otimes W^\ast$,
+\begin{lemma}\label{sym:lem:invariant_iff_intertwiner} For all $g\in G$ and
+  $T\in V\otimes W^\ast$,
   \[
     \Phi\bigl(\Pi(g)T\bigr)=\rho_V(g)\circ\Phi(T)\circ\rho_W(g)^{-1}.
   \]
-  Consequently $T$ is symmetric if and only if $\Phi(T)\in\Hom_G(W,V)$, i.e.
+  Then $T$ is symmetric iff. $\Phi(T)\in\Hom_G(W,V)$, i.e.
   \[
     \rho_V(g)\circ\Phi(T)=\Phi(T)\circ\rho_W(g)\qquad\forall g\in G.
   \]
@@ -892,8 +1048,7 @@ $\Phi(v\otimes f)=\bigl(w\mapsto f(w)\,v\bigr)$.
   invertible $\rho_W(g)$ gives the second claim.
 \end{proof}
 
-Hence $(V\otimes W^\ast)^G\cong\Hom_G(W,V)$, and we identify $T$ with $\Phi(T)$.
-For $W=V$ this is the familiar statement $U(g)HU(g)^{-1}=H\iff[H,U(g)]=0$.
+Hence $V\otimes W^\ast \cong\Hom_G(W,V)$, and we identify $T$ with $\Phi(T)$.
 
 
 \[
@@ -946,7 +1101,7 @@ For $W=V$ this is the familiar statement $U(g)HU(g)^{-1}=H\iff[H,U(g)]=0$.
     \draw[leg] (T2.east) -- (1,0) node[right, yshift=2pt] {\tiny $C$};        
   \end{scope}
 
-  \node at (4.8,0) {$\overset{\cref{sym:eq:pushThrough}}{\Longleftrightarrow}$};
+  \node at (4.8,0) {$\overset{\cref{sym:lem:invariant_iff_intertwiner}}{\Longleftrightarrow}$};
 
 
   \begin{scope}[xshift=6.8cm]
@@ -988,13 +1143,29 @@ For $W=V$ this is the familiar statement $U(g)HU(g)^{-1}=H\iff[H,U(g)]=0$.
   Important there is that this entire discussion is only about FdVect or FdHilb
   for now, but i think the same applies to any braided category.    
 \end{corollary}
-As an application of this more general tensor formalism, we can contstruct a
-symmetric MPS. If we stay with our current example, our ground state is of the
-form $\ket{i_1 i_2 \cdots i_n} \in (\C^2)^{n}$. If we represent this as a
-\gls{mps}, we know by default that this needs a physical dimension of $2$, i.e.
-the space corresponding to the $\frac{1}{2}$ irrep at every site. 
 
-We can also use the presentations of the clebsch-gordan operators and realize that these can be considered tensors of order $3$. If we chain these together naively we will get a state that can be represented symbolically as
+
+As an application of this more general tensor formalism, we can construct a
+symmetric MPS. Recall that a MPS is a contraction of trivalent tensors. Here,
+such a trivalent tensor is just an operator $\Hom_G(D_i \ot P_i, D_{i+1})$. 
+
+\begin{theorem}[Wigner-Eckart]\label{thm:WE}
+  For each trivalent symmetric tensor, there is a decomposition
+  \[
+    \Hom_G(K\otimes V,W)\;\cong\;
+    \bigoplus_{a,b}\;\underbrace{\Hom(\C^{n_a} \ot \C,\C^{m_b})}_{\text{reduced matrix elements}}
+    \otimes\underbrace{\Hom_G(K\otimes V_a,V_b)}_{\text{Clebsch-Gordan tensor}} .
+  \]
+\end{theorem}
+
+This is an instance of a more general theorem concerning tensors of arbitrary
+shape \cref{DecompositionOfSemisimpleCategories} which we will prove in
+\Cref{sect:Categories}.
+
+If we want to represent our ground state above as a MPS, we can first realize
+that the physical dimensions are always $\frac{1}{2}$, so this operator reduces
+to $\Hom_G(D_i \ot V_{1/2}, D_{i+1})$. Then we can visualize it as such
+
 \[
   \begin{tikzpicture}[
     box/.style={
@@ -1044,18 +1215,6 @@ We can also use the presentations of the clebsch-gordan operators and realize th
 \]
 and we can immediately observe an increasing bond dimension to the right.
 
-
-Recall that a single mps tensor that is also symmetric is of the form $\Hom_G(D_i, P_i \ot D_{i+1})$. Note that we did not assume that $P$ or $D$ are irreps, therefore we can decompose such an MPS as
-\[ \Hom_G\left( \bigoplus_i \mathbb{C}^{Ni^D}\otimes D_i,, \left(\bigoplus_j \mathbb{C}^{Nj^P}\otimes P_j\right) \otimes \left(\bigoplus_k \mathbb{C}^{Nk^E}\otimes E_k\right) \right). \]
-Rearranging this equation yields
-\[
-  \bigoplus_{ijk} \underbrace{\Hom(\C^{N_i^D}, \C^{N_j^P} \ot \C^{N_k^E})}_{3 legged tensor} \ot \underbrace{\Hom_G(D_i, P_j \ot E_k)}_{Clebsch-Gordan tensor}
-\]
-Again, we know the physical space to be $\frac{1}{2}$, so we may simplify this expression to
-\[
-TODO
-\]
-
 We can do some analysis on the individual tensors here. If we choose the third
 tensor, of the form $\Hom_G(0 \op 1, \frac{1}{2} \ot (\frac{1}{2} \op
 \frac{3}{2}))$, we can do some analysis over the CG-rule for $\SU{2}$.
@@ -1064,36 +1223,65 @@ There are $3$ possible combination in the basis of this space, these are the spa
 \[
   (0,\frac{1}{2},\frac{1}{2}); \quad (1, \frac{1}{2}, \frac{1}{2}); \quad (1, \frac{1}{2}, \frac{3}{2})
 \]
-and all spaces have degenracy $1$, and so do their associated degeneracy
-tensors. This means that we have $3$ degrees of freedom on the first tensor. 
+and all spaces have degeneracy $1$, and so do their associated degeneracy
+tensors. This means that we have $3$ degrees of freedom on the first tensor, and
+these are precisely the degrees captured by the degeneracy tensor associated to
+each space.
 
-If we look at the fourth tensor
 
-Alternatively, we can also decompose the state over the svd as we have done. Recall that if our tensor is an operator, it decomposes as a direct sum of blocks. Furthermore, we can immediately apply the SVD to each block:
+
+If we had chosen to obtain the MPS by SVD instead, we need to define the SVD on
+symmetric operators. Recall that if our tensor is an operator, it decomposes as
+a direct sum of blocks. Furthermore, we can immediately apply the SVD to each
+block:
 \[
-  \bigoplus_c D_c \otimes \id_{V_c}, \quad \quad T_c = U_c \Sigma_C V^\ast_c
+  \bigoplus_c D_c \otimes \id_{V_c}, \quad \quad T_c = U_c \Sigma_C W^\ast_c
 \]
 and we can rewrite
 \[
-  T = \bigoplus_c (U_c \ot \id_{V_c})(\Sigma_c \ot \id_{V_c})(V_c^\ast \ot \id_{V_c}).
+  T = \bigoplus_c (U_c \ot \id_{V_c})(\Sigma_c \ot \id_{V_c})(W_c^\ast \ot \id_{V_c}).
 \]
-We can also truncate the operators obtained by SVD. The representation parts
-$\id_{V_c}$ are fixed, so we can only operatore withing the degeneracy matrices.
-Effectively we can reduce an operators bond dimension by reducing its
-multiplicity
+We can also truncate the operators obtained by SVD as 
+\[
+  T_c = \tilde{U_c} \tilde{\Sigma_c} \tilde{W_c}^\ast
+\] 
+and then build the full operator as
+\[
+  T = \bigoplus_c (\tilde{U_c} \ot \id_{V_c})(\tilde{\Sigma_c} \ot \id_{V_c})(\tilde{W_c}^\ast \ot \id_{V_c}).
+\]
+The representation parts $\id_{V_c}$ are fixed, so we can only operate within
+the degeneracy matrices. Effectively we can reduce an operators bond dimension
+by reducing its multiplicity
 \[
   V = \bigoplus_c V_c^{n_c} \mapsto \bigoplus_c V_c^{\chi_c}.
 \]
-The new operators are of shape $\chi_c \times \chi_c$, but its effective bond
-dimension in the dense operator is $\sum_c \chi_c \dim(V_c)$. In our $3$-spin
-example, the $1/2$ block has multiplicity two. This could be truncated to a
-$1x1$ matrix. \todo{Actually do this.}
+Now, this means that the bond dimension at the index of decomposition is reduced
+to $\chi$. Generally, te effective bond dimensions are given by $\sum_c \chi_c
+\dim(V_c)$.
 
-\begin{theorem}[Fundamental Theorem of MPS]
-  If two MPS states generated by $A$ and $B$ respectively. Figure out what we
-  can do with this. 
-  
-  Proof
-  \cite{ciracMatrixProductDensity2017},\cite{vercleyenMathematicalStructureTensor2018},
-  \cite{perez-garciaStringOrderSymmetries2008a}.
-\end{theorem}
+TODO MPO operator
+
+Recall the XXX-Hamiltonians MPO operator with bond dimension $5$ from
+\Cref{back:mpo}. This means that the bonds are $D_i \cong \C^5 \cong
+V_{1/2}^{\ot 2} \op V_0 \cong V_0 \op V_1 \op V_0$. We can also represent the symmetric MPO by a matrix
+\[
+  \begin{pmatrix}
+    \id & S & 0 \\
+    0 & 0 & S \\
+    0 & 0 & \id 
+  \end{pmatrix}
+\]
+where $S = (S_x, S_y, S_z)$, with physical legs $V_{1/2}$ and the virtual bond
+$V_1$.
+
+\color{red}
+All the reasoning for deriving this symmetric MPO in the papers i saw
+\cite{fischerTensorNetworkSymmetries2025},
+\cite{schmollBenchmarkingGlobal$SU2$2020} was done after we have defined the
+fusiontrees formally. Maybe this entire section should go after categories? Talk
+about this in the meeting.
+\color{black}
+
+Note that in this section, we have not explained how to apply reshapes and
+contractions to these tensors. We will explain all of these operations as part
+of a more general formalism on \emph{categories} in \Cref{sect:Categories}.
