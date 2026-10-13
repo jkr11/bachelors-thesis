@@ -1,3 +1,5 @@
+### [Current PDF](tex/main.pdf)
+
 Maybe important for tex:
 https://tex.stackexchange.com/questions/300611/penrose-graphical-notation-with-tikz
 
@@ -9,6 +11,7 @@ Nice explanation of universal properties
 https://math.stackexchange.com/questions/57189/understanding-isomorphic-equivalences-of-tensor-product?rq=1
 
 http://www.matlas.math.csu.ru/?page=search
+
 
 ## August 3rd
 
