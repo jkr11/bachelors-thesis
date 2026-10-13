@@ -1,0 +1,24 @@
+name: Build PDF
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: tex
+          root_file: main.tex
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pdf
+          path: tex/main.pdf
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: tex/main.pdf
