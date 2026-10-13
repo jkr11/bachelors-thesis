@@ -11,38 +11,65 @@ In the existing literature it is well known that all of the concepts we have see
   \cite{kitaevAnyonsExactlySolved2006}\cite{rowellClassificationModularTensor2009}.
 \end{enumerate}
 
-\begin{literature}[Tensor Categories]
-  Grothendieck investigated what we now know as tensor categories as part of a
-  larger study on \emph{tannakian categories} to related the methods of
-  representation theory (c.f. 3) to less related mathematical problems. Monoidal
-  categories in turn were introduce by Benabou \cite{} and MacLane \cite{} under
-  the name \emph{bicategory} and \emph{category with multiplication}, although
-  an elementary construction of such categories is given by Tannaka \cite{} 
 
-  The name \emph{tensor category} is due to \textcite{Deligne1990} in
-  "Catégories Tannakiennes" and its followup
-  \cite{deligneCategoriesTensorielles2002} \todo{there is one here from 1982
-  find what this does.}
-  BlaBlub
+\begin{literature}[Algebraic Theory of Anyons]
+  The algebraic theory of anyons appears in many different forms. In this work
+  we use the term \emph{modular tensor category}, but other terms are
+  \emph{braided fusion category}, \emph{braided 6j fusion system}, \emph{modular
+  tensor systems} and \emph{modular functors}. Monographs introducing the theory
+  of anyons include \cite[~Parts I-II]{simonTopologicalQuantum2023},
+  \cite[~Chapter 2]{rowellMathematicsTopologicalQuantum2017a}\todo{check this}.
+  Other reviews and summaries (although this list is non-exhaustive) are given
+  in \cite{burtonShortGuideAnyons2016},
+  \cite{valeraFusionStructureExchange2021,valeraTOPOLOGICALQUANTUMTELEPORTATION},
+  \cite[~Appendix E]{kitaevAnyonsExactlySolved2006},
+  \cite[~Chapter 2]{bondersonNonAbelianAnyonsInterferometry2007},
+  \cite{bondersonInterferometryNonAbelianAnyons2008}.
+\end{literature}
+
+\begin{literature}[Category Theory]
+  Category theory was introduced in the 1940s by the work of Eilenberg and
+  MacLane \cite{???}, originally a construct in algebraic topology. Although at
+  first considered as a part of "abstract nonsense"\footnote{In a non-derogatory
+  way. This quote is due to Steenrod?}, category theory has since found
+  applications all across algebra, logic, computer science and mathematical
+  physics. Introductions to category theory can be found in the standard
+  references \cite{maclaneCategoriesWorkingMathematician1978} and
+  \cite{leinster???}, modern treatments include
+  \cite{riehlCategoryTheoryContext} and \cite{VakilRisingSea2025}.
+\end{literature}
+
+\begin{literature}[Tensor Categories]
+  The parts most relevant to us here concern monoidal, braided monoidal and
+  tensor categories. Originally investigated by Grothendieck, tensor categories
+  are part of a larger program on \emph{tannakian categories}, and are in whole
+  motivated by representation theoretic problems.
+  
+  Monoidal Categories were introduced by MacLane and Benabou, tensor categories
+  are due to \textcite{Deligne1990} \todo{earlier reference}
 
   The correspondence between the penrose notation (i.e. planar diagrams) and the
   calculus provdided by tensor categories is explained in great detail in
   \textcite{joyalGeometryTensorCalculus1991}, although earlier accounts such as
   \cite{reshetikhinInvariants3manifoldsLink1991} already make use of such a
-  string calculus.
-
-
+  string calculus. For larger reviews see
+  \cite{selingerSurveyGraphicalLanguages2011} and
+  \cite{baezPrehistoryCategoricalPhysics2011}.
 \end{literature}
+
 
 We have also seen a method for evaluating networks built in $\Rep(G)$ in
 \cref{sect:symmetricTensorNetworks} by decomposing a network into its fusion
-tree and it's degneracy spaces. As an immedeate consequence, this yields an
+tree and it's degeneracy spaces. As an immediate consequence, this yields an
 algorithm for evaluating generalized \emph{anyonic} and \emph{categorical}
 tensor networks, as in
 \cite[§~4]{dissertation}\cite{devosTensorKitjlJuliaPackage2025}
 \cite{pfeiferSimulationAnyonsUsing2012,pfeiferSimulationAnyonsTensor2010}
 \cite{ayeniStudiesBraidedNonAbelian2017}
-\cite[§~?]{schmollProgrammingGuideTensor2020}.
+\cite[§~?]{schmollProgrammingGuideTensor2020}. This decomposition and its
+associated algorithms are also given formally in
+\Cref{DecompositionOfSemisimpleCategories}.
+
 
 In light of this we provide a bottom-up construction of the theory of fusion
 categories in \cref{cat:sub:introCat}, each concept will carry along an example
@@ -52,22 +79,13 @@ worldlines\todo{or tqfts?} as well as the correspondence to the ATS systems of
 decomposition in \cref{cat:sub:decomp} and list the algorithms necessary for
 achieving a tensor network out of these theories.
 
-If we however mention ATSs, it must be said that there is a multitude of
-tensor-like string calculi and correspondences to categories. A great review of
-these string like languages is given by
-\textcite{selingerSurveyGraphicalLanguages2011}. Furthermore, the string
-calculus as defined by penrose for the ATSs does not have an abstract
-formulation that is sound and coherent as defined by
-\cite{joyalGeometryTensorCalculus1991}. The definitions of these terms will be
-given in the boxes labeled Graphical Notation.
-
 \section{Tensor \& Fusion Categories}\label{cat:sub:introCat}
 
 The general idea of a category is that it admits a sort of \emph{interface}. As
 noticed, there are many similarities in data and structure between the entities
 we already dealt with, i.e. the tensor product of vector space, the tensor
 product of representations, of Hilbert spaces etc.... We can view all these
-concepts as a category with additional constraints added.
+concepts as a category with additional constraints added. But first the basic definition of a category:
 
 \begin{definition}\label{cat:def:category} A \emph{\green {category}}
   $\mathcal{C}$ consists of\todo{Mention consisting of data?}
