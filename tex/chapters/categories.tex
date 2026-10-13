@@ -1320,12 +1320,13 @@ In a basis expansion this then looks like
   \cong
 \bigoplus_{\hat a,\hat b}
 \sum_{e,f,\mu,\nu}
+\underbrace{t^{\hat{a},\hat{b} }_{\vec{e}, \vec{\mu}, \vec{f}, \vec{\nu}}}_{
 \Hom\!\left(
   D_{\hat a},
   E_{\hat b}
-\right)
+\right)}
 \otimes_k
-\mathsf{T}^{\widehat a,\widehat b}_{e,f;\mu,\nu}
+\left(\pi^{\hat{a}}_{c,\vec{e},\vec{\mu}} \circ \iota^{\hat{b}}_{c,\vec{f}, \vec{\nu}}\right)
 \]
 \end{proof}
 
@@ -1365,6 +1366,7 @@ In a basis expansion this then looks like
       dashed,
       thick,
       rounded corners=2pt,
+      minimum height=6mm,
       inner sep=0pt,
       font=\small,
       text=gray
@@ -1375,7 +1377,7 @@ In a basis expansion this then looks like
 \legs{0}{$V_1$}{$V_2$}{$V_n$}{$W_1$}{$W_2$}{$W_m$}
 \node[font=\scriptsize, gray] at (0,-2.1) {$T \in \Hom_{\CC}\bigl(\bigot_i V_i,\ \bigot_j W_j\bigr)$};
  
-\node at (3.0,0) {$=\;\bop_{\hat a,\hat b}$};
+\node at (3.0,0) {$=\;\displaystyle\bop_{\hat a,\hat b}$};
  
 \node[box, minimum width=30mm] at (6.5,0) {$t_{\hat a,\hat b}$};
 \legs{6.5}{$D_{1,a_1}$}{$D_{2,a_2}$}{$D_{n,a_n}$}{$E_{1,b_1}$}{$E_{2,b_2}$}{$E_{m,b_m}$}
@@ -1383,7 +1385,7 @@ In a basis expansion this then looks like
  
 \node at (9.1,0) {$\ot$};
  
-\node[placeholder, minimum width=30mm, minimum height=6mm] at (11.7,0) {fusion tree};
+\node[placeholder, minimum width=30mm] at (11.7,0) {fusion tree};
 \legs{11.7}{$R_{a_1}$}{$R_{a_2}$}{$R_{a_n}$}{$R_{b_1}$}{$R_{b_2}$}{$R_{b_m}$}
 \node[font=\scriptsize, gray] at (11.7,-2.1) {fusion tree $\in \Hom_{\CC}(R_{\hat a}, R_{\hat b})$};
  
@@ -1414,32 +1416,17 @@ thm header.
 \end{corollary}
 
 \begin{example}
-  However, now assign $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ to each leg in the example
-  above. Each leg then becomes $V_0 \oplus V_1 \cong \mathbb{C} \otimes V_0 \oplus
-  \mathbb{C} \otimes V_1$. Then we can start with the decomposition.
-  \[
-    Hom_C(\bigoplus_{a,b,c \in (0,1)} (C \otimes C \otimes C) \otimes V_a \otimes V_b \otimes V_c, \bigoplus_{b \in (0,1)} C \otimes V_b) 
-  \]
-  \[
-    = \bigoplus_{a,b,c,d \in (0,1)} Hom_C((C \otimes C \otimes C) \otimes (V_a \otimes V_b \otimes V_c), C \otimes V_d)
-  \]
-  \[
-    = \bigoplus_{a,b,c,d} Hom(C^3, C) \otimes Hom_{\Rep(SU(2))} (V_a \otimes V_b \otimes V_c, V_d)
-  \]
-\end{example}
-
-\begin{example}
   Easier. However, now assign $V_{\frac{1}{2}} \otimes V_{\frac{1}{2}}$ to each leg in the
   example above. Each leg then becomes $V_0 \oplus V_1 \cong \mathbb{C} \otimes V_0 \oplus
   \mathbb{C} \otimes V_1$. Then we can start with the decomposition.
   \[
-    Hom_C\left(\bigoplus_{a,b\in (0,1)} (C \otimes C) \otimes V_a \otimes V_b \bigoplus_{b \in (0,1)} C \otimes V_b \right) 
+    \Hom_\CC\left(\bigoplus_{a,b\in (0,1)} (\C \otimes \C) \otimes V_a \otimes V_b \bigoplus_{b \in (0,1)} \C \otimes V_b \right) 
   \]
   \[
-    = \bigoplus_{a,b,c \in (0,1)} Hom_C((C \otimes C) \otimes (V_a \otimes V_b), C \otimes V_c)
+    = \bigoplus_{a,b,c \in (0,1)} \Hom_\CC((\C \otimes \C) \otimes (V_a \otimes V_b), \C \otimes V_c)
   \]
   \[
-    = \bigoplus_{a,b, c} Hom(C^2, C) \otimes Hom_{\Rep(SU(2))} (V_a \otimes V_b, V_c)
+    = \bigoplus_{a,b,c \in (0,1)} \Hom(\C \ot \C, \C) \otimes \Hom_{\Rep(SU(2))} (V_a \otimes V_b, V_c)
   \]
 \end{example}
 
@@ -1481,9 +1468,8 @@ A
 \begin{example}[Anyonic matrix operator]
   Finally, consider a $4 \to 4$ anyon operator with one leg on each side,
   representing the space $\mathrm{Hom}_\Fib((\tau \otimes \tau \otimes \tau
-  \otimes \tau), (\tau \otimes \tau \otimes \tau \otimes \tau))$. Here we
-  consider it as an operator. The full decomposition is $2 + 3\tau$. Hence we
-  obtain
+  \otimes \tau), (\tau \otimes \tau \otimes \tau \otimes \tau))$. Here we consider it as an operator. The full
+  decomposition is $2 + 3\tau$. Hence we obtain
   \[
     \Hom_{\Fib}\!\left(
       (\C^2 \otimes 1)\oplus(\C^3\otimes\tau),
