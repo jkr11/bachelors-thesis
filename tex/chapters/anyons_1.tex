@@ -1,21 +1,12 @@
-This chapter introduces the theory of anyons by a set of physical requirements.
+This chapter introduces the theory of \emph{anyons} by a set of physical requirements \todo{Rephrase.}, and here we really just argue about the topology of these anyonic systems.
 The algebraic definition of anyons will then by given by the discussion in
 \Cref{sect:Categories}.
 
-Anyons are proposed as a \emph{defect} in a $2$ dimensional space (manifold?
+Anyons are proposed as \emph{defects} in a $2$ dimensional space (manifold?
 compact?) with \emph{exotic exchange statistics}. These exchange statistics
 differ from bosons or fermions in that we allow particles to pick up a arbitrary
-phase $e^{i\theta}$ on exchange in the abelian case, and a phase as a matrix
-element in the nonabelian case.
-
-We group anyons into theories. An anyon theory carries a finite set of charges
-(types) $a,b,c\ldots$ including a trivial \emph{vacuum} charge. We are then
-interested in their spacetime histories, as this is where the topological
-properties of the anyon become apparent. First fix an oriented manifold $D$ of
-dimension two as our base space. Then introduce an anyonic defect as a point
-like hole (that is also oriented), that is carrying a charge. Such a particles
-spacetime history is then given by an appropriate 3-manifold.\todo{I dont like
-this whole section.}
+phase $e^{i\theta}$ on exchange in the abelian case, and a unitary
+transformation in the non-abelian case.
 
 \section{Configuration Spaces \& The Braid Group}
 \label{sect:anyons1:configurations_spaces_and_the_braid_group}
@@ -41,8 +32,8 @@ the expression
 \]  
 which is defined to be the \emph{configuration space} of $n$ unordered
 particles. However as we will see, anyons come in different "types", and we
-consider only particles of the same type to be identical. Later publications
-however define a swath of different notions of configuration spaces. We follow
+consider only particles of the same type to be identical. This entails that we
+also need a concept o a configuration space that is not ordered. We follow
 \cite{satiDifferentialCohomotopyImplies2022}\todo{original publications.} with
 the following definition:
 \begin{definition}
@@ -66,14 +57,14 @@ the following definition:
 
 Note that while \cite{leinaasTheoryIdenticalParticles1977a} conjectured
 computations for strange exchange statistics in both $2$ and $3$ dimensions, the
-concept of an anyon as a $1$ dimensional representation is due to
-\cite{wilczek1990}. 
+concept of an anyon as a $1$ dimensional representation of the braid group
+\todo{we do nt know what this is yet.} is due to \cite{wilczek1990}. 
 
 Now we want to classify all the possible motions particles can take in this
 space. The \emph{motion group} of the configuration space is given by the spaces
 \emph{homotopy classes} (cf. \Cref{app_gen:homotopy}), which are given by the
 fundamental group(oid) of the spcae. Informally, this group collects all the
-loops at some configuration $x_0$ up to homotopy. We want to differentiate two
+loops at some configuration $x_0$ (a point in the configuration space) up to homotopy. We want to differentiate two
 cases here: If $D = 2$ it is known that
 
 \[
@@ -240,6 +231,7 @@ Now we can give a process as the \emph{spacetime history} diagram of the $n$ par
 
   \end{scope}
 \end{tikzpicture}
+Compare this to the presentation of the symmetric group (cf. \cref{app:gen:groups}) to see that $S_n$ is a \emph{subgroup} of $\Br_n(\R^2)$.
 
 We can also do an example on there $2$-sphere, since there is an extra relation
 of the $\R^2$ braid group. Generally, this braid group arises as a
