@@ -12,6 +12,8 @@
 \usepackage{tikz-cd}  % commuting diagrams based on tikz
 \usetikzlibrary{calc}
 \usetikzlibrary{external}
+% THIS BREAKS SOMETHING
+%\tikzexternalize % activate!
 \usepackage{booktabs}  % for clean tables (tabular environment) 
 \usepackage{caption}  % for setting caption width
 \captionsetup{width=\linewidth}
@@ -235,6 +237,8 @@
 
 % ======
 % Braid Macros
+
+% Fix this some time 
 
 % \drawInjectionWeave{x}{y}{Label}{a}{b}{c}
 \newcommand{\drawInjectionWeave}[6]{
