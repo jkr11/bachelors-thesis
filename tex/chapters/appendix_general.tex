@@ -72,3 +72,19 @@ continuous unless stated otherwise.
         \gamma : [0,1] \to X \quad \text{such that} \gamma(0) = \gamma(1) = x_0
     \end{equation}
 \end{definition}
+
+\section{Tensor Decompositions \& Algorithms}
+
+\begin{definition}
+    The \emph{\green{singular value decomposition}} of a complex operator $A$ of shape $(m,n)$ is a decomposition of the form
+    \[
+        A = U\Sigma V^\ast
+    \]
+    where
+    \[
+        U \in \U{m \times m}, \quad \Sigma \in \Mat{m }{n}{\R} \quad \text{and} \quad V \in \U{n \times n}
+    \]
+    and $\Sigma$ is further diagonal, in fact is it made up of the \emph{singular values} of $A$.
+
+    This also enables us to perform a low rank appoximation of an operator by truncating $\Sigma$ to only keep its $r$ largest singular values. 
+\end{definition}
