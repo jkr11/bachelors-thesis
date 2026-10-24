@@ -296,26 +296,63 @@ themselves are linear function from $\C^{2^n} \to \C^{2^n}$ that are also
 unitary.
 
 Some important single=qubit maps are the $X,Y$ and $Z$ gates. The
-\emph{Hadamard-gate} $\mathop{H}$ produces bell states. We can apply these gates
-sequentially by composition and in parallel by the tensor product. There are
-also gates on two qubits that are not realized as tensor products, these are
-called \emph{multi-qubit} gates. A special class of those is called
-\emph{controlled gates}, which act on the composite $\ket{0x}$ by identity and
-on the ket $\ket{1x}$ by a single qubit gate in the second register. One of the
-important gates is the $\mathop{CNOT}$ gate, or controlled $X$ gate which maps
-$\ket{00} \to \ket{00}$ and $\ket{10}$ to $\ket{11}$.
+\emph{Hadamard-gate} $\mathop{H}$ produces bell states, and the $T$-gate yields a phase on ???.
+\begin{equation}
+  \X = \begin{pmatrix}
+    0 & 1 \\ 1 & 0
+  \end{pmatrix}
+  \qquad
+  \Y = \begin{pmatrix}
+    0 & -i \\ i & 0
+  \end{pmatrix}
+  \qquad
+  \ZGate = 
+  \begin{pmatrix}
+    1 & 0 \\ 0 & -1
+  \end{pmatrix}
+  \qquad
+  \Hadamard =
+  \frac{1}{\sqrt{2}}
+  \begin{pmatrix}
+    1 & 1 \\ 1 & -1
+  \end{pmatrix}
+  \qquad
+  \T =
+  \begin{pmatrix}
+    1 & 0 \\ 0 & e^{i\pi / 4}
+  \end{pmatrix}
+\end{equation}
+We can apply these gates sequentially by composition and in parallel by the
+tensor product. There are also gates on two qubits that are not realized as
+tensor products, these are called \emph{multi-qubit} gates. A special class of
+those is called \emph{controlled gates}, which act on the composite $\ket{0x}$
+by identity and on the ket $\ket{1x}$ by a single qubit gate in the second
+register. One of the important gates is the $\mathop{CNOT}$ gate, or controlled
+$X$ gate which maps $\ket{ab}$ to $\ket{a,a\op b}$. Every quantum gate $U \in
+\U{2^n}$ can then be represented as a unitary in $\U{2^{n+1}}$ \todo{These are
+not SU?} of the form 
+\[
+  \operatorname{C}U = \begin{pmatrix}
+    \operatorname{I}_{2\times 2} & 0 \\ 0 & U
+  \end{pmatrix} \qquad \CNOT = \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0
+  \end{pmatrix}
+\]
 
 The last operation on quantum circuits are \emph{measurements}. A measurement
 operator is a mapping from $\C^2 \to \{0,1\}$. Measurements occur with respect
 to a certain basis, here as a represetative choose $\{\ket{v_1}, \ket{v_2}\}$.
 If we take an arbitrary superposition of a state $\ket{\Phi} = \alpha \ket{v_1}
-+ \beta \ket{v_2}$ we get the result $0$ with probability $\alpha^2$ and the
-result $1$ with probability $\beta^2$. Note that $\alpha,\beta \in \C$. Finally,
-it is possible for states to differ by a global scalar $e^{i\theta} \in \U{1}$.
-These global phases do not affect the probabilities, therefore we choose to
-measure distances by the \emph{trace norm}
++ \beta \ket{v_2}$ we get the result $0$ with probability $|\alpha|^2$ and the
+result $1$ with probability $|\beta|^2$. Note that $\alpha,\beta \in \C$.
+Finally, it is possible for states to differ by a global scalar $e^{i\theta} \in
+\U{1}$. These global phases do not affect the probabilities, therefore we choose
+to measure distances by the \emph{trace norm}
 \[
-  |U - V| = \sqrt{1 - \frac{|\mathop{Tr}(U^\dagger V)|}{2}}
+  ||U - V|| = \sqrt{1 - \frac{|\mathop{Tr}(U^\dagger V)|}{2}}
 \]
 which ignores the phase.
 
@@ -364,30 +401,79 @@ calculus, originally introduced by
 \end{tikzpicture}
 \]
 
-This string calculus is a presentation of the \emph{theoritical} semantics of a
-quantum computer, and it is hardware-agnostic. Realizing quantum computation is
-another problem and has its own architectures, which can be compiled from the
-circuit diagrams. Furthermore, physical computers may not be able to accomodate
-arbitrary gates in $\SU{2}$ but instead support only a finite and perhaps
-limited set of gates. If we can take an arbitrary but finite combination of
-these gates, and we can approximate any unitary $U \in \SU{2}$ \todo{Projective
-Space!} up to precision epsilon, we call such a gate set
-\emph{universal}\footnote{We cannot achieve exact universality by a finite set
-as $\SU{2}$ is uncountable.}.
+This string calculus is a hardware agnostic language for quantum circuits.
+Realizing quantum computation on a physical architecture is another problem and
+has its own architectures, which can be compiled from the circuit diagrams.
+Furthermore, physical computers may not be able to accommodate arbitrary gates
+in $\SU{2}$ but instead support only a finite and perhaps limited set of gates.
+If we can take an arbitrary but finite combination of these gates, and we can
+approximate any unitary $U \in \SU{2}$ \todo{Projective Space!} up to precision
+$\epsilon$, we call such a gate set \emph{universal}\footnote{We cannot achieve
+exact universality by a finite set as $\SU{2}$ is uncountable.}.
+
+\begin{theorem}[Solovay-Kitaev \cite{kitaevQuantumComputationsAlgorithms1997}]
+  Given a finite $G \subseteq \SU{2}$, such that $\langle G \rangle$ is dense in
+  $\SU{2}$, then we can approximate every $U \in \SU{2}$ by a sequence of
+  elements $S$ from $G$ such that $|| U - S || \leq \epsilon$. The length of
+  this sequence is within $\mathcal{O}\left(\log^{3.97}(1/\epsilon)\right)$.
+  Furthermore, this yields an efficient algorithm producing such an
+  approximation in $\mathcal{O}\left(\log^{2.71}(1/\epsilon)\right)$
+  \cite{dawsonSolovayKitaevAlgorithm2005a}. \todo{There are more efficient
+  bounds now i think. Also this may not require inverses.
+  \cite{kuperbergBreakingCubicBarrier2025}}
+\end{theorem}
 
 
-We want to build a quantum computer that acts purely on the topological data
-provided by the anyon theories, or as named by
-\textcite{freedmanNPQuantumField1998}, a \emph{Quantum Field Computer}. To do
-this we need 3 things:
+\todo{Motivation by Feynman and Manin}
 
-\begin{enumerate}
-  \item[] A ground state that has high enough dimension to represent a quantum
+There is also a complexity perspective on quantum computation. \textcite{deutschQuantumTheoryChurch1985} introduced the \emph{quantum Turing machine} as a model. \textcite{doi:10.1137/S0097539796300921} adapted this model as a formal complexity class called $\mathsf{BQP}$. 
+
+
+Now we move towards defining topological quantum computation. But first some
+history:
+
+In a first instance, \textcite{wittenQuantumFieldTheory1989} showed that the
+knot invariants in $\SU{2}_k$ TQFTs at the roots of unity correspond to special
+values of the \emph{Jones polynomial} \cite{jonesPolynomialInvariantKnots1985}.
+While we will not define this problem, it is know that this is a
+$\mathsf{BQP}$-complete problem \cite{jaegerComputationalComplexityJones1990} at
+roots of unity. A complete analysis was given later by
+\textcite{aharonovPolynomialQuantumAlgorithm2006}, the resulting algorithm is
+now known as the \emph{AJL}-algorithm.
+
+Topological quantum computation in its protean form was first conjectured by
+\textcite[~Appendix E]{kitaevFaulttolerantQuantumComputation2003}\footnote{The
+citation reads that this paper was accepted for publication in 2003, however a
+preprint was released in 1997.}. Mainly what was given is, that the braidings of
+anyons can contribute unitary transforms, and that we can measure by fusing
+together anyons. As this work is based on a physical realization of the toric
+code \cite{kitaevQuantumComputationsAlgorithms1997}, the computations by
+exchanges are fault tolerant \todo{This is not true, Clifford magic gates are
+not}. In other words they are topologically protected. 
+
+Similarly to the originally conjectured quantum computing by Feynman to
+simulated quantum processes, \textcite{freedmanNPQuantumField1998} conjectured a
+\emph{topological quantum field computer} to simulate TQFTs a year later, based
+on both the work of Kitaev and Witten. Here it was even considered to be a
+stronger class of computation than standard quantum computing. By combined work,
+\textcite{freedmanSimulationTopologicalField2002} showed that while TQC is both
+fault tolerant and at most as powerful as standard quantum computation by way of
+the Jones polynomial, it does not provide stronger algorithms than
+$\mathsf{BQP}$. The reverse direction, that it is at least as strong as
+$\mathsf{BQP}$ is shown by \textcite{freedmanModularFunctorWhich2000a}. The
+universality given here corresponds only to certain theories such as $\SU{2}_k$
+for $k = 3$ and $k\geq 5$.
+
+
+How do we build such a computer: By the discussion above, we need 3 things:
+
+\begin{itemize}
+  \item A ground state that has high enough dimension to represent a quantum
   bit, i.e. is $\cong \C^2$.
-  \item[] A option to time evolve the system by application of unitaries.
-  \item[] An option to read out the information of the evolved state
+  \item A option to time evolve the system by application of unitaries.
+  \item An option to read out the information of the evolved state
   (\emph{measurement}).
-\end{enumerate}
+\end{itemize}
 
 
 
@@ -407,7 +493,7 @@ representations of the \emph{braid-group}:
   \]
 \end{definition}
 
-and also the \emph{pure-braid-group}:
+and also the \emph{pure-braid-group}: \todo{Introduce the pure braid group?}
 
 By the construction of anyon chains in
 \Cref{anyon:sec:algebraic_theory_of_anyons}, we know that the space of $3$
