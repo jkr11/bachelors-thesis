@@ -1,35 +1,44 @@
-This chapter introduces the theory of \emph{anyons} by a set of physical requirements \todo{Rephrase.}, and here we really just argue about the topology of these anyonic systems.
-The algebraic definition of anyons will then by given by the discussion in
-\Cref{sect:Categories}.
+This chapter introduces the theory of \emph{anyons} not by their algebra (cf.
+\cref{sect:Categories}) but by their physical instantion.
 
-Anyons are proposed as \emph{defects} in a $2$ dimensional space (manifold?
-compact?) with \emph{exotic exchange statistics}. These exchange statistics
-differ from bosons or fermions in that we allow particles to pick up a arbitrary
-phase $e^{i\theta}$ on exchange in the abelian case, and a unitary
-transformation in the non-abelian case.
+In the contemporary literature, anyons are introduced as \emph{defects} in a $2$
+dimensional space (manifold? compact?) with \emph{exotic exchange statistics} on
+its wave functions. These exchange statistics differ from bosons or fermions in
+that we allow particles to pick up an arbitrary complex phase $e^{i\theta}$ on
+exchanges in the abelian case, and a unitary transformation in the non-abelian
+case. Here we introduce as one would have found by doing elementary analysis on
+the \emph{parameter space} of point-like particles. We argue why these systems
+are important and why these are called \emph{topological}. Ending this chapter
+we sketch the motivations for translating this approach into an algebraic
+description using \emph{categories} and their corresponding string
+calculi\todo{Is this string calc or only diagrams?}.
 
 \section{Configuration Spaces \& The Braid Group}
 \label{sect:anyons1:configurations_spaces_and_the_braid_group}
 
 The original article by \textcite{leinaasTheoryIdenticalParticles1977a}
-identifies a generalized theory of \emph{identical} particles. Denote the space
-where a particle lives by $\Sigma$ and thus the space of $n$ particles possible
-coordinates of equal type by $\Sigma^n \coloneqq \bigtimes^n \Sigma$. Since the
-particles are assumed to be identical, any permutation (an action of $S_n$)
-necessarily leads to the same physical state, so we denote the full space of our
-system by the quotient
+identifies a generalized theory of \emph{identical} particles that are
+point-like. Denote the ambient space that such a particle inhabits by $\Sigma$
+and then the space of $n$ identical particles possible coordinates  by $\Sigma^n
+\coloneqq \bigtimes^n \Sigma$. Since the particles are assumed to be
+indistinguishable, any permutation, so an action of $\Sym_n$ (cf.
+\cref{app:gen:groups}) necessarily leads to the same physical state, so we
+denote the full space of our system by the quotient
 \[
-    \Sigma^n / S_n.
+    \Sigma^n / \Sym_n.
 \] 
 However we also want no two particles occupying the same space\footnote{If this
 were the case, then the resulting exchange statistics would be bosonic
-\cite[Footnote~12]{wuGeneralTheoryQuantum1984}.}, so the diagonal in $\Delta =
-\{x \in \Sigma^n \mid x_i = x_j \text{ for some } i \neq j\}$\todo{rephrase!}
-needs to be excluded as well \cite{wuGeneralTheoryQuantum1984}. This leads to
-the expression
-\[
-    \uConf_n(\Sigma) = (\Sigma^n - \Delta) / S_n
-\]  
+\cite[Footnote~12]{wuGeneralTheoryQuantum1984}.}, so the diagonal of overlapping
+points $\Delta = \{x \in \Sigma^n \mid x_i = x_j \text{ for some } i \neq
+j\}$\todo{rephrase!} needs to be excluded as well
+\cite{wuGeneralTheoryQuantum1984}. This leads to the expression
+%\[
+%    \uConf_n(\Sigma) = (\Sigma^n - \Delta) / S_n
+%\]  
+\begin{equation}\label{anyon:conf_space_full}
+  \uConf_n(\Sigma) = \left\{(x_1, \cdots, x_n) \in \Sigma^{\times^n} \mid \displaystyle\forall_{i = j} x_i \neq x_j \right\} / \Sym_n 
+\end{equation}
 which is defined to be the \emph{configuration space} of $n$ unordered
 particles. However as we will see, anyons come in different "types", and we
 consider only particles of the same type to be identical. This entails that we
@@ -46,13 +55,14 @@ the following definition:
     and the \emph{\green{unordered Configuration Space}} of $n$ unlabeled
     identical particles is defined as 
     \[
-        \uConf_n (\Sigma) := \oConf n (\Sigma) / S_n.
+        \uConf_n (\Sigma) := \oConf n (\Sigma) / \Sym_n.
     \]
 \end{definition}    
 
 \begin{figure}
-  \includegraphics[width=0.5\textwidth]{figures/conf_5.png}
-  \caption{The configuration space of 5 particles in the plane $\R^2$.}
+  \includegraphics[width=0.5\textwidth]{figures/uconf_3.png}
+  \caption{The configuration space of 3 particles in the plane $\R^2$ at time $0$ and time $t$. There are two braids between the spaces.}
+  \label{fig:confevolution}
 \end{figure}
 
 Note that while \cite{leinaasTheoryIdenticalParticles1977a} conjectured
@@ -61,45 +71,66 @@ concept of an anyon as a $1$ dimensional representation of the braid group
 \todo{we do nt know what this is yet.} is due to \cite{wilczek1990}. 
 
 Now we want to classify all the possible motions particles can take in this
-space. The \emph{motion group} of the configuration space is given by the spaces
-\emph{homotopy classes} (cf. \Cref{app_gen:homotopy}), which are given by the
-fundamental group(oid) of the spcae. Informally, this group collects all the
-loops at some configuration $x_0$ (a point in the configuration space) up to homotopy. We want to differentiate two
-cases here: If $D = 2$ it is known that
+space. Here we let these motions account for time evolutions. The \emph{motion
+group} of the configuration space is given by the spaces \emph{homotopy classes}
+(cf. \Cref{app_gen:homotopy}), which are given by the fundamental
+group(oid)\footnote{One should rather use the groupoid here, since in a real
+scenario these particles likely will not hit the same return point. But the only
+part that i know of that defines it this way is the source
+\cite{neoriIdenticalParticlesQuantum2016}.} of the space. Informally, this group
+collects all the loops at some configuration $x_0$ (a point in the configuration
+space) up to homotopy. We want to differentiate two cases here: If $D = 2$ it is
+known these spaces correspond to the \emph{(pure) braid groups} on $n$ strands
+denoted
+\[
+    \pi_1(\uConf_n (\Sigma)) = \Br_n(\Sigma) \quad \text{ and } \quad \pi_1(\oConf{n} (\Sigma)) = \PBr_n(\Sigma).
+\]
+If we choose $\Sigma$ as $\R^2$ we can give an presentation in terms of
+generators:
+\begin{definition}[Braid Group, cf. {\cite{artinTheorieZoepfe1925} \cite[~Def.
+  II]{wilsonGeometryTopologyBraid}}] The braid group (on the plane $\R^2$) is
+  defined in terms of its generators:
+\begin{equation}
+  \label{sym:eq:ArtinBraidPresentation}
+  \mathrm{Br}_n(\R^2)
+  \;\simeq\;
+  \left\langle\,
+    \sigma_1, \cdots, \sigma_{n-1}
+    \;\middle|\;
+    \begin{gathered}
+      \underset{
+        i + 1 < j
+      }{\forall}
+      \big(
+        \sigma_i \sigma_j
+        =
+        \sigma_j \sigma_i
+      \big)
+      \,,
+      \\
+      \underset{
+        1 \leq i < n - 1
+      }{\forall}
+      \underset{
+        \mathclap{
+          \scalebox{.7}{\textcolor{gray}{\text{Yang--Baxter relation}}}
+        }
+      }{
+        \big(
+          \sigma_i \, \sigma_{i + 1} \, \sigma_i
+          \,=\,
+          \sigma_{i + 1} \, \sigma_i \, \sigma_{i + 1}
+        \big)
+      }
+    \end{gathered}
+    \,\right\rangle
+  \,,
+\end{equation}
+\end{definition}
 
-\[
-    \pi_1(\uConf_n (\Sigma)) = \Br_n(\Sigma) \quad \text{ and } \quad \pi_1(\oConf{n} (\Sigma)) = \PBr_n(\Sigma)
-\]
-however if $D >= 3$ we know that both of these coincide with the symmetric group
-$S_n$ instead. In fact there is an exact sequence
-\[
-    1 
-    \longrightarrow 
-    \mathrm{PBr}_n(\Sigma) 
-    \longrightarrow 
-    \mathrm{Br}_n(\Sigma)
-    \longrightarrow 
-    S_n 
-    \longrightarrow 
-    1 .
-\]
-For an example in the plane $\R^2$ (or $\C$?), we give an explicit
-representation of the \emph{braid group} $\Br_n(\R^2)$ and the \emph{pure braid
-group} $\PBr_n(\R^2)$. There is a well know presentation in terms of generators
-due to \cite{artin25} as
-\[
-    \Br_n(\R^2)
-    = 
-    \left\langle
-    \sigma_1, \ldots, \sigma_{n-1}
-    \;\middle\vert\;
-    \begin{aligned}
-        \sigma_i\sigma_{i+1}\sigma_i &= \sigma_{i+1}\sigma_i \sigma_{i+1} \\
-        \sigma_i\sigma_j &= \sigma_j\sigma_i,\; \vert i - j \vert \geq 2
-    \end{aligned}
-    \right\rangle.
-\]
-These generators also have a graphical interpretation as
+
+We can also give these generators graphically, as well as view a composite in
+\cref{fig:confevolution}.
 \begin{equation}
 \sigma_i
 \;\coloneqq\;
@@ -147,91 +178,36 @@ These generators also have a graphical interpretation as
 \right]
 \end{equation}
 
-Now we can give a process as the \emph{spacetime history} diagram of the $n$ particles.
+However now if $D >= 3$ we know that both of these coincide with the symmetric
+group $\Sym_n$ instead. In fact there is an exact sequence
+\[
+    1 
+    \longrightarrow 
+    \mathrm{PBr}_n(\Sigma) 
+    \lhook\joinrel\longrightarrow
+    \mathrm{Br}_n(\Sigma)
+    \longrightarrow 
+    \Sym_n 
+    \longrightarrow 
+    1
+\]
+and this is quite best understood forgetting what an anyon is, the configuration
+space intrinsically has no knowledge of what it is either, it only knows its
+points. In the case of the ordered configuration space these points are each
+endowed with a label, and these may yet correspond to identical particles in the
+physical layer. So the pure braid group requires a motion to end up at its exact
+starting configuration, so it has no permutation of labels. The braid groups
+generator $\sigma_i$ hover can be directly mapped to the symmetric groups $s_i$,
+thus we say there is a group homomorphism $\Br_n \to \Sym_n$. Since the pure
+braid group does not induce \emph{any} permutation but the trivial one, it must
+be in the kernel of this homomorphism.
 
-    \begin{tikzpicture}
-\begin{scope}[scale=0.6]
-  \begin{scope}[shift={(-1.6,0)}]
-    \draw[line width=1.2]
-      (+.5,5) to (+.5,-1);
-  \end{scope}
 
-  \begin{scope}[shift={(0,4)}]
-    \draw[line width=1.4]
-      (-.35,-1)
-      .. controls (-.35,0) and (+.35,0)  ..
-      (+.35,1);
 
-    \draw[line width=4.5, white]
-      (+.35,-1)
-      .. controls (+.35,0) and (-.35,0)  ..
-      (-.35,1);
-    \draw[line width=1.4]
-      (+.35,-1)
-      .. controls (+.35,0) and (-.35,0)  ..
-      (-.35,1);
-  \end{scope}
 
-  \draw[line width=1.4]
-    (-.35,3)
-    --
-    (-.35,1);
-
-  \draw[line width=1.4]
-    (+1.05,5)
-    --
-    (+1.05,3);
-
-  \begin{scope}[shift={(.7,2)}]
-    \draw[line width=1.4]
-      (-.35,-1)
-      .. controls (-.35,0) and (+.35,0)  ..
-      (+.35,1);
-
-    \draw[line width=4.5, white]
-      (+.35,-1)
-      .. controls (+.35,0) and (-.35,0)  ..
-      (-.35,1);
-    \draw[line width=1.4]
-      (+.35,-1)
-      .. controls (+.35,0) and (-.35,0)  ..
-      (-.35,1);
-  \end{scope}
-
-  \begin{scope}
-    \draw[line width=1.4]
-      (-.35,-1)
-      .. controls (-.35,0) and (+.35,0)  ..
-      (+.35,1);
-
-    \draw[line width=4.5, white]
-      (+.35,-1)
-      .. controls (+.35,0) and (-.35,0)  ..
-      (-.35,1);
-    \draw[line width=1.4]
-      (+.35,-1)
-      .. controls (+.35,0) and (-.35,0)  ..
-      (-.35,1);
-  \end{scope}
-
-  \draw[line width=1.4]
-    (1.05,1) to (1.05,-1);
-
-  \begin{scope}[shift={(+2.4,0)}]
-    \draw[line width=1.4]
-      (-.5,5) to (-.5,-1);
-  \end{scope}
-
-  \draw[fill=gray, opacity=0.3] (-2,4.3) rectangle (2.7,5.9);
-
-  \draw[fill=gray, opacity=0.3] (-2,-0.1) rectangle (2.7,-1.7);
-
-  \node[align=center, blue, font=\footnotesize] at (-4.5, 2) 
-        {The spacetime history \\ of $5$ particles in $\R^2$.};
-
-  \end{scope}
-\end{tikzpicture}
-Compare this to the presentation of the symmetric group (cf. \cref{app:gen:groups}) to see that $S_n$ is a \emph{subgroup} of $\Br_n(\R^2)$.
+Compare this to the presentation of the symmetric group (cf.
+\cref{app:gen:groups}) to see that $\Sym_n$ is a \emph{subgroup} of
+$\Br_n(\R^2)$.
 
 We can also do an example on there $2$-sphere, since there is an extra relation
 of the $\R^2$ braid group. Generally, this braid group arises as a
@@ -240,10 +216,8 @@ of the $\R^2$ braid group. Generally, this braid group arises as a
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{figures/anyons_sphere.png}
-  \caption{ $3$ Anyons on the sphere $S^2$ with the equivalence of the braids $\sigma_1^2$
-    and $\sigma_2^2$. From an
-    exercise\href{https://github.com/jkr11/maths-notes/tree/main/tq-simons-solutions}{github}
-    in \cite{simonTopologicalQuantum2023}. }
+  \caption{ $3$ Anyons on the sphere $S^2$ with the equivalence of the braids
+    $\sigma_1^2$ and $\sigma_2^2$ \cite{simonTopologicalQuantum2023}. Implicitly, we are given the configuration spaces $\uConf_3(S^2)$.}
   \label{anyon:fig:sphere}
 \end{figure}
 
@@ -268,19 +242,62 @@ order of $Br_n(S^2)$ is given by
   }
 \end{equation}
 
-Now, if we associate a Hilbert space to this configuration space, we can achieve
-this by using a \emph{Hilbert Bundle}
+\begin{remark}
+  This is not to assert that anyons (rather anyonic excitations) do not exist
+  $3$ or more dimensions, this simply states that there are no \emph{point-like
+  defects} in $3$ or more dimensions that behave as anyons. Sheet and
+  string-like defects can exhibit anyonic exchange statistics and higher fusion
+  categories
+  \cite{kongDefects3dimensionalToric2020,bullivantRepresentationsLoopBraid2019,baezExoticStatisticsStrings2006}.
+  Generally, defects that are of $2$ dimensions less than the space of their
+  material can be considered having anyonic exchange statistics.
+\end{remark}
+
+To reiterate, the configuration space here takes the role of a \emph{classical}
+parameter space. Any quantum process we give on this state should ideally
+\emph{parameterized} by the configuration space itself. To make this a formal definition, we associate a Hilbert space to each point in the configuration space by using a \emph{Hilbert bundle} (cf. \cref{app_gen:homotopy}).
 \[
   \mathcal{H} \overset{\pi}{\longrightarrow} \oConf{n}(\Sigma),
 \]
 i.e. to each point $x \in \oConf{n}(\Sigma)$ there is an associated Hilbert
-space $\mathcal{H}_{x}$. Furthermore, a path through the configuration space
-$[\gamma] : x_0 \to x_1 \in \oConf{n}(\Sigma)$ is lifted to some unitary
-representation
+space $\mathcal{H}_{x}$ called the \emph{fiber} of $x$. Furthermore, a path
+through the configuration space $[\gamma] : x_0 \to x_1 \in \oConf{n}(\Sigma)$
+is lifted to some unitary representation
 \[
   \rho([\gamma]) \in U(\mathcal{H}_{x_0} \to \mathcal{H}_{x_1})
 \]
-by \emph{parallel transport}.
+by \emph{parallel transport}. Since we care about the topology of the system, we
+would like our paths to be \emph{homotopy protected}. So any topological
+deformation (so not cuttings or crossings) can be resolved back to itself.
+However if we follow two paths in the configuration space that are \emph{not}
+homotopic, we want \emph{distinctly robust transformations} on the fibers of the
+space. We can illustrate this as follows (adapted after
+\cite[~Fig. H]{satiAnyonicTopologicalOrder2023})
+% https://q.uiver.app/#q=WzAsMTEsWzAsMywicF8wIl0sWzIsMywicF8xIl0sWzAsMCwiXFxtYXRoY2Fse0h9X3twXzB9Il0sWzIsMCwiXFxtYXRoY2Fse0h9X3twXzF9Il0sWzQsMCwiXFxtYXRoY2Fse0h9X3twXzB9Il0sWzYsMCwiXFxtYXRoY2Fse0h9X3twXzF9Il0sWzQsMywicF8wIl0sWzYsMywicF8xIl0sWzUsMywiXFxtYXRoc2Z7ZGVmZWN0fSJdLFs4LDAsIkhfe3BfMH0iXSxbOCwzLCJwXzAiXSxbMCwxLCJcXGdyZWVue1xcZ2FtbWFfMH0iLDEseyJjdXJ2ZSI6NCwic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoic3F1aWdnbHkifX19XSxbMCwxLCJcXG9yYW5nZXtcXGdhbW1hXzF9IiwxLHsiY3VydmUiOi00LCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJzcXVpZ2dseSJ9fX1dLFsyLDMsIlVfe1tcXGdyZWVue1xcZ2FtbWFfMH1dfSIsMSx7ImN1cnZlIjo0fV0sWzIsMywiVV97W1xcb3Jhbmdle1xcZ2FtbWFfMX1dfSIsMSx7ImN1cnZlIjotNH1dLFs2LDcsIlxcZ3JlZW57XFxnYW1tYV8wfSIsMSx7ImN1cnZlIjo0LCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJzcXVpZ2dseSJ9fX1dLFs2LDcsIlxcb3Jhbmdle1xcZ2FtbWFfMX0iLDEseyJjdXJ2ZSI6LTQsInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6InNxdWlnZ2x5In19fV0sWzQsNSwiVV97W1xcZ3JlZW57XFxnYW1tYV8wfV19IiwxLHsiY3VydmUiOjR9XSxbNCw1LCJVX3tbXFxvcmFuZ2V7XFxnYW1tYV8xfV19IiwxLHsiY3VydmUiOi00fV0sWzksOSwiVV97W1xcZ2FtbWFfMF19IiwxLHsicmFkaXVzIjo1LCJhbmdsZSI6MTgwfV0sWzEwLDEwLCJcXGdhbW1hXzAiLDEseyJyYWRpdXMiOjUsInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6InNxdWlnZ2x5In19fV0sWzEyLDEzLCJcXHRleHR7cGFyYWxsZWwgdHJhbnNwb3J0fSIsMSx7InNob3J0ZW4iOnsic291cmNlIjozMCwidGFyZ2V0IjozMH19XSxbMTMsMTQsIiIsMSx7InNob3J0ZW4iOnsic291cmNlIjo0MCwidGFyZ2V0Ijo0MH0sInN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMTcsMTgsIiIsMSx7InNob3J0ZW4iOnsic291cmNlIjo0MCwidGFyZ2V0Ijo0MH0sInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImJhcnJlZCJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzE2LDE3LCJcXHRleHR7cGFyYWxsZWwgdHJhbnNwb3J0fSIsMSx7InNob3J0ZW4iOnsic291cmNlIjoyMCwidGFyZ2V0IjoyMH19XSxbMTEsMTIsImh0cHkiLDEseyJzaG9ydGVuIjp7InNvdXJjZSI6MjAsInRhcmdldCI6MjB9LCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV1d
+\[\begin{tikzcd}[cramped]
+	{\mathcal{H}_{p_0}} && {\mathcal{H}_{p_1}} && {\mathcal{H}_{p_0}} && {\mathcal{H}_{p_1}} && {H_{p_0}} \\
+	\\
+	\\
+	{p_0} && {p_1} && {p_0} & {\mathsf{defect}} & {p_1} && {p_0}
+	\arrow[""{name=0, anchor=center, inner sep=0}, "{U_{[\green{\gamma_0}]}}"{description}, curve={height=24pt}, from=1-1, to=1-3]
+	\arrow[""{name=1, anchor=center, inner sep=0}, "{U_{[\orange{\gamma_1}]}}"{description}, curve={height=-24pt}, from=1-1, to=1-3]
+	\arrow[""{name=2, anchor=center, inner sep=0}, "{U_{[\green{\gamma_0}]}}"{description}, curve={height=24pt}, from=1-5, to=1-7]
+	\arrow[""{name=3, anchor=center, inner sep=0}, "{U_{[\orange{\gamma_1}]}}"{description}, curve={height=-24pt}, from=1-5, to=1-7]
+	\arrow["{U_{[\gamma_0]}}"{description}, from=1-9, to=1-9, loop, in=230, out=310, distance=15mm]
+	\arrow[""{name=4, anchor=center, inner sep=0}, "{\green{\gamma_0}}"{description}, curve={height=24pt}, squiggly, from=4-1, to=4-3]
+	\arrow[""{name=5, anchor=center, inner sep=0}, "{\orange{\gamma_1}}"{description}, curve={height=-24pt}, squiggly, from=4-1, to=4-3]
+	\arrow["{\green{\gamma_0}}"{description}, curve={height=24pt}, squiggly, from=4-5, to=4-7]
+	\arrow[""{name=6, anchor=center, inner sep=0}, "{\orange{\gamma_1}}"{description}, curve={height=-24pt}, squiggly, from=4-5, to=4-7]
+	\arrow["{\gamma_0}"{description}, squiggly, from=4-9, to=4-9, loop, in=50, out=130, distance=15mm]
+	\arrow[between={0.4}{0.6}, equals, nfold, from=0, to=1]
+	\arrow["\shortmid"{marking}, between={0.4}{0.6}, equals, nfold, from=2, to=3]
+	\arrow["{\text{parallel transport}}"{description}, between={0.3}{0.7}, Rightarrow, nfold, from=5, to=0]
+	\arrow["htpy"{description}, between={0.2}{0.8}, equals, nfold, from=4, to=5]
+	\arrow["{\text{parallel transport}}"{description}, between={0.2}{0.8}, Rightarrow, nfold, from=6, to=2]
+\end{tikzcd}\] and this is only the case when the corresponding connection is
+\emph{flat}. Another case is when the connection is trivial, lets say we are
+working over a time-axis $\R$, then the bundle $\mathcal{H} \to \R \cong
+\mathcal{H} \times \R$.
 
 The closed paths in the respective groups form a \emph{monodromy} in the
 configuration space and a \emph{holonomy} in the Hilbert Bundle, and it is these
@@ -289,31 +306,54 @@ quantum computation} (cf. \Cref{sect:anyon:tqc})
 
 
 However, in the usual literature anyons are also identified over their
-\emph{fusion tensor category} (cf. \Cref{sect:Categories}). Shifting the
-viewpoint from configuration spaces to fusion categories requires additional
-postulates \todo{is this true?} about the systems we want to reason about.
-Although this correspondence is well known and the categorical interpretation
-can be considered standard, a formal treatment and proof \todo{Check if htis is
-a full proof.} were only given recently. These are pointed out in
+\emph{fusion tensor category} (cf. \Cref{sect:Categories}). Although this
+correspondence is well known and the categorical interpretation can be
+considered standard, a formal treatment and proof \todo{Check if htis is a full
+proof.} were only given recently. These are pointed out in
 \cite{valeraFusionStructureExchange2021}, and formally rigorous derivations of
-this fact are given in \cite{satiAnyonicTopologicalOrder2023}. However we will
-not give a derivation of this result and instead assume it. Perhaps a more
-natural introduction to this correspondence is given by an excursion over MCGs
+this fact \todo{withing another theory, not general?} are given in
+\cite{satiAnyonicTopologicalOrder2023}. However we will not give a derivation of
+this result and instead assume it. Perhaps a more natural introduction to this
+correspondence is given by an excursion over \emph{mapping class groups (MCGs)}
 as done in \cite{burtonShortGuideAnyons2016}.
 
 Now we need to introduce anther assumption, that anyons are spatially localized
-phenomena. This means that we can do a local exchange of a $k$-anyons subsystem
-that only effects the $k$ anyons \todo{They need to be adjacent?}.
+phenomena. This means that in every $n$-anyon system we can look at a $k$-anyon
+subsystem (such that they are adjacent) and apply evolutions only within this
+subsystem. Then the other anyons outside of the system are not affected by this.
+Note that this correlates with the inclusion $\Br_k \hookrightarrow \Br_n$ since
+while we could always take the restriction
+\[
+  \rho_{
+    |\Br_k
+  } : \Br_k \to \U{\mathcal{H}_n}.
+\]
+we are now allowed, by the postulate of locality that we can also take this
+restriction with a proper subsystem $H_k \subseteq H_n$ as 
+\[
+  \rho_{
+    |\Br_k
+  } : \Br_k \to \U{\mathcal{H}_k}.
+\]
 
 
-Note that all of these discussion gave us a \emph{symmetry} for these anyonic systems. Assume that we are working with identitcal particles. Let $O$ be observables on the hilbert space and let $\rho : \Br_n \to \U{\mathcal{H}}$ a unitary linear representation of $\mathcal{H}$ under the action of $\Br_n$. THen there is a symmetry
+Remarkably, these postulates gave us a type of \emph{symmetry} for these anyonic
+systems. Assume that we are working with identical particles. Let $O$ be
+observables on the Hilbert space and let $\rho : \Br_n \to \U{\mathcal{H}}$ a
+unitary linear representation of $\mathcal{H}$ under the action of $\Br_n$. THen
+there is a symmetry
 \[
   [O, \rho(\sigma_i)] = 0 \quad \forall 0 \leq i < n.
 \]
 
-Consider two of these particles, and their rep $\rho$ with the only generator
-$\sigma_1$. Since $\rho(\sigma_1)$ is unitary, we can diagonalize it and thus we
-get $\dim(\mathcal{H})$ eigenvectors $e^{i\theta_X} \in \U{1}$.
+For a system of $n=k=2$ particles, and their representation $\rho$ with the
+only generator $\sigma_1$. Since $\rho(\sigma_1)$ is unitary, we can diagonalize
+it and thus we get $\dim(\mathcal{H})$ eigenvectors $e^{i\theta_X} \in \U{1}$.
+We can elicit a first appearance of non-abelian behaviour under the
+Artin-relation \cref{eq:artinrep} $[\rho(\sigma_1), \rho(\sigma)_2]$ not
+necessarily being zero here. \todo{compare to the symmetry case.}
+
+Now choose $n\geq 3$, $k=2$ still. 
 
 \color{red}{ There is one issue here. We assumed that anyons were
   indistinguishable with no degrees of freedom. However, languages like the
