@@ -1,42 +1,46 @@
 This section develops the theory underlying \emph{symmetric tensor networks},
-specifically for non-abelian groups. We give an informal overview on the
-necessary representation theoretic concepts in \Cref{sym:sub:rep}. We employ the
-example of the $XXZ$-Hamiltonian for both abelian and non-abelian symmetries and
-give an exact calculation of its conserved values. Here we are mostly interested
-in the \emph{speedup} obtained by exploiting the emergent block-structure of
-symmetric operators. Most of the proofs and formal definitions required for this
-formalism are delegated to \Cref{sect:Categories}, however there will still be
-repetitions of some of the theory.
+specifically for non-abelian groups. We give a quick overview over the necessary
+representation theoretic concepts in \Cref{sym:sub:rep}. We employ the example
+of the $XXZ$-Hamiltonian for both abelian and non-abelian symmetries and give an
+exact calculation of its conserved quantities for lattices of size $2$ and $3$.
+Here we are mostly interested in the \emph{speedup} obtained by exploiting the
+emergent block-structure of symmetric operators. Most of the proofs and formal
+definitions required for this formalism are delegated to \Cref{sect:Categories},
+however there will still be repetitions of some of the theory.
 
 \section{Representation theory}\label{sym:sub:rep}
 
 This section gives a quick review of representation theory. We consider all
 vector spaces and their representations here to be finite, the groups may only
 be compact. For some of the more basic definitions as those of a group and some
-of the matrix groups we are using here, see \Cref{app:gen:groups}. \todo{cite
-rep theory textbook.}
+of the matrix groups we are using here, see \Cref{app:gen:groups}. We follow the
+books by \textcite{ibortIntroductionGroupsGroupoids2019},
+\textcite{serreLinearRepresentationsFinite1977}, \textcite{woit} \todo{cite woit
+book} as well as \textcite{etingofIntroductionRepresentationTheory2011}.
 
-\begin{definition}[Representation]
-  A \green{\emph{representation}} of a compact group $G$ over a vector space $V$ is a
-  group homomorphism
+\begin{definition}
+  A \green{\emph{representation}} of a group $(G,\cdot)$ which is just $G$ here
+  over a vector space $V$ is a group homomorphism
   \[
-    \rho : G \to \GL V, \quad \rho(g)\rho(h) = \rho(g \cdot h), \quad \rho(e) = id_V
+    \rho : G \to \End (V), \quad \rho(g)\rho(h) = \rho(g \cdot h), \quad \rho(e) = id_V
   \]
-  The \green{\emph{representation space}} is denoted by the tuple $(\rho, V)$ but usually
-  we shorten this to just $V$.
+  The \green{\emph{representation space}} is denoted by the tuple $(\rho, V)$
+  but usually we shorten this to just $V$.
+
+  If we want the representation to be linear, we can choose it as
+  \[
+    \rho : G \to \GL(V)
+  \]
+  instead. Choosing a linear basis for $V$ in $\C^n$ gives this as 
+  \[
+    \rho : G \to \GL_n(\C).
+  \]
 \end{definition}
 
-\noindent
-Equivalently we can state the definition of a representation of $G$ as imposed by its
-action on $V$, given as a map
-  \begin{equation}
-    \alpha : G \times V \to V, \quad (g,v) \mapsto g \cdot v
-  \end{equation}
-such that this is linear, todo. I think we get the equality to the hom def if we set $g \cdot v = \rho(g)v$
 
 \begin{definition}\label{sym:def:intertwiner}
   A linear map $A : V \to W$ is an \emph{\green{intertwiner}}, if under
-  representations $\rho_V : G \to \GL V$ and $\rho_W : G \to \GL W$ it holds
+  representations $\rho_V : G \to \GL(V)$ and $\rho_W : G \to \GL(W)$ it holds
   that
   \[
     A \circ \rho_V(g) = \rho_W (g) \circ A \quad \forall g \in G.
@@ -46,13 +50,14 @@ such that this is linear, todo. I think we get the equality to the hom def if we
   \Hom_G(V,V)$.
 \end{definition}
 
-\begin{definition}[Unitary representation]\todo{This is quite important.} If our
-  vector space $V$ is equipped  with a (Hermitian?) inner product 
-\end{definition}
-
-\begin{definition}[Irreducible representation (Woit 16)]
-  A representation $\rho$ is an \emph{irrep} if there are no $W \subset V$ such that
-  $(\rho_{\vert W}, W)$ is a representation. 
+\begin{definition} If our vector space $V$ is equipped  with a (Hermitian?)
+  inner product, or in other words we are given a representation $\pi : G \to
+  \U{\mathcal{H}} \hookrightarrow \GL(\mathcal{H})$ where $\mathcal{H}$ is a
+  complex Hilbert space, then $\pi$ is unitary if
+  \[
+    \pi(g)^\dagger \pi(g) = \pi(g)\pi(g)^\dagger = I.
+  \]
+  This directly entails that $\pi(g^{-1}) = \pi(g)^\dagger$.
 \end{definition}
 
 \begin{definition}
@@ -66,7 +71,8 @@ such that this is linear, todo. I think we get the equality to the hom def if we
 \end{definition}
 
 \begin{definition}
-  As above, the \emph{\green{direct sum representation}} $(\rho_{V \oplus W}, V \oplus W)$ 
+  As above, the \emph{\green{direct sum representation}} $(\rho_{V \oplus W}, V
+  \oplus W)$ 
   \[
     \rho_{V \oplus W}(g) = \begin{pmatrix}
       \rho_V(g) &   \\
@@ -75,23 +81,48 @@ such that this is linear, todo. I think we get the equality to the hom def if we
   \]
 \end{definition}
 
-\begin{lemma}[Schur's lemma
-    \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}
-  ]
-  \label{sym:lemma:schur}
-  If $A$ and $B$ are irreducible representations for some group $G$, then it
-  holds that
+
+\begin{definition}
+  A representation $\rho$ is called \emph{\green{irreducible}} if it cannot be written as a direct sum representation.
+
+  If $G$ is finite, we can group these irreducibles (irreps) into isomorphism classes, and we denote these
   \[
-    \Hom(A,B) = \begin{dcases}
-      \C \cdot \id_S, &\text{ if } A \cong B ;\\
+    \Irr(G) \cong \{[\rho_i]\}_{i \in I}. 
+  \]
+\end{definition}
+
+\begin{theorem}
+  There is a relation on the dimensions of the representations (cf. \cite[~Thm
+  3.1 (ii)]{etingofIntroductionRepresentationTheory2011})
+  \[
+    \sum_{i \in \Irr(G)} (\dim(\rho_i))^2 = |G|.
+  \]
+\end{theorem}
+
+\begin{lemma}[Schur's Lemma (cf. {
+  \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}
+  \cite[~Thm. 7.5]{ibortIntroductionGroupsGroupoids2019}})]
+  \label{sym:lemma:schur}
+  \emph{\green{Schur's} Lemma} states that for irreps $A$ and $B$ of $G$, we can
+  give its endomorphisms as a complex multiple of the identity (cf. ). Further
+  it holds that
+  \begin{equation}\label{sym:eq:schur} 
+    \Hom_G(A,B) = \begin{dcases}
+      \C \cdot \id_A, &\text{ if } A \cong B ;\\
       0 , &\text{ if } A \ncong B .
     \end{dcases}
+  \end{equation}
+  By isomorphism and basis choice, we can directly express this as a matrix
+  representation
+  \[
+    \C \cdot \id_A \cong \C \ot \id_A \cong \id_A \ot\; \C \cong \id_{\dim(A)} \ot\; \C.
   \]
-  Proof \cite[Theorem~7.5]{ibortIntroductionGroupsGroupoids2019}.
 \end{lemma}
 
-\begin{definition}[Isotypic / Semisimple decomposition]\label{sym:def:isotypic}
-  Each semisimple representation $V$ decomposes as
+\begin{definition}[Canonical decomposition {(cf. \cite[~§2.6, Thm.
+  8]{serreLinearRepresentationsFinite1977} \cite[~Prop.
+  1.8]{fultonRepresentationTheory2004})}]\label{sym:def:isotypic} A
+  representation $V$ is semisimple (or isotypic) if it decomposes as
   \[
     V \cong \bigoplus_{i \in I} V_i^{\oplus n_i} 
     \cong 
@@ -101,11 +132,21 @@ such that this is linear, todo. I think we get the equality to the hom def if we
   \]
   by grouping isomorphic simples. Here we call $n_i$ the multiplicity of its
   corresponding irrep and $\C^{n_i}$ the \emph{multiplicity-space}. Canonically,
-  we can define the multiplicity space as the vector space $\Hom_G(V_i, V)$.
+  we can define the multiplicity space as the vector space $\Hom_G(V_i, V)$
+  \cite[~Cor. 2.16]{fultonRepresentationTheory2004}.
 \end{definition}
 
-Due to a theorem by Peter \& Weyl \cite{}, the unitary representations of any compact $G$ are
-semisimple. 
+Due to a theorem by Peter \& Weyl \cite{}, the unitary representations of any
+compact $G$ are semisimple. \todo{I misunderstood this i think. This is some
+different theorem}
+\color{red}
+So there are two things goind on here (i believe). First, for any \emph{finite}
+group $G$, its associated category $\Rep(G)$ is semisimple by a theorem after
+???. For non-finite groups this does not hold in general. However if they are
+unitary, the representations also decompose as a direct sum. But is this not
+just a consequence of diagonalization? This also fits with the intuition for the
+braid factors in anyons.
+\color{black}
 %Therefore, for any representations $V$ and $W$ it holds that
 %\[
 %  V \otimes W \cong \bigoplus_{c \in I} R_c^{\oplus m_c} 
@@ -115,8 +156,8 @@ semisimple.
 %  V \otimes 
 %\]
 
-Therefore, it must hold for any irreps $R_a,R_b$ of $G$ that their tensor product is
-completely reducible with the decomposition
+Therefore, it must hold for any irreps $R_a,R_b$ of $G$ that their tensor
+product is completely reducible with the decomposition
 \[
   R_a \otimes R_b 
   \cong
@@ -132,9 +173,15 @@ the decomposition is said to be \emph{multiplicity-free}.
 
 On the operators between tensor products, i.e. $T \in \End_G(R_a \otimes R_b)$
 this yields a formula
-\[
-  T \cong \bigoplus_c \id_{R_c} \otimes \; \C^{N_{ab}^c}. 
-\]
+\begin{equation}\label{sym:eq:operatordecomp}
+  T 
+  \cong 
+  \bigoplus_c 
+  \underbrace{\id_{R_c}}_{\text{fixed}} 
+  \otimes \; 
+  \underbrace{\Mat{N_{ab}^c}{N_{ab}^c}{\C}}_{\text{ degrees of freedom}}. 
+\end{equation}
+
 This holds because, if we apply a rep of $g$, it acts only on where? what?
 
 Anyhow, this decomposition is essentially fixed by the representation, the
@@ -217,9 +264,9 @@ spans the space $\End_G(R_a \otimes R_b)$.
 
 \begin{example}
   The simple objects of $G = \U{1}$ are given by the one-dimensional representations
-  \[
+  \begin{equation}\label{sym:eq:U1rep}
     \chi_n : U(1) \to \C^{\times}, \quad e^{i\theta} \mapsto e^{i n \theta} 
-  \]
+  \end{equation}
   and each representation of $\U{1}$ decomposes as 
   \[
     V \cong \bigoplus_{n \in \Z} \chi_n^{\oplus m_n}. 
@@ -230,12 +277,18 @@ spans the space $\End_G(R_a \otimes R_b)$.
   \end{equation}
 \end{example}
 
-\begin{example}
-  Let $G = \SU{2}$ and let $V_i$ and $V_j$ be two spin irreps of charge $i$ and $j$. These combine to
+
+\begin{example}[Representations theory of $\SU{2}$ (cf. {\cite[~Thm.
+  C.1]{hallLieGroupsLie2015}})] Let $G = \SU{2}$ and let $V_i$ and $V_j$ be two
+  spin irreps of charge $i$ and $j$. These combine to
   \begin{equation}
     (\pi_{V_i \otimes V_{j}}, V_i \otimes V_j) = \bigoplus_{k \in \left\vert i - j \right\vert}^{i + j} (\pi_{V_k}, V_k) \label{sym:eq:cgseries}
   \end{equation}
-  in what is referred to as the \emph{Clebsch-Gordan-series}.
+  in what is referred to as the \emph{Clebsch-Gordan-series}. The dimension of a
+  representation $V_j$ here is given by 
+  \begin{equation}\label{sym:eq:su2dim}
+    \dim(V_j) = 2j+1
+  \end{equation}
 \end{example}
 
 \begin{example}
@@ -394,8 +447,8 @@ direct sum
   
 
 Recall that for $\U{1}$, all representations are $1$-dimensional, then by
-Schur's lemma, we can write $H$ as its operator in $\End_{\U{1}}((\C^2)^{\ot
-6})$ as
+Schur's lemma \eqref{sym:eq:operatordecomp}, we can write $H$ as its operator in
+$\End_{\U{1}}((\C^2)^{\ot 6})$ as
 %\[
  % H \cong \bop_{S \in \left\{\substack{-6,-4,-2 \\ 0,2,4,6}\right\}} \Mat{m_S}{m_S}{\R}  \ot \id_{\chi_S} \quad \text{ where } m_S \in \{1, 6, 15, 20, 15, 6, 1\}%
 %\]
@@ -420,8 +473,9 @@ numbers.
 
 
 \medskip
-If we consider the XXZ model with $\Delta=1$ (so the XXX model), a nonabelian
-$\SU{2}$ symmetry emerges. Here, the generators of $\SU{2}$ are given by
+If we consider the XXZ model \eqref{def:xxzHamiltonian} with $\Delta=1$ (so the
+XXX model), a nonabelian $\SU{2}$ symmetry emerges. Here, the generators of
+$\SU{2}$ are given by
 \[
   S_{tot}^\alpha = \sum_{i = 1}^{N} S_i^\alpha, \quad \alpha \in \{x,y,z\},
 \]
@@ -456,7 +510,7 @@ $2S + 1$ basis vectors. However since the irreps also occur with a multiplicity,
 %%%
 Or we can again do the representation theoretical approach. Let $V_j$ denote the
 spin-$j$ irrep of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by
-\cref{cqseries} that
+\cref{sym:eq:cgseries} that
 \[
   (\C^2)^{\ot 6} 
   \cong 
@@ -468,7 +522,7 @@ spin-$j$ irrep of $\SU 2$. We have that $\C^2 \cong V_{\frac{1}{2}}$ and by
 \]
 
 Now our operator is a morphism in $\End_G(V_{\frac{1}{2}}^{\otimes 6})$ and thus
-by Schur's lemma
+by Schur's lemma \eqref{sym:eq:schur}
 \begin{equation}\label{sym:eq:blockdiag}
   H 
   \cong
@@ -534,13 +588,13 @@ expect our operator, now in $\bop\limits_{S \in \{0,1\}} \End_G(V_S)$ to look li
     0 & 0 & 0 & \frac{1}{4}J
   \end{array}\right).
 \]
-However we can also still represent this as an element of $\End_G(V_{1/2}^{\ot
- 2})$ \emph{factored} through its fusion result. This notation might for now
- come out of nowhere, but remember how we characterized the graphical calculus
- for the Clebsch-Gordan tensors in \cref{sym:eq:CGgraphical}. The graphical
- calculus here reads: Change base into the coupled basis, apply the two degrees
- of freedom that we just calculated, and change the base back into the uncoupled
- basis.
+in the dense representation. However we can also still represent this as an
+element of $\End_G(V_{1/2}^{\ot 2})$ \emph{factored} through its fusion result.
+This notation might for now come out of nowhere, but remember how we
+characterized the graphical calculus for the Clebsch-Gordan tensors in
+\eqref{sym:eq:CGgraphical}. The graphical calculus here reads: Change base into
+the coupled basis, apply the two degrees of freedom that we just calculated, and
+change the base back into the uncoupled basis.
 
 \begin{equation}\label{sym:eq:S1S2}
 \begin{tikzpicture}[
@@ -606,6 +660,9 @@ However we can also still represent this as an element of $\End_G(V_{1/2}^{\ot
 
 \end{tikzpicture}
 \end{equation}
+
+Note that the definition above is indeed that of a \emph{projector}. Define this
+as $\mathcal{P}_{i,i+1}^{c}$ and note that $P_{i,i+1} P_{i,i+1} = P_{i,i+1}$. 
 
 Now we consider the same Hamiltonian with $N = 3$, our state space is
 $
@@ -711,12 +768,10 @@ columns here, but i should follow the convention from the 6j definition.}
   \end{pmatrix}.
 \] 
 on the spin-$\frac{1}{2}$ sector and $\frac{1}{4}$ on the spin-$\frac{3}{2}$
-sector. To summarize, the full presentation of these operators look like this
-with the sum (the full $H$) given to the right (by exact diagonalization):
-
+sector. We show both the sparse (left) and the dense representation of these operators.
 
 \vspace*{1cm}
-\begin{minipage}{0.65\textwidth}
+\begin{minipage}{0.5\textwidth}
 \begin{align*}
 S_1 \cdot S_2 
 &=
@@ -744,9 +799,19 @@ S_2 \cdot S_3
 \;(1/4)
 \end{align*}
 \end{minipage}%
-\begin{minipage}{0.35\textwidth}
-\centering
-\includegraphics[width=0.7\linewidth]{../experiments/plots/su2_sz_block_structure_3.png}
+\begin{minipage}{0.5\textwidth}
+\[
+\begin{pmatrix}
+\frac14 & -\frac{\sqrt{3}}{4} & 0 & 0 & 0 & 0 & 0 & 0\\
+-\frac{\sqrt{3}}{4} & \frac34 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & \frac14 & -\frac{\sqrt{3}}{4} & 0 & 0 & 0 & 0\\
+0 & 0 & -\frac{\sqrt{3}}{4} & \frac34 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & -\frac12 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & -\frac12 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & -\frac12 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & -\frac12
+\end{pmatrix}
+\]
 \end{minipage}
 
 
@@ -958,6 +1023,8 @@ ground state trees:
 where we have to apply a recoupling before we can apply $S_2 \cdot S_3$ and we
 have to apply another one to move back.
 
+Note that we have implicitely given the action of a \emph{reshape} operation. If we may implement this, in presentation ???
+
 \color{red}
 There is a third symmetry with $\Z_2$ under the operator 
 \[
@@ -1137,11 +1204,12 @@ Hence $V\otimes W^\ast \cong\Hom_G(W,V)$, and we identify $T$ with $\Phi(T)$.
 \end{array}
 \]
 
-\begin{corollary}[Networks of symmetric tensors are symmetric]
-  Since a tensor network is built by composition and application of the $(co)ev$
-  maps, both of which are intertwiners, the full network is also an intertwiner.
-  Important there is that this entire discussion is only about FdVect or FdHilb
-  for now, but i think the same applies to any braided category.    
+\begin{corollary}[Networks of symmetric tensors are symmetric, cf. {\cite[~Fig.
+  7(a)]{singhTensorNetworkDecompositions2010a}}] Since a tensor network is built
+  by composition and application of the $(co)ev$ maps, both of which are
+  intertwiners, the full network is also an intertwiner. Important there is that
+  this entire discussion is only about FdVect or FdHilb for now, but i think the
+  same applies to any braided category.    
 \end{corollary}
 
 
@@ -1149,12 +1217,17 @@ As an application of this more general tensor formalism, we can construct a
 symmetric MPS. Recall that a MPS is a contraction of trivalent tensors. Here,
 such a trivalent tensor is just an operator $\Hom_G(D_i \ot P_i, D_{i+1})$. 
 
-\begin{theorem}[Wigner-Eckart]\label{thm:WE}
-  For each trivalent symmetric tensor, there is a decomposition
+\begin{theorem}[Wigner-Eckart, {cf.
+  \cite[~§2]{sellaroliNoncompactGroupsTensor2016}, \cite[~Eq.
+  23]{singhTensorNetworkStates2012a}}]\label{thm:WE} For each trivalent
+  symmetric tensor, there is a
   \[
-    \Hom_G(K\otimes V,W)\;\cong\;
-    \bigoplus_{a,b}\;\underbrace{\Hom(\C^{n_a} \ot \C,\C^{m_b})}_{\text{reduced matrix elements}}
-    \otimes\underbrace{\Hom_G(K\otimes V_a,V_b)}_{\text{Clebsch-Gordan tensor}} .
+    \Hom_G(K\otimes V,W)
+    \;\cong\;
+    \bigoplus_{a,b,c}\;
+    \underbrace{\Hom(\C^{n_a} \ot \C,\C^{m_b})}_{\text{reduced matrix elements}}
+    \otimes
+    \underbrace{\Hom_G(K\otimes V_a,V_b)}_{\text{Clebsch-Gordan tensor}} .
   \]
 \end{theorem}
 
@@ -1229,29 +1302,32 @@ these are precisely the degrees captured by the degeneracy tensor associated to
 each space.
 
 
-
-If we had chosen to obtain the MPS by SVD instead, we need to define the SVD on
-symmetric operators. Recall that if our tensor is an operator, it decomposes as
-a direct sum of blocks. Furthermore, we can immediately apply the SVD to each
-block:
+We also want to retain the ability to build MPSs by the SVD (cf.
+\cref{app:gen:groups} \todo{svd appendix}). Note that this requires the implicit
+notion of a reshape, however we already know how to express these tensors as
+block sparse operators \eqref{sym:eq:operatordecomp}. Take
 \[
-  \bigoplus_c D_c \otimes \id_{V_c}, \quad \quad T_c = U_c \Sigma_C W^\ast_c
+  T \cong \bigoplus_c T_c \otimes \id_{V_c}, \quad \quad T_c = U_c \Sigma_C W^\ast_c
 \]
-and we can rewrite
+and we can rewrite due to the identity $(A \ot B) \cdot (C \ot D) = (AC \ot BD)$
+as
 \[
   T = \bigoplus_c (U_c \ot \id_{V_c})(\Sigma_c \ot \id_{V_c})(W_c^\ast \ot \id_{V_c}).
 \]
-We can also truncate the operators obtained by SVD as 
+Note that the information that is stored by the irreducible parts $\id_{V_c}$
+does not change, it is already fixed by the symmetry.
+
+In order to truncate these operators (i.e. achieving a smaller bond dimensions
+as in \cref{???})
 \[
   T_c = \tilde{U_c} \tilde{\Sigma_c} \tilde{W_c}^\ast
 \] 
-and then build the full operator as
+we can apply the truncation blockwise
 \[
   T = \bigoplus_c (\tilde{U_c} \ot \id_{V_c})(\tilde{\Sigma_c} \ot \id_{V_c})(\tilde{W_c}^\ast \ot \id_{V_c}).
 \]
-The representation parts $\id_{V_c}$ are fixed, so we can only operate within
-the degeneracy matrices. Effectively we can reduce an operators bond dimension
-by reducing its multiplicity
+Effectively we can reduce an operators bond dimension by reducing its
+multiplicity and thus reducing the dimensions of the degeneracy matrix
 \[
   V = \bigoplus_c V_c^{n_c} \mapsto \bigoplus_c V_c^{\chi_c}.
 \]
