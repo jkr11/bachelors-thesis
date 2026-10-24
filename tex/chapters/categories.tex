@@ -476,16 +476,24 @@ As a consequence, the \emph{hexagon} relations commute for all $A,B,C \in
 \end{center}
 \end{definition}
 
-\begin{definition}
+\begin{definition}\label{cat:def:symmetric}
 A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ
 \beta_{A,B} = \mathrm{id}_{A \otimes B}$ for all $A, B$.
 \end{definition}
 
-\begin{lemma}
-  The \emph{Yang-Baxter equation}\todo{define this somewhere} holds for the braiding:
+\begin{lemma}[{\cite[~Prop. 8.1.10]{etingofTensorCategories2015}}]
+  The \emph{Yang-Baxter equation} (a representation of
+  \cref{sym:eq:ArtinBraidPresentation}) holds for the braiding:
   \[
-    (\beta_{A,B} \ot \id_C)(\id_A \ot \beta_{A,C})(\beta_{B,C} \ot \id_A) = 
+    (\beta_{A,B} \ot \id_C)(\id_B \ot \beta_{A,C})(\beta_{B,C} \ot \id_A) = (\id_A \ot \beta_{B,C})(\id_B \ot \beta_{A,C})(\id_A \ot \beta_{A,B}) 
+  \]\todo{Do we need R for this or can we do this with the braiding op as such?}
+  In fact, we can take any braiding to represent a generator $\sigma_i$ of $\Br_n$ by using
+  \[
+    \sigma_i \mapsto \id_{\bigot_{j=1}^{i-1} A_j} \ot \beta_{A_i,A_{i+1}} \ot \id_{\bigot_{j=i+2}^n A_j}.
   \]
+  If the category is symmetric (\ref{cat:def:symmetric}), then these braid
+  representations also form representations for the symmetric group (cf.
+  \ref{app:eq:symmetricGroup}).
 \end{lemma}
 
 \begin{graphicalCalculus}
@@ -596,7 +604,7 @@ motivate the following definition:
 	%  \arrow["{\ev_A \otimes_{A^\ast}}"', from=3-5, to=3-7]
 	%  \arrow["{\alpha_{A^\ast,A,A^\ast}}"', from=3-7, to=1-7]
   %\end{tikzcd}\]
-\end{definition}
+\end{definition}  
 
 \begin{example}
   These maps appear both for traditional vector space but also have an anyonic
@@ -850,7 +858,7 @@ would need to double check this.
       (Irreps) or they decompose as some direct sum representation.
     \item In Anyonic theories, we primarily consider simple objects $a,b,c
       \ldots$ and tensor products between them. Then we assign each
-      combinationof anyons a fusion outcome $a \otimes b = c \oplus d \oplus
+      combination of anyons a fusion outcome $a \otimes b = c \oplus d \oplus
       \cdots$. 
   \end{enumerate}
   
@@ -914,7 +922,7 @@ the following diagram:
 \end{equation}
 
 Furthermore, these admit similar constraints as the direct sum:
-\begin{equation}
+\begin{equation}\label{cat:eq:iotaDeltaBase}
   \pi^{c,\mu}_{ab} \iota_{d,\nu}^{ab} = \pi_{c,\mu} \Phi^{-1}\Phi  \iota_{d,\nu} = \delta_{cd}\delta_{\mu\nu} \id_{R_c}
 \end{equation}
 and
@@ -967,34 +975,176 @@ We define the higher bases recursively: Let $n > 2$ and intermediate labels
 $e_1, e_2, \ldots, e_{n-2} \in \Irr(\CC)$ and multiplicity indices $\mu_1,
 \ldots, \mu_{n-1}$. We fix some notation to let $\vec \mu_{k-1}$ to denote the
 tuple of all labels up to $\mu_{k-1}$. Then we can define
-\[
+\begin{equation}\label{cat:eq:iotaNDef}
   \iota^{a_1 \cdots a_n}_{d,\hat e_{n-2},\hat\mu_{n-1}} \coloneqq \left(\iota^{a_1 \cdots a_{n-1}}_{e_{n-2},\vec e_{n-3},\vec\mu_{n-2}} \otimes \id_{R_{a_n}}\right) \circ \iota^{e_{n-2}a_n}_{d,\mu_{n-1}}.
-\]
+\end{equation}
+and
+\begin{equation}\label{cat:eq:piNDef}
+  \pi^{a_1 \cdots a_n}_{e_{n-2}}
+\end{equation}
 We can assume this holds by induction for $(n-1)$:
-\[
+\begin{equation}\label{cat:eq:iotaInductionDelta}
   \pi^{a_1\cdots a_{n-1}}_{e;\vec e,\vec\mu}\circ
   \iota^{a_1\cdots a_{n-1}}_{e';\vec e\,',\vec\mu'}
   = \delta_{ee'}\,\delta_{\vec e\vec e\,'}\,\delta_{\vec\mu\vec\mu'}\;\id_{R_e}.
-\]
-\[
+\end{equation}
+\begin{equation}\label{cat:eq:iotaInductionSum}
   \sum_{e,\vec e,\vec\mu}
   \iota^{a_1\cdots a_{n-1}}_{e;\vec e,\vec\mu}\circ
   \pi^{a_1\cdots a_{n-1}}_{e;\vec e,\vec\mu}
   = \id_{\bigotimes_{i<n}R_{a_i}}.
-\]
-\[
-    \pi^{a_1\cdots a_n}_{c;\vec e,\vec\mu} \circ \iota^{a_1\cdots a_n}_{d;\vec f,\vec\nu}
-    \overeq{\eqref{cat:monoidal:bifunctor}} \pi^{e_{n-2}a_n}_{c,\mu_{n-1}}\circ\Big[\big(\pi^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-1}}
-    \circ \iota^{a_1\cdots a_{n-1}}_{f_{n-2}; \vec f_{n-3}, \vec\nu_{n-1}}\big)\otimes\id_{R_{a_n}}\Big]
-    \circ\iota^{f_{n-2}a_n}_{d,\nu_{n-1}}.
-  \]
-By the inductive hypothesis the bracket evaluates to
-$\delta_{e_{n-2}f_{n-2}}\,\delta_{\vec e_{n-3}\vec f_{n-3}}\,
-\delta_{\vec\mu_{n-2}\vec\nu_{n-2}}\,\id_{R_{e_{n-2}}}$,
-and the $n=2$ case finishes orthoonality.
+\end{equation}
+The inductive step then easily evaluates:
+\begin{align}
+  {
+    \color{gray}%
+    \underbrace{%
+    \color{black}\pi^{a_1\cdots a_n}_{c;\vec e,\vec\mu} \circ \iota^{a_1\cdots a_n}_{d;\vec f,\vec\nu}%
+    }_{\mathclap{\in \Hom_\CC(R_d, R_c)}}%
+  }
+    &\overeq{\eqref{cat:monoidal:bifunctor}} 
+    \pi^{e_{n-2}a_n}_{c,\mu_{n-1}}
+    \circ
+    \Big[
+      \big(
+        \pi^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+        \circ 
+        \iota^{a_1\cdots a_{n-1}}_{f_{n-2}; \vec f_{n-3}, \vec\nu_{n-2}}
+      \big)
+      \otimes
+      \id_{R_{a_n}}
+    \Big]
+    \circ
+    \iota^{f_{n-2}a_n}_{d,\nu_{n-1}} \\[-2.0em]
+    &\overeq{\eqref{cat:eq:iotaInductionDelta}} 
+    \pi^{e_{n-2}a_n}_{c,\mu_{n-1}}
+    \circ
+    \left[
+      \delta_{e_{n-2}f_{n-2}}\,\delta_{\vec e_{n-3}\vec f_{n-3}}\,
+      \delta_{\vec\mu_{n-2}\vec\nu_{n-2}}\,\id_{R_{e_{n-2}}}
+      \ot
+      \id_{R_{a_n}}
+    \right]
+    \circ 
+    \iota^{f_{n-2}a_n}_{d,\nu_{n-1}} \\
+    &\overeq{\eqref{cat:monoidal:bifunctor}}
+    \delta_{\vec e_{n-2}\vec f_{n-2}}
+    \delta_{\vec\mu_{n-2}\vec\nu_{n-2}}
+    \cdot
+    \pi^{e_{n-2}a_n}_{c,\mu_{n-1}}
+    \circ
+    \left[
+      \id_{R_{e_{n-2}} \ot R_{a_n}}
+    \right]
+    \circ 
+    \iota^{e_{n-2}a_n}_{d,\nu_{n-1}} \\
+    &= 
+    \delta_{\vec e_{n-2}\vec f_{n-2}}
+    \delta_{\vec\mu_{n-2}\vec\nu_{n-2}}
+    \cdot
+    \pi^{e_{n-2}a_n}_{c,\mu_{n-1}}
+    \circ 
+    \iota^{e_{n-2}a_n}_{d,\nu_{n-1}} \\
+    &\overeq{\eqref{cat:eq:iotaDeltaBase}}
+    \delta_{cd}
+    \delta_{\vec e_{n-2}\vec f_{n-2}}
+    \delta_{\vec\mu_{n-1}\vec\nu_{n-1}}
+    \id_{R_c}\;.
+\end{align}
 
-Let $e:=e_{n-2}$, $\iota'=\iota^{a_1\cdots a_{n-1}}_{e;\vec e_{n-3},\vec\mu_{n-2}}$,
-and $\pi'$ likewise. Then
+We can proceed for completeness likewise.
+
+\begin{align*}
+  \sum_{d,\vec e,\vec\mu}
+  &\iota^{a_1\cdots a_n}_{d;\vec e,\vec\mu}
+  \circ
+  \pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu} \\
+  &\overeq{\eqref{cat:eq:iotaNDef}}
+  \sum_{d,\vec e,\vec\mu}
+  \left(
+    \iota^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+    \otimes
+    \id_{R_{a_n}}
+  \right)
+  \circ
+  \iota^{e_{n-2}a_n}_{d,\mu_{n-1}}
+  \circ
+  \pi^{e_{n-2}a_n}_{d,\mu_{n-1}}
+  \circ
+  \left(
+    \pi^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+    \otimes
+    \id_{R_{a_n}}
+  \right) \\
+  &=
+  \sum_{d,\vec e_{n-3},\vec \mu_{n-2}}
+  \left(
+    \iota^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+    \otimes
+    \id_{R_{a_n}}
+  \right)
+  \circ
+  \left[
+    \sum_{d,\mu_{n-1}}
+    \iota^{e_{n-2}a_n}_{d,\mu_{n-1}}
+    \circ
+    \pi^{e_{n-2}a_n}_{d,\mu_{n-1}}
+  \right]
+  \circ
+  \left(
+    \pi^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+    \otimes
+    \id_{R_{a_n}}
+  \right) \\
+  &\overeq{\eqref{cat:eq:basis_completeness}}
+  \sum_{d,\vec e_{n-3},\vec \mu_{n-2}}
+  \left(
+    \iota^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+    \otimes
+    \id_{R_{a_n}}
+  \right)
+  \circ
+  \id_{R_{e_{n-2}} \ot R_{a_n}}
+  \circ
+  \left(
+    \pi^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+    \otimes
+    \id_{R_{a_n}}
+  \right) \\
+  &=
+  \sum_{\vec e_{n-2},\vec \mu_{n-2}}
+  \left(
+    \iota^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+    \otimes
+    \id_{R_{a_n}}
+  \right)
+  \circ
+  \left(
+    \pi^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+    \otimes
+    \id_{R_{a_n}}
+  \right) \\
+  &\overeq{\eqref{cat:monoidal:bifunctor}}
+  \sum_{\vec e_{n-2},\vec \mu_{n-2}}
+  \left(
+    \iota^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+    \circ
+    \pi^{a_1\cdots a_{n-1}}_{e_{n-2};\vec e_{n-3},\vec\mu_{n-2}}
+  \right)
+  \otimes
+  \left(
+    \id_{R_{a_n}} \circ \id_{R_{a_n}}
+  \right) \\
+  &\overeq{\eqref{cat:eq:iotaInductionSum}}
+  \id_{\bigotimes_{i<n} R_{a_i}}
+  \otimes
+  \id_{R_{a_n}} \\
+  &=
+  \id_{\bigotimes_{i=1}^n R_{a_i}}\;.
+\end{align*}
+
+Let $e:=e_{n-2}$, $\iota'=\iota^{a_1\cdots a_{n-1}}_{e;\vec
+e_{n-3},\vec\mu_{n-2}}$, and $\pi'$ likewise. Then
 \[
   \sum_{d,\vec e,\vec\mu}
   \iota^{a_1\cdots a_n}_{d;\vec e,\vec\mu}\circ\pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu}
