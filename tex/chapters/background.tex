@@ -1,5 +1,3 @@
-\section{Literature \& Related Work}
-
 \newacronym{mps}{MPS}{matrix product state}
 \newacronym{mpo}{MPO}{matrix product operator}
 \newacronym{peps}{PEPS}{projected entangled-pair state}
@@ -7,141 +5,250 @@
 \newacronym{mera}{MERA}{multiscale entanglement renormalization ansatz}
 \newacronym{tn}{TN}{tensor network}
 \newacronym{svd}{SVD}{singular value decomposition}
-
-\begin{literature}[\bf Tensor Networks]
-  The modern theory of \emph{tensor networks} shaped out of the study of
-  \emph{renormalization} and quantum many-body systems, initially with the
-  \emph{\gls{dmrg}} of
-  \textcite{whiteDensityMatrixFormulation1992,whiteDensitymatrixAlgorithmsQuantum1993}
-  and later extended by \textcite{ostlundThermodynamicLimitDensity1995} as a
-  variational method (ansatz?) in the form of \emph{\glspl{mps}} (Maybe this is
-  actually due to \cite{fannesFinitelyCorrelatedStates1992}). This was further
-  generalized to 2 dimensions with the introduction of \emph{\gls{peps}}
-  \cite{verstraeteRenormalizationAlgorithmsQuantumMany2004}. \emph{\gls{mera}}
-  \cite{vidalClassQuantumManybody2008} can be considered as an extension of MPS
-  allowing for long-range entanglement (this is probably wrong). Whats missing?
-  Holography \cite{singhHolographicSpinNetworks2018} but there are earlier ones.
-
-  In the purely mathematical view as a network of tensor contractions however, both concept and the notation we use today were introduced by \cite{Penrose1971Applications} under the name of \emph{tensor-systems}.
-\end{literature}
-
-While we introduce this concept classically and endow it with symmetry as a start, we will start concerning ourselves with a categorical embedding of tensor networks in what is commonly reffereed to as a \emph{fusion-category} (Lit ???).
-
-\begin{literature}[\bf Symmetric Tensor Network]
-  Originally, the idea to exploit symmetries of the hamiltonian for a speedup was proposed to be used in dmrg by \cite{mccullochNonAbelianDensityMatrix2002} (What is \cite{sierraDensityMatrixRenormalization1998a}? This sounds like it as well.). More general theory for \emph{globally invariant tensor networks}, i.e. networks that are built of tensors that are globally invariant is given by \textcite{singhTensorNetworkDecompositions2010a} preceeding more detailed accounts on abelian symmetries \cite{singhTensorNetworkStates2011} and nonabelian ($\SU{2}$) symmetries in \cite{singhTensorNetworkStates2012a}. A similar approach to (non)abelian symmetries is given by \textcite{weichselbaumNonabelianSymmetriesTensor2012, weichselbaumXsymbolsNonAbelianSymmetries2020}. These rely on the general idea, that under representations of some compact group $G$, there are on site symmetries on each tensor, i.e. $[A, U_g^{\otimes k}] = 0$ there is a generalized \emph{wigner-eckart-theorem} for tensors with $n$ legs of the form
-  \[
-    T \in \bigoplus_a D_a \otimes V_a
-  \]
-  where $D_a$ is a matrix and $V_a$ is a \emph{fusion-tree}, i.e. a clebsch-gordan tensor.
-  Reviews and specific algorithms in the SU(2) case are given by \cite{schmollBenchmarkingGlobal$SU2$2020, schmollTensorNetworkSimulations2020, schmollProgrammingGuideTensor2020}.
-  \cite[§~8]{schmollProgrammingGuideTensor2020} proposes that this method is appropriate for Anyonic simulation as well (although this is done earlier by singh \& pfeiffer.).
-  Symmetries as categorified networks, as we will present in \cref{chap:?}, are explained in \cite{dissertation} 
-  and \cite{devosTensorKitjlJuliaPackage2025} and in this work in \cref{sect:Anyons}.
-
-  For a list of software implementing symmetries see \cref{app}.
-\end{literature}
-
-
-\begin{literature}[\bf{Anyons}]\label{Lit:Anyons}
-  \emph{Anyons} as quasiparticles with exotic exchange statistics were originally propsed by \cite{wilczek1990} \cite{leinaasTheoryIdenticalParticles1977a}. Anyons are usually described as \emph{defects} in a (topologically orderd?) medium of dimension two (technically codimension after \cite{SS23AnyonsInTedK}).
-  The exchange statistics of $N$ particles on this medium $M$ is goverend by the \emph{configuration space}
-  \[
-    \mathrm{Conf}_N(M) = \{(x_1,\ldots,x_N) \in M^N : x_i \neq x_j \} \setminus S_N.
-  \]
-  The statistics of the particle exchange is given by the representation of $\pi_1(\mathrm{Conf}_N(M))$ (the fundamental (homology?) group). If $M = \R^2$, this corresponds to the \emph{braid group} on $N$ strands $B_N$. If the dimension of $M \geq 3$ this corresponds to the symmetric group $S_N$. If these representations are unitary and the (ground state?) is degenerate, this allows for \emph{topological quantum computation} (cf. \Cref{lit:tqc}).
-\end{literature}
-
-
-
-\begin{literature}[Anyonic Spin Chains and Tensor Networks]
-  (Check if this is the first). A first appearance of \emph{Anyonic Tensor Networks} in terms of spin chains is given by \textcite{feiguinInteractingAnyonsTopological2007} as the \emph{golden chain}, which realizes a interacting $2$-local hamiltonian on a $n$ $\Fib$-anyon lattice. This is reviewed in \cite{trebstShortIntroductionFibonacci2008a} with generalizations to $3$-local and longer range hamiltonians. A general account outside of the $\Fib$-model can be found in \cite{gilsAnyonicQuantumSpin2013} and \cite{buicanAnyonicChainsTopological2017} (Check these again.). We can consider these approaches as a sort of manualization of the tensor network approach. Anyonic tensor networks are first introduced by \cite{pfeiferSimulationAnyonsTensor2010} and \cite{pfeiferSimulationAnyonsUsing2012}, developed out of the symmetry methods from \cref{sect:symmetricTensorNetworks} and both the \emph{isotopy} rules and anyonic operators defined in \cite{bondersonInterferometryNonAbelianAnyons2008}. Furthermore, stuctures such as an anyonic MERA are introduced. 
-
-  We also need to discuss the topic of \emph{anyonic entanglement entropy}, as given in \cite{pfeiferMeasuresEntanglementNonAbelian2014,bondersonAnyonicEntanglementTopological2017,pfeiferSimulationAnyonsUsing2012}.
-\end{literature}
-
-\begin{literature}[Simulation of Anyons and String Nets]
-  This should probably go in the previous section. \cite{liuMethodsSimulatingStringNet2022} \cite{kirchnerNumericalSimulationNonabelian2023}
-\end{literature}
-
-\begin{literature}[Anyons as Categories]\label{lit:anyonCat}
-  The correspondence between the \emph{physical} treatment of anyons and the \emph{categorical treatment}
-  of anyons as a \emph{braided fusion category} (modular functor?) was originally 
-  descibed by \textcite[§~E, §~8]{kitaevAnyonsExactlySolved2006} based on previous work
-  in quantum field theory already making use of modular categories and their diagrammatic
-  calculus such as \cite{reshetikhinInvariants3manifoldsLink1991}. Further treatments are
-  found in \cite{wang} and \cite{simon-nayak-das-sarma}. A modern treatment of the
-  realization through the Configuration space of $n$-anyons if given by \cite{90eb98357acd4634abd18d906cc3811d}
-  and in terms of modular functors by \cite{burtonShortGuideAnyons2016}.
-\end{literature}
-
-\begin{literature}[\bf Topological Quantum Computation]\label{lit:tqc}
-  Fault tolerant \emph{Topological Quantum Computation (TQC)} using anabelian anyons was originally proposed by \textcite[§~7]{kitaevFaulttolerantQuantumComputation2003} (Originally published in 1997). Also \cite{freedmanNPQuantumField1998} and .... ??? has shown that there are nonabelian anyon models that are universal \cite{dawsonSolovayKitaevAlgorithm2005a} \cite{mochonAnyonsNonsolvableFinite2003} \cite{mochonAnyonComputersSmaller2004a}. 
-
-  \cite{myersTopologicalQuantumGates2024a} gives nicer literature. \cite{simonTopologicalQuantum2023} is a great textbook account from one of the original authors on quantum compiling and computing. \cite{nayakNonAbelianAnyonsTopological2008b} is also one of the original accounts. This does not need to be any longer. Maybe mention categorical computation in general? but idk what htis is yet \cite{kongCategoricalComputation2023}.
-\end{literature}
-
-\begin{literature}[\bf Quantum Compiling]
-  Some (Many?) anyon theories are universal for quantum computation. The \emph{Solovay-Kitaev theorem} \cite{kitaevQuantumComputationsAlgorithms1997}\cite{dawsonSolovayKitaevAlgorithm2005a} yields an efficient algorithm for approximating any quantum gate using only basic gates from a universal set. 
-  Here we can consider 1.) The representation of braid circuits as a tensor nework operation and 2). A natural embedding of injection weaves as proposed by \textcite{simonTopologicalQuantumComputing2006a} where $2$ anyons are braided in their composite fusion channel by realizing this operation as a tensor reshape.
-\end{literature}
-
-\begin{literature}[Categorified Quantum Mechanics]
-  There are multiple approach to a diagramatic and categorified approach to quantum mechanics. Generally one wants both spaces and maps represented by a framework that allows for parallel and entangled operations, i.e. has a tensor product structure. \cite{selingerSurveyGraphicalLanguages2011} gives a review of this \cite{vercleyenMathematicalStructureTensor2018} does for tensor networks specifically.
-
-  TODO: find the XZ-calculus literature by Kissinger? Specific examples such as \emph{XZ}-calculus in the context of TQC is handled by \cite{ahmadiZXcalculusLanguageTopological2023}.
-
-  TODO: How to mention that this results in or from $\Hilbfd$? Does it? The work from selinger et.al does not yet include anyons. For this, one needs \Cref{lit:anyonCat}.
-
-  Also, take \cite[§~1]{satiEntanglementSectionsPushout2026} for a description
-  of categorified mechanics. This stats that structure for \emph{entangled} processes
-  is given by the monoidal category of complex vector spaces.
-  
-  % https://q.uiver.app/#q=WzAsNixbMSwwLCIoXFxNb2R7XFxDfSwgXFxvdGltZXMsIFxcQykiXSxbMSwyLCJcXE1vZHtcXEN9Il0sWzAsMCwiXFxzdGFja3JlbHtcXHRleHR7ZW50YW5nbGVkIHByb2Nlc3Nlc319e1xcdGV4dHtuby1jbG9uaW5nfX0iXSxbMCwyLCJcXHN0YWNrcmVse1xcdGV4dHtxdWFudHVtIHByb2Nlc3Nlc319e1xcdGV4dHtzdXBlcnBvc2l0aW9ucyBieX0gXFxvcGx1c30iXSxbMywwLCIoXFxIaWxiLFxcb3RpbWVzLD8pIl0sWzMsMiwiXFxIaWxiIl0sWzEsNSwiXFxkYWdnZXJcXHRleHR7LXN0cnVjdHVyZX0iXSxbMCw0LCJcXGRhZ2dlclxcdGV4dHstc3RydWN0dXJlfSJdLFsxLDBdLFs1LDRdXQ==
-  \begin{tikzcd}
-	  {\stackrel{\text{parallel quantum processes}}{\text{entanglement, no-cloning}}} & {(\Mod{\C}, \otimes, \C)} && {(\Hilb,\otimes,?)} \\
-	  \\
-	  {\stackrel{\text{quantum processes}}{\text{superpositions by} \oplus}} & {\Mod{\C}} && \Hilb
-	  \arrow["{\dagger\text{-structure}}", from=1-2, to=1-4]
-	  \arrow[from=3-2, to=1-2]
-	  \arrow["{\dagger\text{-structure}}", from=3-2, to=3-4]
-	  \arrow[from=3-4, to=1-4]
-  \end{tikzcd}
-
-  The categorical language specifically yield interpretations of theorems such as no-cloning and no deleting \cite{abramskyNoCloningCategoricalQuantum2012}.
-
-  Additionally, many of the concepts of topological order are governed by category theory \cite{kongInvitationTopologicalOrders2022b}, as well as the topic of higher symmetries (should this be its own Lit sect if relevant? It is for MPO symmetries \cite{delcampHigherCategoricalSymmetries2024} \cite{kongAlgebraicHigherSymmetry2020}).
-\end{literature}
+%
+%While we introduce this concept classically and endow it with symmetry as a
+%start, we will start concerning ourselves with a categorical embedding of tensor
+%networks in what is commonly reffereed to as a \emph{fusion-category} (Lit ???).
+%
+%\begin{literature}[\bf Symmetric Tensor Network]
+%  Originally, the idea to exploit symmetries of the hamiltonian for a speedup
+%  was proposed to be used in dmrg by \cite{mccullochNonAbelianDensityMatrix2002}
+%  (What is \cite{sierraDensityMatrixRenormalization1998a}? This sounds like it
+%  as well.). More general theory for \emph{globally invariant tensor networks},
+%  i.e. networks that are built of tensors that are globally invariant is given
+%  by \textcite{singhTensorNetworkDecompositions2010a} preceeding more detailed
+%  accounts on abelian symmetries \cite{singhTensorNetworkStates2011} and
+%  nonabelian ($\SU{2}$) symmetries in \cite{singhTensorNetworkStates2012a}. A
+%  similar approach to (non)abelian symmetries is given by
+%  \textcite{weichselbaumNonabelianSymmetriesTensor2012,
+%  weichselbaumXsymbolsNonAbelianSymmetries2020}. These rely on the general idea,
+%  that under representations of some compact group $G$, there are on site
+%  symmetries on each tensor, i.e. $[A, U_g^{\otimes k}] = 0$ there is a
+%  generalized \emph{wigner-eckart-theorem} for tensors with $n$ legs of the form
+%  \[
+%    T \in \bigoplus_a D_a \otimes V_a
+%  \]
+%  where $D_a$ is a matrix and $V_a$ is a \emph{fusion-tree}, i.e. a
+%  clebsch-gordan tensor. Reviews and specific algorithms in the SU(2) case are
+%  given by \cite{schmollBenchmarkingGlobal$SU2$2020,
+%  schmollTensorNetworkSimulations2020, schmollProgrammingGuideTensor2020}.
+%  \cite[§~8]{schmollProgrammingGuideTensor2020} proposes that this method is
+%  appropriate for Anyonic simulation as well (although this is done earlier by
+%  singh \& pfeiffer.). Symmetries as categorified networks, as we will present
+%  in \cref{chap:?}, are explained in \cite{dissertation} and
+%  \cite{devosTensorKitjlJuliaPackage2025} and in this work in
+%  \cref{sect:Anyons}.
+%
+%  For a list of software implementing symmetries see \cref{app}.
+%\end{literature}
+%
+%
+%\begin{literature}[\bf{Anyons}]\label{Lit:Anyons} \emph{Anyons} as
+%  quasiparticles with exotic exchange statistics were originally propsed by
+%  \cite{wilczek1990} \cite{leinaasTheoryIdenticalParticles1977a}. Anyons are
+%  usually described as \emph{defects} in a (topologically orderd?) medium of
+%  dimension two (technically codimension after
+%  \cite{satiAnyonicTopologicalOrder2023}). The exchange statistics of $N$
+%  particles on this medium $M$ is goverend by the \emph{configuration space}
+%  \[
+%    \mathrm{Conf}_N(M) = \{(x_1,\ldots,x_N) \in M^N : x_i \neq x_j \} \setminus S_N.
+%  \]
+%  The statistics of the particle exchange is given by the representation of
+%  $\pi_1(\mathrm{Conf}_N(M))$ (the fundamental (homology?) group). If $M =
+%  \R^2$, this corresponds to the \emph{braid group} on $N$ strands $B_N$. If the
+%  dimension of $M \geq 3$ this corresponds to the symmetric group $S_N$. If
+%  these representations are unitary and the (ground state?) is degenerate, this
+%  allows for \emph{topological quantum computation} (cf. \Cref{lit:tqc}).
+%\end{literature}
+%
+%
+%
+%\begin{literature}[Anyonic Spin Chains and Tensor Networks]
+%  (Check if this is the first). A first appearance of \emph{Anyonic Tensor
+%  Networks} in terms of spin chains is given by
+%  \textcite{feiguinInteractingAnyonsTopological2007} as the \emph{golden chain},
+%  which realizes a interacting $2$-local hamiltonian on a $n$ $\Fib$-anyon
+%  lattice. This is reviewed in \cite{trebstShortIntroductionFibonacci2008a} with
+%  generalizations to $3$-local and longer range hamiltonians. A general account
+%  outside of the $\Fib$-model can be found in \cite{gilsAnyonicQuantumSpin2013}
+%  and \cite{buicanAnyonicChainsTopological2017} (Check these again.). We can
+%  consider these approaches as a sort of manualization of the tensor network
+%  approach. Anyonic tensor networks are first introduced by
+%  \cite{pfeiferSimulationAnyonsTensor2010} and
+%  \cite{pfeiferSimulationAnyonsUsing2012}, developed out of the symmetry methods
+%  from \cref{sect:symmetricTensorNetworks} and both the \emph{isotopy} rules and
+%  anyonic operators defined in
+%  \cite{bondersonInterferometryNonAbelianAnyons2008}. Furthermore, stuctures
+%  such as an anyonic MERA are introduced. 
+%
+%  We also need to discuss the topic of \emph{anyonic entanglement entropy}, as
+%  given in
+%  \cite{pfeiferMeasuresEntanglementNonAbelian2014,bondersonAnyonicEntanglementTopological2017,pfeiferSimulationAnyonsUsing2012}.
+%\end{literature}
+%
+%\begin{literature}[Simulation of Anyons and String Nets]
+%  This should probably go in the previous section. \cite{liuMethodsSimulatingStringNet2022} \cite{kirchnerNumericalSimulationNonabelian2023}
+%\end{literature}
+%
+%\begin{literature}[Anyons as Categories]\label{lit:anyonCat} The correspondence
+%  between the \emph{physical} treatment of anyons and the \emph{categorical
+%  treatment} of anyons as a \emph{braided fusion category} (modular functor?)
+%  was originally descibed by \textcite[§~E, §~8]{kitaevAnyonsExactlySolved2006}
+%  based on previous work in quantum field theory already making use of modular
+%  categories and their diagrammatic calculus such as
+%  \cite{reshetikhinInvariants3manifoldsLink1991}. Further treatments are found
+%  in \cite{wang} and \cite{simon-nayak-das-sarma}. A modern treatment of the
+%  realization through the Configuration space of $n$-anyons if given by
+%  \cite{90eb98357acd4634abd18d906cc3811d} and in terms of modular functors by
+%  \cite{burtonShortGuideAnyons2016}.
+%\end{literature}
+%
+%\begin{literature}[\bf Topological Quantum Computation]\label{lit:tqc} Fault
+%  tolerant \emph{Topological Quantum Computation (TQC)} using anabelian anyons
+%  was originally proposed by
+%  \textcite[§~7]{kitaevFaulttolerantQuantumComputation2003} (Originally
+%  published in 1997). Also \cite{freedmanNPQuantumField1998} and .... ??? has
+%  shown that there are nonabelian anyon models that are universal
+%  \cite{dawsonSolovayKitaevAlgorithm2005a}
+%  \cite{mochonAnyonsNonsolvableFinite2003}
+%  \cite{mochonAnyonComputersSmaller2004a}. 
+%
+%  \cite{myersTopologicalQuantumGates2024a} gives nicer literature.
+%  \cite{simonTopologicalQuantum2023} is a great textbook account from one of the
+%  original authors on quantum compiling and computing.
+%  \cite{nayakNonAbelianAnyonsTopological2008b} is also one of the original
+%  accounts. This does not need to be any longer. Maybe mention categorical
+%  computation in general? but idk what htis is yet
+%  \cite{kongCategoricalComputation2023}.
+%\end{literature}
+%
+%\begin{literature}[\bf Quantum Compiling]
+%  Some (Many?) anyon theories are universal for quantum computation. The
+%  \emph{Solovay-Kitaev theorem}
+%  \cite{kitaevQuantumComputationsAlgorithms1997}\cite{dawsonSolovayKitaevAlgorithm2005a}
+%  yields an efficient algorithm for approximating any quantum gate using only
+%  basic gates from a universal set. Here we can consider 1.) The representation
+%  of braid circuits as a tensor nework operation and 2). A natural embedding of
+%  injection weaves as proposed by
+%  \textcite{simonTopologicalQuantumComputing2006a} where $2$ anyons are braided
+%  in their composite fusion channel by realizing this operation as a tensor
+%  reshape.
+%\end{literature}
+%
+%\begin{literature}[Categorified Quantum Mechanics]
+%  There are multiple approach to a diagramatic and categorified approach to
+%  quantum mechanics. Generally one wants both spaces and maps represented by a
+%  framework that allows for parallel and entangled operations, i.e. has a tensor
+%  product structure. \cite{selingerSurveyGraphicalLanguages2011} gives a review
+%  of this \cite{vercleyenMathematicalStructureTensor2018} does for tensor
+%  networks specifically.
+%
+%  TODO: find the XZ-calculus literature by Kissinger? Specific examples such as
+%  \emph{XZ}-calculus in the context of TQC is handled by
+%  \cite{ahmadiZXcalculusLanguageTopological2023}.
+%
+%  TODO: How to mention that this results in or from $\Hilbfd$? Does it? The work
+%  from selinger et.al does not yet include anyons. For this, one needs
+%  \Cref{lit:anyonCat}.
+%
+%  Also, take \cite[§~1]{satiEntanglementSectionsPushout2026} for a description
+%  of categorified mechanics. This stats that structure for \emph{entangled}
+%  processes is given by the monoidal category of complex vector spaces.
+%  
+%  % https://q.uiver.app/#q=WzAsNixbMSwwLCIoXFxNb2R7XFxDfSwgXFxvdGltZXMsIFxcQykiXSxbMSwyLCJcXE1vZHtcXEN9Il0sWzAsMCwiXFxzdGFja3JlbHtcXHRleHR7ZW50YW5nbGVkIHByb2Nlc3Nlc319e1xcdGV4dHtuby1jbG9uaW5nfX0iXSxbMCwyLCJcXHN0YWNrcmVse1xcdGV4dHtxdWFudHVtIHByb2Nlc3Nlc319e1xcdGV4dHtzdXBlcnBvc2l0aW9ucyBieX0gXFxvcGx1c30iXSxbMywwLCIoXFxIaWxiLFxcb3RpbWVzLD8pIl0sWzMsMiwiXFxIaWxiIl0sWzEsNSwiXFxkYWdnZXJcXHRleHR7LXN0cnVjdHVyZX0iXSxbMCw0LCJcXGRhZ2dlclxcdGV4dHstc3RydWN0dXJlfSJdLFsxLDBdLFs1LDRdXQ==
+%  \begin{tikzcd}
+%	  {\stackrel{\text{parallel quantum processes}}{\text{entanglement, no-cloning}}} & {(\Mod{\C}, \otimes, \C)} && {(\Hilb,\otimes,?)} \\
+%	  \\
+%	  {\stackrel{\text{quantum processes}}{\text{superpositions by} \oplus}} & {\Mod{\C}} && \Hilb
+%	  \arrow["{\dagger\text{-structure}}", from=1-2, to=1-4]
+%	  \arrow[from=3-2, to=1-2]
+%	  \arrow["{\dagger\text{-structure}}", from=3-2, to=3-4]
+%	  \arrow[from=3-4, to=1-4]
+%  \end{tikzcd}
+%
+%  The categorical language specifically yield interpretations of theorems such
+%  as no-cloning and no deleting \cite{abramskyNoCloningCategoricalQuantum2012}.
+%
+%  Additionally, many of the concepts of topological order are governed by
+%  category theory \cite{kongInvitationTopologicalOrders2022b}, as well as the
+%  topic of higher symmetries (should this be its own Lit sect if relevant? It is
+%  for MPO symmetries \cite{delcampHigherCategoricalSymmetries2024}
+%  \cite{kongAlgebraicHigherSymmetry2020}).
+%\end{literature}
 
 \section{On Tensors}
 
-Throughout, $k$ denotes a field and all vector spaces are finite-dimensional
-over $k$.
+Throughout this text, we build tensors over the field $\C$, note however that
+all of this will work for any algebraically closed field $k$.
 
+
+The usual picture of a tensor as introduced in the tensor network literature is
+a multi-dimensional array $T\in\C^{d_1\times\cdots\times d_n}$
+(cf.~\cite[§~2.1.1]{bridgemanHandwavingInterpretiveDance2017},
+\cite[§~1.1]{bauerTensorTypesTheir2022}). This is a tensor written in the
+standard bases $\{e_i\}$ of the spaces $\C^{d_j}$, with product basis
+\[
+  e^{(1)}_{i_1}\ot\cdots\ot e^{(n)}_{i_n},\qquad
+  (i_1,\dots,i_n)\in[d_1]\times\cdots\times[d_n].
+\]
+There are also the familiar operations (cf. \cite[~§
+II]{taylorIntroductionGraphicalTensor2024}) such as
+\begin{equation} 
+  \begin{gathered} 
+    T_{i_1i_2i_3\cdots i_n} 
+    \overset{\text{ reshape}}{\longmapsto} 
+    T_{(i_1i_2)i_3\cdots i_n}, 
+    \qquad 
+    T_{i_1i_2\cdots i_n} 
+    \overset{\text{ permutation}}{\longmapsto} 
+    T_{i_{\sigma(1)}i_{\sigma(2)}\cdots i_{\sigma(n)}}, \\[1ex]
+    A_{i_1\cdots i_r k_1\cdots k_m}, B_{k_1\cdots k_m j_1\cdots j_s} 
+    \overset{\text{ contraction}}{\longmapsto} 
+    C_{i_1\cdots i_r j_1\cdots j_s}, 
+    \qquad
+    C_{i_1\cdots i_r j_1\cdots j_s}
+    =
+    \sum_{k_1,\dots,k_m} 
+    A_{i_1\cdots i_r k_1\cdots k_m} B_{k_1\cdots k_m j_1\cdots j_s}\;. 
+  \end{gathered} 
+\end{equation}
+
+
+Later, in \Cref{sect:symmetricTensorNetworks,sect:Categories}, we will be
+dealing with vector spaces that are not necessarily representable by such a
+basis, and even tensors where the spaces are given by \emph{objects} in a
+\emph{category} that are not isomorphic to $\C^n$, and therefore have no
+elements to index. Whence we describe tensors as linear maps independent of
+their chosen basis and indexing-schemes as a first step.
 
 A \emph{tensor} is an element of a tensor product of finite-dimensional vector
-spaces,
+spaces (cf. \cite[~Def. 1]{devosTensorKitjlJuliaPackage2025}),
 \[
   T \in \bigotimes_{j \in J} V_j ,
 \]
 and we call $T$ a rank $\left\vert J \right\vert$ tensor. The \emph{dimension}
-of the tensor is then $\dim(T) = \prod_{j \in J} \dim(V_j)$.
+of the vector space is $\dim(\bigot_j V_j) = \prod_{j \in J} \dim(V_j)$. If we
+have a basis on each space, call that basis ${v_i}_{i \in \dim(V)}$, then we can
+build a product space basis by tensoring each of the basis elements trivially.
 
-The \emph{dual space} of a vector space $V$ is $V^* = \operatorname{Hom}(V,k)$,
-the space of linear functionals $f \colon V \to k$, $x \mapsto f(x)$. In Dirac
+
+The \emph{dual space} of a vector space $V$ is $V^* = \operatorname{Hom}(V,\C)$,
+the space of linear functionals $f \colon V \to \C$, $x \mapsto f(x)$. In Dirac
 notation we write $\ket{v} \in V$ for vectors (kets) and $\bra{f} \in V^*$ for
-linear functionals (bras), so that $\braket{f}{v} = f(v)$.
+linear functionals (bras), additionally so that $\braket{f}{v} = f(v)$.
 
 Since all spaces are finite-dimensional, we have the canonical isomorphisms
 \[
   V^{**} \cong V, \qquad
-  (V \otimes W)^* \cong V^* \otimes W^*, \qquad
+  (V \otimes W)^* \cong W^* \otimes V^*, \qquad
   W \otimes V^* \cong \operatorname{Hom}(V,W),
 \]
-where the last is given on simple tensors by
-\[
-  \ket{w} \otimes \bra{f} \;\longmapsto\; \bigl(v \mapsto \braket f  v\,\ket w\bigr),
-\]
-i.e.\ $\ket{w}\!\bra{f}$ is the outer product.
+where the last relation is given by the mapping
+\begin{equation}\label{back:eq:basicHomAdjunction}
+  \ket{w} \otimes \bra{f} 
+  \;\longmapsto\; 
+  \bigl(v \mapsto \braket f v\,\ket w\bigr).
+\end{equation}
 
 Because $V^{**} \cong V$, any tensor $T \in V_1 \otimes \cdots \otimes V_n$ can
 be regarded as a linear map after choosing a split of its legs at some $0 \le m
@@ -149,7 +256,8 @@ be regarded as a linear map after choosing a split of its legs at some $0 \le m
 \[
   T : V_1^\ast \ot \cdots \ot V_{m}^\ast \longrightarrow V_{m+1} \ot \cdots \ot V_{n}.
 \]
-We can also make the default definition a linear map if we do not want to have a split into domain and codomain by equating it to the map
+We can also make the default definition a linear map if we do not want to have a
+split into domain and codomain by equating it to the map
 \[
   \C \to V_1 \ot \cdots \ot V_n \cong V_1 \ot \cdots \ot V_n, \quad f \mapsto f(1).
 \]
@@ -158,9 +266,9 @@ have defined $X = V_1 \otimes \cdots \ot V_n$ as its own vector space.
 
 \begin{example}
   
- Let $t \in V_1 \otimes V_2 \otimes W_2^* \otimes W_1^*$.
-Choosing the split after $V_2$, $t$ is an operator $W_1 \otimes W_2 \to V_1
-\otimes V_2$, which in Dirac notation reads
+Let $t \in V_1 \otimes V_2 \otimes W_2^* \otimes W_1^*$. Choosing the split
+after $V_2$, $t$ is an operator $W_1 \otimes W_2 \to V_1 \otimes V_2$, which in
+Dirac notation reads
 \[
   t = \sum_{i_1,i_2,j_1,j_2} T^{i_1 i_2}_{j_1 j_2}\,
       \ket{v^1_{i_1}}\ket{v^2_{i_2}}\bra{w^2_{j_2}}\bra{w^1_{j_1}},
@@ -170,7 +278,8 @@ $W_b^*$ (the dual basis of a basis of $W_b$).
 \end{example}
 
 \begin{example}
-  Note that while we gave a definition of a vector as $\ket{v} \in V$, we can alternatively define a vector as a linear map
+  Note that while we gave a definition of a vector as $\ket{v} \in V$, we can
+  alternatively define a vector as a linear map
   \[
     v : \C \to V, \lambda \mapsto \lambda \ket{v}.
   \]
@@ -189,9 +298,9 @@ $W_b^*$ (the dual basis of a basis of $W_b$).
   
 Graphically, a tensor $T \colon W_n \otimes \cdots \otimes W_1 \to V_1 \otimes
 \cdots \otimes V_m$ is a coupon with a leg for each factor of its spaces: legs
-for the codomain are outgoing from the top of the coupon, legs for the domain point inwards towards the bottom of the diagram.
-Arrows are oriented so that a leg carrying $V$ points up and a leg carrying
-$V^*$ points down.
+for the codomain are outgoing from the top of the coupon, legs for the domain
+point inwards towards the bottom of the diagram. Arrows are oriented so that a
+leg carrying $V$ points up and a leg carrying $V^*$ points down.
 \[
 \begin{tikzpicture}[
   box/.style={draw, thick, fill=white, rounded corners=2pt,
@@ -220,7 +329,9 @@ Now we want to introduce the common methods of \emph{reshapes} and
   \item Permutations: $\Hom(V \ot W, X \ot Y) \to \Hom(W \ot V, Y \ot X)$
 \end{enumerate}
 
-For grouping legs, we can act as above and consider the isomorphic vector space $X$. Equivalently we can also consider a bracketing of the vector spaces
+For grouping legs, we can act as above and identify a part of the product $V_{i}
+\ot V_{i+1} \overset{\phi}{\cong} X$. Equivalently we can also consider a
+bracketing of the vector spaces
 % https://q.uiver.app/#q=WzAsMTAsWzAsMCwiICAoVl8xIFxcb3QgXFxjZG90cyBcXG90IFZfbSkgIl0sWzAsMSwiWCJdLFsxLDAsIlxcb3RpbWVzIl0sWzIsMCwiIChWX3ttKzF9IFxcb3QgXFxjZG90cyBcXG90IFZfbikgIl0sWzMsMCwiXFxvdCJdLFs0LDAsIlxcY2RvdHMiXSxbMSwxLCJcXG90aW1lcyJdLFsyLDEsIlkiXSxbMywxLCJcXG90Il0sWzQsMSwiXFxjZG90cyJdLFszLDcsIlxcdGV4dHtncm91cGluZ30iLDAseyJvZmZzZXQiOi0yfV0sWzUsOSwiXFx0ZXh0e2xlZnQgYXMgaXN9IiwwLHsic3R5bGUiOnsidGFpbCI6eyJuYW1lIjoiYXJyb3doZWFkIn19fV0sWzEsMCwiXFx0ZXh0e3NwbGl0dGluZ30iLDAseyJvZmZzZXQiOi0yfV0sWzAsMSwiXFx0ZXh0e2dyb3VwaW5nfSIsMCx7Im9mZnNldCI6LTJ9XSxbNywzLCJcXHRleHR7c3BsaXR0aW5nfSIsMCx7Im9mZnNldCI6LTJ9XV0=
 \[\begin{tikzcd}
 	{  (V_1 \ot \cdots \ot V_m) } & \otimes & { (V_{m+1} \ot \cdots \ot V_n) } & \ot & \cdots \\
@@ -240,26 +351,57 @@ For grouping legs, we can act as above and consider the isomorphic vector space 
       mark=at position 0.6 with {\arrow{Stealth[length=4pt]}}}}},
 ]
 \begin{scope}
-  \node[box, minimum width=14mm] at (0,0) {$f$};
+  \node[box, minimum width=24mm] at (0,0) {$f$};
   \draw[wire] (-0.4,-1.8) node[below] {$V$} -- (-0.4,-0.3);
   \draw[wire] ( 0.4,-1.8) node[below] {$W$} -- ( 0.4,-0.3);
+  \node at (1.0, -1.05) {$\cdots$};
+  \node at (-1.0, -1.05) {$\cdots$};
   \draw[wire] ( 0.0, 0.3) -- (0,1.8) node[above] {$X$};
   \node[font=\small] at (0,-2.7) {$f \in \Hom(V \ot W, X)$};
 \end{scope}
 \end{tikzpicture}
 \]
+Now assume again that we are working in the linear basis $V_i \cong \C^{n_i}$.
+Then we can give $\phi$ as a bijection of the index sets $[n_i] \times [n_{i+1}]
+\to [n_i n_{i+1}]$ lifted to action on the spaces obtaining the familiar
+row-major layout:
+\[
+  \phi : \C^{n_i} \ot \C^{n_{i+1}} \to \C^{n_i n_{i+1}},
+  \quad
+  e_{j_i} \ot e_{j_{i+1}} \to e_{j_i n_{i+1} + j_{i+1}}
+\]
 
 For the other operations, we need a relation between a vector space and its dual
 space. For this we use the notion of \emph{evaluation} and \emph{coevaluation}
 maps.
-\begin{align*}
-  \mathrm{ev}_V &\colon V^* \otimes V \to k, & f \otimes v &\mapsto f(v),\\
-  \mathrm{coev}_V &\colon k \to V \otimes V^*, & \lambda &\mapsto
-    \lambda \sum_i v_i \otimes f_i.
-\end{align*}
-Take a arbitrary tensor $\Hom(V \ot W, X)$. Now we can do a reshape by composing these maps. The transposition here would then be the isomorphism
+\begin{align}
+  \mathrm{ev}_V 
+  &\colon 
+  V^* \otimes V \to \C, 
+  & f \otimes v &\mapsto f(v), 
+  \label{back:eq:evalutationMapVector}
+  \\
+  \mathrm{coev}_V 
+  &\colon
+  \C \to V \otimes V^*, 
+  & \lambda &\mapsto
+  \lambda \underbrace{
+    \sum_i v_i \otimes f_i
+    }_{
+      \smash{\mathclap{\text{\color{RoyalBlue} identity on} \Hom(V,V)}}
+    }  .
+  \label{back:eq:coevaluationMapVector}
+\end{align}
+and we can explain away the choice of basis of $\{v_i\}$ and $\{f_i\}$ by
+showing these maps are basis-invariant as well ... \cite{???}.
+
+
+Take a arbitrary tensor $\Hom(V \ot W, X)$. Now we can do a reshape by composing
+these maps. The transposition here would then be the isomorphism
 \[
-  \Hom(V \ot W, X) \to \Hom(V, X \ot W^\ast), \quad f \mapsto (f \ot id_{W^\ast}) \circ (\id_V \ot \coev_W).
+  \Hom(V \ot W, X) \to \Hom(V, X \ot W^\ast), 
+  \quad
+  f \mapsto (f \ot id_{W^\ast}) \circ (\id_V \ot \coev_W).
 \] 
 \[
 \begin{tikzpicture}[
@@ -295,7 +437,8 @@ Take a arbitrary tensor $\Hom(V \ot W, X)$. Now we can do a reshape by composing
 where we have omitted the extra leg carrying $\C$ as this is a trivial leg of
 dimension one.
 
-If we have a matrix operator $A : V \to W$ we can execute a transpose by application of $\ev$ and $\coev$:
+If we have a matrix operator $A : V \to W$ we can execute a transpose by
+application of $\ev$ and $\coev$, this is best seen visually:
 \[
 \begin{tikzpicture}[
   box/.style={draw, thick, fill=white, rounded corners=2pt,
@@ -334,8 +477,11 @@ If we have a matrix operator $A : V \to W$ we can execute a transpose by applica
     {$\id_{W^\ast} \ot \coev_V$};
  
   \node[font=\scriptsize, align=center, anchor=north] at (1.3,-2.5)
-    {$(\ev_W \ot \id_{V^\ast}) \circ (\id_{W^\ast} \ot A \ot \id_{V^\ast})$\\[1pt]
-     $\circ\; (\id_{W^\ast} \ot \coev_V)$};
+    {
+      $(\ev_W \ot \id_{V^\ast}) \circ (\id_{W^\ast} \ot A \ot \id_{V^\ast})$
+      \\[1pt]
+      $\circ\; (\id_{W^\ast} \ot \coev_V)$
+    };
 \end{scope}
  
 \node at (8.6,0) {$=:$};
@@ -349,20 +495,125 @@ If we have a matrix operator $A : V \to W$ we can execute a transpose by applica
  
 \end{tikzpicture}
 \]
+We can again confirm this in the standard basis. Let $A\in\Hom(V,W)$ with
+$A\ket{v_i}=\sum_j A_{ji}\ket{w_j}$, and let $A^T$ be the composite
+\[
+A^T=(\ev_W\ot\id_{V^\ast})\circ(\id_{W^\ast}\ot A\ot\id_{V^\ast})\circ(\id_{W^\ast}\ot\coev_V)
+\ \in\ \Hom(W^\ast,V^\ast).
+\]
+We follow a basis elements $\bra{w_k} \in W^\ast$ through the diagram above:
 
-Next, we want to realize \emph{permutations}. Recall that a permutation is a
-rearrangement on a set of labels $(a_1, a_2, \ldots, a_n) \mapsto (s_1(a_1),
-s_2(a_n), \ldots, s_n(a_n)$. It is known that an arbitrary permutation can be
-realized by swapping repeatedly applying \emph{swap operations} between two
-adjacent symbols, these operators $s_i : (a,b) \to (b,a)$ are the generators of
-the symmetric group of order $n$, $S_n$ (cf. \cref{app:gen:groups}). So it is
-enough for us to implement these simple swaps.
+The first application of $\id_{W^\ast} \ot \coev_V$ expands as
+\[
+  \bra{w_k} \mapsto \sum_i \bra{w_k} \ot \ket{v_i} \ot \bra{v_i}.
+\]
+Then we feed in $A$ on the middle leg
+\[
+  \sum_i \bra{w_k} \ot A\ket{v_i} \ot \bra{v_i} = \sum_{ij} A_{ji} \bra{w_k} \ot \ket{w_j} \ot \bra{v_i}.
+\]
+and at last apply $\ev_W$ on $\braket{w_k}{w_j} = \delta_{kj}$ to obtain
+\[
+  \sum_i A_{ki} \bra{v_i}
+\]
 
-where $\{v_i\}$ is a basis of $V$ and $\{f_i\}$ its dual basis. A
-\emph{contraction} is a composite of identities and evaluation maps that
-removes the paired legs from the tensor product. For example, for operators
-$A \in U \otimes V^*$ (a map $V \to U$) and $B \in V \otimes W^*$ (a map
-$W \to V$), the product $AB \in U \otimes W^*$ is
+
+Next, we want to realize \emph{permutations} of the legs of the tensor. Recall
+that a permutation is a rearrangement on a set of labels $(a_1, a_2, \ldots,
+a_n) \mapsto (s_1(a_1), s_2(a_n), \ldots, s_n(a_n))$. It is known that an
+arbitrary permutation can be realized by swapping repeatedly applying \emph{swap
+operations} between two adjacent symbols, these operators $s_i : (a,b) \to
+(b,a)$ are the generators of the symmetric group of order $n$, $\Sym_n$ (cf.
+\Cref{app:gen:groups}). So it is enough for us to implement these simple swaps.
+For f.d. vector spaces $V,W$ define $\tau_{V,W} : V \ot W \to W \ot V, v \ot w
+\mapsto w \ot v$, and for vector spaces we are free to do this (at least if we
+consider adjacent spaces) and stay within the domain and the codomain. If we
+want to braid opposite spaces, we first need to bend back one of the legs and
+the apply the swap.
+
+\[
+\begin{tikzpicture}[% Cant scale without wires clipping? 
+  box/.style={draw, thick, fill=white, rounded corners=2pt,
+              minimum height=6mm, minimum width=14mm, inner sep=0pt, font=\small},
+  wire/.style={thick, postaction={decorate, decoration={markings,
+      mark=at position #1 with {\arrow{Stealth[length=4pt]}}}}},
+  wire/.default=0.6,
+  halo/.style={white, line width=4pt},   % gives the over-crossing
+  lab/.style={font=\scriptsize, text=gray},
+]
+
+\begin{scope}
+  \node[box] at (0,0) {$f$};
+  \draw[wire] (-0.4,-1.8) node[below] {$V$} -- (-0.4,-0.3);
+  \draw[wire] ( 0.4,-1.8) node[below] {$W$} -- ( 0.4,-0.3);
+  \draw[wire] (-0.4, 0.3) -- (-0.4, 1.8) node[above] {$X$};
+  \draw[wire] ( 0.4, 0.3) -- ( 0.4, 1.8) node[above] {$Y$};
+\end{scope}
+\node at (1.5,0) {$\to$};
+
+\begin{scope}[xshift=3cm]
+  \node[box] at (0,0) {$f$};
+  \draw[wire] (-0.4,-1.8) node[below] {$V$} -- (-0.4,-0.3);
+  \draw[wire] (-0.4, 0.3) -- (-0.4, 1.8) node[above] {$X$};
+  \draw[wire] ( 0.4, 0.3) -- ( 0.4, 1.8) node[above] {$Y$};
+  \draw[wire] (1.2,1.8) node[above] {$W^\ast$} -- (1.2,-0.7)
+        to[out=-90,in=-90] (0.4,-0.7) -- (0.4,-0.3);
+  \node[lab] at (0.8,-1.3) {$\coev_W$};
+  \node[lab] at (0.4,-2.6) {bend $W$ up};
+\end{scope}
+\node at (4.9,0) {$\to$};
+
+\begin{scope}[xshift=6cm]
+  \node[box] at (0,0) {$f$};
+  \draw[wire] (-0.4,-1.8) node[below] {$V$} -- (-0.4,-0.3);
+  \draw[wire] (-0.4, 0.3) -- (-0.4, 1.8) node[above] {$X$};
+  % W^* strand (under): top -> down through the crossing -> cup -> f
+  \draw[wire] (0.4,1.8) node[above] {$W^\ast$} -- (0.4,1.3)
+        to[out=-90,in=90] (1.2,0.7) -- (1.2,-0.7)
+        to[out=-90,in=-90] (0.4,-0.7) -- (0.4,-0.3);
+  % Y strand (over)
+  \draw[halo] (0.4,0.7) to[out=90,in=-90] (1.2,1.3);
+  \draw[wire=0.85] (0.4,0.3) -- (0.4,0.7)
+        to[out=90,in=-90] (1.2,1.3) -- (1.2,1.8) node[above] {$Y$};
+  \node[lab] at (0.8,-1.3) {$\coev_W$};
+  \node[lab] at (0.4,-2.6) {braid};
+\end{scope}
+\node at (7.9,0) {$\to$};
+
+\begin{scope}[xshift=9cm]
+  \node[box] at (0,0) {$f$};
+  \draw[wire] (-0.4,-1.8) node[below] {$V$} -- (-0.4,-0.3);
+  \draw[wire] (-0.4, 0.3) -- (-0.4, 1.8) node[above] {$X$};
+  \draw[wire] (0.4,1.8) node[above] {$W^\ast$} -- (0.4,1.3)
+        to[out=-90,in=90] (1.2,0.7) -- (1.2,-0.7)
+        to[out=-90,in=-90] (0.4,-0.7) -- (0.4,-0.3);
+  \draw[halo] (0.4,0.7) to[out=90,in=-90] (1.2,1.3);
+  \draw[wire=0.3] (0.4,0.3) -- (0.4,0.7) to[out=90,in=-90] (1.2,1.3);
+  \draw[wire=0.8] (1.2,1.3) to[out=90,in=90] (2.0,1.3)
+        -- (2.0,-1.8) node[below] {$Y^\ast$};
+  \node[lab] at (0.8,-1.3) {$\coev_W$};
+  \node[lab] at (1.6,2.0) {$\ev$};
+  \node[lab] at (0.8,-2.6) {bend $Y$ down};
+\end{scope}
+
+\node at (11.6,0) {$=$};
+
+\begin{scope}[xshift=12.7cm]
+  \node[box] at (0,0) {$\tilde f$};
+  \draw[wire] (-0.4,-1.8) node[below] {$V$}   -- (-0.4,-0.3);
+  \draw[wire] ( 0.4,-0.3) -- ( 0.4,-1.8) node[below] {$Y^\ast$};
+  \draw[wire] (-0.4, 0.3) -- (-0.4, 1.8) node[above] {$X$};
+  \draw[wire] ( 0.4, 1.8) node[above] {$W^\ast$} -- ( 0.4, 0.3);
+\end{scope}
+
+\end{tikzpicture}
+\]
+
+
+
+A \emph{contraction} is a composite of identities and evaluation maps that
+removes the paired legs from the tensor product. For example, for operators $A
+\in U \otimes V^*$ (a map $V \to U$) and $B \in V \otimes W^*$ (a map $W \to
+V$), the product $AB \in U \otimes W^*$ is
 \[
   AB = (\mathrm{id}_U \otimes \mathrm{ev}_V \otimes \mathrm{id}_{W^*})(A \otimes B).
 \]
@@ -379,10 +630,10 @@ and by evaluation $\ev_V(\bra{v_j} \ot \ket{v_i}) = \braket{v_j}{v_i} =
 with coordinates $(AB)^a_b = \sum_i A^a_i B^i_b$ which is precisely the well
 known matrix-multiplication formula.
 
-If we have considered them both maps, we can still do the contraction, however
-now under application of both evaluation maps. \todo{SHow this. But there should
-be a deepere reasoning, i.e this is probably just the fact that ev itself is the
-isomorphisms tbetween the presentations.}
+If we had taken them both as maps instead, we can still do the contraction.
+However now under application of both evaluation maps. \todo{SHow this. But
+there should be a deeper reasoning, i.e this is probably just the fact that ev
+itself is the isomorphisms tbetween the presentations.}
 
 \[
   \begin{tikzpicture}[
@@ -414,12 +665,14 @@ isomorphisms tbetween the presentations.}
   will later see the use of categories (cf. \Cref{sect:Categories}) where we
   have vector spaces that only admit a formal basis of symbols.
 
-  Traditionally however, we are developing tensors at least over the field $\C$. Furthermore, all our vector spaces are indexable by $\C^n$ \todo{rephrase!}.
+  Traditionally however, we are developing tensors at least over the field $\C$.
+  Furthermore, all our vector spaces are indexable by $\C^n$ \todo{rephrase!}.
 
-  It should also be mentioned that on the implementation
-  level, we also have to consider how we store these tensors. If we have real
-  tensors we may use datatypes such as $\texttt{float64}$, if we have complex
-  tensors we can use $\texttt{complex128}$. Generally, we store these tensors as arrays (vectors?) in contiguous memory. 
+  It should also be mentioned that on the implementation level, we also have to
+  consider how we store these tensors. If we have real tensors we may use
+  datatypes such as $\texttt{float64}$, if we have complex tensors we can use
+  $\texttt{complex128}$. Generally, we store these tensors as arrays (vectors?)
+  in contiguous memory. 
 
   In such a memory-layouted representation of a tensor, the underlying data is
   never changed, but the layout of its storage is. For example, if we index
@@ -431,21 +684,71 @@ isomorphisms tbetween the presentations.}
 \end{remark}
 
 The semantics of the reshape operations are captured \todo{how much?
-consistently?} by operations called \emph{einsums}\footnote{Einsum landing page: \url{https://einsum.org}} (Einstein-sums)
-\cite{wenigSyntaxSemanticsEinsum2025}.
-\newcommand{\einsum}{\mathop{einsum}}
-The matrix-matrix product $A \cdot B$ is here written as
+consistently?} by operations called \emph{einsums}\footnote{Einsum landing page:
+\url{https://einsum.org}} (Einstein-sums) \cite{wenigSyntaxSemanticsEinsum2025}.
+\newcommand{\einsum}{\mathop{einsum}} The matrix-matrix product $A \cdot B$ is
+here written as
 \[
-  \einsum(ij,jk \to ik, A, B)
+  \texttt{einsum}(ij,jk \to ik, A, B)
 \]
 
 
 
-\section{Tensor Networks \& Lattice Models}
+\subsection{Tensor Networks \& Lattice Models}
 
-Often times we will consider quantum state on a lattice. For $1$-dimensional
-systems, we can consider a lattice of $n$ \emph{sites} where each holds a
-\emph{local site} $\ket{i}$. We can give an arbitrary state on this lattice as
+\begin{literature}[\bf Tensor Networks]
+  Tensor networks represent higher-rank tensors as the contraction of a network
+  of low-rank tensors. These emerged largely from three different directions:
+  numerical simulations of quantum many-body systems, quantum information theory
+  with area laws and a diagrammatic calculus induced from multilinear algebra.
+  
+  For numerical calculations, the perhaps earliest instance is
+  \textcite{wilsonRenormalizationGroupCritical1983} \emph{numerical
+  renormalization group}. Limitations thereof then motivated the
+  \emph{\gls{dmrg}} by
+  \textcite{whiteDensityMatrixFormulation1992,whiteDensitymatrixAlgorithmsQuantum1993}.
+  \textcite{ostlundThermodynamicLimitDensity1995} then showed that the states
+  produce by DMRG are exactly the states captured by so-called
+  \emph{\glspl{mps}} (cf. \ref{???})\todo{aklt and fannes}. MPSs give us the
+  theory of \emph{area-laws}: The ground states of gapped 1D Hamiltnians have
+  limited entanglement entropy
+  \cite{verstraeteRenormalizationAlgorithmsQuantumMany2004} and can be
+  efficiently simulated by MPSs with small \emph{bond-dimensions}. Reviews
+  include \cite{schollwoeck},\cite{orusAdvancesTensorNetwork2014},
+  \cite{bridgemanHandwavingInterpretiveDance2017} and
+  \cite{cuiperHouchesLectureNotes2026}\todo{which chapter les houches?}.
+
+
+  For $2$D states, MPSs are generalized to \emph{\glspl{peps}}
+  \cite{verstraeteRenormalizationAlgorithmsQuantumMany2004} which also obey and
+  area law. \todo{complexity of peps contractions, review? i dont really get it
+  up till here.} Systems that are not caputred by either method are adressed by
+  \emph{tree tensor networks} and \emph{\gls{mera}}
+  \cite{vidalClassQuantumManybody2008} \todo{explain how we will need this.}.
+
+
+  Since a quantum circuit is in itself an instance of a tensor network, we can
+  use existing methods to simulate these circuits classically
+  \cite{markovSimulatingQuantumComputation2008}. However this simulation cost is
+  still exponential in general and polynomial for sparsely entangled states
+  \cite{vidal}. In fact these methods have been used to challenge claims of
+  quantum advantages \cite{arute???, panSimulationQuantumCircuits2022}. For
+  recent reviews see
+  \cite{patraEfficientTensorNetwork2024,berezutskiiTensorNetworksQuantum2025}.
+
+  
+
+  The graphical notation for tensor networks goes back to
+  \textcite{Penrose1971Applications}. A categorical formulation in terms of
+  monoidal categories is given by \textcite{joyalGeometryTensorCalculus1991}.
+  Reviews inlcude
+  \cite{selingerSurveyGraphicalLanguages2011,vercleyenMathematicalStructureTensor2018}.
+\end{literature}
+
+Often times we will study quantum states and systems on a lattice. For
+$1$-dimensional systems, we can consider a lattice of $n$ \emph{sites} where
+each holds a \emph{local site} $\ket{i}$. We can give an arbitrary state on this
+lattice as
 \[
   \ket{\Psi} = \sum_{i_1 \ldots i_n} c_{i_1 \cdots i_n} \ket{i_1 i_2 \cdots i_n}.
 \]
@@ -463,22 +766,35 @@ thus representable by a statevector $\ket{\Psi} \in \C^{2^n}$.
 
 Now, we are allowed to apply a reshape operation and change $\C^{2^n}$ into
 $\C^{2 \times 2^{n-1}}$ which corresponds to a tensor of order $2$, i.e. a
-matrix with $2$ columns and $2^{n-1}$ rows. Now that we have a matrix, we can apply the \gls{svd} yielding a decomposition 
+matrix with $2$ columns and $2^{n-1}$ rows. Now that we have a matrix, we can
+apply the \gls{svd} yielding a decomposition 
 \[
-  c_{i_1, (i_2 \ldots i_n)} = \sum_{j_1} U_{i1,j1} S_{j_1,j_1} (V^\dagger)_{j1, (i_2 \ldots i_n)}
+  c_{i_1, (i_2 \ldots i_n)} 
+  = 
+  \sum_{j_1} U_{i1,j1} S_{j_1,j_1} (V^\dagger)_{j1, (i_2 \ldots i_n)}
 \]
 Recall that we can choose the rank of the SVD, so that the matrix $U$ that is
-produced is of dimension $r \leq i_1$\todo{NOTATION!}. We can absorb the factors $S$ and $V$ into the remaining state and again reshape to a state, and we get the expression
+produced is of dimension $r \leq i_1$\todo{NOTATION!}. We can absorb the factors
+$S$ and $V$ into the remaining state and again reshape to a state, and we get
+the expression
 \[
-  c_{i_1,(i_2 \ldots i_n)} = \sum_{j_1} U_{i_1,j_1} c_{j_1, i_2 \ldots i_n}
+  c_{i_1,(i_2 \ldots i_n)} 
+  = 
+  \sum_{j_1} U_{i_1,j_1} c_{j_1, i_2 \ldots i_n}
 \]
-We now reshape the new c again to a tensor of shape $[(j_1i_2, i_3 \ldots i_n)]$.
+We now reshape the new c again to a tensor of shape $[(j_1i_2, i_3 \ldots
+i_n)]$.
 \[
-  c_{i_1, i_2, \ldots} = \sum_{j_1, j_2} U^{i_1,j_1} U_{(j_1 i_2),j_2} c_{j_2, (i_3, \ldots, i_n)}
+  c_{i_1, i_2, \ldots} 
+  = 
+  \sum_{j_1, j_2} U^{i_1,j_1} U_{(j_1 i_2),j_2} c_{j_2, (i_3, \ldots, i_n)}
 \]
-and we can reshape the expression $U_{(j_1i_1),j_2}$ to a trivalent tensor having an extra leg for the physical dimension, i.e. we want ot build the tensor
+and we can reshape the expression $U_{(j_1i_1),j_2}$ to a trivalent tensor
+having an extra leg for the physical dimension, i.e. we want ot build the tensor
 \[
-  c_{i_1, i_2, \ldots} = \sum_{j_1, j_2} U_{j_1}^{i_1} U_{j_1,j_2}^{i_2} c_{j_2, (i_3, \ldots, i_n)}
+  c_{i_1, i_2, \ldots} 
+  = 
+  \sum_{j_1, j_2} U_{j_1}^{i_1} U_{j_1,j_2}^{i_2} c_{j_2, (i_3, \ldots, i_n)}
 \]
 We can apply this procedure recursively to the new coefficient, and in the end
 we will get an expression for our state
@@ -488,9 +804,9 @@ we will get an expression for our state
 
 
 
-\begin{definition}\label{def:MPS}
-  A \emph{\green{Matrix Product State}} is a quantum state $\ket{\psi}$ with $n$ legs written as
-  the contraction of $n$ trivalent tensors $\{A^{[i]}\}_{i \in [n]}$. Formally this reads
+\begin{definition}\label{def:MPS} A \emph{\green{Matrix Product State}} is a
+  quantum state $\ket{\psi}$ with $n$ legs written as the contraction of $n$
+  trivalent tensors $\{A^{[i]}\}_{i \in [n]}$. Formally this reads
   \[
     \ket{\psi[A]}
     =
@@ -572,12 +888,13 @@ Note that we can easily define an inner product on an MPS (as it represents a st
 \]
 
 \begin{definition}
-  A \green{\emph{\gls{mpo}}} is an operator on a state with $n$ legs
-  on each side written as the contraction of $4$ legged tensors $W^[i]$.... 
+  A \green{\emph{\gls{mpo}}} is an operator on a state with $n$ legs on each
+  side written as the contraction of $4$ legged tensors $W^[i]$.... 
   \[
     \sum_{i_1, .., i_n j_1, ..., j_n} \tr(M^{i_1 j_1} M^{i_2 j_2} \cdots M^{i_n j_n}) \ket{i_1 \cdots i_n} \bra{j_1 \cdots j_n}
   \]
-  We again use the convention of denoting the bonds by $D$, and we can regard each mps tensor as a mapping
+  We again use the convention of denoting the bonds by $D$, and we can regard
+  each mps tensor as a mapping
   \[
     \Hom(P_i \otimes D_i, P_j \otimes D_{i+1})
   \]
@@ -616,7 +933,9 @@ Note that we can easily define an inner product on an MPS (as it represents a st
 $$
 \end{graphicalCalculus}
 
-Constructing these operators can be done by the use of a \emph{finite state machine} \cite{crosswhiteFiniteAutomataCaching2008}. As an example, the XXZ-Hamiltonian is represented by the MPO tensors 
+Constructing these operators can be done by the use of a \emph{finite state
+machine} \cite{crosswhiteFiniteAutomataCaching2008}. As an example, the
+XXZ-Hamiltonian is represented by the MPO tensors 
 \begin{equation}\label{back:mpo}
   W_{ij} = \begin{pmatrix}
     1 & 0 & 0 & 0 & 0 \\
@@ -628,7 +947,8 @@ Constructing these operators can be done by the use of a \emph{finite state mach
 \end{equation}
 with bond dimension $5$, note that this acts on the physical states as such. 
 
-As an application, we can immediately represent the expectation value of a state $\bra{\Psi} H \ket{\Psi}$ by using MPSs and MPOs:
+As an application, we can immediately represent the expectation value of a state
+$\bra{\Psi} H \ket{\Psi}$ by using MPSs and MPOs:
 \[
    \begin{tikzpicture}[
   box/.style={draw, thick, fill=lightgray, rounded corners=2pt,
@@ -656,6 +976,10 @@ As an application, we can immediately represent the expectation value of a state
   \end{scope}
 \end{tikzpicture}
 \]
+
+\subsection{Tensor Network Algorithms}
+
+
 
 %\newcommand{\mcT}{\mathcal{T}}
 %
