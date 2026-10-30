@@ -215,28 +215,31 @@ important relation here will be \emph{naturality}:
   Here are two familiar examples on vector- and Hilbert-spaces:
   \begin{enumerate}
     \item Consider the category of Hilbert spaces $\Hilb$ and assign it a
-  \emph{forgetful} functor 
-  \[
-    \begin{aligned}
-      \omega : \Hilb &\longrightarrow \Veck,\\
-      (\mathcal H,\langle\cdot,\cdot\rangle_{\mathcal H})
-      &\longmapsto \mathcal H,\\
-      \mathcal B(\mathcal H,\mathcal K) \ni T  &\longmapsto T \in \Hom(\mathcal{H}, \mathcal{K}).
-    \end{aligned}
-  \]
-  that takes each Hilbert space to its underlying vector space, and each bounded
-  linear operator to its linear operator between vector spaces. So the inner
-  product structure is forgotten.
+      \emph{forgetful} functor 
+      \[
+        \begin{aligned}
+          \omega : \Hilb &\longrightarrow \Veck,\\
+          (\mathcal H,\langle\cdot,\cdot\rangle_{\mathcal H})
+          &\longmapsto \mathcal H,\\
+          \mathcal B(\mathcal H,\mathcal K) \ni T  &\longmapsto T \in \Hom(\mathcal{H}, \mathcal{K}).
+        \end{aligned}
+      \]
+      that takes each Hilbert space to its underlying vector space, and each
+      bounded linear operator to its linear operator between vector spaces. So
+      the inner product structure is forgotten.
     \item Take the category $\Veck$. We can regard taking dual spaces $(-)^\ast
-    : V \to \Hom(V,\C)$ as a functor, as 
+      : V \to \Hom(V,\C)$ as a functor, as 
       \[
         f^\ast : W^\ast \to V^\ast 
       \]
       fits the notion of contravariance \eqref{cat:eq:contravariance} and
       furthermore, $(g \circ f)^\ast = f^\ast \circ g^\ast$.
     \item \label{cat:bifunctor} A \emph{bifunctor} $F : \CC \times \CD \to
-    \mathcal{E}$ is a functor from the product category \eqref{cat:product_cat}
-    $\CC \times \CD$ to $E$.
+      \mathcal{E}$ is a functor from the product category
+      \eqref{cat:product_cat} $\CC \times \CD$ to $E$.
+    \item Take the map $\Hom_\CC(-,A) : \CC -> \mathrm{Set}$. This is a
+      covariant functor. The map $\Hom_\CC(A,-) : \CC \to Set$ is a
+      contravariant functor.
   \end{enumerate}
 \end{example}
 
@@ -322,9 +325,9 @@ Note that because we defined $- \otimes - : \CC \times \CC \to \CC$ to be a
 \begin{equation}\label{cat:monoidal:bifunctor}
   (f \ot g) \circ (f^\prime \ot g^\prime) = (f \circ f^\prime) \ot (g \circ g^\prime)
 \end{equation}
-\[
-  \id_{A \otimes B} = \id_A \otimes \id_B 
-\]
+\begin{equation}
+    \id_{A \otimes B} = \id_A \otimes \id_B 
+\end{equation}\todo{remove?}
 
 \begin{graphicalCalculus}
   We denote the elemenets of this Category by simple lines, and the morphisms as
@@ -611,20 +614,28 @@ motivate the following definition:
   interpretation:
   \begin{enumerate}
     \item 
-  In $\Veck$, the dual object for every vector space $V$ is given by its \emph{dual-space} $V^\ast \coloneqq \Hom(V, k)$. The evaluation and coevaluation maps here correspond to 
-  \[
-    \ev_V : V \otimes V^\ast \to k,\quad \bra{f} \ot \ket{v} \mapsto \braket{f}{v} \in k 
-  \]
-  \[
-    \coev_V : k \to V^\ast \otimes V, 
-  \]
+      In $\Veck$, the dual object for every vector space $V$ is given by its
+      \emph{dual-space} $V^\ast \coloneqq \Hom(V, \C)$. The evaluation
+      \eqref{back:eq:evalutationMapVector} and coevaluation
+      \eqref{back:eq:coevaluationMapVector} maps here correspond to 
+      \[
+        \ev_V : V \ot V^\ast \to \C,
+        \quad 
+        \bra{f} \ot \ket{v} 
+        \mapsto 
+        \braket{f}{v} \in \C
+      \]
+      \[
+        \coev_V : \C \to V^\ast \ot V, 
+      \]
+    \item For representations, every such $\rho$ is outfitted with its dual representation 
     \item 
-    In anyon theories we generally want the ability to take antiparticles for
-    each species of anyon, and furthermore, we want to be able to \emph{create}
-    and \emph{annihilate} these anyons. So the dual object corresponds to the
-    antiparticle, and the $\ev$ and $\coev$ maps either produce a
-    particle-antiparticle pair from the vacuum or annihilate them (to a state
-    containing the vacuum).
+      In anyon theories we generally want the ability to take antiparticles for
+      each species of anyon, and furthermore, we want to be able to
+      \emph{create} and \emph{annihilate} these anyons. So the dual object
+      corresponds to the antiparticle, and the $\ev$ and $\coev$ maps either
+      produce a particle-antiparticle pair from the vacuum or annihilate them
+      (to a state containing the vacuum).
   \end{enumerate}
 \end{example}
 
