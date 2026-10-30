@@ -20,6 +20,20 @@ Note on universal properties: When dealing with categories, we are fundamentally
   \end{tikzcd}\]
 \end{definition}
 
+\begin{definition}[Currying, cf. \cite{???}]
+	\todo{delinearized version of the tensor-hom-adjunction.} 
+	In $\Set$ it holds that 
+	\[
+		\Hom(A \times B, C) \cong \Hom(A, \Hom(B, C)).
+	\]
+	This then would be the equivalence of the function types
+	\[
+		f : A \times B \to C \quad \text{and} \quad \texttt{curry}(f) : (A \to B) \to C
+	\]
+	and we can form partial functions since $\texttt{curry}(f)(a) : B \to C$.
+	\todo{rewrite this nicely.}
+\end{definition}
+
 
 This should all go in the anyon chapter? or later on into categories. Lets show
 how to build the splitting of a fusion tree 

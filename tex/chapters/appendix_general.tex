@@ -1,6 +1,10 @@
 \section{Some Group Theory}
 \label{app:gen:groups}
 
+We recall some of the elementary definitions and results on groups as used in
+this work, mainly in \Cref{sect:symmetricTensorNetworks} and
+\Cref{sec:anyonsIntro}.
+
 \begin{definition}
     A \emph{\green{group}} $(G,\cdot)$ consists of a (possibly infinite) set of
     elements and a binary op $\cdot : G \times G \to G$ such that
@@ -23,9 +27,9 @@ write any other element as the concatenation of the generating set. Here by
 example:
 
 \begin{definition}
-    The \emph{\green{symmetric group}} of $n$ points $S_n$ is given by
-    \begin{equation}
-        S_n 
+    The \emph{\green{symmetric group}} of $n$ points $\Sym_n$ is given by
+    \begin{equation}\label{app:eq:symmetricGroup}
+        \Sym_n
         = 
         \left\langle 
         s_1, \ldots, s_{n-1} 
@@ -58,7 +62,7 @@ example:
 Let spaces $X,Y$ be topological in the following, and let all functions be
 continuous unless stated otherwise.
 
-\begin{definition}
+\begin{definition}[Homotopy, cf. \cite{h}]
     A \emph{\green{homotopy}} between two continuous functions $f,g : X \to Y$
     is a continuous function
     \begin{equation}
@@ -66,11 +70,73 @@ continuous unless stated otherwise.
     \end{equation}
 \end{definition}
 
+\[
+\begin{tikzpicture}[thick, >=stealth]
+
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (6,0);
+
+    \draw[black, thick]
+        (A) .. controls (1.2,3.0) and (3.8,1.8) .. (B)
+        node[midway, above] {$\gamma_0$};
+
+    \draw[gray, thick]
+        (A) .. controls (1.2,2.5) and (3.8,1.4) .. (B);
+
+    \draw[gray, thick]
+        (A) .. controls (1.2,2.0) and (3.8,1.0) .. (B);
+
+    \draw[gray, thick]
+        (A) .. controls (1.2,1.5) and (3.8,0.6) .. (B);
+
+    \draw[gray, thick]
+        (A) .. controls (1.2,1.0) and (3.8,0.2) .. (B);
+
+    \draw[gray, thick]
+        (A) .. controls (1.2,0.5) and (3.8,-0.2) .. (B);
+
+    \draw[gray, thick]
+        (A) .. controls (1.2,0.3) and (3.8, -0.8) .. (B);
+
+    \draw[black, thick]
+        (A) .. controls (1.2,0.0) and (3.8,-1.5) .. (B)
+        node[midway, below] {$\gamma_1$};
+
+    \fill[black] (A) circle (2pt);
+    \fill[black] (B) circle (2pt);
+
+    \node[left] at (A) {$A$};
+    \node[right] at (B) {$B$};
+
+\end{tikzpicture}
+\]
+
+
 \begin{definition}
     A \emph{\green{loop}} with basepoint $x_0$ on $X$ is a function
     \begin{equation}
-        \gamma : [0,1] \to X \quad \text{such that} \gamma(0) = \gamma(1) = x_0
+        \gamma : [0,1] \to X \quad\text{such that}\quad \gamma(0) = \gamma(1) = x_0
     \end{equation}
+\end{definition}
+
+\begin{definition}[Bundle]
+    A \emph{vector (Hilbert) bundle} over a space $X$ is a collection of vector
+    (Hilbert) spaces $\{V_x\}_{x \in X}$ so to say a parameterization of vector
+    spaces dependent on a base space. This base space could be any of a
+    manifold, a topological space, a scheme and others. Here we mostly care
+    about differentiable manifolds and topoplogical spaces such as configuration
+    spaces. An element $V_x$ is called the \emph{\green{fiber}} at $x \in X$.
+\end{definition}
+
+Now that we have the spaces parameterized over the base space, we want to encode this dependence, hence the definition of a \emph{connection}.
+
+\begin{definition}[Connection]
+    A \emph{\green{connection}} on a bundle $V \longrightarrow X$ assigns to
+    each path $\gamma : [0,1] \to X$ a homomorphism on the paths
+    \[
+        \hat{\gamma} : V_{\gamma(0)} \to V_{\gamma(1)}.
+    \]
+    This assignment is also called \emph{parallel transport}. If 
 \end{definition}
 
 \section{Tensor Decompositions \& Algorithms}
