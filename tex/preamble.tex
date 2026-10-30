@@ -1,4 +1,4 @@
-\usepackage{graphicx} % Required for inserting images
+\usepackage{graphicx}
 \usepackage{mathtools}
 \usepackage[hidelinks]{hyperref}
 %\usepackage{bbm}  % for \mathbb and \mathbbm symbols
@@ -38,6 +38,8 @@
 \usepackage{longtable, array} % for the notation table
 
 \usepackage[acronym]{glossaries} % or this for the notation table
+
+\usepackage{quiver}
 
 \makeglossaries
 
@@ -113,37 +115,48 @@
 \newcommand{\SO}[1]{\mathrm{SO}(#1)}
 \newcommand{\U}[1]{\mathrm{U}(#1)}
 \newcommand{\Sp}[1]{\mathrm{Sp}(#1)}
-\newcommand{\GL}[1]{\mathrm{GL}(#1)} % e.g., GL(n, R)
+\newcommand{\GL}{\mathrm{GL}} % e.g., GL(n, R)
 \newcommand{\SL}[2]{\mathrm{SL}(#1, #2)}
+
+
+\newcommand{\X}{\operatorname{X}}
+\newcommand{\Y}{\operatorname{Y}}
+\newcommand{\ZGate}{\operatorname{Z}}
+\newcommand{\Hadamard}{\operatorname{H}}
+\newcommand{\T}{\operatorname{T}}
+\newcommand{\CNOT}{\operatorname{CNOT}}
 
 \newcommand{\liesl}[1]{\mathfrak{sl}_{#1}} % sl_2 lie algebra.
 
 %\theoremstyle{italics}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{fact}[theorem]{Fact}
-\newtheorem{conjecture}[theorem]{Conjecture}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{graphicalCalculus}[theorem]{Graphical Notation}
-\newtheorem{notation}[theorem]{Notation}
-\newtheorem{literature}[theorem]{Literature}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{assumption}[theorem]{Assumption}
-\newtheorem{examples}[theorem]{Examples}
-\newtheorem{remark}[theorem]{Remark}
-%\newtheorem{proof}{Proof}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{fact}{Fact}[chapter]
+\newtheorem{conjecture}{Conjecture}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
+\newtheorem{corollary}{Corollary}[chapter]
 
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{graphicalCalculus}{Graphical Notation}[chapter]
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{literature}{Literature}[chapter]
+\newtheorem{example}{Example}[chapter]
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{examples}{Examples}[chapter]
+\newtheorem{remark}{Remark}[chapter]
+%\newtheorem{proof}{Proof}
+%\numberwithin{equation}{chapter}
+\counterwithout{equation}{chapter}
 \newcommand{\Cat}{\mathbf{Cat}}          % Category of categories
 %\newcommand{\VecCat}{\mathbf{Vect}}      % Category of Vector spaces
-\newcommand{\Veck}{\mathrm{fdVect_k}}
+\newcommand{\Veck}{\mathrm{Vect_{\C}}}
 \newcommand{\Rep}{\mathrm{Rep}}          % Representation category
 \newcommand{\Hom}{\operatorname{Hom}}    % 
 \newcommand{\End}{\operatorname{End}}    % Endomorphism set
 \newcommand{\id}{\operatorname{id}}      % Identity morphism
-\newcommand{\Hilb}{\operatorname{fdHilb}}
+\newcommand{\Hilb}{\operatorname{Hilb}}
+\newcommand{\Bord}[1]{\operatorname{Bord_{#1}}}
 \newcommand{\del}{\boxtimes}
 \newcommand{\sVect}{\mathrm{sVect}}
 \newcommand{\gVSpace}[1]{\mathrm{Vec}_{#1}} % Graded Vector Space
@@ -164,6 +177,7 @@
 \newcommand{\oConf}[1]{\underset{\{1, \ldots, #1\}}{\uConf}}
 \newcommand{\Br}{\mathrm{Br}} % Braid Group
 \newcommand{\PBr}{\mathrm{PBr}} % Pure braid group
+\newcommand{\Sym}{\mathrm{Sym}} % Symmetric Group
 
 \newcommand{\Hilbfd}{\mathrm{Hilb_{\text{fd}}}}
 
@@ -179,6 +193,15 @@
 \newcommand{\CC}{\mathcal{C}}
 \newcommand{\CD}{\mathcal{D}}
 
+\newcommand{\mcC}{\mathcal{C}}
+\newcommand{\mcD}{\mathcal{D}}
+\newcommand{\mcE}{\mathcal{E}}
+\newcommand{\mcF}{\mathcal{F}}
+\newcommand{\mcG}{\mathcal{G}}
+\newcommand{\mcH}{\mathcal{H}}
+\newcommand{\mcA}{\mathcal{A}}
+\newcommand{\mcB}{\mathcal{B}}
+
 \newcommand{\ev}{\operatorname{ev}}
 \newcommand{\coev}{\operatorname{coev}}
 \newcommand{\tr}{\operatorname{tr}}
@@ -191,7 +214,7 @@
 \definecolor{CiteViolet}{HTML}{7B2CBF}
 \hypersetup{
     colorlinks=true,
-		linkcolor=Maroon,
+		linkcolor=RoyalBlue,
     %linkcolor = CiteViolet,
 		citecolor=RoyalBlue,
     urlcolor=RoyalBlue
@@ -202,6 +225,8 @@
 \definecolor{purple}{rgb}{0.6, 0.1, 0.6}
 \definecolor{darkgreen}{rgb}{0.1, 0.5, 0.1}
 \definecolor{darkblue}{rgb}{0.1, 0.2, 0.7}
+\definecolor{gray}{rgb}{0.51,0.47,0.47}
+\newcommand{\gray}[1]{\textcolor{gray}{#1}}
 
 % ==========================================
 % Quantum Circuit Macros

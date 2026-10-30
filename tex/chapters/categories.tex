@@ -290,7 +290,7 @@ definition:
   \]
   such that the following \emph{triangle} and \emph{pentagon}\footnote{Medieval
   mathematicians used to include the diagonal composite morphisms in this
-  diagram, however, after a few stake burning incidents, this practice was
+  diagram, however, after a few stake burnin g incidents, this practice was
   abandoned.} diagrams commute:
   \begin{center} % Is there really no way ro make this work as a tikzcd?
 \begin{tikzpicture}[baseline=(current bounding box.center)]\label{cat:def:monoidalCat:pentagon}
@@ -1797,16 +1797,37 @@ A
   which is just a block matrix with indexing $(1_1, 1_2, \tau_1, \tau_2, \tau_3)$.
 \end{example}
 
-\subsection{Implementing Fusion Trees}
+\subsection{Implementing Sparse Tensors with a Fusion-Tree backend}
+Primarily, since a tensor is just an arbitrary morphisms in $\Hom_\CC(a \ot b
+\ot c \cdots, x \ot y \ot \cdots)$ we will store its domain and its codomain as
+two lists of charges $a,b,c : \texttt{charge}$. \todo{Introduce the grothendieck
+ring here ...} This type \texttt{charge} supports storing simples like
+$\frac{1}{2}$ for $\SU{2}$ and arbitrary superpositions over the direct sum like
+$\frac{1}{2} + \frac{3}{2} \in \ob(\SU{2})$. For something like $\Z_2$ we would
+need $\texttt{int}$ as the type and for theories like $\Fib$ a custom enum of
+sorts. 
 
-Before we begin to build categorical tensors, we will show how to implement a
-fusion-tree. Primarily, since a tensors is just an arbitrary morphisms in
-$\Hom_\CC(a \ot b \ot c \cdots, x \ot y \ot \cdots)$ we will store its domain
-and its codomain as two lists of charges $a,b,c : \texttt{charge}$. Specifics
-here would allow $\texttt{int}$ for $\Z_2$ and $\texttt{float}$ for $\SU{2}$.
+
+%Specifics here would allow
+%$\texttt{int}$ for $\Z_2$ and $\texttt{float}$ for $\SU{2}$ or a custom datatype
+%for theories like $\Fib$ where the types would have to model $\tau$ and
+%$\mathrm{I}$.
+%
+
+Recall the decomposition theorem driving our sparse block tensors
+\eqref{cat:eq:decompositionInBasisExpansion}. Since we have expanded both parts
+in the basis of fusion-trees \eqref{cat:eq:fusionTreeHomSpaceFull} the reduced
+tensor elements (which are just traditional $\Veck$ tensors) are fully indexed
+by the fusion trees. Fusiontrees are also defined in between the simple objects
+of the theory. This is why we will argue in the following that it is enough to
+store a fusiontree with the representative \emph{geometry} and a list of the
+possible charges separately.
+
+
 
 For the fusion trees, the most basic building blocks are the trivalent verteces
-$\iota^{ab}_{c,\mu}$ and $\pi_{ab}^{c,\mu}$. A larger tree is then stored as an array of these vertices, so we have a correspondence
+$\iota^{ab}_{c,\mu}$ and $\pi_{ab}^{c,\mu}$. A larger tree is then stored as an
+array of these vertices, so we have a correspondence
 \[
   [\iota^{ab}_{c,\mu}, \iota^{cd}_{e,\nu}, \iota^{ef}_{g,\omega}, \ldots, \pi_{xy}^{z,\delta}]
   \equiv
@@ -1846,7 +1867,7 @@ determined charge sectors are
 \]
 If we had instead chosen $[a,b,c] \cong [\tau \op I, \tau \op I, \tau \op I]$
 and $[e] \cong [I \op \tau]$, we get charge sectors
-\[
+\begin{equation}\label{cat:eq:chargeSectorExample}
   \bigl[
     [I,I,I,I,I],
     [I, I, \tau, I, \tau],
@@ -1858,22 +1879,53 @@ and $[e] \cong [I \op \tau]$, we get charge sectors
     [\tau,\tau,\tau,I, \tau],
     [\tau,\tau,\tau,\tau,\tau]
   \bigr]
-\]
+\end{equation}
 so it suffices to only save the \emph{geometry} of the tree, and all of its
-charge sectors.
+charge sectors. To summarize the datastructure (this is adjacent to
+\cite{schmollProgrammingGuideTensor2020} with review in
+\cite{fischerTensorNetworkSymmetries2025}):
+\begin{equation}
+  \text{Tensor} \coloneqq 
+  \left\{ 
+    \begin{array}{ll}
+      \mathsf{symmetry} &: \CC \\
+      \mathsf{tree} &: \mathsf{FusionTree} \\
+      \mathsf{sectors} &: \mathsf{List}(\mathsf{List}(\mathsf{\Irr(\CC)})) \\
+      \mathsf{degeneracyTensors} & : \mathsf{(E \to \Irr(\CC))} \to \mathsf{np.ndarray}
+    \end{array}
+  \right.
+\end{equation}
+\begin{equation}
+  \text{FusionTree} \coloneqq
+  \left\{
+    \begin{array}{ll}
+      \mathsf{symmetry} &: \CC \\ % redundant?
+      \mathsf{listOfNodes} &: \mathsf{List}((label,label,label,int)) \\
+      \mathsf{openEdges} &: ...
+    \end{array}
+  \right.
+\end{equation}
+Note here that by the association of the degeneracy tensors (which we store as
+\texttt{np.ndarray}) we can save a dict between charge sectors
+\eqref{cat:eq:chargeSectorExample} and these arrays. Note that by construction,
+these arrays have shape $???$.
 
-Now we wish to apply all the reshape operations to these trees. We know that
-$F$-moves create a superposition of trees when applied, but we only care about
-the geometry for now. Also recall that $F$-moves act locally on a tree, for the
-geometry this entails that a local rearrangement is enough. Recall that an fmove
-acts on the local space $\Hom(a \ot b \ot c, d)$ and thus in the array
-representation on spaces such as $[\iota^{ab}_c, \iota_{cd}^e]$. There are also
-$F$-moves defined on non-simple trees that are of the form $[\iota^{a,\mu}_{bc},
-\pi^{cd}_{e,\nu}]$ also admit an $F$-move, in this case to the target $[]$. This
-convention is sometimes also chosen as the default definition of the $F$-move,
-and is denotes as $[F^{ab}_{cd}]_{e}^{f}$ \todo{nicer!}, especially in the
-context of spin chains \cite{bondersonNonAbelianAnyonsInterferometry2007}
+
+To build a tensor theory, we need to follow \Cref{sect:background} and implement
+permutations and reshapes. We know that $F$-moves create a superposition of
+trees when applied, but we only care about the geometry for now. Also recall
+that $F$-moves act locally on a tree, for the geometry this entails that a local
+rearrangement is enough. Recall that an fmove acts on the local space $\Hom(a
+\ot b \ot c, d)$ and thus in the array representation on spaces such as
+$[\iota^{ab}_c, \iota_{cd}^e]$. There are also $F$-moves defined on non-simple
+trees that are of the form $[\iota^{a,\mu}_{bc}, \pi^{cd}_{e,\nu}]$ also admit
+an $F$-move, in this case to the target $[]$. This convention is sometimes also
+chosen as the default definition of the $F$-move, and is denotes as
+$[F^{ab}_{cd}]_{e}^{f}$ \todo{nicer!}, especially in the context of spin chains
+\cite{bondersonNonAbelianAnyonsInterferometry2007}.
 \todo{check the sources im referring to.}
+
+We now leave out the 
 
 Applying permutations to the trees is also only possible whenever therere is a
 clear target to apply this to, so the two charges need to be a adjacent (i.e.

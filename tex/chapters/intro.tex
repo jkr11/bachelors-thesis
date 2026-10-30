@@ -1,11 +1,35 @@
-Tensor Networks allow the efficient representations and computation on quantum
-states for large $N$ using methods such as DMRG. Symmetric Tensor Networks yield
-a speedup over traditional methods for appropriate Hamiltonians. Furthermore, we
-would also like to represent \emph{Anyonic} states and Hamiltonians by these
-operations, and since some anyon species are universal for quantum computation,
-we would like to represent circuits as well. It is folklore that tensor networks
-and quantum systems in general are goverened by category-theoretic
-constructions. 
+Tensor Networks \cite{cuiperHouchesLectureNotes2026} allow the efficient
+numerical representations and computation on quantum states for large $N$. This
+includes variational methods and efficient simulation of quantum circuits
+\cite{orusAdvancesTensorNetwork2014,biamonteLecturesQuantumTensor2020}.
+Symmetric Tensor Networks \cite{singhTensorNetworkDecompositions2010a} yield a
+speedup over traditional methods for a subclass of tensor networks that are
+globally symmetric. The study of symmetric tensors is largely related to the
+structure of the \emph{categories of representations} $\Rep(G)$ for some
+symmetry group $G$ such as $\SU{2}$. These representation categories are
+foundational to the theory behind \emph{fusion tensor categories}
+\cite{deligneCategoriesTensorielles2002}\todo{Check this one. Or find a better
+source.}.
+
+These fusion categories also model \emph{topological orders} \todo{introduce}. 
+
+These fusion categories also model a class of particles \todo{what even is this?
+a topological order?} called \emph{anyons} \cite{kitaevAnyonsExactlySolved2006}.
+These anyons are of great interest because they are \emph{universal} for quantum
+computation \cite{freedmanSimulationTopologicalField2002}, and they are natively
+\emph{fault tolerant} \cite{kitaevFaulttolerantQuantumComputation2003}. This
+method of computation is called \emph{topological quantum computation}. Just as
+for traditional quantum circuits, we can represent anyonic quantum circuits by
+an \emph{anyonic tensor network}. There are also classes of interacting
+Hamiltonians on anyonic systems, as given by
+\cite{feiguinInteractingAnyonsTopological2007}. In fact, the same algorithms
+underlying symmetric tensor network methods can be adapted to support anyonic
+theories
+\cite{pfeiferSimulationAnyonsUsing2012,schmollProgrammingGuideTensor2020,devosTensorKitjlJuliaPackage2025}. 
+
+Third, all of these concepts are embedded into a \emph{string-diagram} formalism
+\cite{}
+
 
 In this thesis we give a formal overview how all these concepts fit into the same
 categorical framework while presenting a review of the existing literature, i.e. we give
@@ -15,7 +39,48 @@ an interpretation of the results of
 to the interconnectedness with topological order, we phrase them in the language
 of \cite{kongInvitationTopologicalOrders2022b}. 
 
-\section{Thesis Outline}
+\paragraph{Overview} This is an overview of the individual chapters and their contents.
+
+\begin{itemize}
+    \item \Cref{sect:background} gives an introduction to tensors and tensor
+    networks. We provide the folklore definition of a tensor as a multilinear
+    arrays of complex numbers, and generalize this to a definition over abstract
+    vector spaces. We collect all the necessary operations of a tensor into the
+    einsum notation. We also define the theory of tensor networks, and we give
+    the most common structures and algorithms.
+    \item \Cref{sect:symmetricTensorNetworks} first introduces the concept of a
+    symmetry, and we also give a short review of representation theory. We show
+    how the XXZ-hamiltonian factors into a block-sparse matrix under its
+    symmetry groups $\U{1},\operatorname{O}(2)$ and $\SU{2}$. We then begin
+    defining symmetric tensors, so tensors that are invariant under the global
+    application of a symmetry $g \in G$. We show that we can achieve a speedup
+    on tensors of any shape, however the actual algorithms by which these sparse
+    block tensors are realized are given in \Cref{sect:Categories}\todo{index
+    the subsection} so we do not produce redundant texts.
+    \item \Cref{sec:anyonsIntro} is an introduction to the theory of
+    \emph{anyons}. We introduce them as pointlike defects in a two-dimensional
+    medium. We then show that their time-evolutions are governed by the
+    structure of the \emph{braid-group}, and its higher dimensional
+    representations. We sketch a derivation of their fusion relations from this
+    exchange structure. 
+    \item \Cref{sect:Categories} forms the backbone of this thesis. First, we
+    give an introduction to category theory from the ground up. Then, we begin a
+    step-by-step derivation of the theory of \emph{modular tensor categories},
+    motivated by our knowledge about representations and the physical aspects of
+    the anyons. Each step carries along a visual interpretation in terms of
+    standard vectors spaces, in terms of representations and in terms of anyon
+    diagrammatics. Then, in \Cref{DecompositionOfSemisimpleCategories} we prove
+    the sparse-block decomposition of a tensor for arbitrary fusion categories.
+    In \Cref{...}, we derive how to implement these categorical tensors on the
+    basis of this decomposition. We give a formal definition of a
+    \emph{fusion-tree} and how to represent this in a program. As above, general
+    einsums will be implemented.
+    \item \Cref{sect:Anyons} should form the last chapter \todo{Does it?}. Here
+    we explore some of the more elementary models on anyon systems in one and
+    two-dimensions. Then we introduce the theory of \emph{topological quantum
+    computation}, and we show how to simulate this by our categorical tensor
+    networks.
+\end{itemize}
 
 In \Cref{sect:background} we review the technical literature which is shared by the
 chapters (sections?). We give accounts on symmetries, representation theory, fermionic
