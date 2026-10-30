@@ -827,17 +827,18 @@ would need to double check this.
 \end{example}
 
 
-\begin{definition}\label{cat:def:directSum}
-  Given a linear category $\CC$ with objects $\{A_j\}_{j=1}^N \subseteq \ob(\CC)$, an object $\bigoplus_{i=1}^n A_i \in \CC$ is
-  called the \emph{\green{direct sum}} if it is equipped with the injection and projection
-  map
+\begin{definition}[Direct sum, cf. {\cite[~Cor.
+    8.2.4]{kashiwaraCategoriesSheaves2006}}]\label{cat:def:directSum} Given a
+    linear category $\CC$ with objects $\{A_j\}_{j=1}^N \subseteq \ob(\CC)$, an
+    object $\bigoplus_{i=1}^n A_i \in \CC$ is called the \emph{\green{direct
+    sum}} if it is equipped with the injection and projection map
   \[
     \iota_i : A_j \to \bigoplus A_i \quad \text{ and } \quad \pi_i : \bigoplus A_j \to A_i 
   \]
   such that
-  \[
+  \begin{equation}\label{cat:eq:directSumRelations}
     \pi_i \circ \iota_i = \id_{A_i} \forall i \quad \text{ and } \quad \sum_{i}^{} \iota_i \pi_i = \id_{\bigoplus A_i}
-  \]
+  \end{equation}
 \end{definition}
 
 \begin{definition}[Semisimple Category, cf. \cite{bailieSemisimple2017}]\label{cat:def:semisimpleCategory} A \emph{\green{semisimple}}
@@ -875,9 +876,7 @@ would need to double check this.
   
 \end{example}
 
-\begin{lemma}[Schur's lemma
-    \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}
-  ]
+\begin{lemma}[Schur's lemma for categories, cf. {\cite[~Lem. 5.1.2]{etingofTensorCategories2015}} ]
   \label{cat:lemma:schur}
   If $A$ and $B$ are simple objects in a linear category over an algebraically
   closed field $k$ (this is always $\C$ in our case), then it holds that
@@ -887,7 +886,6 @@ would need to double check this.
       0 , &\text{ if } A \ncong B .
     \end{dcases}
   \]
-  Proof \cite[Theorem~7.5]{ibortIntroductionGroupsGroupoids2019}.
 \end{lemma}
 
 Now assume that we take a semisimple category that is also monoidal. By
@@ -895,25 +893,18 @@ semisimplicity, any of the objects of the form $R_a \ot R_b$ are isomoprhic to $
 where $R_a,R_b, \{R_c\}$ are all simple. A simple consequence of \Cref{cat:lemma:schur} produces
 \[
   \dim \Hom_\CC(R_a \ot R_b, R_c) 
-  = \dim \Hom_\CC (\bop_c N^{ab}_d R_d, R_c) 
-  = \dim \bop_d \Hom_\CC (R_d, R_c)^{\op N^{ab}_d} 
-  \overeq{\cref{cat:lemma:schur}} \dim k^{N^{ab}_c}
+  = 
+  \dim \Hom_\CC \left(\bop_c N^{ab}_d R_d, R_c\right) 
+  = 
+  \dim \bop_d \Hom_\CC (R_d, R_c)^{\op N^{ab}_d} 
+  \overeq{\eqref{cat:lemma:schur}} 
+  \dim k^{N^{ab}_c}
 \]
-Call this isomorphism $\Phi: \bigoplus_{c,\mu} R_c \to R_a \otimes R_b$. Then we
-can extend projection and injection maps in dependence of the tensor product by
-the following diagram:
+Choose this isomorphism $\Phi: \bigoplus_{c,\mu} R_c \to R_a \otimes R_b$. Note
+that this is not necessarily unique, so all of the discussion here depends on
+the choice of isomorphism. Then we can extend projection and injection maps in
+dependence of the tensor product by the following diagram:
 \begin{equation}\label{cat:eq:fusionprop}
-% https://q.uiver.app/#q=WzAsNSxbMCwwLCJcXGJpZ29wbHVzX2MgUl9jIl0sWzIsMCwiUl9hIFxcb3RpbWVzIFJfYiJdLFswLDEsIlJfYyJdLFs0LDAsIlxcYmlnb3BsdXNfYyBSX2MiXSxbNCwxLCJSX2MiXSxbMCwxLCJcXFBoaSJdLFsyLDAsIlxcaW90YV9jIl0sWzIsMSwiXFxleGlzdHMgXFxpb3RhX3tjLFxcbXV9XnthYn0iLDJdLFsxLDMsIlxcUGhpXnstMX0iXSxbMyw0LCJcXHBpX2MiXSxbMSw0LCJcXGV4aXN0c1xccGlfe2FifV57YyxcXG11fSIsMl1d
-%\begin{tikzcd}
-%	{\bigoplus_c R_c} && {R_a \otimes R_b} && {\bigoplus_c R_c} \\
-%	{R_c} &&&& {R_c}
-%	\arrow["\Phi", from=1-1, to=1-3]
-%	\arrow["{\Phi^{-1}}", from=1-3, to=1-5]
-%	\arrow["{\exists\pi_{ab}^{c,\mu}}"', from=1-3, to=2-5]
-%	\arrow["{\pi_c}", from=1-5, to=2-5]
-%	\arrow["{\iota_c}", from=2-1, to=1-1]
-%	\arrow["{\exists \iota_{c,\mu}^{ab}}"', from=2-1, to=1-3]
-%\end{tikzcd}
 % https://q.uiver.app/#q=WzAsNyxbMCwwLCJcXGJpZ29wbHVzX2MgUl9jIl0sWzMsMCwiUl9hIFxcb3RpbWVzIFJfYiJdLFswLDIsIlJfYyJdLFs2LDAsIlxcYmlnb3BsdXNfYyBSX2MiXSxbNiwyLCJSX2MiXSxbMSwwLCJcXGJpZ29wbHVzX3tcXG11LGN9Ul9jIl0sWzUsMCwiXFxiaWdvcGx1c197XFxtdSxjfVJfYyJdLFsyLDAsIlxcaW90YV9jIl0sWzIsMSwiXFxleGlzdHMgXFxpb3RhX3tjLFxcbXV9XnthYn0iLDJdLFszLDQsIlxccGlfYyJdLFsxLDQsIlxcZXhpc3RzXFxwaV97YWJ9XntjLFxcbXV9IiwyXSxbNSwxLCJcXFBoaSJdLFswLDUsIlxcaW90YV9cXG11Il0sWzIsNSwiXFxpb3RhX3tjLFxcbXV9IiwxXSxbMSw2LCJcXFBoaV57LTF9Il0sWzYsMywiXFxwaV9cXG11Il0sWzYsNCwiXFxwaV97XFxtdSxjfSIsMV1d
 \begin{tikzcd}[cramped]
 	{\bigoplus_c R_c} & {\bigoplus_{\mu,c}R_c} && {R_a \otimes R_b} && {\bigoplus_{\mu,c}R_c} & {\bigoplus_c R_c} \\
@@ -932,13 +923,28 @@ the following diagram:
 \end{tikzcd}
 \end{equation}
 
-Furthermore, these admit similar constraints as the direct sum:
+Furthermore, these admit similar constraints as the direct sum relations
+\eqref{cat:eq:directSumRelations}:
 \begin{equation}\label{cat:eq:iotaDeltaBase}
-  \pi^{c,\mu}_{ab} \iota_{d,\nu}^{ab} = \pi_{c,\mu} \Phi^{-1}\Phi  \iota_{d,\nu} = \delta_{cd}\delta_{\mu\nu} \id_{R_c}
+  \pi^{c,\mu}_{ab} 
+  \iota_{d,\nu}^{ab} 
+  = 
+  \pi_{c,\mu} \Phi^{-1} \Phi \iota_{d,\nu} 
+  =
+  \delta_{cd}\delta_{\mu\nu} \id_{R_c}
 \end{equation}
 and
 \begin{equation}\label{cat:eq:basis_completeness}
-  \sum_{c,\mu}^{} \iota_{c,\mu}^{ab} \pi^{c,\mu}_{ab} = \Phi \left(\sum_{c,\mu}^{} \iota_{c,\mu}\pi_{c,\mu}\right) \Phi^{-1} = \Phi \id_{\bigoplus R_{c}} \Phi^{-1} = \id_{R_a \otimes R_b}  
+  \sum_{c,\mu}
+  \iota_{c,\mu}^{ab} \pi^{c,\mu}_{ab} 
+  = 
+  \Phi \left(
+    \sum_{c,\mu} \iota_{c,\mu}\pi_{c,\mu}
+  \right) \Phi^{-1} 
+  =
+  \Phi \id_{\bigoplus R_{c}} \Phi^{-1} 
+  =
+  \id_{R_a \otimes R_b}\;.
 \end{equation}
 
 We take these maps as above and claim they form a basis of the spaces $\Hom_\CC
@@ -964,15 +970,20 @@ We take these maps as above and claim they form a basis of the spaces $\Hom_\CC
   and the statement follows dually for $\Hom_\CC(R_a \otimes R_b, R_c)$.
 \end{proof}
 
-%\begin{graphicalCalculus}
-%  We carry over the graphical calculus for the monoidal categories (and all the
-%  extra structure defined thus far) and introduce new notation for the nodes 
-%\end{graphicalCalculus}
+\begin{graphicalCalculus}
+  We carry over the graphical calculus for the monoidal categories (and all the
+  extra structure defined thus far) and introduce new notation for these node as
+  basis vectors. Recall that we have already done so once for representations
+  (cf. \eqref{sym:eq:CGgraphical}) so we are dealing with \emph{generalized
+  Clebsch-Gordan} tensors here. Not that unlike for $\SU{2}$, these do not have
+  to be indexable or representable as $\C^n$.
+
+\end{graphicalCalculus}
 
 If we look at $\Hom$ spaces of a higher order such as $\Hom_\CC(R_d, (R_a \ot
 R_b) \ot R_c)$, we have to choose a bracketing of the tensor products since we
-can only associate $(R_a \ot R_b) \ot R_c \cong R_a \ot (R_b \ot R_c)$.
-Under the (covariant) functor $\Hom_\CC(-, R_d)$ this introduces a pushforward
+can only associate $(R_a \ot R_b) \ot R_c \cong R_a \ot (R_b \ot R_c)$. Under
+the (covariant) functor $\Hom_\CC(-, R_d)$ this introduces a pushforward
 \[
   (\alpha_{abc}^d)^\ast : \Hom_\CC((R_a \ot R_b) \ot R_c, R_d) \cong \Hom_\CC(R_a \ot (R_b \ot R_c), R_d)
 \]
@@ -980,18 +991,57 @@ and a pullback under $\Hom_\CC(R_d, -)$
 \[
   (\alpha^{abc}_d)^\ast : \Hom_\CC(R_d, (R_a \otimes R_b \otimes R_c)) \cong \Hom_\CC(R_d, R_a \ot (R_b \ot R_c)).
 \]
-We can also define a basis for these extended spaces. In fact, lets generalize this to the space $\Hom_\CC(R_b, \bigotimes_{i=1}^n R_{a_i})$ where we assume this is fully left-algined bracketing. 
+We can also define bases on these higher spaces as follows: 
+
+We can also define a basis for these extended spaces. In fact, lets generalize
+this to the space $\Hom_\CC(R_b, \bigotimes_{i=1}^n R_{a_i})$ where we assume
+this is fully left-algined bracketing. 
 
 We define the higher bases recursively: Let $n > 2$ and intermediate labels
 $e_1, e_2, \ldots, e_{n-2} \in \Irr(\CC)$ and multiplicity indices $\mu_1,
 \ldots, \mu_{n-1}$. We fix some notation to let $\vec \mu_{k-1}$ to denote the
 tuple of all labels up to $\mu_{k-1}$. Then we can define
 \begin{equation}\label{cat:eq:iotaNDef}
-  \iota^{a_1 \cdots a_n}_{d,\hat e_{n-2},\hat\mu_{n-1}} \coloneqq \left(\iota^{a_1 \cdots a_{n-1}}_{e_{n-2},\vec e_{n-3},\vec\mu_{n-2}} \otimes \id_{R_{a_n}}\right) \circ \iota^{e_{n-2}a_n}_{d,\mu_{n-1}}.
+  \iota^{a_1 \cdots a_n}_{d,\vec e_{n-2},\vec\mu_{n-1}}
+  \coloneqq
+  \underbrace{
+    \left(
+      %\underbrace{
+        \iota^{a_1 \cdots a_{n-1}}_{e_{n-2},\vec e_{n-3},\vec\mu_{n-2}}
+      %}_{\text{\color{gray}$\Hom_\CC(R_{e_{n-2}},R_{a_1}\otimes\cdots\otimes R_{a_{n-1}})$}}
+      \otimes
+      \id_{R_{a_n}}
+    \right)
+  }_{\text{\color{gray}$\Hom_\CC(R_{e_{n-2}}\otimes R_{a_n},
+  \bigotimes_{i=1}^n R_{a_i})$}}
+  \circ
+  \underbrace{
+    \iota^{e_{n-2}a_n}_{d,\mu_{n-1}}
+  }_{\text{\color{gray}$\Hom_\CC(R_d,R_{e_{n-2}}\otimes R_{a_n})$}}
+\end{equation}
+
+\begin{equation}\label{cat:eq:iotaNDef}
+  \iota^{a_1 \cdots a_n}_{d,\hat e_{n-2},\hat\mu_{n-1}} 
+  \coloneqq
+  \left(
+    \iota^{a_1 \cdots a_{n-1}}_{e_{n-2},\vec e_{n-3},\vec\mu_{n-2}}
+    \ot 
+    \id_{R_{a_n}}
+  \right) 
+  \circ 
+  \iota^{e_{n-2}a_n}_{d,\mu_{n-1}}
 \end{equation}
 and
 \begin{equation}\label{cat:eq:piNDef}
-  \pi^{a_1 \cdots a_n}_{e_{n-2}}
+  \pi^{a_1 \cdots a_n}_{d,\vec e_{n-2}, \vec \mu_{n-1}}
+  \coloneqq
+  \pi^{e_{n-2}a_n}_{d,\mu_{n-1}} 
+  \circ
+  \left(
+    \pi^{a_1 \cdots a_{n-1}}_{e_{n-2}, \vec e_{n-3}, \vec \mu_{n-2}} 
+    \ot 
+    \id_{R_{a_n}}
+  \right)\;
 \end{equation}
 We can assume this holds by induction for $(n-1)$:
 \begin{equation}\label{cat:eq:iotaInductionDelta}
@@ -1006,11 +1056,14 @@ We can assume this holds by induction for $(n-1)$:
   = \id_{\bigotimes_{i<n}R_{a_i}}.
 \end{equation}
 The inductive step then easily evaluates:
-\begin{align}
+\begin{align*}
   {
     \color{gray}%
     \underbrace{%
-    \color{black}\pi^{a_1\cdots a_n}_{c;\vec e,\vec\mu} \circ \iota^{a_1\cdots a_n}_{d;\vec f,\vec\nu}%
+      \color{black}
+      \pi^{a_1\cdots a_n}_{c;\vec e,\vec\mu} 
+      \circ 
+      \iota^{a_1\cdots a_n}_{d;\vec f,\vec\nu}%
     }_{\mathclap{\in \Hom_\CC(R_d, R_c)}}%
   }
     &\overeq{\eqref{cat:monoidal:bifunctor}} 
@@ -1061,15 +1114,20 @@ The inductive step then easily evaluates:
     \delta_{\vec e_{n-2}\vec f_{n-2}}
     \delta_{\vec\mu_{n-1}\vec\nu_{n-1}}
     \id_{R_c}\;.
-\end{align}
+\end{align*}
 
 We can proceed for completeness likewise.
 
 \begin{align*}
-  \sum_{d,\vec e,\vec\mu}
-  &\iota^{a_1\cdots a_n}_{d;\vec e,\vec\mu}
-  \circ
-  \pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu} \\
+  {\color{gray}%
+    \overbrace{%
+      \color{black}
+      \sum_{d,\vec e,\vec\mu}
+      \iota^{a_1\cdots a_n}_{d;\vec e,\vec\mu}
+      \circ
+      \pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu}%
+    }^{\mathclap{\in \End_\CC\left(\bigotimes_{i=1}^n R_{a_i}\right)}}%
+  }
   &\overeq{\eqref{cat:eq:iotaNDef}}
   \sum_{d,\vec e,\vec\mu}
   \left(
@@ -1154,29 +1212,10 @@ We can proceed for completeness likewise.
   \id_{\bigotimes_{i=1}^n R_{a_i}}\;.
 \end{align*}
 
-Let $e:=e_{n-2}$, $\iota'=\iota^{a_1\cdots a_{n-1}}_{e;\vec
-e_{n-3},\vec\mu_{n-2}}$, and $\pi'$ likewise. Then
-\[
-  \sum_{d,\vec e,\vec\mu}
-  \iota^{a_1\cdots a_n}_{d;\vec e,\vec\mu}\circ\pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu}
-  = \sum_{e,\vec e_{n-3},\vec\mu_{n-2}}
-  (\iota'\ot\id_{R_{a_n}})\circ
-  \Big[\sum_{d,\mu_{n-1}}
-  \iota^{e a_n}_{d,\mu_{n-1}}\circ\pi^{e a_n}_{d,\mu_{n-1}}\Big]
-  \circ(\pi'\ot\id_{R_{a_n}}).
-\]
-
-%\[
-%  \pi^{a_1\cdots a_n}_{d;\vec e,\vec\mu}\circ\iota^{a_1\cdots a_n}_{d';\vec e\,',\vec\mu'}
-%    = \pi^{e_{n-2}a_n}_{d,\mu_{n-1}}\circ\Big[\big(\pi^{a_1\cdots a_{n-1}}_{e_{n-2},\vec\mu_{n-1}}
-%    \circ \iota^{a_1\cdots a_{n-1}}_{e'_{n-2},\vec\mu'_{n-1}}\big)\otimes\id_{R_{a_n}}\Big]
-%    \circ\iota^{e'_{n-2}a_n}_{d',\mu'_{n-1}}.
-%\]
-
 In fact, we can also form a "canoncial" basis for the spaces $\Hom_\CC(X^{\ot
 n}, X^{\ot n})$\todo{this needs a lot of conventions?} as given in
 \cite{ValeraThesis}
-\begin{equation}
+\begin{equation}\label{cat:eq:fusionTreeHomSpaceFull}
 \text{Hom}\left( \bigotimes_{k=1}^m X_{i_k}, \bigotimes_{l=1}^n X_{j_l} \right) = \text{span}_{\mathbb{C}} \left\{
 \begin{gathered}
 \begin{tikzpicture}[
@@ -1514,72 +1553,79 @@ $$
 \end{theorem}
 
 \begin{proof}
-\begin{align*}
-\Hom_C&\!\left(
-  \bigot_i V_i,
-  \bigot_j W_j
-\right) \\
-&\cong
-\Hom_C\!\left(
-  \bigot_i
-  \Bigl(
-    \bop_{a_i}
-    D_{i,a_i}\ot R_{a_i}
-  \Bigr),
-  \,
-  \bigot_j
-  \Bigl(
-    \bop_{b_j}
-    E_{j,b_j}\ot R_{b_j}
-  \Bigr)
-\right)
-&\text{(\textcolor{gray}{\Cref{IsotopicDecomposition}})} 
-\\[1.5ex]
-&\cong
-\Hom_C\!\left(
-  \bop_{\hat a}
-  D_{\hat a}\ot R_{\hat a},
-  \,
-  \bop_{\hat b}
-  E_{\hat b}\ot R_{\hat b}
-\right)
-&\text{(\textcolor{gray}{linearity of $\ot$})}
-\\[1.5ex]
-&\cong
-\bop_{\hat a,\hat b}
-\Hom_C\!\left(
-  D_{\hat a}\ot R_{\hat a},
-  E_{\hat b}\ot R_{\hat b}
-\right)
-&
-\text{\textcolor{gray}{(additivity of $\Hom_{\CC}$)}} 
-\\[1.5ex]
-&\cong
-\bigoplus_{\hat a,\hat b}
-\Hom\!\left(
-  D_{\hat a},
-  E_{\hat b}
-\right)
-\otimes
-\Hom_C\!\left(
-  R_{\hat a},
-  R_{\hat b}
-\right)
-&\text{\textcolor{gray}{(\Cref{HomTensorFactorization})}} 
-\end{align*}
-In a basis expansion this then looks like
-\[
-  \cong
-\bigoplus_{\hat a,\hat b}
-\sum_{e,f,\mu,\nu}
-\underbrace{t^{\hat{a},\hat{b} }_{\vec{e}, \vec{\mu}, \vec{f}, \vec{\nu}}}_{
-\Hom\!\left(
-  D_{\hat a},
-  E_{\hat b}
-\right)}
-\otimes_k
-\left(\pi^{\hat{a}}_{c,\vec{e},\vec{\mu}} \circ \iota^{\hat{b}}_{c,\vec{f}, \vec{\nu}}\right)
-\]
+  \begin{align*}
+  \Hom_C&\!\left(
+    \bigot_i V_i,
+    \bigot_j W_j
+  \right) \\
+  &\cong
+  \Hom_C\!\left(
+    \bigot_i
+    \Bigl(
+      \bop_{a_i}
+      D_{i,a_i}\ot R_{a_i}
+    \Bigr),
+    \,
+    \bigot_j
+    \Bigl(
+      \bop_{b_j}
+      E_{j,b_j}\ot R_{b_j}
+    \Bigr)
+  \right)
+  &\text{(\textcolor{gray}{\Cref{IsotopicDecomposition}})} 
+  \\[1.5ex]
+  &\cong
+  \Hom_C\!\left(
+    \bop_{\hat a}
+    D_{\hat a}\ot R_{\hat a},
+    \,
+    \bop_{\hat b}
+    E_{\hat b}\ot R_{\hat b}
+  \right)
+  &\text{(\textcolor{gray}{linearity of $\ot$})}
+  \\[1.5ex]
+  &\cong
+  \bop_{\hat a,\hat b}
+  \Hom_C\!\left(
+    D_{\hat a}\ot R_{\hat a},
+    E_{\hat b}\ot R_{\hat b}
+  \right)
+  &
+  \text{\textcolor{gray}{(additivity of $\Hom_{\CC}$)}} 
+  \\[1.5ex]
+  &\cong
+  \bigoplus_{\hat a,\hat b}
+  \Hom\!\left(
+    D_{\hat a},
+    E_{\hat b}
+  \right)
+  \otimes
+  \Hom_C\!\left(
+    R_{\hat a},
+    R_{\hat b}
+  \right)
+  &\text{\textcolor{gray}{(\Cref{HomTensorFactorization})}} 
+  \end{align*}
+  In a basis expansion this then looks like
+  \begin{equation}\label{cat:eq:decompositionInBasisExpansion}
+    \bigoplus_{\hat a,\hat b}
+    \sum_{c, \vec e, \vec f, \vec \mu, \vec \nu}
+    \underbrace{
+      t^{\hat{a},\hat{b} }_{\vec{e}, \vec{\mu}, \vec{f}, \vec{\nu}}
+    }_{
+      \text{\color{blue} reduced tensor element}
+    }
+    \otimes_k
+    \underbrace{
+      \left(
+        \pi^{\hat{a}}_{c,\vec{e},\vec{\mu}} 
+        \circ 
+        \iota^{\hat{b}}_{c,\vec{f}, \vec{\nu}}
+      \right)
+    }_{
+      \text{\color{RoyalBlue} fusion tree \eqref{cat:eq:fusionTreeHomSpaceFull}}
+    }
+  \end{equation}
 \end{proof}
 
 \newcommand{\legs}[7]{%
