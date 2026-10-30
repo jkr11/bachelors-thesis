@@ -15,8 +15,9 @@ vector spaces and their representations here to be finite, the groups may only
 be compact. For some of the more basic definitions as those of a group and some
 of the matrix groups we are using here, see \Cref{app:gen:groups}. We follow the
 books by \textcite{ibortIntroductionGroupsGroupoids2019},
-\textcite{serreLinearRepresentationsFinite1977}, \textcite{woit} \todo{cite woit
-book} as well as \textcite{etingofIntroductionRepresentationTheory2011}.
+\textcite{serreLinearRepresentationsFinite1977},
+\textcite{woitQuantumTheoryGroups2017} \todo{cite woit book} as well as
+\textcite{etingofIntroductionRepresentationTheory2011}.
 
 \begin{definition}
   A \green{\emph{representation}} of a group $(G,\cdot)$ which is just $G$ here
@@ -81,6 +82,15 @@ book} as well as \textcite{etingofIntroductionRepresentationTheory2011}.
   \]
 \end{definition}
 
+\begin{definition}[Dual representation, cf. {\cite[~§
+1.1]{fultonRepresentationTheory2004}}] Each representation $(\rho, V)$ dual
+space $V^\ast$ (\eqref{???dualspace???}) also acts as a representation
+$\rho^\ast : G \to \GL(V^\ast)$ and so as a linear functional
+\begin{equation}\label{sym:eq:dualRepresentation}
+  \rho^\ast(g) : f \mapsto f \circ \rho(g^{-1}).
+\end{equation}
+\end{definition}
+
 
 \begin{definition}
   A representation $\rho$ is called \emph{\green{irreducible}} if it cannot be written as a direct sum representation.
@@ -99,9 +109,9 @@ book} as well as \textcite{etingofIntroductionRepresentationTheory2011}.
   \]
 \end{theorem}
 
-\begin{lemma}[Schur's Lemma (cf. {
+\begin{lemma}[Schur's Lemma, cf. {
   \cite{deutscheakademiederwissenschaftenzuberlinSitzungsberichteKoeniglichPreussischen1882}
-  \cite[~Thm. 7.5]{ibortIntroductionGroupsGroupoids2019}})]
+  \cite[~Thm. 7.5]{ibortIntroductionGroupsGroupoids2019}}]
   \label{sym:lemma:schur}
   \emph{\green{Schur's} Lemma} states that for irreps $A$ and $B$ of $G$, we can
   give its endomorphisms as a complex multiple of the identity (cf. ). Further
@@ -166,9 +176,9 @@ product is completely reducible with the decomposition
   \bigoplus_{c \in I} R_c \ot \C^{N_{an}^c}
 \]
 with $N_{ab}^c$ called \emph{fusion-multiplicities}. If
-\[
+\begin{equation}\label{sym:eq:multiplicityFree}
   N_{ab}^c \leq 1 \quad \forall a,b,c 
-\]
+\end{equation}
 the decomposition is said to be \emph{multiplicity-free}.
 
 On the operators between tensor products, i.e. $T \in \End_G(R_a \otimes R_b)$
@@ -192,9 +202,9 @@ multiplicity spaces.
 Note as well that the appearance of the \emph{direct sum} here (cf. 
 \Cref{cat:eq:fusionprop}) is fully characterized by
 its injection and projection maps, for which we provide a graphical calculus.
-\[
+\begin{equation}\label{sym:eq:clebschGordanGeneral}
   \ket{a,b;c,\mu} : R_c \to R_a \otimes R_b \quad \text{ and } \quad \bra{c,\mu; a,b} :R_a \otimes R_b \to R_c   
-\]
+\end{equation}
 \begin{equation}\label{sym:eq:CGgraphical}
 \begin{tikzpicture}[
     baseline=(current bounding box.center),
@@ -263,7 +273,7 @@ spans the space $\End_G(R_a \otimes R_b)$.
 
 
 \begin{example}
-  The simple objects of $G = \U{1}$ are given by the one-dimensional representations
+  The simple objects of $G = \U{1}$ are the one-dimensional representations
   \begin{equation}\label{sym:eq:U1rep}
     \chi_n : U(1) \to \C^{\times}, \quad e^{i\theta} \mapsto e^{i n \theta} 
   \end{equation}
@@ -271,24 +281,63 @@ spans the space $\End_G(R_a \otimes R_b)$.
   \[
     V \cong \bigoplus_{n \in \Z} \chi_n^{\oplus m_n}. 
   \]
-  Its fusion rule is given by
+  Its fusion rule is also does not produce a direct sum
   \begin{equation}\label{symm:eq:U1FusionRule}
     \chi_n \otimes \chi_m = \chi_{n + m}.
   \end{equation}
 \end{example}
 
 
-\begin{example}[Representations theory of $\SU{2}$ (cf. {\cite[~Thm.
-  C.1]{hallLieGroupsLie2015}})] Let $G = \SU{2}$ and let $V_i$ and $V_j$ be two
-  spin irreps of charge $i$ and $j$. These combine to
+\begin{example}[Representation theory of $\SU{2}$ , cf. {\cite[~Thm.
+  C.1]{hallLieGroupsLie2015}}] Let $G = \SU{2}$. The irreps of $\SU{2}$ are
+  given by $V_j$ labeled by the half integers $j \in \frac{\mathbb{N}}{2}$ and
+  let $V_{j_1}$ and $V_{j_2}$ be two such irreps of spin $j_1$ and $j_2$. These
+  combine to
   \begin{equation}
-    (\pi_{V_i \otimes V_{j}}, V_i \otimes V_j) = \bigoplus_{k \in \left\vert i - j \right\vert}^{i + j} (\pi_{V_k}, V_k) \label{sym:eq:cgseries}
+    (\pi_{V_{j_1} \otimes V_{j_2}}, V_{j_1} \otimes V_{j_2}) 
+    = 
+    \bigoplus_{j_{tot} \in \left\vert j_1 - j_2 \right\vert}^{j_1 + j_2}
+    (\pi_{V_{j_{tot}}}, V_{j_{tot}})
+    \label{sym:eq:cgseries}
   \end{equation}
-  in what is referred to as the \emph{Clebsch-Gordan-series}. The dimension of a
-  representation $V_j$ here is given by 
+  in what is referred to as the \emph{Clebsch-Gordan-series}. This is a
+  multiplicity-free theory \eqref{sym:eq:multiplicityFree} as
+  \begin{equation}
+    N^{j_1 j_2}_{j_{tot}} = \begin{cases}
+      1 & |j_1 - j_2| \leq j_{tot} \leq j_1 + j_2 \\
+      0 & \text{else}.
+    \end{cases}
+  \end{equation} The dimension of a
+  representation $V_j$ here is 
   \begin{equation}\label{sym:eq:su2dim}
-    \dim(V_j) = 2j+1
+    \dim(V_j) = 2j+1.
   \end{equation}
+
+  Conventionally, we pick the operator $S^z_{tot}$ to diagonalize with
+  \todo{explain all this}, the eigenvalues of $V_j$ here are
+  \[
+    \{-j,j+1,\ldots,j-1,j\},
+  \]
+  so one eigenvalue for each dimension, with a corresponding eigenspace
+  $\ket{j.m}$ of one dimension. So we say that
+  \[
+    \left\{ \ket{j,m}\right\}_{m=-j}^j \quad \text{ is a basis of } V_j.
+  \]
+  Knowing this we can adjust our definition in \eqref{sym:eq:clebschGordanGeneral} to the quantity
+  \[
+    \ket{j_1,j_2;J}
+    =
+    \sum_{m_1,m_2,M}
+    \langle
+      j_1m_1;j_2m_2\,|\,J\,M
+    \rangle\;
+    \big(
+      \ket{j_1,m_1}
+      \ot
+      \ket{j_2,m_2}
+    \big)
+    \bra{J,M}
+  \]
 \end{example}
 
 \begin{example}
@@ -338,7 +387,7 @@ this is written in terms of Wigner's \emph{$6j$-symbols}
 \[
   \begin{Bmatrix} j_1 & j_2 & j_{12} \\ j_3 & j & j_{23} \end{Bmatrix},
 \]
-via the \emph{Racah recoupling formula} \todo{cyten \cite{TenpyCyten2026} uses
+via the \emph{Racah recoupling formula} \todo{lasyten \cite{TenpyCyten2026} uses
 these racah formulas instead of tradtional 6j? Not sure about the difference.}
 \cite{mironov$6j$symbolsSymmetricRepresentations2017}
 \begin{equation}\label{sym:eq:6j}
@@ -466,21 +515,24 @@ $\End_{\U{1}}((\C^2)^{\ot 6})$ as
 \]
 and so we should expect $7$ blocks in total, just as given in
 \Cref{fig:diagonal_hamiltonians}. To store these blocks, we need to store an
-effective $1^2 + 6^2 + 15^2 + 20^2 + 15^2 + 6^2 + 1^1 = 934$ floating point
+effective $1^2 + 6^2 + 15^2 + 20^2 + 15^2 + 6^2 + 1^1 = 924$ floating point
 numbers.
-% 1 + 36 + 225 + 400 + 225 + 36 + 1 = 2 + 72 + 850 = 934?
+% 1 + 36 + 225 + 400 + 225 + 36 + 1 = 2 + 72 + 850 = 924?
 %% Fine up until here.
 
 
 \medskip
 If we consider the XXZ model \eqref{def:xxzHamiltonian} with $\Delta=1$ (so the
 XXX model), a nonabelian $\SU{2}$ symmetry emerges. Here, the generators of
-$\SU{2}$ are given by
+$\SU{2}$ are given by the total spin operators for $x,y,z$ (cf. \cite[~§
+3]{georgiLieAlgebrasParticle2018})
 \[
-  S_{tot}^\alpha = \sum_{i = 1}^{N} S_i^\alpha, \quad \alpha \in \{x,y,z\},
+  S_{tot}^\alpha 
+  =
+  \sum_{i = 1}^{N} S_i^\alpha, \quad \alpha \in \{x,y,z\},
 \]
-and its representation is  $U(g_{\vec{n}}) = e^{i\theta \vec{n} \cdot S_{tot}}$. The Hamiltonian
-is invariant under
+and its representation is  $U(g_{\vec{n}}) = e^{i\theta \vec{n} \cdot S_{tot}}$.
+The Hamiltonian is invariant under
 \[
   U(g) H U(g)^\dagger = H, \quad g \in \SU 2
 \]
@@ -488,23 +540,29 @@ which is equivalent to $[H, S_{tot}^\alpha] = 0$ for all $\alpha$. Since
 \[
   [S_{tot}^x, S_{tot}^y ] = i S_{tot}^z 
 \] (and all its permutations)
-we cannot diagonalize these operators simultaneously and we need to consider a new operator. The \emph{Casimir operator}
+we cannot diagonalize these operators simultaneously and we need to consider a
+new operator. The \emph{Casimir operator}
 \[ 
   S_{tot}^2 = \sum_{a \in \{x,y,z\}}^{} (S_{tot}^{a})^2
 \]
-commutes with all the generators since\todo{appendix?}
+commutes with all the generators by the Lie-product rule
+\cite[~Eq. 2.24]{georgiLieAlgebrasParticle2018}
 \[
   [S_{tot}^2, S_{tot}^b]
-  = \sum_{a} \big( S^a_{tot}[S^a_{tot}, S^b_{tot}] + [S^a_{tot}, S^b_{tot}] S^a_{tot} \big)
-  = i \sum_{a,c} \varepsilon_{abc} \big( S^a_{tot} S^c_{tot} + S^c_{tot} S^a_{tot} \big)
-  = 0,
+  = 
+  \sum_{a} \big( S^a_{tot}[S^a_{tot}, S^b_{tot}] + [S^a_{tot}, S^b_{tot}] S^a_{tot} \big)
+  =
+  i \sum_{a,c} \varepsilon_{abc} \big( S^a_{tot} S^c_{tot} + S^c_{tot} S^a_{tot} \big)
+  = 0.
 \]
-\todo{Justify why we choose Sz and Stot2}
 We take the Casimir operator and the $S^z_{tot}$ operator to diagonalize with.
 The eigenvalue $S(S+1)$ of $S^2_{tot}$ labels the irrep $V_S$. \todo{Sx Sz sy
 are not constant on the irrep?} $S^z_{tot}$ then labels the states inside of the
 irrep, within $V_S$ its eigenvalues $M \in \{-S, \ldots, S\}$ distinguish the
-$2S + 1$ basis vectors. However since the irreps also occur with a multiplicity, we need yet another label to differentiate these blocks. This is done just like for the CG-tensors with another label $\alpha$. Then the states look like $\ket{S,m,\alpha}$.
+$2S + 1$ basis vectors. However since the irreps also occur with a multiplicity,
+we need yet another label to differentiate these blocks. This is done just like
+for the CG-tensors with another label $\alpha$. Then the states look like
+$\ket{S,m,\alpha}$.
 
 
 %%%
@@ -550,10 +608,6 @@ While this big picture overview conveys the general idea, we should do some of
 the calculations by hand. In order to get an interpretation of the matrix
 coefficients in $\cref{sym:eq:blockdiag}$, we restrict ourselves to the case of
 the XXZ-Hamiltonian for $N = 2$ spins:
-%\[
-%  H = \frac{J}{2} (\sigma_1^x \sigma_2^x + \sigma_1^y \sigma_2^y + \sigma_1^z \sigma_2^z)
-%  = J \cdot S_1 \cdot S_2.
-%\]
 \[
   H = J \cdot (S_1^x S_2^x + S_1^y S_2^y + S_1^z S_2^z) = J \cdot S_1 \cdot S_2
 \]
@@ -578,7 +632,8 @@ and this again splits into the sectors for $S = 0$ and $S = 1$
   c_1 = \frac{J}{2}(2 - 3/2) = \frac{1}{4}J
 \]
 which are exactly the two degrees of freedom we get by the direct sum. So we
-expect our operator, now in $\bop\limits_{S \in \{0,1\}} \End_G(V_S)$ to look like
+expect our operator, now in $\bop\limits_{S \in \{0,1\}} \End_G(V_S)$ to look
+like
 \[
   \left(\begin{array}{c|ccc}
     -\frac{3}{4}J &  0 & 0 & 0 \\ 
@@ -768,7 +823,8 @@ columns here, but i should follow the convention from the 6j definition.}
   \end{pmatrix}.
 \] 
 on the spin-$\frac{1}{2}$ sector and $\frac{1}{4}$ on the spin-$\frac{3}{2}$
-sector. We show both the sparse (left) and the dense representation of these operators.
+sector. We show both the sparse (left) and the dense representation of these
+operators.
 
 \vspace*{1cm}
 \begin{minipage}{0.5\textwidth}
@@ -1023,7 +1079,8 @@ ground state trees:
 where we have to apply a recoupling before we can apply $S_2 \cdot S_3$ and we
 have to apply another one to move back.
 
-Note that we have implicitely given the action of a \emph{reshape} operation. If we may implement this, in presentation ???
+Note that we have implicitely given the action of a \emph{reshape} operation. If
+we may implement this, in presentation ???
 
 \color{red}
 There is a third symmetry with $\Z_2$ under the operator 
@@ -1084,9 +1141,11 @@ of $V \ot W^\ast$ and the maps in $\Hom(V,W)$. Here we wish to show the same for
 symmetric tensors.
 
 
-\begin{definition}\label{def:symmetricTensor} A tensor $T\in V\otimes W^\ast$ is
-  \emph{\green{symmetric}} (or $G$-invariant) if $\Pi(g)T=T$ for all $g\in G$
-  \cite{singhTensorNetworkDecompositions2010a}.
+\begin{definition}[Symmetric tensor
+  \cite{singhTensorNetworkDecompositions2010a}]\label{def:symmetricTensor} A
+  tensor $T\in V\otimes W^\ast$ is \emph{\green{symmetric}} (or $G$-invariant)
+  if it remains unchanged under a global application of a representation
+  $\Pi(g)$ on all of it legs, so  $\Pi(g)T=T$ for all $g\in G$, 
 \end{definition}
 
 Let $\Phi\colon V\otimes W^\ast\to\Hom(W,V)$ be the linear isomorphism
@@ -1235,9 +1294,10 @@ This is an instance of a more general theorem concerning tensors of arbitrary
 shape \cref{DecompositionOfSemisimpleCategories} which we will prove in
 \Cref{sect:Categories}.
 
-If we want to represent our ground state above as a MPS, we can first realize
-that the physical dimensions are always $\frac{1}{2}$, so this operator reduces
-to $\Hom_G(D_i \ot V_{1/2}, D_{i+1})$. Then we can visualize it as such
+If we want to represent our ground state above as a MPS (cf. \cite[~§
+4.5]{fischerTensorNetworkSymmetries2025}), we can first realize that the
+physical dimensions are always $\frac{1}{2}$, so this operator reduces to
+$\Hom_G(D_i \ot V_{1/2}, D_{i+1})$. Then we can visualize it as such
 
 \[
   \begin{tikzpicture}[
@@ -1292,7 +1352,8 @@ We can do some analysis on the individual tensors here. If we choose the third
 tensor, of the form $\Hom_G(0 \op 1, \frac{1}{2} \ot (\frac{1}{2} \op
 \frac{3}{2}))$, we can do some analysis over the CG-rule for $\SU{2}$.
 
-There are $3$ possible combination in the basis of this space, these are the spaces
+There are $3$ possible combination in the basis of this space, these are the
+spaces
 \[
   (0,\frac{1}{2},\frac{1}{2}); \quad (1, \frac{1}{2}, \frac{1}{2}); \quad (1, \frac{1}{2}, \frac{3}{2})
 \]
@@ -1339,7 +1400,8 @@ TODO MPO operator
 
 Recall the XXX-Hamiltonians MPO operator with bond dimension $5$ from
 \Cref{back:mpo}. This means that the bonds are $D_i \cong \C^5 \cong
-V_{1/2}^{\ot 2} \op V_0 \cong V_0 \op V_1 \op V_0$. We can also represent the symmetric MPO by a matrix
+V_{1/2}^{\ot 2} \op V_0 \cong V_0 \op V_1 \op V_0$. We can also represent the
+symmetric MPO by a matrix
 \[
   \begin{pmatrix}
     \id & S & 0 \\
@@ -1351,9 +1413,10 @@ where $S = (S_x, S_y, S_z)$, with physical legs $V_{1/2}$ and the virtual bond
 $V_1$.
 
 \color{red}
-All the reasoning for deriving this symmetric MPO in the papers i saw
-\cite{fischerTensorNetworkSymmetries2025},
-\cite{schmollBenchmarkingGlobal$SU2$2020} was done after we have defined the
+All the reasoning for deriving this symmetric MPO in the papers i saw \cite[~§
+4.6]{fischerTensorNetworkSymmetries2025},
+\cite{schmollBenchmarkingGlobal$SU2$2020},
+\cite{mambriniSystematicConstructionSpin2016} was done after we have defined the
 fusiontrees formally. Maybe this entire section should go after categories? Talk
 about this in the meeting.
 \color{black}
