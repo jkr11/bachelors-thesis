@@ -32,12 +32,17 @@ were the case, then the resulting exchange statistics would be bosonic
 \cite[Footnote~12]{wuGeneralTheoryQuantum1984}.}, so the diagonal of overlapping
 points $\Delta = \{x \in \Sigma^n \mid x_i = x_j \text{ for some } i \neq
 j\}$\todo{rephrase!} needs to be excluded as well
-\cite{wuGeneralTheoryQuantum1984}. This leads to the expression
-%\[
-%    \uConf_n(\Sigma) = (\Sigma^n - \Delta) / S_n
-%\]  
+\cite{wuGeneralTheoryQuantum1984}. This leads to the expression 
 \begin{equation}\label{anyon:conf_space_full}
-  \uConf_n(\Sigma) = \left\{(x_1, \cdots, x_n) \in \Sigma^{\times^n} \mid \displaystyle\forall_{i = j} x_i \neq x_j \right\} / \Sym_n 
+  \uConf_n(\Sigma) 
+  = 
+  \left\{
+    (x_1, \cdots, x_n) \in \Sigma^{n} 
+    \;\middle|\;
+    \displaystyle{\forall}_{i \neq j} \underset{\text{\color{RoyalBlue} Pauli-exclusion}}{x_i \neq x_j} 
+  \right\} 
+  \bigg/ 
+  \Sym_n 
 \end{equation}
 which is defined to be the \emph{configuration space} of $n$ unordered
 particles. However as we will see, anyons come in different "types", and we
@@ -82,9 +87,9 @@ collects all the loops at some configuration $x_0$ (a point in the configuration
 space) up to homotopy. We want to differentiate two cases here: If $D = 2$ it is
 known these spaces correspond to the \emph{(pure) braid groups} on $n$ strands
 denoted
-\[
-    \pi_1(\uConf_n (\Sigma)) = \Br_n(\Sigma) \quad \text{ and } \quad \pi_1(\oConf{n} (\Sigma)) = \PBr_n(\Sigma).
-\]
+\begin{equation}\label{anyon:eq:fundamentalGroupsAreBraidGroups}
+    \pi_1(\uConf_n (\Sigma), x_0) = \Br_n(\Sigma) \quad \text{ and } \quad \pi_1(\oConf{n} (\Sigma), x_0) = \PBr_n(\Sigma).
+\end{equation}
 If we choose $\Sigma$ as $\R^2$ we can give an presentation in terms of
 generators:
 \begin{definition}[Braid Group, cf. {\cite{artinTheorieZoepfe1925} \cite[~Def.
@@ -209,6 +214,57 @@ Compare this to the presentation of the symmetric group (cf.
 \cref{app:gen:groups}) to see that $\Sym_n$ is a \emph{subgroup} of
 $\Br_n(\R^2)$.
 
+\begin{definition}[Fundamentl Groupoid]
+  Let $X$ be a topological space. The \emph{fundamental groupoid} $\Pi_1(X)$ is
+  a category (cf. \Cref{sect:Categories}) with objects being the points of $X$,
+  and the morphisms between a configurations $x$ and $y$ are the the homotopy
+  classes of paths between $x$ and $y$ 
+  \[
+    [\gamma] : x \longrightarrow y \qquad \gamma : [0,1] \to X, \quad \gamma(0) = x, \gamma(1) = y. 
+  \]
+\end{definition}
+
+Note that all of these description up to now chose a initial fixed configuration
+$x_0$, and all the paths in the fundamental group are necessarily closed loops.
+We can remedy this by choosing instead the \emph{fundamental groupoid} of the
+configuration spaces, which has arbitrary basepoints and maps between them.
+
+\begin{remark}[Fundamental Group vs. fundamental Groupoid]
+  Above we chose the fundamental grrup at some basepoint $x_0$. We therefore
+  also only get motions around that specific basepoint. We couldve also simply
+  used the \emph{fundamental groupoid} $\Pi_1(X)$ which would yield all possible
+  starting configurations. This is resolved by \todo{where put?} the equivalence
+  of categories
+  \[
+    \mathrm{Fun}(\Pi_1(X), \Veck) \equiv \Rep(\pi_1(X,x_0))
+  \]
+  Where is this even handled? \cite[~Ftn. 12]{simonTopologicalQuantum2023}
+\end{remark}
+
+\newcommand{\W}{\mathrm{W}}
+\newcommand{\PW}{\mathrm{PW}}
+
+
+\begin{remark}[On weaves]
+  On quantum compiling, \cite{simonTopologicalQuantumComputing2006a} consider a
+  mode of control that only involves moving one of the anyons at a time. This
+  special type of braid that moves only one anyons is called a
+  \emph{(pure)weave}. If this single anyon is fixed, this forms a subgroup of
+  the surface braid groups. Denote the weave group by $\W_k$ where $k$ is the
+  fixed point. This arises naturally as the fundamental group of the punctured
+  surface $\pi_1(\Sigma / \{x_j \mid j \neq k\}, x_k)$. This construction is
+  also used in ...
+
+  From the fact that 
+  \begin{equation}
+    \oConf{1}(\Sigma / \{x_1, \ldots, x_n\}) = \Sigma / \{x_1, \ldots, x_n\}
+  \end{equation}
+  we can define the weave groupoid (not pure) as
+  \[
+    \Pi_1(\Sigma / \{x_1, \ldots, x_n\})
+  \]
+\end{remark}
+
 We can also do an example on there $2$-sphere, since there is an extra relation
 of the $\R^2$ braid group. Generally, this braid group arises as a
 \emph{quotient} of the Artin group, but this does not hold in general.
@@ -217,7 +273,8 @@ of the $\R^2$ braid group. Generally, this braid group arises as a
   \centering
   \includegraphics[width=0.8\textwidth]{figures/anyons_sphere.png}
   \caption{ $3$ Anyons on the sphere $S^2$ with the equivalence of the braids
-    $\sigma_1^2$ and $\sigma_2^2$ \cite{simonTopologicalQuantum2023}. Implicitly, we are given the configuration spaces $\uConf_3(S^2)$.}
+    $\sigma_1^2$ and $\sigma_2^2$ \cite{simonTopologicalQuantum2023}.
+    Implicitly, we are given the configuration spaces $\uConf_3(S^2)$.}
   \label{anyon:fig:sphere}
 \end{figure}
 
@@ -295,9 +352,20 @@ space. We can illustrate this as follows (adapted after
 	\arrow["htpy"{description}, between={0.2}{0.8}, equals, nfold, from=4, to=5]
 	\arrow["{\text{parallel transport}}"{description}, between={0.2}{0.8}, Rightarrow, nfold, from=6, to=2]
 \end{tikzcd}\] and this is only the case when the corresponding connection is
-\emph{flat}. Another case is when the connection is trivial, lets say we are
-working over a time-axis $\R$, then the bundle $\mathcal{H} \to \R \cong
-\mathcal{H} \times \R$.
+\emph{flat}.  %Another case is when the connection is trivial, lets say we are
+%working over a time-axis $\R$, then the bundle $\mathcal{H} \to \R \cong
+%\mathcal{H} \times \R$.
+
+We can take this further, in fact if $\mcH \rightarrow \oConf{n}(\Sigma)$ is a
+flat bundle, it induces a functor
+\[
+  \mathcal{P} : \Pi_1(\oConf{n}(\Sigma)) \rightarrow \Hilb
+\]
+class $[\gamma] : x \to y$ a unitary transformation
+associating to each configuration $x$ it fiber $\mcH_x$ and to each homotopy
+\[
+  \mathcal{P}([\gamma]) : \mcH_x \to \mcH_y.
+\]
 
 The closed paths in the respective groups form a \emph{monodromy} in the
 configuration space and a \emph{holonomy} in the Hilbert Bundle, and it is these

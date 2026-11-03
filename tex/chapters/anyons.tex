@@ -476,29 +476,10 @@ How do we build such a computer: By the discussion above, we need 3 things:
 \end{itemize}
 
 
-
-
-Computing with nonabelian anyons requires a universal gate set built from
-representations of the \emph{braid-group}:
-\begin{definition}[Braid Group (algebraic)]
-  \[
-    Br(\R^2) 
-    = 
-    \left\langle 
-      \begin{aligned}
-      \sigma_i\sigma_j &= \sigma_j\sigma_i, \;\; \left\vert i - j \right\vert \geq 2\\
-      \sigma_i\sigma_{i+1}\sigma_{i} &= \sigma_{i+1}\sigma_i\sigma_{i+1}, \;\; i \in [1,n-2]
-    \end{aligned}
-    \right\rangle
-  \]
-\end{definition}
-
-and also the \emph{pure-braid-group}: \todo{Introduce the pure braid group?}
-
 By the construction of anyon chains in
 \Cref{anyon:sec:algebraic_theory_of_anyons}, we know that the space of $3$
 anyons fusing to $\tau$ is in fact $2$-dimensional. This motivates a choice of
-qubits as the following:
+logical qubits as the following:
 
 \begin{equation*}
   \vert 0 \rangle =
@@ -558,8 +539,10 @@ qubits as the following:
 \end{tikzpicture}
 }
 \end{equation*}
-and we say that $\C^2$ is \emph{embedded} in $V^{\tau \tau \tau}$. We could
-choose a different presentations, where each anyon is drawn from the vacuum as
+and we say that $\C^2$ is \emph{embedded} in $V^{\tau \tau \tau}$, its full
+dimension is $3$. In the single-qubit case we can ignore the noncomputational
+state $\ket{NC}$, it is aphysical. We could choose a different presentation,
+where each anyon is drawn from the vacuum as
 \[
   TODO!
 \]
@@ -568,6 +551,67 @@ Then we can build multi-qubit circuits by simply stacking these diagrams (inside
 their own fusion channel). This is what is called a \emph{sparse-encoding}. A
 dense encoding would correspond to just choosing the smallest space of
 appropriate dimension that includes one of the $(\C^2)^{\otimes d}$.
+
+Here we take a sparse endcoding of two qubits, based on the inclusion map
+\[
+  \Hom(\tau \otimes \tau \otimes \tau, \tau) \otimes \Hom(\tau \otimes \tau \otimes \tau, \tau) \hookrightarrow \Hom(\tau^{\otimes 6}, \tau)
+\]
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.4]
+    % Global container (Total charge tau)
+    \fill[gray!15] (4.0, 0) ellipse (2.8 and 0.85);
+    \draw[thick] (4.0, 0) ellipse (2.8 and 0.85);
+
+    % Qubit 1 container (3 anyons -> charge tau)
+    \fill[gray!35] (2.7, 0) ellipse (1.3 and 0.55);
+    \draw[thick] (2.7, 0) ellipse (1.3 and 0.55);
+    
+    % Qubit 1 inner fusion channel (a_1 = 1 or tau)
+    \draw[thick] (2.3, 0) ellipse (0.7 and 0.35);
+    \node at (3.15, -0.2) {$a_1$};
+
+    % Qubit 2 container (3 anyons -> charge tau)
+    \fill[gray!35] (5.3, 0) ellipse (1.3 and 0.55);
+    \draw[thick] (5.3, 0) ellipse (1.3 and 0.55);
+
+    % Qubit 2 inner fusion channel (a_2 = 1 or tau)
+    \draw[thick] (4.9, 0) ellipse (0.7 and 0.35);
+    \node at (5.75, -0.2) {$a_2$};
+
+    % --- Anyon dots & labels ---
+    % Qubit 1 Anyons
+    \node[scale=2.2] at (1.8, 0) {$\cdot$}; 
+    \node at (1.9, 0.15) {$\tau$};
+
+    \node[scale=2.2] at (2.4, 0) {$\cdot$}; 
+    \node at (2.5, 0.15) {$\tau$};
+
+    \node[scale=2.2] at (3.0, 0) {$\cdot$}; 
+    \node at (3.1, 0.15) {$\tau$};
+
+    % Qubit 2 Anyons
+    \node[scale=2.2] at (4.4, 0) {$\cdot$}; 
+    \node at (4.5, 0.15) {$\tau$};
+
+    \node[scale=2.2] at (5.0, 0) {$\cdot$}; 
+    \node at (5.1, 0.15) {$\tau$};
+
+    \node[scale=2.2] at (5.6, 0) {$\cdot$}; 
+    \node at (5.7, 0.15) {$\tau$};
+
+    % --- Fusion Charge Labels ---
+    % Sub-block total charges
+    \node at (3.8, -0.4) {$\tau$};
+    \node at (6.4, -0.4) {$\tau$};
+
+    % Global total charge
+    \node at (6.9, -0.65) {$\tau$};
+  \end{tikzpicture}
+  \caption{Sparse encoding of 2 logical qubits using 6 Fibonacci anyons stacked inside an overall total charge $\tau$ sector. The choices of intermediate channels $a_1, a_2 \in \{1, \tau\}$ encode the 4-dimensional computational subspace $(\mathbb{C}^2)^{\otimes 2}$.}
+  \label{fig:two_qubit_6anyon_sparse}
+\end{figure}
 
 The solovay-kitaev theorem guarantees a polylog time and space algorithm for
 approximating any gate in $\SU d$ to a desired accuracy. This, and similar

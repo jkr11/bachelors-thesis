@@ -178,10 +178,6 @@
 
 \section{On Tensors}
 
-Throughout this text, we build tensors over the field $\C$, note however that
-all of this will work for any algebraically closed field $k$.
-
-
 The usual picture of a tensor as introduced in the tensor network literature is
 a multi-dimensional array $T\in\C^{d_1\times\cdots\times d_n}$
 (cf.~\cite[§~2.1.1]{bridgemanHandwavingInterpretiveDance2017},
@@ -231,6 +227,13 @@ of the vector space is $\dim(\bigot_j V_j) = \prod_{j \in J} \dim(V_j)$. If we
 have a basis on each space, call that basis ${v_i}_{i \in \dim(V)}$, then we can
 build a product space basis by tensoring each of the basis elements trivially.
 
+For now we consider finite dimensional vector spaces over the field $k$\todo{do
+we ?}, we denote a membership of a vector space in these by denoting $V \in
+\Veck$. We denote the set of \emph{linear maps} between $V,W \in \Veck$ by
+$\Hom(V,W)$. This so-called hom-set can be naturally made into a vector space by
+pointwise scalar-multiplication in $k$ and pointwise addition of
+\todo{evaluated?} maps.
+
 
 The \emph{dual space} of a vector space $V$ is $V^* = \operatorname{Hom}(V,\C)$,
 the space of linear functionals $f \colon V \to \C$, $x \mapsto f(x)$. In Dirac
@@ -244,11 +247,17 @@ Since all spaces are finite-dimensional, we have the canonical isomorphisms
   W \otimes V^* \cong \operatorname{Hom}(V,W),
 \]
 where the last relation is given by the mapping
-\begin{equation}\label{back:eq:basicHomAdjunction}
+\begin{align*}\label{back:eq:basicHomAdjunction}
+  W \ot V^\ast &\longrightarrow \Hom(V,W) \\
   \ket{w} \otimes \bra{f} 
-  \;\longmapsto\; 
-  \bigl(v \mapsto \braket f v\,\ket w\bigr).
-\end{equation}
+  \;&\longmapsto\; 
+  \bigl(v \mapsto \braket f v\, \cdot \, \ket w\bigr).
+\end{align*}
+
+This is also apparent when choosing a linear basis $V \cong k^n, W \cong k^m$ by which we obtain 
+\[
+  \Mat{n}{m}{k} \cong \Hom(V,W) \cong W \ot V^\ast \cong k^n \ot k^m \cong k^{n \times m}
+\]
 
 Because $V^{**} \cong V$, any tensor $T \in V_1 \otimes \cdots \otimes V_n$ can
 be regarded as a linear map after choosing a split of its legs at some $0 \le m

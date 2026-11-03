@@ -138,6 +138,12 @@ concepts as a category with additional constraints added. But first the basic de
   \end{enumerate}
 \end{example}
 
+\begin{example}[Groupoids]
+  We can denote a group $(G,\cdot)$ as a category with a single object $\ast$.
+  Each group element $g_1$ is then mapped to a morphism $\Hom_G(\ast,\ast)$ of
+  the category.
+\end{example}
+
 We can take categories and associate them with each other by use of a
 \emph{functor}. This should be familiar for users of any functional programming
 language. If preferred this can be seen as the association of a homomorphism for
@@ -242,6 +248,18 @@ important relation here will be \emph{naturality}:
       contravariant functor.
   \end{enumerate}
 \end{example}
+
+\begin{example}[Category of Functors]
+  Given two categories $\CC$ and $\CD$, we can form a category $\Fun(\CC,\CD)$
+  whose objects are functors $F : \CC \to \CD$ and whose morphisms are natural
+  transformations between these functors.
+\end{example}
+
+\begin{definition}[Equivalence of Categories]
+  Two categories $\CC$ and $\CD$ are \emph{equivalent} if there exist functors
+  $F : \CC \to \CD$ and $G : \CD \to \CC$ such that $G \circ F \cong
+  \mathrm{id}_\CC$ and $F \circ G \cong \mathrm{id}_\CD$.
+\end{definition}
 
 %We want to embed some of the larger structures of $\Rep(G)$ and $\VecCat{\C}$
 %into the categorical formalism. For fdVect, the hom spaces of linear maps $V

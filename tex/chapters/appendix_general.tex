@@ -52,83 +52,146 @@ example:
 
 \begin{definition}
     The \emph{\green{General Linear Group}} $\GL{n}$ of degree $n$ is the set of
-    $n\times n$ matrices that are invertible, and its operation $\cdot$ is that
-    of matrix multiplication. 
+    \todo{mention the field specifically?} complex $n\times n$ matrices that are
+    invertible, and its operation $\cdot$ is that of matrix multiplication. 
 \end{definition}
+
+\begin{definition}[Pure braid group {\cite[~Def.
+II]{wilsonGeometryTopologyBraid}}]
+  The pure braid group has a presentation in terms of generators $T_{i,j}$ which \"weave\" strand $I$ around strand $j$.
+  \[
+    \PBr_n = \left\langle T_{ij} \mid ... \right\rangle
+  \]
+\end{definition}
+
+
 
 \section{Some Algebraic Topology}
 \label{app_gen:homotopy}
 
 Let spaces $X,Y$ be topological in the following, and let all functions be
-continuous unless stated otherwise.
+continuous unless stated otherwise. We follow \textcite[~Chapitre
+III]{bourbakiTopologieAlgebrique2016} for our definitions.
 
-\begin{definition}[Homotopy, cf. \cite{h}]
-    A \emph{\green{homotopy}} between two continuous functions $f,g : X \to Y$
-    is a continuous function
-    \begin{equation}
-        H : X \times [0,1] \to Y \text{ such that } H(x,0) = f(x) \text{ and } H(x,1) = g(x)
+\begin{definition}[Path on a manifold]
+    Let $M$ be a manifold. A path $\gamma : x \to y$ for $x,y \in X$ is a map
+    \[
+        \gamma : [0,1] \to X \quad \text{such that}\quad \gamma(0) = x \quad \text{and}\quad \gamma(1) = y.
+    \]
+    Given two paths $\gamma_1,\gamma_2$ such that $\gamma_1(1) = \gamma_2(0)$ we can define a concatenation of these paths as
+    \begin{equation}\label{app:top:pathConcatenation}
+        (\gamma_2 \circ \gamma_1)(t) \coloneqq \begin{cases}
+            \gamma_1(2t) & 0 \leq t \leq \frac{1}{2} \\
+            \gamma_2(2t - 1) & \frac{1}{2} < t \leq 1
+        \end{cases}
     \end{equation}
+
 \end{definition}
 
-\[
-\begin{tikzpicture}[thick, >=stealth]
 
-    \coordinate (A) at (0,0);
-    \coordinate (B) at (6,0);
+\begin{definition}[Homotopy, cf. {\cite[~Chapitre III, §1,
+  Def.1]{bourbakiTopologieAlgebrique2016}}]\label{app:top:def:homotopy} A
+  \emph{\green{homotopy}} between two continuous functions $f,g : X \to Y$ is a
+  continuous function
+  \begin{equation}
+    H : X \times [0,1] \to Y \text{ such that } H(x,0) = f(x) \text{ and } H(x,1) = g(x)
+  \end{equation}
+\end{definition}
 
-    \draw[black, thick]
-        (A) .. controls (1.2,3.0) and (3.8,1.8) .. (B)
-        node[midway, above] {$\gamma_0$};
+\begin{figure}
+  \centering
+    \begin{tikzpicture}[thick, >=stealth]
 
-    \draw[gray, thick]
-        (A) .. controls (1.2,2.5) and (3.8,1.4) .. (B);
+      \coordinate (A) at (0,0);
+      \coordinate (B) at (6,0);
 
-    \draw[gray, thick]
-        (A) .. controls (1.2,2.0) and (3.8,1.0) .. (B);
+      \draw[black, thick]
+          (A) .. controls (1.2,3.0) and (3.8,1.8) .. (B)
+          node[midway, above] {$\gamma_0$};
 
-    \draw[gray, thick]
-        (A) .. controls (1.2,1.5) and (3.8,0.6) .. (B);
+      \draw[gray, thick]
+          (A) .. controls (1.2,2.5) and (3.8,1.4) .. (B);
 
-    \draw[gray, thick]
-        (A) .. controls (1.2,1.0) and (3.8,0.2) .. (B);
+      \draw[gray, thick]
+          (A) .. controls (1.2,2.0) and (3.8,1.0) .. (B);
 
-    \draw[gray, thick]
-        (A) .. controls (1.2,0.5) and (3.8,-0.2) .. (B);
+      \draw[gray, thick]
+          (A) .. controls (1.2,1.5) and (3.8,0.6) .. (B);
 
-    \draw[gray, thick]
-        (A) .. controls (1.2,0.3) and (3.8, -0.8) .. (B);
+      \draw[gray, thick]
+          (A) .. controls (1.2,1.0) and (3.8,0.2) .. (B);
 
-    \draw[black, thick]
-        (A) .. controls (1.2,0.0) and (3.8,-1.5) .. (B)
-        node[midway, below] {$\gamma_1$};
+      \draw[gray, thick]
+          (A) .. controls (1.2,0.5) and (3.8,-0.2) .. (B);
 
-    \fill[black] (A) circle (2pt);
-    \fill[black] (B) circle (2pt);
+      \draw[gray, thick]
+          (A) .. controls (1.2,0.3) and (3.8, -0.8) .. (B);
 
-    \node[left] at (A) {$A$};
-    \node[right] at (B) {$B$};
+      \draw[black, thick]
+          (A) .. controls (1.2,0.0) and (3.8,-1.5) .. (B)
+          node[midway, below] {$\gamma_1$};
 
-\end{tikzpicture}
-\]
+      \fill[black] (A) circle (2pt);
+      \fill[black] (B) circle (2pt);
+
+      \node[left] at (A) {$x$};
+      \node[right] at (B) {$y$};
+    \end{tikzpicture}
+  \caption{A homotopy between two paths $\gamma_1, \gamma_2 : x \to y$ at discrete values $0 \leq t \leq 1$.}
+\end{figure}
+
+
+Two paths are thus \emph{homotopic} if there is a homotopy $\gamma_1
+\equiv_{htpy} \gamma_2$ and we collect them into homotopy-equivalence-classes
+$[\gamma_1]$.
+
+\begin{definition}[Path groupoid on a manifold, cf. {\cite[~§
+  1]{mollerFundamentalGroupCovering2011a}}] Denote the set of homotopy classes
+  $[\gamma]$ of paths $x_0 \to x_1$ in $X$ by $\pi_1(X,x_0,x_1)$. We can
+  concatenate these sets by \eqref{app:top:pathConcatenation} with the product
+  operation
+  \[
+    \begin{alignedat}{2}
+      \pi_1(X,x_0,x_1) &\times \pi_1(X,x_1,x_2)
+      &\longrightarrow{}& \pi_1(X,x_0,x_2)\\
+      [\gamma_1] &,\ [\gamma_2]
+      &\longmapsto{}& [\gamma_1 * \gamma_2].
+    \end{alignedat}
+  \]
+  The \emph{fundamental groupoid} $\Pi_1(X)$ is the category whose objects are
+  the points of $X$ and whose morphisms are given by these homotopy classes
+  \[
+    \Hom_{\Pi_1(X)}(x_0, x_1) = \pi_1(X,x_0,x_1).
+  \]
+  We can recover the fundamental group
+  \eqref{anyon:eq:fundamentalGroupsAreBraidGroups} as 
+  \[
+    \pi_1(X,x_0) = \mathrm{Aut}_{\Pi_1(X)}(x_0) = \pi_1(X,x_0,x_0).
+  \]
+\end{definition}
+
+\begin{theorem}[Functors on fundamental groupoids equals representations of funddamental group]
+\end{theorem}
 
 
 \begin{definition}
-    A \emph{\green{loop}} with basepoint $x_0$ on $X$ is a function
-    \begin{equation}
-        \gamma : [0,1] \to X \quad\text{such that}\quad \gamma(0) = \gamma(1) = x_0
-    \end{equation}
+  A \emph{\green{loop}} with basepoint $x_0$ on $X$ is a function
+  \begin{equation}
+    \gamma : [0,1] \to X \quad\text{such that}\quad \gamma(0) = \gamma(1) = x_0
+  \end{equation}
 \end{definition}
 
 \begin{definition}[Bundle]
-    A \emph{vector (Hilbert) bundle} over a space $X$ is a collection of vector
-    (Hilbert) spaces $\{V_x\}_{x \in X}$ so to say a parameterization of vector
-    spaces dependent on a base space. This base space could be any of a
-    manifold, a topological space, a scheme and others. Here we mostly care
-    about differentiable manifolds and topoplogical spaces such as configuration
-    spaces. An element $V_x$ is called the \emph{\green{fiber}} at $x \in X$.
+  A \emph{vector (Hilbert) bundle} over a space $X$ is a collection of vector
+  (Hilbert) spaces $\{V_x\}_{x \in X}$ so to say a parameterization of vector
+  spaces dependent on a base space. This base space could be any of a manifold,
+  a topological space, a scheme and others. Here we mostly care about
+  differentiable manifolds and topoplogical spaces such as configuration spaces.
+  An element $V_x$ is called the \emph{\green{fiber}} at $x \in X$.
 \end{definition}
 
-Now that we have the spaces parameterized over the base space, we want to encode this dependence, hence the definition of a \emph{connection}.
+Now that we have the spaces parameterized over the base space, we want to encode
+this dependence, hence the definition of a \emph{connection}.
 
 \begin{definition}[Connection]
     A \emph{\green{connection}} on a bundle $V \longrightarrow X$ assigns to
@@ -141,16 +204,19 @@ Now that we have the spaces parameterized over the base space, we want to encode
 
 \section{Tensor Decompositions \& Algorithms}
 
-\begin{definition}
-    The \emph{\green{singular value decomposition}} of a complex operator $A$ of shape $(m,n)$ is a decomposition of the form
-    \[
-        A = U\Sigma V^\ast
-    \]
-    where
-    \[
-        U \in \U{m \times m}, \quad \Sigma \in \Mat{m }{n}{\R} \quad \text{and} \quad V \in \U{n \times n}
-    \]
-    and $\Sigma$ is further diagonal, in fact is it made up of the \emph{singular values} of $A$.
-
-    This also enables us to perform a low rank appoximation of an operator by truncating $\Sigma$ to only keep its $r$ largest singular values. 
+\begin{definition}[Singular Value Decomposition (SVD), cf. {\cite[~Thm.
+  2.6.3]{Horn_Johnson_2012}}] The \emph{\green{singular value decomposition}}
+  of a complex operator $A$ of shape $(m,n)$ is a decomposition of the form
+  \[
+      A = U\Sigma V^\ast
+  \]
+  where
+  \[
+      U \in \U{m \times m}, \quad \Sigma \in \Mat{m }{n}{\R} \quad \text{and} \quad V \in \U{n \times n}
+  \]
+  and $\Sigma$ is further diagonal, in fact is it made up of the
+  \emph{singular values} of $A$.
+  
+  This also enables us to perform a low rank appoximation of an operator by
+  truncating $\Sigma$ to only keep its $r$ largest singular values. 
 \end{definition}
