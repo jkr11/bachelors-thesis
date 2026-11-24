@@ -126,7 +126,24 @@
 \newcommand{\T}{\operatorname{T}}
 \newcommand{\CNOT}{\operatorname{CNOT}}
 
+\newcommand{\sx}{S^x}
+\newcommand{\sy}{S^y}
+\newcommand{\sz}{S^z}
+\newcommand{\stot}{S_{\mathrm{tot}}}
+\newcommand{\ssq}[1]{S_{#1}^2}
+\newcommand{\sxsq}[1]{(\sx_{#1})^2}
+\newcommand{\sysq}[1]{(\sy_{#1})^2}
+\newcommand{\szsq}[1]{(\sz_{#1})^2}
+\newcommand{\stotsq}{\stot^2}
+
 \newcommand{\liesl}[1]{\mathfrak{sl}_{#1}} % sl_2 lie algebra.
+
+\newcommand{\myendmark}{%
+  \hfill
+  \tikz[baseline=-0.5ex]{
+    \draw[line width=0.4pt] (0,0) -- (1.2ex,0) -- (1.2ex,1.2ex);
+  }%
+}
 
 %\theoremstyle{italics}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -148,21 +165,24 @@
 %\newtheorem{proof}{Proof}
 %\numberwithin{equation}{chapter}
 \counterwithout{equation}{chapter}
+
+
+
 \newcommand{\Cat}{\mathbf{Cat}}          % Category of categories
 %\newcommand{\VecCat}{\mathbf{Vect}}      % Category of Vector spaces
-\newcommand{\Veck}{\mathrm{Vect_{\C}^{\mathrm{fin}}}}
-\newcommand{\Rep}{\mathrm{Rep}}          % Representation category
+\newcommand{\Veck}[1][\C]{\mathbf{Vect_{#1}}}
+\newcommand{\Rep}{\mathbf{Rep}}          % Representation category
 \newcommand{\Hom}{\operatorname{Hom}}    % 
 \newcommand{\End}{\operatorname{End}}    % Endomorphism set
-\newcommand{\Fun}{\operatorname{Fun}}   % Functor category
+\newcommand{\Fun}{\mathbf{Fun}}   % Functor category
 \newcommand{\id}{\operatorname{id}}      % Identity morphism
-\newcommand{\Hilb}{\operatorname{Hilb}}
-\newcommand{\Bord}[1]{\operatorname{Bord_{#1}}}
+\newcommand{\Hilb}{\mathbf{Hilb}}
+\newcommand{\Bord}[1]{\mathbf{Bord_{#1}}}
 \newcommand{\del}{\boxtimes}
-\newcommand{\sVect}{\mathrm{sVect}}
-\newcommand{\gVSpace}[1]{\mathrm{Vec}_{#1}} % Graded Vector Space
-\newcommand{\Fib}{\mathrm{Fib}}
-\newcommand{\Set}{\mathrm{Set}}
+\newcommand{\sVect}{\mathbf{sVect}}
+\newcommand{\gVSpace}[1]{\mathbf{Vec}_{#1}} % Graded Vector Space
+\newcommand{\Fib}{\mathbf{Fib}}
+\newcommand{\Set}{\mathbf{Set}}
 \newcommand{\sgotimes}[1]{\otimes_{\scriptscriptstyle#1}} % small Graded Tensor Space
 \newcommand{\gotimes}[1]{\otimes_{#1}} % G-graded vectors space 
 \newcommand{\ot}{\otimes}
@@ -200,6 +220,7 @@
 \newcommand{\mcF}{\mathcal{F}}
 \newcommand{\mcG}{\mathcal{G}}
 \newcommand{\mcH}{\mathcal{H}}
+\newcommand{\mcV}{\mathcal{V}}
 \newcommand{\mcA}{\mathcal{A}}
 \newcommand{\mcB}{\mathcal{B}}
 
@@ -211,7 +232,7 @@
 
 
 \makeatletter
-\definecolor{RoyalBlue}{HTML}{4169E1}
+\definecolor{RoyalBlue}{HTML}{791633}
 \definecolor{CiteViolet}{HTML}{7B2CBF}
 \hypersetup{
     colorlinks=true,
@@ -273,6 +294,7 @@
 
 \usepackage{libertine}
 \usepackage[libertine]{newtxmath}
+\usepackage[mathcal]{euscript}
 \renewcommand{\ttdefault}{cmtt}
 
 \tikzset{
