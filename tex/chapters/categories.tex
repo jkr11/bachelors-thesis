@@ -2,7 +2,7 @@ In the existing literature it is well known that all of the concepts we have see
 \begin{enumerate}
   \item $\Veck$ and $\Hilb$ tensors are the most trivial and motivating case and
   trivial build tensor categories.
-  \item $\Rep(G)$ (for $G$ finite) as in \cref{sect:symmetricTensorNetworks} are
+  \item $\Rep(G)$ (for $G$ finite) as in \cref{chap:symmetricTensorNetworks} are
   one of the primary motivations for construction fusion tensor categories.
   \cite{etingofFusionCategories2017}.
   \item All anyonic topological orders (i.e species of quasiparticles as in
@@ -59,7 +59,7 @@ In the existing literature it is well known that all of the concepts we have see
 
 
 We have also seen a method for evaluating networks built in $\Rep(G)$ in
-\cref{sect:symmetricTensorNetworks} by decomposing a network into its fusion
+\cref{chap:symmetricTensorNetworks} by decomposing a network into its fusion
 tree and it's degeneracy spaces. As an immediate consequence, this yields an
 algorithm for evaluating generalized \emph{anyonic} and \emph{categorical}
 tensor networks, as in
@@ -81,18 +81,19 @@ achieving a tensor network out of these theories.
 
 \section{Tensor \& Fusion Categories}\label{cat:sub:introCat}
 
-The general idea of a category is that it admits a sort of \emph{interface}. As
-noticed, there are many similarities in data and structure between the entities
-we already dealt with, i.e. the tensor product of vector space, the tensor
-product of representations, of Hilbert spaces etc.... We can view all these
-concepts as a category with additional constraints added. But first the basic definition of a category:
+The general idea of a category in an implementation context is that it admits a
+sort of \emph{interface}. As noticed, there are many similarities in data and
+structure between the entities we already dealt with, i.e. the tensor product of
+vector space, the tensor product of representations, of Hilbert spaces etc....
+We can view all these concepts as a category with additional constraints added.
+But first the basic definition of a category:
 
 \begin{definition}\label{cat:def:category} A \emph{\green {category}}
-  $\mathcal{C}$ consists of\todo{Mention consisting of data?}
+  $\mcC$ consists of\todo{Mention consisting of data?}
   \begin{itemize}
-    \item a set of \emph{objects} $\ob(\mcC)$,
-    \item for every pair $A, B \in \ob(\mcC)$, a \emph{hom-set}
-    $\Hom_{\mcC}(A,B)$ of \emph{morphisms} $f : A \to B$,
+    \item a set of \emph{objects} denoted $\ob(\mcC)$,
+    \item for every pair $A, B \in \ob(\mcC)$, a set $\Hom_{\mcC}(A,B)$ of
+    \emph{morphisms} $f : A \to B$,
     \item for every $A \in \ob(\mcC)$, an \emph{identity morphism} $\id_A : A
     \to A$,
     \item for every triple $A,B,C \in \ob(\mcC)$, a \emph{composition} map
@@ -109,16 +110,16 @@ concepts as a category with additional constraints added. But first the basic de
         & B \ar[r, shorten=-2pt, "g"] & C\footnotemark
       \end{tikzcd}
     \]
-    \footnotetext{These diagrams are mostly but in part created with the great
-  software \url{https://q.uiver.app}.} 
-  \end{itemize} such that composition is
-  \emph{associative}, i.e.\ $(f \circ g) \circ h = f \circ (g \circ h)$ whenever
-  defined, and \emph{unital}, i.e.\ $f \circ \mathrm{id}_A = f = \mathrm{id}_B
+    \footnotetext{These diagrams are mostly created with the program
+  \url{https://q.uiver.app}.} \end{itemize} such that composition is
+  \emph{associative}, so $(f \circ g) \circ h = f \circ (g \circ h)$ whenever
+  defined, and \emph{unital}, so $f \circ \mathrm{id}_A = f = \mathrm{id}_B
   \circ f$ for all $f : A \to B$.
 \end{definition}
 
 \begin{example}
-  Some examples here:
+  Some examples here, these can be commonly found in
+  \cite{riehlCategoryTheoryContext,etingofFusionCategories2017}.
   \begin{enumerate}
     \item The category $\Veck{}$ is the category of finite dimensional vector
     spaces and its morphisms are the linear operators between vector spaces.
@@ -131,9 +132,9 @@ concepts as a category with additional constraints added. But first the basic de
     \item The category $\Rep(G)$ has all the representations of $G$ as its
     objects and the intertwiners of $G$ as its morphisms which we denote by
     $\Hom_G(-,-)$ here.
-    \item \label{cat:product_cat} The product category $\CC \times \mathcal{D}$
-    holds as objects tuples $(a \in \CC, b \in \mathcal{D})$ and as morphisms
-    tuples of maps $(f \in \Hom_\CC(a_1, a_2), g \in \Hom_\mathcal{D}(b_1,
+    \item \label{cat:product_cat} The product category $\CC \times \mcD$
+    holds as objects tuples $(a \in \mcC, b \in \mcD)$ and as morphisms
+    tuples of maps $(f \in \Hom_\mcC(a_1, a_2), g \in \Hom_\mcD(b_1,
     b_2))$.
   \end{enumerate}
 \end{example}
@@ -141,7 +142,21 @@ concepts as a category with additional constraints added. But first the basic de
 \begin{example}[Groupoids]
   We can denote a group $(G,\cdot)$ as a category with a single object $\ast$.
   Each group element $g_1$ is then mapped to a morphism $\Hom_G(\ast,\ast)$ of
-  the category.
+  the category. See an illustration of a group of order $n$ below, with group
+  elements $g_1, \ldots, g_n$. \todo{Are these the generators? do we get a
+  closure by the axioms automatically?}
+  % https://q.uiver.app/#q=WzAsMSxbMCwwLCJcXHtcXGFzdFxcfSJdLFswLDAsImciXSxbMCwwLCJnXzIiLDAseyJhbmdsZSI6LTQ1fV0sWzAsMCwiZ18zIiwwLHsiYW5nbGUiOi05MH1dLFswLDAsImdfNCIsMCx7ImFuZ2xlIjotMTM1fV0sWzAsMCwiZ181IiwwLHsiYW5nbGUiOi0xODB9XSxbMCwwLCJcXGNkb3RzIiwzLHsiYW5nbGUiOjEzNX1dLFswLDAsImdfe24tMX0iLDAseyJhbmdsZSI6OTB9XSxbMCwwLCJnX24iLDAseyJhbmdsZSI6NDV9XV0=
+  \[\begin{tikzcd}
+	  {\{\ast\}}
+	  \arrow["g", from=1-1, to=1-1, loop, in=55, out=125, distance=10mm]
+	  \arrow["{g_2}", from=1-1, to=1-1, loop, in=100, out=170, distance=10mm]
+	  \arrow["{g_3}", from=1-1, to=1-1, loop, in=145, out=215, distance=10mm]
+	  \arrow["{g_4}", from=1-1, to=1-1, loop, in=190, out=260, distance=10mm]
+	  \arrow["{g_5}", from=1-1, to=1-1, loop, in=235, out=305, distance=10mm]
+	  \arrow["\cdots"{marking, allow upside down}, from=1-1, to=1-1, loop, in=280, out=350, distance=10mm]
+	  \arrow["{g_{n-1}}", from=1-1, to=1-1, loop, in=325, out=35, distance=10mm]
+	  \arrow["{g_n}", from=1-1, to=1-1, loop, in=10, out=80, distance=10mm]
+  \end{tikzcd}\]
 \end{example}
 
 We can take categories and associate them with each other by use of a
@@ -241,7 +256,7 @@ important relation here will be \emph{naturality}:
       fits the notion of contravariance \eqref{cat:eq:contravariance} and
       furthermore, $(g \circ f)^\ast = f^\ast \circ g^\ast$.
     \item \label{cat:bifunctor} A \emph{bifunctor} $F : \CC \times \CD \to
-      \mathcal{E}$ is a functor from the product category
+      \mcE$ is a functor from the product category
       \eqref{cat:product_cat} $\CC \times \CD$ to $E$.
     \item Take the map $\Hom_\CC(-,A) : \CC -> \mathrm{Set}$. This is a
       covariant functor. The map $\Hom_\CC(A,-) : \CC \to Set$ is a
@@ -302,40 +317,41 @@ definition:
   3.4.17]{kongInvitationTopologicalOrders2022b})}]\label{cat:def:monoidalCat} A
   \emph{\green{monoidal category}} $\CC$ is a category that admits a unit object
   $I \in ob(\CC)$ and a bifunctor $\otimes : \CC \times \CC \to \CC$, as well as
-  3 constraining isomorphisms
+  3 natural isomorphisms
   \[
       \rho_A : A \otimes I \cong A \qquad \lambda_B : I \otimes B \cong B \qquad \alpha_{ABC} : (A \otimes B) \otimes C \cong A \otimes (B \otimes C)
   \]
   such that the following \emph{triangle} and \emph{pentagon}\footnote{Medieval
   mathematicians used to include the diagonal composite morphisms in this
-  diagram, however, after a few stake burnin g incidents, this practice was
+  diagram, however, after a few stake burning incidents, this practice was
   abandoned.} diagrams commute:
   \begin{center} % Is there really no way ro make this work as a tikzcd?
-\begin{tikzpicture}[baseline=(current bounding box.center)]\label{cat:def:monoidalCat:pentagon}
-  \node (AIB)  at (0,1.2)   {$(A \otimes I) \otimes B$};
-  \node (AIB2) at (3,1.2)   {$A \otimes (I \otimes B)$};
-  \node (AB)   at (1.5,0)     {$A \otimes B$};
+    \begin{tikzpicture}[baseline=(current bounding box.center)]\label{cat:def:monoidalCat:pentagon}
+      \node (AIB)  at (0,1.2)   {$(A \otimes I) \otimes B$};
+      \node (AIB2) at (3,1.2)   {$A \otimes (I \otimes B)$};
+      \node (AB)   at (1.5,0)     {$A \otimes B$};
 
-  \draw[->] (AIB)  -- node[above] {$\scriptstyle \alpha_{A,I,B}$} (AIB2);
-  \draw[->] (AIB)  -- node[below left]  {$\scriptstyle \rho_A \otimes \id_B$} (AB);
-  \draw[->] (AIB2) -- node[below right] {$\scriptstyle \id_A \otimes \lambda_B$} (AB);
-\begin{scope}[shift={(7.0,0)}]
-  \node (TL) at (0,2)     {$((A \otimes B) \otimes C) \otimes D$};
-  \node (TR) at (5,2)     {$(A \otimes (B \otimes C)) \otimes D$};
-  \node (ML) at (0,0.6)   {$(A \otimes B) \otimes (C \otimes D)$};
-  \node (MR) at (5,0.6)   {$A \otimes ((B \otimes C) \otimes D)$};
-  \node (B)  at (2.5,-0.8)  {$A \otimes (B \otimes (C \otimes D))$};
+      \draw[->] (AIB)  -- node[above] {$\scriptstyle \alpha_{A,I,B}$} (AIB2);
+      \draw[->] (AIB)  -- node[below left]  {$\scriptstyle \rho_A \otimes \id_B$} (AB);
+      \draw[->] (AIB2) -- node[below right] {$\scriptstyle \id_A \otimes \lambda_B$} (AB);
+      \begin{scope}[shift={(7.0,0)}]
+        \node (TL) at (0,2)     {$((A \otimes B) \otimes C) \otimes D$};
+        \node (TR) at (5,2)     {$(A \otimes (B \otimes C)) \otimes D$};
+        \node (ML) at (0,0.6)   {$(A \otimes B) \otimes (C \otimes D)$};
+        \node (MR) at (5,0.6)   {$A \otimes ((B \otimes C) \otimes D)$};
+        \node (B)  at (2.5,-0.8)  {$A \otimes (B \otimes (C \otimes D))$};
 
-  \draw[->] (TL) -- node[above] {$\scriptstyle \alpha_{A,B,C} \otimes id_D$} (TR);
-  \draw[->] (TL) -- node[left]  {$\scriptstyle \alpha_{A \otimes B, C, D}$} (ML);
-  \draw[->] (TR) -- node[right] {$\scriptstyle \alpha_{A, B \otimes C, D}$} (MR);
-  \draw[->] (ML) -- node[below left]  {$\scriptstyle \alpha_{A,B,C \otimes D}$} (B);
-  \draw[->] (MR) -- node[below right] {$\scriptstyle id_A \otimes \alpha_{B,C,D}$} (B);
-\end{scope}
-\end{tikzpicture}
-\end{center}
-For simplicity we denote a monoidal category as the sextuple $(\CC, \otimes, I,
-\alpha, \lambda, \rho   )$.
+        \draw[->] (TL) -- node[above] {$\scriptstyle \alpha_{A,B,C} \otimes id_D$} (TR);
+        \draw[->] (TL) -- node[left]  {$\scriptstyle \alpha_{A \otimes B, C, D}$} (ML);
+        \draw[->] (TR) -- node[right] {$\scriptstyle \alpha_{A, B \otimes C, D}$} (MR);
+        \draw[->] (ML) -- node[below left]  {$\scriptstyle \alpha_{A,B,C \otimes D}$} (B);
+        \draw[->] (MR) -- node[below right] {$\scriptstyle id_A \otimes \alpha_{B,C,D}$} (B);
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+  For simplicity we denote a monoidal category as the sextuple $(\CC, \otimes, I,
+  \alpha, \lambda, \rho   )$.
+  \myendmark
 \end{definition}
 
 Note that because we defined $- \otimes - : \CC \times \CC \to \CC$ to be a
@@ -434,21 +450,36 @@ $\alpha$ associator on $3$ strands is enough.
 
 \begin{definition}
   Let $(\CC, \ot_\CC, 1_\CC)$ and $(D,\ot_D, 1_D)$ be monoidal categories. A
-  \emph{\green{monoidal functor}} is a functor $F : \CC \to D$ that preserves
-  the monoidal structure 
+  \emph{\green{monoidal functor}} is a functor $F : \CC \to D$ that additonally preserves the monoidal structure. We equip this with coherence conditions by a unit axiom and a natural transformation
+  \begin{equation}
+    1_\mcD \to F(1_\mcC) \qquad \mu_{A,B} : F(A) \otimes_\mcD F(B) \to F(A \ot_\mcC B)
+  \end{equation}
+  satisfying unit and associativity by
+  % https://q.uiver.app/#q=WzAsNixbMCwwLCIoRihBKSBcXG90X1xcbWNEIEYoQikpIFxcb3RfXFxtY0QgRihDKSJdLFsyLDAsIkYoQSBcXG90X1xcbWNDIEIpXFxvdF9cXG1jRCBGKEMpIl0sWzQsMCwiRigoQVxcb3RfXFxtY0MgQilcXG90X1xcbWNDIEMpIl0sWzQsMiwiRihBIFxcb3RfXFxtY0MgKEIgXFxvdF9cXG1jQyBDKSkiXSxbMCwyLCJGKEEpIFxcb3RfXFxtY0QgKEYoQikgXFxvdF9cXG1jRCBGKEMpKSJdLFsyLDIsIlxcYnVsbGV0Il0sWzAsMSwiXFxtdV97QSxCfVxcb3RpbWVzX1xcbWNEIFxcaWQiXSxbMiwzLCJcXGFscGhhX3tBLEIsQ31eXFxtY0MiXSxbMCw0LCJcXGFscGhhX3tGQSxGQixGQ31eXFxtY0QiLDJdLFs0LDVdLFs1LDNdXQ==&macros=%5Cnewcommand%7B%5Cot%7D%7B%5Cotimes%7D%0A%5Cnewcommand%7B%5CmcC%7D%7B%5Cmathcal%7BC%7D%7D%0A%5Cnewcommand%7B%5CmcD%7D%7B%5Cmathcal%7BD%7D%7D
+\[\begin{tikzcd}
+	{(F(A) \ot_\mcD F(B)) \ot_\mcD F(C)} && {F(A \ot_\mcC B)\ot_\mcD F(C)} && {F((A\ot_\mcC B)\ot_\mcC C)} \\
+	\\
+	{F(A) \ot_\mcD (F(B) \ot_\mcD F(C))} && \bullet && {F(A \ot_\mcC (B \ot_\mcC C))}
+	\arrow["{\mu_{A,B}\otimes_\mcD \id}", from=1-1, to=1-3]
+	\arrow["{\alpha_{FA,FB,FC}^\mcD}"', from=1-1, to=3-1]
+	\arrow["{\alpha_{A,B,C}^\mcC}", from=1-5, to=3-5]
+	\arrow[from=3-1, to=3-3]
+	\arrow[from=3-3, to=3-5]
+\end{tikzcd}\]
+\todo{Better notation for associators}
 \end{definition}
 
 \begin{definition}
-Let $(\mathcal{V}, \ot_\mathcal{V}, I, \alpha, \lambda, \rho)$ be a monoidal
-category. A category $\CC$ \green{\emph{enriched over $\mathcal{V}$}} (or a
-\emph{$\mathcal{V}$-category}) consists of
+Let $(\mcV, \ot_\mcV, I, \alpha, \lambda, \rho)$ be a monoidal
+category. A category $\CC$ \green{\emph{enriched over $\mcV$}} (or a
+\emph{$\mcV$-category}) consists of
 \begin{enumerate}
-  \item for every $A, B \in \ob(\CC)$, a \emph{hom-object} $\Hom_\CC(A,B) \in \mathcal{V}$ (as opposed to Set in normal category),
-  \item for every triple $A,B,C \in \ob(\CC)$, a \emph{composition morphism} in $\mathcal{V}$
+  \item for every $A, B \in \ob(\CC)$, a \emph{hom-object} $\Hom_\CC(A,B) \in \mcV$ (as opposed to Set in normal category),
+  \item for every triple $A,B,C \in \ob(\CC)$, a \emph{composition morphism} in $\mcV$
   \[
-    \circ_{A,B,C} : \Hom_\CC(B,C) \ot_\mathcal{V} \Hom_\CC(A,B) \longrightarrow \Hom_\CC(A,C),
+    \circ_{A,B,C} : \Hom_\CC(B,C) \ot_\mcV \Hom_\CC(A,B) \longrightarrow \Hom_\CC(A,C),
   \]
-  \item for every $A \in \ob(\CC)$, a \emph{unit morphism} in $\mathcal{V}$
+  \item for every $A \in \ob(\CC)$, a \emph{unit morphism} in $\mcV$
   \[
     j_A : I \longrightarrow \Hom_\CC(A,A),
   \]
@@ -457,12 +488,27 @@ category. A category $\CC$ \green{\emph{enriched over $\mathcal{V}$}} (or a
 
 This immedeately gives us another defintion: 
 \[
-  \Hom_\CC(-,X) : \CC \to \mathcal{V} \quad \text{ is a contravariant functor. }
+  \Hom_\CC(-,X) : \CC \to \mcV \quad \text{ is a contravariant functor. }
 \]
+
+\begin{example}
+  We can give some examples here again.
+  \begin{enumerate}
+    \item Let $\mcV$ be the monoidal category $(\Set, \times, \{\ast\})$ equipped with the cartesian product. A $\mcV$ enriched category is thus just an ordinary category as defined in \cref{cat:def:category}.
+    \item Let $\mcV = (\Veck, \ot_k, k)$. A $\mcV$ enriched category replaces the hom-sets with vector spaces
+    \[
+      \Hom_\mcC(A,B) \in \Veck
+    \]
+    and composition becomes a bilinear map
+    \[
+      \Hom(B,C) \ot_k \Hom(A,V) \to \Hom(A,C).
+    \]
+  \end{enumerate}
+\end{example}
 
 
 \begin{definition}[Braided Monoidal Category, (cf. \cite{joyalGeometryTensorCalculus1991})]\label{cat:def:braidedMonoidalCat}
-A \emph{\green{braided monoidal category}} is a monoidal category $(\mathcal{C},
+A \emph{\green{braided monoidal category}} is a monoidal category $(\mcC,
 \otimes, I, \alpha, \lambda, \rho)$ equipped with an additional isomorphism, the
 \emph{\green{braiding}}
 \[
@@ -474,7 +520,7 @@ on $A$ and $B$ satisfying
 \end{equation} 
 
 As a consequence, the \emph{hexagon} relations commute for all $A,B,C \in
-\mathcal{C}$:
+\mcC$:
 
 \begin{center}
 % https://q.uiver.app/#q=WzAsMTIsWzAsMCwiKEEgXFxvdGltZXMgQikgXFxvdGltZXMgQyJdLFsxLDAsIkEgXFxvdGltZXMoQlxcb3RpbWVzIEMpIl0sWzIsMCwiKEIgXFxvdGltZXMgQylcXG90aW1lcyBBIl0sWzAsMSwiKEJcXG90aW1lcyBBKVxcb3RpbWVzIEMiXSxbMSwxLCJCIFxcb3RpbWVzIChBIFxcb3RpbWVzIEMpIl0sWzIsMSwiQiBcXG90aW1lcyAoQyBcXG90aW1lcyBBKSJdLFszLDAsIkEgXFxvdGltZXMgKEIgXFxvdGltZXMgQykiXSxbNCwwLCIoQSBcXG90aW1lcyBCKSBcXG90aW1lcyBDIl0sWzUsMCwiQ1xcb3RpbWVzKEFcXG90aW1lcyBCKSJdLFszLDEsIkEgXFxvdGltZXMoQyBcXG90aW1lcyBCKSJdLFs0LDEsIihBIFxcb3RpbWVzIEMpXFxvdGltZXMgQiJdLFs1LDEsIihDIFxcb3RpbWVzIEEpIFxcb3RpbWVzIEIiXSxbMCwxLCJcXGFscGhhIl0sWzEsMiwiXFxiZXRhX3tBLEJcXG90aW1lcyBDfSJdLFszLDQsIlxcYWxwaGEiXSxbNCw1LCJcXGlkX0IgXFxvdGltZXNcXGJldGFfe0EsQ30iXSxbMCwzLCJcXGJldGFfe0EsQn1cXG90aW1lcyBcXGlkX0MiLDJdLFsyLDUsIlxcYWxwaGEiXSxbNiw3LCJcXGFscGhhXnstMX0iXSxbNiw5LCJcXGJldGEiLDJdLFs5LDEwLCJcXGFscGhhXnstMX0iLDJdLFs3LDgsIlxcYmV0YSJdLFs4LDExLCJcXGFscGhhXnstMX0iXSxbMTAsMTEsIlxcYmV0YSIsMl1d
@@ -572,8 +618,10 @@ A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ
     \item In $\Veck$ this mapping is trivial.
     \item For representations, there exist transformations on the basis states,
     for example the theory $\Rep(\SU{2})$ picks up the phase $(-1)^{j_a + j_b +
-    j_c}$\todo{Notation!}. For all categories built from representations of
-    groups, these are symmetric.
+    j_c}$. However on the uncoupled basis $\ket{j_a, m_a} \otimes \ket{j_b, m_b}
+    = \ket{j_b, m_b} \otimes \ket{j_a, m_a}$ there is not swap. The factor is
+    only introduced once we define coupled bases in a \emph{fusion category}
+    (cf. \ref{}).
     \item For anyons, these correspond to the phase picked up when exchaning the
     anyons. For abelian anyons, these braidings are symmetric indeed, however
     for nonabelians these create non-symmetric categories.
@@ -583,18 +631,22 @@ A braided monoidal category is \emph{\green{symmetric}} if $\beta_{B,A} \circ
 
 If we want to use contractions between matchings legs, and overall want the
 ability to take duals just like in $\FDVec{\C}$, we need both a concept of
-duality and the evaluation maps. This is also the categorification of the
-\emph{creation} and \emph{annihilation} maps from \Cref{sect:Anyons}. Let this
-motivate the following definition:
+duality and the evaluation maps
+\eqref{back:eq:evalutationMapVector,back:eq:coevaluationMapVector}. This is also
+the categorification of the \emph{creation} and \emph{annihilation} maps from
+\Cref{chap:Anyons}. Let this motivate the following definition:
 \begin{definition}
-  A monoidal category $(\CC, \otimes, 1)$ is \emph{\green{rigid}} if, for every $A \in \CC$, there exists a \emph{\green{dual object}} $A^\ast$ with the following maps:
+  A monoidal category $(\CC, \otimes, 1)$ is \emph{\green{rigid}} if, for every
+  $A \in \CC$, there exists a \emph{\green{dual object}} $A^\ast$ with the
+  following maps:
   \[
     \ev_A : A^\ast \otimes A \to 1 \quad \text{ and } \quad \coev_A : 1 \to A \otimes A^\ast
   \]
   subject to the diagrammatic constraints
 % MODIFIED
 % https://q.uiver.app/#q=WzAsMTIsWzAsMCwiQSJdLFsyLDAsIjFcXG90IEEiXSxbNCwwLCIoQSBcXG90IEFeXFxhc3QpIFxcb3QgQSJdLFs2LDAsIkFcXG90KEFeXFxhc3QgXFxvdCBBKSJdLFs4LDAsIkEgXFxvdCAxICJdLFsxMCwwLCJBIl0sWzAsMiwiQV5cXGFzdCJdLFsyLDIsIiBBXlxcYXN0IFxcb3QgMSJdLFs0LDIsIkFeXFxhc3QgXFxvdCAoQSBcXG90IEFeXFxhc3QpIl0sWzYsMiwiKEFeXFxhc3QgXFxvdCBBKSBcXG90IEFeXFxhc3QiXSxbOCwyLCIxIFxcb3QgQV5cXGFzdCJdLFsxMCwyLCJBXlxcYXN0Il0sWzQsNSwiXFxyaG9fQSJdLFszLDQsIlxcaWRfQSBcXG90IFxcZXZfQSJdLFsyLDMsIlxcYWxwaGFfe0EsQV5cXGFzdCxBfSJdLFsxLDIsIlxcY29ldl9BIFxcb3QgXFxpZF9BIl0sWzAsMSwiXFxsYW1iZGFfQSJdLFs3LDgsIlxcaWRfe0FeXFxhc3R9IFxcb3QgXFxjb2V2X3tBfSJdLFs4LDksIlxcYWxwaGFfe0FeXFxhc3QsQSxBXlxcYXN0fSJdLFs5LDEwLCJcXGV2X0EgXFxvdCBcXGlkX3tBXlxcYXN0fSJdLFsxMCwxMSwiXFxsYW1iZGFfe0FeXFxhc3R9Il0sWzYsNywiXFxyaG9fe0FeXFxhc3R9Il1d
-\[\begin{tikzcd}[cramped, column sep=scriptsize]
+\begin{equation}\label{cat:eq:snakeEq}
+\begin{tikzcd}[cramped, column sep=scriptsize]
 	A && {1\ot A} && {(A \ot A^\ast) \ot A} && {A\ot(A^\ast \ot A)} && {A \ot 1 } && A \\
 	\\
 	{A^\ast} && { A^\ast \ot 1} && {A^\ast \ot (A \ot A^\ast)} && {(A^\ast \ot A) \ot A^\ast} && {1 \ot A^\ast} && {A^\ast}
@@ -610,7 +662,8 @@ motivate the following definition:
 	\arrow["{\ev_A \ot \id_{A^\ast}}", from=3-7, to=3-9]
 	\arrow["{\lambda_{A^\ast}}", from=3-9, to=3-11]
   \arrow[from=3-1, to=3-11, u path, "\id_{A^\ast}"' {below, distance=2pt}]
-\end{tikzcd}\]
+\end{tikzcd}
+\end{equation}
   % https://q.uiver.app/#q=WzAsOCxbMCwwLCIxIFxcb3RpbWVzIEEiXSxbMiwwLCIoQSBcXG90aW1lcyBBXlxcYXN0KSBcXG90aW1lcyBBIl0sWzAsMiwiQSBcXG90aW1lcyAxIl0sWzIsMiwiQSBcXG90aW1lcyAoQV5cXGFzdCBcXG90aW1lcyBBKSJdLFs0LDIsIjEgXFxvdGltZXMgQV5cXGFzdCJdLFs0LDAsIkFeXFxhc3RcXG90aW1lcyAxIl0sWzYsMiwiKEFeXFxhc3QgXFxvdGltZXMgQSkgXFxvdGltZXMgQV5cXGFzdCJdLFs2LDAsIkFeXFxhc3QgXFxvdGltZXMgKEEgXFxvdGltZXMgQV5cXGFzdCkiXSxbMCwxLCJcXGNvZXZfQSBcXG90aW1lcyBcXGlkX0EiXSxbMCwyLCJcXGxhbWJkYV9BIFxcY2lyYyBcXHJob19BIiwyXSxbMiwzLCJcXGlkXzEgXFxvdGltZXMgXFxldl9BIiwyXSxbMSwzLCJcXGFscGhhX3tBLEFeXFxhc3QsQX0iXSxbNCw2LCJcXGV2X0EgXFxvdGltZXNfe0FeXFxhc3R9IiwyXSxbNSw0LCJcXGxhbWJkYV97QV5cXGFzdH0gXFxjaXJjIFxccmhvX3tBXlxcYXN0fSIsMl0sWzYsNywiXFxhbHBoYV97QV5cXGFzdCxBLEFeXFxhc3R9IiwyXSxbNSw3LCJcXGlkX0EgXFxvdGltZXMgXFxjb2V2X0EiXV0=
   %\[\begin{tikzcd}
 	%  {1 \otimes A} && {(A \otimes A^\ast) \otimes A} && {A^\ast\otimes 1} && {A^\ast \otimes (A \otimes A^\ast)} \\
@@ -646,14 +699,23 @@ motivate the following definition:
       \[
         \coev_V : \C \to V^\ast \ot V, 
       \]
-    \item For representations, every such $\rho$ is outfitted with its dual representation 
+    \item For representations, every such $\rho$ is outfitted with its dual
+    representation 
     \item 
       In anyon theories we generally want the ability to take antiparticles for
       each species of anyon, and furthermore, we want to be able to
       \emph{create} and \emph{annihilate} these anyons. So the dual object
       corresponds to the antiparticle, and the $\ev$ and $\coev$ maps either
       produce a particle-antiparticle pair from the vacuum or annihilate them
-      (to a state containing the vacuum).
+      (to a state containing the vacuum). For $\Fib$, the particle with charge
+      $\tau$ is its own antiparticle. We can annihilate these by
+      \[
+        \ev_\tau : \tau \otimes \tau \to I
+      \]
+      and create them from the vacuum
+      \[
+        \coev_\tau : I \mapsto \tau \otimes \tau
+      \]
   \end{enumerate}
 \end{example}
 
@@ -744,11 +806,13 @@ We can give the two constraint (aptly named the \emph{snake equations}) as a "ti
 
 \end{graphicalCalculus}
 
-Observe that in the graphical calculus, we denoted this as a bent arrow from $A \to A^\ast$. In fact, we gain the following identities:
+Observe that in the graphical calculus, we denoted this as a bent arrow from $A
+\to A^\ast$. In fact, we gain the following identities:
 \[
   \Hom_\CC(X \ot A, Y) \cong \Hom_\CC(X, A^\ast \ot Y) : f \mapsto 
 \]
-We can also build dualities for morphisms here: Let $f : A \to B$ be arbitrary and define
+We can also build dualities for morphisms here: Let $f : A \to B$ be arbitrary
+and define
 \[
   f^\ast : B^\ast \to A^\ast = (\ev_B \ot \id_{A^\ast})(\id_{B^\ast} \ot f \ot \id_{A^\ast})(\id_{B^\ast} \ot \coev_A)
 \]
@@ -764,7 +828,9 @@ Also notice by this that $(-)^\ast$ is a contravariant functor.
 Further the natural observation that $A \cong A^{\ast\ast}$ holds should be
 encoded in these categories.
 \begin{definition}
-  A \emph{\green{pivotal structure}} on a rigid monoidal category is given by a natural isomorphism $\id \to (-)^{\ast\ast}$, i.e. a collection of isomorphisms that identify $\{A \to A^{\ast\ast}\}$.
+  A \emph{\green{pivotal structure}} on a rigid monoidal category is given by a
+  natural isomorphism $\id \to (-)^{\ast\ast}$, i.e. a collection of
+  isomorphisms that identify $\{A \to A^{\ast\ast}\}$.
 \end{definition}
 
 This allows us to define a notion of a traced category.
@@ -1485,8 +1551,8 @@ category. \todo{So why can we not jst do a Hilber-Enrichment?}
 Now there is only one last structure missing before we can model anyons, and
 this is perhaps the least intuitive of all of these structures. While
 foundational for the physical interpretations of these theories, it is of little
-interest to our tensor formalisms and we will not go into depth on this. 
-\begin{definition}
+interest to our tensor formalisms and we will not go into depth on this.
+\begin{definition}[Modular Tensor Category, cf. \cite{rowellClassificationModularTensor2009}]
   In a braided fusion category $\CC$ with $A,B \in \CC$ define the
   \emph{\green{S-matrix}}
   \[
@@ -1494,6 +1560,36 @@ interest to our tensor formalisms and we will not go into depth on this.
   \]
   If $S$ is invertible, we call the category \emph{\green{modular}}.
 \end{definition}
+
+This roughly amounts to stating that apart from the vacuum/identity/unit object,
+no other anyon braids trivially with all other anyons.
+
+\begin{example}[$\Fib$ as a category, cf. \cite{bondersonNonAbelianAnyonsInterferometry2007}]
+  The category $\Fib$ has two basic types: The vacuum $I$ and the charge $\tau$. $\tau$ is its own antiparticle, so we do not need to consider more duals. Furthermore, we have the fusion rule
+  \[
+    \tau \otimes \tau = 1 \oplus \tau.
+  \]
+  The dimensions here are given by $\dim(I) = 1$ and $\dim(\tau) = \varphi$.
+
+  The only non-trivial $F$-move is 
+  \[
+    F^{\tau\tau\tau}_\tau =
+    \begin{pmatrix}
+      \varphi^{-1} & \varphi^{-1/2} \\
+      \varphi^{-1/2} & -\varphi^{-1}
+    \end{pmatrix}.
+  \]  
+
+  The braiding is determined by the $R$-symbols
+  \[
+    R^{\tau\tau}_I = e^{-4\pi i/5}, \qquad R^{\tau\tau}_\tau = e^{3\pi i/5},
+  \]
+  and all $R$-symbols involving $I$ are trivial.
+\end{example}
+
+\begin{example}[$\Rep(\SU{2})$]
+  The simple objects of $\Rep(\SU{2})$ are the irreducible $V_j$ for $j \in \{0, \tfrac{1}{2}, 1, \tfrac{3}{2}, \ldots \}$, with $\dim(V_j) = 2j + 1$. The unit object $V_0 \cong \C$. Here again, every $V_j$ is self-dual.
+\end{example}
 
 \section{Decompositions for Categorical Networks}\label{cat:sub:decomp}
 
@@ -1929,7 +2025,7 @@ Note here that by the association of the degeneracy tensors (which we store as
 these arrays have shape $???$.
 
 
-To build a tensor theory, we need to follow \Cref{sect:background} and implement
+To build a tensor theory, we need to follow \Cref{chap:background} and implement
 permutations and reshapes. We know that $F$-moves create a superposition of
 trees when applied, but we only care about the geometry for now. Also recall
 that $F$-moves act locally on a tree, for the geometry this entails that a local
