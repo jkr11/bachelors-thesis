@@ -1,5 +1,5 @@
 This chapter introduces the theory of \emph{anyons} not by their algebra (cf.
-\cref{sect:Categories}) but by their physical instantion.
+\cref{chap:Categories}) but by their physical instantion.
 
 In the contemporary literature, anyons are introduced as \emph{defects} in a $2$
 dimensional space (manifold? compact?) with \emph{exotic exchange statistics} on
@@ -185,7 +185,7 @@ We can also give these generators graphically, as well as view a composite in
 
 However now if $D >= 3$ we know that both of these coincide with the symmetric
 group $\Sym_n$ instead. In fact there is an exact sequence
-\[
+\begin{equation}\label{braidGroupExactSequence}
     1 
     \longrightarrow 
     \mathrm{PBr}_n(\Sigma) 
@@ -195,7 +195,7 @@ group $\Sym_n$ instead. In fact there is an exact sequence
     \Sym_n 
     \longrightarrow 
     1
-\]
+\end{equation}
 and this is quite best understood forgetting what an anyon is, the configuration
 space intrinsically has no knowledge of what it is either, it only knows its
 points. In the case of the ordered configuration space these points are each
@@ -214,9 +214,9 @@ Compare this to the presentation of the symmetric group (cf.
 \cref{app:gen:groups}) to see that $\Sym_n$ is a \emph{subgroup} of
 $\Br_n(\R^2)$.
 
-\begin{definition}[Fundamentl Groupoid]
+\begin{definition}[Fundamental Groupoid]
   Let $X$ be a topological space. The \emph{fundamental groupoid} $\Pi_1(X)$ is
-  a category (cf. \Cref{sect:Categories}) with objects being the points of $X$,
+  a category (cf. \Cref{chap:Categories}) with objects being the points of $X$,
   and the morphisms between a configurations $x$ and $y$ are the the homotopy
   classes of paths between $x$ and $y$ 
   \[
@@ -230,7 +230,7 @@ We can remedy this by choosing instead the \emph{fundamental groupoid} of the
 configuration spaces, which has arbitrary basepoints and maps between them.
 
 \begin{remark}[Fundamental Group vs. fundamental Groupoid]
-  Above we chose the fundamental grrup at some basepoint $x_0$. We therefore
+  Above we chose the fundamental group at some basepoint $x_0$. We therefore
   also only get motions around that specific basepoint. We couldve also simply
   used the \emph{fundamental groupoid} $\Pi_1(X)$ which would yield all possible
   starting configurations. This is resolved by \todo{where put?} the equivalence
@@ -374,7 +374,7 @@ quantum computation} (cf. \Cref{sect:anyon:tqc})
 
 
 However, in the usual literature anyons are also identified over their
-\emph{fusion tensor category} (cf. \Cref{sect:Categories}). Although this
+\emph{fusion tensor category} (cf. \Cref{chap:Categories}). Although this
 correspondence is well known and the categorical interpretation can be
 considered standard, a formal treatment and proof \todo{Check if htis is a full
 proof.} were only given recently. These are pointed out in
